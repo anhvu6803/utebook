@@ -1,5 +1,37 @@
 const Book = require('../models/book.model');
 const mongoose = require('mongoose');
+const { findById } = require('../models/user.model');
+
+exports.getAllBook = async () => {
+    let books;
+    try {
+        books = await Book.find({});
+        console.log(books)
+        return books.map(book => book.toObject({ getters: true }));
+    } catch (err) {
+        throw new Error('Something went wrong, could not find a book.', 500);
+    }
+}
+
+exports.getOneBook = async (bookId) => {
+    let book;
+    try {
+        book = await Book.findById(bookId);
+        return book.toObject({ getters: true });
+    } catch (err) {
+        throw new Error('Something went wrong, could not find a book.', 500);
+    }
+}
+
+exports.getBookByCategory = async (category) => {
+    let books;
+    try {
+        books = await Book.find({ categories: category });
+        return books.map(book => book.toObject({ getters: true }));
+    } catch (err) {
+        throw new Error('Something went wrong, could not find a book.', 500);
+    }
+}
 
 exports.addBook = async (bookdata) => {
     const { bookname, author, categories, price,
@@ -21,7 +53,7 @@ exports.addBook = async (bookdata) => {
         wordcontents,
         audios
     });
-    console.log(addedBook)
+
     return await addedBook.save();
 };
 

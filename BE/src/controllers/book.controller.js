@@ -1,6 +1,45 @@
 const { validationResult } = require('express-validator');
 const BookService = require('../services/book.service');
 
+exports.getAllBook = async (req, res) => {
+    try {
+        const allBook = await BookService.getAllBook();
+
+        res.status(201).json({
+            message: 'Find books successfully',
+            books: allBook,
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+exports.getOneBook = async (req, res) => {
+    try {
+        const book = await BookService.getOneBook(req.params.bid);
+
+        res.status(201).json({
+            message: 'Find book successfully',
+            books: book,
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+exports.getBookByCategory = async (req, res) => {
+    try {
+        const books = await BookService.getBookByCategory(req.params.category);
+
+        res.status(201).json({
+            message: 'Find books successfully',
+            books: books,
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 exports.addBook = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

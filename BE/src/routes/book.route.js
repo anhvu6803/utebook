@@ -3,6 +3,9 @@ const { body } = require('express-validator');
 const router = express.Router();
 const { BookController } = require('../controllers/index');
 
+router.get('/get-all-book', BookController.getAllBook);
+router.get('/get-detail-book/:bid', BookController.getOneBook);
+router.get('/get-book-category/:category', BookController.getBookByCategory);
 router.post(
     '/add-book',
     [
