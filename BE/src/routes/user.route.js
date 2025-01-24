@@ -3,16 +3,16 @@ const { body } = require('express-validator');
 const router = express.Router();
 const { UserController } = require('../controllers/index');
 
-router.post(
-    '/register',
-    [
-        body('username').notEmpty().withMessage('Username is required').isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'),
-        body('email').isEmail().withMessage('Invalid email').notEmpty().withMessage('Email is required'),
-        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long').notEmpty().withMessage('Password is required'),
-        body('ngaySinh').isDate().withMessage('Invalid date of birth').notEmpty().withMessage('Date of birth is required'),
-        body('gioiTinh').isIn(['Nam', 'Nữ', 'Khác']).withMessage('Invalid gender').notEmpty().withMessage('Gender is required'),
-    ],
-    UserController.registerUser
-);
+router.post('/register', UserController.registerUser);
+router.get('/confirm/:token', UserController.confirmEmail);
+router.post('/resend-confirmation', UserController.resendConfirmationEmail);
+router.post('/request-password-reset', [
+    body('email').isEmail().withMessage('Valid email is required')
+], UserController.requestPasswordReset);
+
+router.post('/reset-password', [
+    body('token').notEmpty().withMessage('Token is required'),
+    body('newPassword').notEmpty().withMessage('New password is required')
+], UserController.resetPassword);
 
 module.exports = router;

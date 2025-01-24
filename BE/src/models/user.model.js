@@ -8,7 +8,11 @@ const UserSchema = new mongoose.Schema({
     ngaySinh: { type: Date, required: true },
     gioiTinh: { type: String, enum: ['Nam', 'Nữ', 'Khác'], required: true },
     sachYeuThich: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
-    sachSangTac: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }] 
+    sachSangTac: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    confirmationToken: String,
+    confirmationExpires: Date,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
