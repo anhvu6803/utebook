@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     gioiTinh: { type: String, enum: ['Nam', 'Nữ', 'Khác'], required: true },
     sachYeuThich: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
     sachSangTac: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    isAdmin: { type: Boolean, default: false },
     confirmationToken: String,
     confirmationExpires: Date,
     resetPasswordToken: String,
