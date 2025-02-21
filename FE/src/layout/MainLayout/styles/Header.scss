@@ -1,0 +1,19 @@
+.header {
+  background-color: white; 
+  color: #333;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    height: 80px; 
+    width: auto;
+    margin-left: 20px;
+  }
+}
