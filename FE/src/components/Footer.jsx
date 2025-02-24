@@ -1,6 +1,6 @@
 import "./styles/Footer.scss";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -13,11 +13,11 @@ function Footer() {
           <p>
             📍 
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Số+1,+Võ+Văn+Ngân,+Thủ+Đức"
+              href="https://maps.app.goo.gl/agovngfaE6LaN1FF9"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Số 1, Võ Văn Ngân, Thủ Đức, TP Hồ Chí Minh
+              HCMC University of Technology and Education
             </a>
           </p>
           <p>
