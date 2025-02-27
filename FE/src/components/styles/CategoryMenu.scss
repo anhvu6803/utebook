@@ -1,0 +1,121 @@
+.category-container {
+  position: relative;
+  display: inline-block;
+
+  .category-link {
+    display: inline-block;
+    font-size: 16px;
+    color: #ddd;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .category-menu {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 750px;
+    background: #1b1b1b;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &.active {
+      opacity: 0.95;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      padding: 15px 0;
+      overflow-x: auto;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          padding: 12px 14px; 
+          font-size: 14px; 
+          color: #ddd;
+          cursor: pointer;
+          border-radius: 8px; 
+          transition: background 0.3s ease;
+          text-align: left; 
+          font-weight: 500; 
+
+          &:hover {
+            background: #292929;
+          }
+        }
+      }
+    }
+
+
+    .menu-footer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); // 4 cột
+      gap: 10px;
+      border-top: 1px solid #333;
+      padding-top: 10px;
+
+      .menu-header {
+        grid-column: span 4; /* Header chiếm toàn bộ chiều rộng */
+        text-align: left; /* Căn lề trái */
+        font-size: 16px;
+        font-weight: bold;
+        color: #ddd;
+        padding-bottom: 10px;
+        border-bottom: none;
+      }
+
+      .menu-btn {
+        background: #292929;
+        color: #ddd;
+        border: none;
+        padding: 14px 20px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.3s ease;
+        justify-content: center;
+
+        &:hover {
+          background: #444;
+        }
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr); // 2 nút trên mỗi dòng khi màn hình nhỏ
+      }
+    }
+  }
+}

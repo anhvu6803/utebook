@@ -1,0 +1,133 @@
+.notification-container {
+    position: relative;
+
+    .notification-icon {
+        cursor: pointer;
+        color: #fff;
+        transition: color 0.3s ease;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    .notification-dropdown {
+        position: absolute;
+        top: 40px;
+        right: 0px;
+        width: 350px;
+        background: #1b1b1b;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition: all 0.3s ease;
+
+        &.active {
+            opacity: 0.95;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            font-weight: bold;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .notification-list {
+            height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden; // Ẩn thanh cuộn ngang
+
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #444;
+                border-radius: 6px;
+                transition: background 0.3s ease;
+
+                &:hover {
+                    background: #666;
+                }
+            }
+
+            &::-webkit-scrollbar-track {
+                background: #222;
+                border-radius: 6px;
+            }
+
+            .notification-item {
+                display: flex;
+                align-items: center;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                width: 328px;
+                height: fit-content;
+                padding: 0 0 15px 15px;
+
+                &:hover {
+                    background: #222;
+                }
+
+                .icon {
+                    font-size: 12px;
+                    color: #fff;
+                    flex-shrink: 0;
+                    background-color: #444;
+                    width: 25px;
+                    height: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 20%;
+                    padding: 5px;
+                }
+
+                .content {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    overflow: hidden;
+
+                    .time {
+                        font-size: 12px;
+                        color: #888;
+                    }
+
+                    .title {
+                        font-size: 15px;
+                        color: #fff;
+                        font-weight: 500;
+                        margin: 4px 0;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .description {
+                        font-size: 13px;
+                        color: #888;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 4;
+                        line-clamp: 4; 
+                        -webkit-box-orient: vertical;
+                        overflow: hidden; 
+                        word-break: break-word;
+                    }
+                }
+            }
+
+        }
+
+    }
+}
