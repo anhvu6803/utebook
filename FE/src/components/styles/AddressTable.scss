@@ -1,0 +1,138 @@
+.address-table {
+    padding-top: 15px;
+    display: flex;
+    align-self: start;
+    width: 100%;
+
+    .address-table__list {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+            background-color: #2673C5;
+            color: #f0f0f0;
+            border-top-left-radius: 20px;
+
+            th {
+                padding: 16px 12px;
+                text-align: left;
+                font-size: 14px;
+                font-weight: 500;
+                width: auto;
+                word-break: break-word !important;
+                white-space: nowrap;
+            }
+
+            th:first-child {
+                border-top-left-radius: 20px;
+            }
+
+            th:last-child {
+                border-top-right-radius: 20px;
+            }
+        }
+
+        tbody {
+
+            tr {
+                background-color: #7FADDD;
+                color: #fff;
+
+                td {
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 14px;
+                    word-wrap: break-word;
+                    font-weight: 500;
+                }
+
+                td:nth-child(3) {
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 14px;
+                    max-width: 42ch;
+                    word-wrap: break-word;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                }
+
+                td:nth-child(5) {
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 14px;
+                    word-wrap: break-word;
+                    height: 100%;
+                }
+
+                td:nth-child(5) div.toggle,
+                td:nth-child(5) span {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+
+                .toggle {
+                    position: relative;
+                    width: 48px;
+                    height: 24px;
+                    border-radius: 999px;
+                    background-color: #fff;
+                    opacity: 0.8;
+                    cursor: pointer;
+
+                    &.active {
+                        background-color: #005bbb;
+                    }
+
+                    .toggle__circle {
+                        position: absolute;
+                        top: 50%;
+                        left: 2px;
+                        width: 21px;
+                        height: 21px;
+                        border-radius: 50%;
+                        background-color: #005bbb;
+                        transform: translateY(-50%);
+                        transition: left 0.3s;
+                    }
+
+                    &.active .toggle__circle {
+                        background-color: #fff;
+                        left: 25px;
+                    }
+                }
+
+                .btn-update,
+                .btn-delete {
+                    padding: 8px 16px;
+                    margin: 0 5px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    border: none;
+                    font-size: 16px;
+                    font-weight: 500;
+                    background-color: #fff;
+                    color: #005bbb;
+                    opacity: 0.9;
+
+                    &:hover {
+                        opacity: 0.3;
+                    }
+                }
+
+
+                .btn-delete {
+
+                    &.disabled {
+                        color: #7FADDD;
+                        cursor: default;
+                        opacity: 0.9;
+                    }
+                }
+            }
+        }
+    }
+}

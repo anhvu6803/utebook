@@ -20,10 +20,15 @@ const HeaderHome = () => {
     SetShowSearch(!isShowSearch);
   }
 
+  const handleLoadLink = (link) => {
+    navigate(link);
+    window.location.reload();
+  }
+
   return (
     <header className="header-home">
       <div className="header-left">
-        <div className="logo-container" onClick={() => navigate("/home")}>
+        <div className="logo-container" onClick={() => handleLoadLink("/utebook")}>
           <img src={logo} alt="Logo" className="logo" />
         </div>
 
@@ -61,7 +66,7 @@ const HeaderHome = () => {
           <NotificationMenu />
         </div>
 
-        <div className="avatar-container" onClick={() => navigate("/home")}>
+        <div className="avatar-container" onClick={() => handleLoadLink("/utebook/account/profile")}>
           <UserMenu />
         </div>
       </div>
