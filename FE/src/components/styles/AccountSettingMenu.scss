@@ -1,0 +1,97 @@
+.account-menu {
+    position: relative;
+    width: 250px;
+    padding: 15px 30px 15px 15px;
+    align-items: center;
+    background-color: #fff;
+    border-right: 1px solid #005bbb4d;
+
+    .user-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 12px;
+
+        button {
+            background: #005bbb;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 30px;
+        border-bottom: 1px solid rgb(0, 91, 187, 0.3);
+
+        .user-name {
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .menu-list {
+        margin-top: 12px;
+        list-style: none;
+        padding: 0;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            padding: 10px;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(77, 77, 77, 0.3);
+                border-radius: 12px;
+            }
+
+            &.active {
+                background: rgba(77, 77, 77, 0.3);
+                color: #005bbb;
+                font-weight: bold;
+                border-radius: 12px;
+
+                svg {
+                    color: #005bbb;
+                }
+            }
+
+            svg {
+                color: black;
+            }
+        }
+    }
+}

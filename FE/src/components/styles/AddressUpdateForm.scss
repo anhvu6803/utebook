@@ -1,0 +1,128 @@
+.address-form-container {
+  display: inline-block;
+
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+  }
+
+  .create-address-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    background-color: #7FADDD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 16px;
+
+    .icon-create {
+      color: white;
+      font-size: 20px;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .address-form {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    color: black;
+    width: 900px;
+    height: fit-content;
+    margin: auto;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 1px solid #005bbb;
+
+    &.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      visibility: visible;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+      font-size: 14px;
+      color: #4f4f4f;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: black;
+      font-size: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .form-group {
+        display: flex;
+        gap: 5px;
+        padding: 5px;
+        justify-content: space-around;
+      }
+
+      .switch {
+        display: flex;
+        align-items: center;
+        align-self: flex-start;
+        margin-left: 15px;
+      }
+
+      button {
+        padding: 12px;
+        width: 200px;
+        background: #2673C5;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+        align-self: flex-end;
+        margin-right: 15px;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

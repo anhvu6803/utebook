@@ -1,0 +1,41 @@
+.profile-settings {
+    width: 1080px;
+    margin: auto;
+    flex-direction: column;
+
+    .profile-header {
+        width: 100%;
+        border-bottom: 1px solid rgb(0, 91, 187, .3);
+        height: fit-content;
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 20px;
+
+            .tab {
+                background: none;
+                border: none;
+                color: black;
+                font-size: 16px;
+                cursor: pointer;
+
+                &.active {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #005bbb;
+                }
+            }
+        }
+    }
+
+    .profile-content {
+        position: relative;
+    }
+}

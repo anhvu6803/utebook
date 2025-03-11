@@ -41,6 +41,30 @@
             visibility: visible;
         }
 
+        .user-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+    
+            button {
+                background: #005bbb;
+                color: white;
+                border: none;
+                padding: 8px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+                transition: background 0.3s;
+                opacity: 0.8;
+    
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
+        }
+
         .user-info {
             display: flex;
             align-items: center;

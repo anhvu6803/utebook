@@ -1,10 +1,13 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from './layout/MainLayout/MainLayout'
+import MainLayout from './layout/MainLayout'
 import WelcomPage from './pages/WelcomePage'
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPassPage";
-import HomeLayout from "./layout/MainLayout/HomeLayout";
+import HomeLayout from "./layout/HomeLayout";
+import AccountSettingPage from "./pages/AccountSettingPage";
+import AccountSettingLayout from "./layout/AccountSettingLayout";
+
 const App = () => {
   return (
     <Router>
@@ -15,13 +18,15 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
 
-        <Route path="/home" element={<HomeLayout />}>
-
+        <Route path="/utebook" element={<HomeLayout />}>
+          <Route path="account" element={<AccountSettingLayout />}>
+            <Route path="profile" element={<AccountSettingPage />} />
+          </Route>
         </Route>
-        
+
       </Routes>
     </Router>
-   
+
   )
 }
 

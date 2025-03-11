@@ -1,0 +1,78 @@
+.verification-container {
+    position: relative;
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        border-bottom: 1px solid rgb(0, 91, 187, .3);
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 400px;
+            background-color: #7FADDD;
+            padding: 10px 5px 10px 15px;
+            border-radius: 12px;
+
+            label {
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.6); // Màu nhạt hơn
+                margin-bottom: 4px;
+            }
+
+            input {
+                width: 100%;
+                font-size: 14px;
+                font-weight: bold;
+                border: none;
+                background-color: #7FADDD;
+                color: white;
+                outline: none;
+                cursor: text;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        .verified-text {
+            color: #005bbb;
+            font-weight: 500;
+            font-size: 13px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .warning-text {
+            color: red;
+            font-weight: 500;
+            font-size: 13px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .verify-btn {
+            margin-top: 10px;
+            width: fit-content;
+            width: fit-content;
+        }
+    }
+
+    .delete-account {
+        color: black;
+        font-size: 14px;
+
+        span {
+            color: #005bbb;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

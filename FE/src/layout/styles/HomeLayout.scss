@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 91, 187, 0.5);
+    border-radius: 6px;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: rgba(0, 91, 187, 0.5);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #fff;
+  }
+}
+
+.layout-home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vh;
+}
+
+.header-home {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.content-home {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+}
+
+.footer-home {
+  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
