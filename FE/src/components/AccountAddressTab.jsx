@@ -30,7 +30,7 @@ const addresses = [
 ];
 
 const AccountAddressTab = () => {
-    const [addressesTable, setaddressesTable] = useState([]);
+    const [addressesTable, setaddressesTable] = useState(addresses);
 
     const toggleDefault = (index) => {
         const newaddressesTable = addressesTable.map((address, i) => ({
@@ -54,7 +54,7 @@ const AccountAddressTab = () => {
                             <AddressUpdateForm />
                         </div>
                         <AddressTable
-                            addresses={addressesTable}
+                            addresses={addresses}
                             toggleDefault={toggleDefault}
                             deleteAddress={deleteAddress}
                         />

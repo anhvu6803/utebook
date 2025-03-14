@@ -20,13 +20,15 @@ const AccountSettingMenu = () => {
     };
     return (
         <div className="account-menu">
-            <div className="user-info">
-                <span className="user-name">Anh Vu</span>
-                <img src={testAvatar} alt="testAvatar" className="user-avatar" />
-            </div>
+            <div className="user-header">
+                <div className="user-info">
+                    <span className="user-name">Anh Vu</span>
+                    <img src={testAvatar} alt="testAvatar" className="user-avatar" />
 
-            <div className="user-actions">
-                <button>Trở thành hội viên</button>
+                </div>
+                <div className="user-actions">
+                    <button>Trở thành hội viên</button>
+                </div>
             </div>
 
             <ul className="menu-list">
@@ -38,25 +40,25 @@ const AccountSettingMenu = () => {
                 </li>
                 <li
                     className={activeItem === "Tủ sách cá nhân" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/library", "Tủ sách cá nhân")}
+                    onClick={() => handleLoadLink("/utebook/account/bookcase", "Tủ sách cá nhân")}
                 >
                     <ListAltIcon /> Tủ sách cá nhân
                 </li>
                 <li
                     className={activeItem === "Quản lý đơn hàng" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/orders", "Quản lý đơn hàng")}
+                    onClick={() => handleLoadLink("/utebook/account/orders", "Quản lý đơn hàng")}
                 >
                     <ReceiptIcon /> Quản lý đơn hàng
                 </li>
                 <li
                     className={activeItem === "Lịch sử giao dịch" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/transactions", "Lịch sử giao dịch")}
+                    onClick={() => handleLoadLink("/utebook/account/transaction-histories", "Lịch sử giao dịch")}
                 >
                     <ReceiptLongIcon /> Lịch sử giao dịch
                 </li>
                 <li
                     className={activeItem === "Hỗ trợ khách hàng" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/support", "Hỗ trợ khách hàng")}
+                    onClick={() => handleLoadLink("/utebook/account/support", "Hỗ trợ khách hàng")}
                 >
                     <HeadphonesIcon /> Hỗ trợ khách hàng
                 </li>

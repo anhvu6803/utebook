@@ -27,13 +27,15 @@ const UserMenu = () => {
             </div>
 
             <div className={`user-dropdown ${isOpen ? "active" : ""}`}>
-                <div className="user-info">
-                    <span className="user-name">Anh Vu</span>
-                    <img src={testAvatar} alt="testAvatar" className="user-avatar" />
-                </div>
+                <div className="user-header">
+                    <div className="user-info">
+                        <span className="user-name">Anh Vu</span>
+                        <img src={testAvatar} alt="testAvatar" className="user-avatar" />
 
-                <div className="user-actions">
-                    <button>Trở thành hội viên</button>
+                    </div>
+                    <div className="user-actions">
+                        <button>Trở thành hội viên</button>
+                    </div>
                 </div>
 
                 <ul className="menu-list">

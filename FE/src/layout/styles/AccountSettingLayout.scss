@@ -1,6 +1,7 @@
 .layout-account {
     display: flex; // Sắp xếp các phần tử con theo hàng ngang
     padding-top: 30px;
+    height: auto;
 
     .menu-bar {
         display: flex;
@@ -8,7 +9,6 @@
 
     .content-account {
         flex-grow: 1;
-        position: absolute;
-        left: 300px;
+        position: relative;
     }
 }
