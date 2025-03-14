@@ -3,7 +3,7 @@
   color: white;
   padding: 5px 0; 
   text-align: left;
-  font-size: 12px;
+  font-size: 10px;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -22,17 +22,19 @@
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 8px;
   }
 
   p {
-    margin: 4px 0;
+    margin: 2px 0;
+    font-size: 10px;
   }
 
   a {
     color: #fff;
+    font-size: 10px;
     text-decoration: underline;
     &:hover {
       color: #ffd700; 

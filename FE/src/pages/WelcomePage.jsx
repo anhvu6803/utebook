@@ -10,7 +10,7 @@ const WelcomePage = () => {
       <div className="welcome-text">
         <h1>Trang web đọc sách trực tuyến</h1>
         <div className="buttons">
-          <button className="btn btn-register">Đăng kí</button>
+          <button className="btn btn-register" onClick={()=> navigate("/register")}>Đăng kí</button>
           <button className="btn btn-login" onClick={() => navigate("/login")}>
             Đăng nhập
           </button>

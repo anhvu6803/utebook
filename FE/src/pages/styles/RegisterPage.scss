@@ -1,0 +1,107 @@
+.register-page {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    html, body {
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #fff;
+    }
+  
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      margin-top: 50px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  
+    .register-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      width: 100%;
+    }
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+  
+    .required {
+      color: red;
+    }
+  
+    input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      width: 100%;
+    }
+  
+    .verification {
+      display: flex;
+      gap: 10px;
+    }
+  
+    .btn-verify {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  
+    .btn-container {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  
+    .btn-register, .btn-back {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  
+    .btn-register {
+      background-color: #007bff;
+      color: white;
+    }
+  
+    .btn-back {
+      background-color: #6c757d;
+      color: white;
+    }
+  
+    @media (max-width: 768px) {
+      .register-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  

@@ -1,0 +1,12 @@
+.admin-layout {
+    display: flex;
+  }
+  
+  .admin-content {
+    margin-left: 250px; // Để tránh bị navbar che phủ
+    padding: 20px;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
