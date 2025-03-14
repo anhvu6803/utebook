@@ -77,7 +77,7 @@ const AccountInfoTab = () => {
                     className="image"
                 />
                 <div class="upload-btn-wrapper">
-                    <button class="btn">Thay ảnh</button>
+                    <button >Thay ảnh</button>
                     <input type="file" name="myfile" onChange={handleImageChange} />
                 </div>
             </div>
