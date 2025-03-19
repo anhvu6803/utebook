@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import "./styles/Header.scss";
-import logo from "../assets/logoUTE.png";
-
-const Header = () => {
+import "./styles/HeaderAdmin.scss";
+import logo from "../../assets/logoUTE.png"; 
+const HeaderAdmin = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="header">
+    <div className="admin-header">
       <div className="logo-container" onClick={() => navigate("/")}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
@@ -14,4 +13,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderAdmin;

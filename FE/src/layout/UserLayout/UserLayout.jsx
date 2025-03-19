@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import HeaderHome from "../../components/HeaderHome.jsx";
+import FooterHome from "../../components/FooterHome.jsx";
 import "./styles/UserLayout.scss";
 
 const UserLayout = () => {
   return (
-    <div className="user-layout">
-      <Navbar />
-      <main className="user-content">
+    <div className="layout-home">
+      <HeaderHome className="header-home" />
+      <main className="content-home">
         <Outlet />
       </main>
-      <Footer />
+      <FooterHome className="footer-home" />
     </div>
   );
 };

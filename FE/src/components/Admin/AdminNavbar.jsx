@@ -1,71 +1,123 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Users, Layers, Book, Package, BarChart } from "lucide-react";
-import "./styles/AdminNavbar.scss";
-import logo from "../../assets/logoUTE.png";
+import { useNavigate } from "react-router-dom";
+import "./styles/AdminNavbar.scss"; // Import SCSS
+import testAvatar from "../../assets/testAvatar.jpg";
 
-const Navbar = () => {
-  const location = useLocation();
-  const [activeTab, setActiveTab] = useState(location.pathname);
+import PeopleIcon from "@mui/icons-material/People";
+import CategoryIcon from "@mui/icons-material/Category";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+const menuItems = [
+  {
+    name: "Quản lý người dùng",
+    path: "/utebook-admin/",
+    icon: <PeopleIcon />,
+  },
+  {
+    name: "Quản lý sách",
+    icon: <MenuBookIcon />,
+    children: [
+      { name: "Sách đọc", path: "/admin/books/reading" },
+      { name: "Sách nghe", path: "/utebook-admin/" },
+    ],
+  },
+  {
+    name: "Quản lý thể loại",
+    icon: <CategoryIcon />,
+    children: [
+      { name: "Thể loại sách đọc", path: "/utebook-admin/" },
+      { name: "Thể loại sách nghe", path: "/admin/categories/audio" },
+    ],
+  },
+  {
+    name: "Quản lý đơn hàng",
+    icon: <ReceiptIcon />,
+    children: [
+      { name: "Tùy chỉnh đơn hàng", path: "/admin/orders/manage" },
+      { name: "Lịch sử đơn hàng", path: "/admin/orders/history" },
+    ],
+  },
+  {
+    name: "Thống kê",
+    icon: <BarChartIcon />,
+    children: [
+      { name: "Số lượng hội viên", path: "/admin/statistics/members" },
+      { name: "Doanh số bán sách", path: "/admin/statistics/sales" },
+      { name: "Doanh thu", path: "/admin/statistics/revenue" },
+    ],
+  },
+];
+
+const AdminNavbar = () => {
+  const navigate = useNavigate();
+  const [activeDropdowns, setActiveDropdowns] = useState({});
+  const [activeItem, setActiveItem] = useState(null); // Lưu mục active
+
+  const handleLoadLink = (path, itemName) => {
+    setActiveItem(itemName);
+    navigate(path);
+  };
+
+  const toggleDropdown = (itemName) => {
+    setActiveDropdowns((prev) => ({
+      ...prev,
+      [itemName]: !prev[itemName],
+    }));
+  };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="logo">
-          <img src={logo} alt="Admin Logo" />
+    <div className="admin-menu">
+      {/* Header */}
+      <div className="admin-header-navbar">
+        <div className="admin-info">
+          <img src={testAvatar} alt="Admin Avatar" className="admin-avatar" />
+          <span className="admin-name">Admin</span>
         </div>
-
-        {/* Danh sách menu */}
-        <ul className="nav-links">
-          <li className="nav-item-container">
-            <Link
-              to="/admin/users"
-              className={`nav-item ${activeTab === "/admin/users" ? "active" : ""}`}
-              onClick={() => setActiveTab("/admin/users")}
-            >
-              <Users size={20} /> <span>Quản lý người dùng</span>
-            </Link>
-          </li>
-          <li className="nav-item-container">
-            <Link
-              to="/admin/categories"
-              className={`nav-item ${activeTab === "/admin/categories" ? "active" : ""}`}
-              onClick={() => setActiveTab("/admin/categories")}
-            >
-              <Layers size={20} /> <span>Quản lý danh mục</span>
-            </Link>
-          </li>
-          <li className="nav-item-container">
-            <Link
-              to="/admin/books"
-              className={`nav-item ${activeTab === "/admin/books" ? "active" : ""}`}
-              onClick={() => setActiveTab("/admin/books")}
-            >
-              <Book size={20} /> <span>Quản lý sách</span>
-            </Link>
-          </li>
-          <li className="nav-item-container">
-            <Link
-              to="/admin/orders"
-              className={`nav-item ${activeTab === "/admin/orders" ? "active" : ""}`}
-              onClick={() => setActiveTab("/admin/orders")}
-            >
-              <Package size={20} /> <span>Quản lý đơn hàng</span>
-            </Link>
-          </li>
-          <li className="nav-item-container">
-            <Link
-              to="/admin/statistics"
-              className={`nav-item ${activeTab === "/admin/statistics" ? "active" : ""}`}
-              onClick={() => setActiveTab("/admin/statistics")}
-            >
-              <BarChart size={20} /> <span>Thống kê</span>
-            </Link>
-          </li>
-        </ul>
       </div>
-    </nav>
+
+      {/* Menu */}
+      <ul className="menu-list">
+        {menuItems.map((item) => (
+          <li key={item.name} className="menu-item">
+            <div
+              className={`menu-title ${activeItem === item.name ? "active" : ""}`}
+              onClick={() =>
+                item.children ? toggleDropdown(item.name) : handleLoadLink(item.path, item.name)
+              }
+            >
+              <div className="menu-icon">{item.icon}</div>
+              <span>{item.name}</span>
+              {item.children && (
+                <ExpandMoreIcon className={`dropdown-icon ${activeDropdowns[item.name] ? "rotated" : ""}`} />
+              )}
+            </div>
+
+            {item.children && (
+              <ul className={`dropdown ${activeDropdowns[item.name] ? "show" : ""}`}>
+                {item.children.map((child) => (
+                  <li
+                    key={child.name}
+                    className={activeItem === child.name ? "active" : ""}
+                    onClick={() => handleLoadLink(child.path, child.name)}
+                  >
+                    {child.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+        <li className="menu-item logout" onClick={() => handleLoadLink("/logout", "Đăng xuất")}>
+          <div className="menu-icon"><LogoutIcon /></div>
+          <span>Đăng xuất</span>
+        </li>
+      </ul>
+    </div>
   );
 };
 
-export default Navbar;
+export default AdminNavbar;
