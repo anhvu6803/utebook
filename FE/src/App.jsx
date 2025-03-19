@@ -45,8 +45,8 @@ const App = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
-        <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<AdminHomePage />} />
+        <Route path="/utebook-admin" element={<AdminLayout />}>
+          <Route index element={<AdminHomePage />} />
         </Route>
       </Routes>
     </Router>
