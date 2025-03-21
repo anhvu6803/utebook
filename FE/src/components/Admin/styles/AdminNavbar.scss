@@ -6,7 +6,10 @@
   flex-direction: column;
   padding: 15px;
   overflow-y: auto;
-  scrollbar-width: none; 
+  scrollbar-width: none;
+  border-top-right-radius: 20px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 .admin-menu::-webkit-scrollbar {
@@ -19,6 +22,8 @@
   justify-content: center;
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
+  border-top-right-radius: 20px;
+  margin-top: 30px;
 }
 
 .admin-info {
@@ -57,21 +62,18 @@
 .menu-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
+  gap: 10px;
   padding: 10px;
   border-radius: 8px;
   transition: background 0.3s, font-weight 0.3s;
 }
 
-.menu-title:hover {
-  background: rgba(0, 91, 187, 0.1);
-}
-
+.menu-title:hover,
 .menu-title.active {
-  font-weight: bold;
   background: rgba(0, 91, 187, 0.2);
+  font-weight: bold;
 }
-
 
 .menu-icon {
   display: flex;
@@ -79,6 +81,7 @@
   gap: 10px;
 }
 
+/* Dropdown Styles */
 .dropdown {
   display: none;
   padding-left: 30px;
@@ -93,21 +96,14 @@
 .dropdown li {
   padding: 8px 0;
   font-size: 14px;
-  margin-left: 5px; 
+  margin-left: 5px;
   transition: background 0.3s, padding-left 0.3s;
   cursor: pointer;
 }
 
-
-.dropdown li.active {
-  font-weight: bold;
-  background: rgba(0, 91, 187, 0.2);
-  border-radius: 5px;
-  padding-left: 10px;
-}
-
+.dropdown li.active,
 .dropdown li:hover {
-  background: rgba(0, 91, 187, 0.1);
+  background: rgba(0, 91, 187, 0.2);
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -118,6 +114,11 @@
 
 .dropdown-icon.rotated {
   transform: rotate(180deg);
+}
+
+/* Hide dropdown icon if no children */
+.menu-item:not(:has(.dropdown)) .dropdown-icon {
+  display: none;
 }
 
 /* Logout */
@@ -133,7 +134,7 @@
   border-radius: 8px;
   transition: background 0.3s;
   cursor: pointer;
-  margin-top: auto; 
+  margin-top: auto;
   margin-bottom: 30px;
 }
 

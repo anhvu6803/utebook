@@ -10,7 +10,12 @@ import ChangePasswordPage from "./pages/ChangePassPage";
 import RegisterPage from "./pages/RegisterPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import AdminHomePage from "./pages/Admin/AdminHomePage";
+import ManageUserPage from "./pages/Admin/ManageUserPage";
+import ManageBookPage from "./pages/Admin/ManageBookPage";
+import ManageAudioBookPage from "./pages/Admin/ManageAudioBookPage";
+import ManageCategoryPage from "./pages/Admin/ManageCategoryPage";
+import ManageOrderPage from "./pages/Admin/ManageOrderPage";
+import StatisticsPage from "./pages/Admin/StatisticsPage";
 import HomeLayout from "./layout/HomeLayout";
 import AccountSettingPage from "./pages/AccountSettingPage";
 import AccountSettingLayout from "./layout/AccountSettingLayout";
@@ -46,7 +51,13 @@ const App = () => {
           <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
         <Route path="/utebook-admin" element={<AdminLayout />}>
-          <Route index element={<AdminHomePage />} />
+          <Route index element={<ManageUserPage />} />
+          <Route path="books" element={<ManageBookPage />} />
+          <Route path="audio-books" element={<ManageAudioBookPage />} />
+          <Route path="categories" element={<ManageCategoryPage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="order" element={<ManageOrderPage />} />
+
         </Route>
       </Routes>
     </Router>
