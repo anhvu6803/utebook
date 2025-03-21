@@ -54,7 +54,7 @@ const AccountAddressTab = () => {
                             <AddressUpdateForm />
                         </div>
                         <AddressTable
-                            addresses={addresses}
+                            addresses={addressesTable}
                             toggleDefault={toggleDefault}
                             deleteAddress={deleteAddress}
                         />

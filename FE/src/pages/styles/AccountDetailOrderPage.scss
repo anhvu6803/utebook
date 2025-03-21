@@ -1,0 +1,119 @@
+.detail-order-settings {
+    width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+
+    .order-left-containter {
+        width: 750px;
+        display: flex;
+        flex-direction: column;
+        padding-right: 40px;
+
+        .order-header {
+            width: 100%;
+            border-bottom: 1px solid rgb(0, 91, 187, .3);
+            height: fit-content;
+            padding-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-direction: row;
+            align-items: center;
+
+            .title {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .icon {
+                cursor: pointer;
+                margin-bottom: 20px;
+                font-size: 18px;
+            }
+        }
+
+        .order-content {
+            position: relative;
+        }
+    }
+
+    .order-right-containter {
+        width: 550px;
+        height: fit-content;
+        background: #e8f0fe;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+
+        .content-line {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            padding-top: 15px;
+            font-size: 16px;
+            text-align: start;
+
+            .name {
+                width: 200px;
+                color: #999;
+                margin: 0;
+            }
+
+            .value {
+                color: black;
+                margin: 0;
+            }
+        }
+
+        .payment-content {
+            padding: 24px;
+
+            .infor-payment {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 16px;
+                font-weight: 500;
+                border-bottom: 1px solid #005bbb;
+                padding-bottom: 15px;
+
+                .title {
+                    color: black;
+                }
+
+            }
+
+            .type-payment {
+                font-size: 16px;
+                font-weight: 500;
+                border-bottom: 1px solid #005bbb;
+                padding-bottom: 15px;
+            }
+
+            .total-price {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                padding-top: 15px;
+                font-weight: bold;
+                text-align: start;
+
+                .name {
+                    width: 200px;           
+                    color: black;
+                    font-size: 16px;
+                    margin: 0;
+                }
+
+                .value {
+                    color: #005bbb;
+                    font-size: 20px;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

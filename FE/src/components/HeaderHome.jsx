@@ -5,6 +5,8 @@ import "./styles/HeaderHome.scss";
 
 import EbookMenu from "./EbookMenu";
 import AudioMenu from "./AudioMenu";
+import NovelMenu from "./NovelMenu";
+import PodcastMenu from "./PodcastMenu";
 import NotificationMenu from "./NotificationMenu";
 import UserMenu from "./UserMenu";
 import logo from "../assets/logoUTE.png";
@@ -33,9 +35,10 @@ const HeaderHome = () => {
         </div>
 
         <nav className="nav-links">
-          <a href="#">Trang chủ</a>
           <EbookMenu />
           <AudioMenu />
+          <NovelMenu />
+          <PodcastMenu />
           <a href="#">Sáng tác</a>
         </nav>
 
@@ -66,7 +69,7 @@ const HeaderHome = () => {
           <NotificationMenu />
         </div>
 
-        <div className="avatar-container" onClick={() => handleLoadLink("/utebook/account/profile")}>
+        <div className="avatar-container">
           <UserMenu />
         </div>
       </div>

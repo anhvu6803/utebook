@@ -23,6 +23,7 @@ import AccountHistoryTransactionPage from "./pages/AccountHistoryTransactionPage
 import AccountLibraryPage from "./pages/AccountLibraryPage";
 import AccountOderPage from "./pages/AccountOderPage";
 import AccountSupportPage from "./pages/AccountSupportPage";
+import AccountDetailOrderPage from "./pages/AccountDetailOrderPage";
 
 const App = () => {
   return (
@@ -40,7 +41,9 @@ const App = () => {
           <Route path="account" element={<AccountSettingLayout />}>
             <Route path="profile" element={<AccountSettingPage />} />
             <Route path="bookcase" element={<AccountLibraryPage />} />
-            <Route path="orders" element={<AccountOderPage />} />
+            <Route path="orders" element={<AccountOderPage />} >
+              <Route path=":orderId" element={<AccountDetailOrderPage />} />
+            </Route>
             <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
             <Route path="support" element={<AccountSupportPage />} />
           </Route>
@@ -61,7 +64,7 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
-   
+
   )
 }
 export default App
