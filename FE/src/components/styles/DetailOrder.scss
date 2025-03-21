@@ -1,0 +1,314 @@
+.detail-order-card-container {
+    position: relative;
+    margin-top: 15px;
+
+    .order-progress {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .cancel-tittle {
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: 19px;
+            font-weight: bold;
+            color: #ff375f;
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            color: #999;
+        }
+    }
+
+    .detail-order-card {
+        background-color: #e8f0fe;
+        border-radius: 10px;
+        padding: 16px;
+        color: black;
+        margin-top: 15px;
+        height: fit-content;
+        margin-bottom: 15px;
+
+        .detail-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #005bbb;
+            padding-bottom: 25px;
+
+            .shop-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .shop-name {
+                    font-weight: 600;
+                    font-size: 20px;
+                    width: 120px;
+                    display: flex;
+                    align-items: center;
+
+                    .shop-icon {
+                        margin-right: 6px;
+                    }
+                }
+
+                .message-btn {
+                    background: transparent;
+                    border: 2px solid #005bbb;
+                    color: #005bbb;
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    font-size: 16px;
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+            .detail-order-status {
+                text-align: right;
+
+                .status {
+                    font-size: 16px;
+                    font-weight: bold;
+
+                    &.canceled {
+                        color: #005bbb; // Vàng
+                    }
+                }
+            }
+        }
+
+        .detail-order-body {
+            padding: 16px 0;
+
+            .product {
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+
+                .product-image {
+                    width: 88px;
+                    height: 88px;
+                    border-radius: 6px;
+                    object-fit: cover;
+                }
+
+                .product-info {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    height: 80px;
+                    justify-content: space-around;
+
+                    p {
+                        color: #999;
+                        padding: 0;
+                        margin: 0;
+                    }
+
+                    .product-name {
+                        font-weight: 600;
+                        font-size: 16px;
+                        color: #005bbb;
+                    }
+
+                    .product-type {
+                        font-size: 14px;
+                    }
+
+                    .product-qty {
+                        font-size: 14px;
+                    }
+                }
+
+                .product-price {
+                    text-align: right;
+                    display: flex;
+                    flex-direction: column;
+
+                    .new-price {
+                        font-weight: bold;
+                        font-size: 16px;
+                        color: #005bbb;
+                    }
+
+                    .old-price {
+                        font-size: 14px;
+                        text-decoration: line-through;
+                        color: #999;
+                    }
+                }
+            }
+
+            .total-price {
+                text-align: right;
+                font-weight: bold;
+                margin-top: 10px;
+                display: flex;
+                gap: 20px;
+                justify-self: flex-end;
+
+                .title {
+                    font-size: 16px;
+                    color: black;
+                }
+
+                .price {
+                    font-size: 20px;
+                    color: #ff375f;
+                }
+            }
+        }
+
+        .detail-order-footer {
+            padding-top: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .cancel-note {
+                color: #005bbb;
+                font-size: 16px;
+                font-weight: bold;
+                max-width: 450px;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+
+                .btn-outline {
+                    background: #7FADDD;
+                    color: #fff;
+                    font-size: 16px;
+                    border: 1px solid #7FADDD;
+                    padding: 8px 16px;
+                    border-radius: 18px;
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+
+    .reason-card-container {
+        height: fit-content;
+        padding: 15px 0 15px 0;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .reason-card-content {
+            margin-top: 15px;
+            background-color: #e8f0fe;
+            border-radius: 10px;
+            padding: 16px;
+            color: black;
+
+            .infor-cancel {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 16px;
+                font-weight: 500;
+                color: #999;
+
+                p {
+
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .infor-delivery {
+        height: fit-content;
+        padding: 15px 0 15px 0;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .infor-delivery-container {
+            margin-top: 15px;
+            background-color: #e8f0fe;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+
+            p {
+                font-size: 16px;
+                font-weight: 500;
+                padding-bottom: 10px;
+                color: black;
+            }
+
+            .infor-delivery-content {
+                display: flex;
+                flex-direction: row;
+
+                .address-detail {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    font-size: 16px;
+                    color: #999;
+                    width: 280px;
+                    border-right: 1px solid #005bbb;
+
+                    .name {
+                        font-weight: 500;
+                        color: black;
+                        margin: 0;
+                    }
+
+                    .phone {
+                        color: #999;
+                        margin: 0;
+                    }
+
+                    .address {
+                        width: 250px;
+                        color: #999;
+                        margin: 0;
+                    }
+                }
+
+                .process-delivery {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    font-size: 16px;
+                    color: #999;
+                    width: 300px;
+                }
+            }
+
+        }
+    }
+
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./styles/AccountSettingMenu.scss"; // Import SCSS
 import testAvatar from "../assets/testAvatar.jpg";
 
@@ -10,14 +10,18 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+const menuItems = [
+    { path: "/utebook/account/profile", label: "Quản lý tài khoản", icon: <PersonIcon /> },
+    { path: "/utebook/account/bookcase", label: "Tủ sách cá nhân", icon: <ListAltIcon /> },
+    { path: "/utebook/account/orders", label: "Quản lý đơn hàng", icon: <ReceiptIcon /> },
+    { path: "/utebook/account/transaction-histories", label: "Lịch sử giao dịch", icon: <ReceiptLongIcon /> },
+    { path: "/utebook/account/support", label: "Hỗ trợ khách hàng", icon: <HeadphonesIcon /> },
+    { path: "/", label: "Đăng xuất", icon: <LogoutIcon /> },
+];
+
 const AccountSettingMenu = () => {
     const navigate = useNavigate();
-    const [activeItem, setActiveItem] = useState("Quản lý tài khoản"); // Mục mặc định
-
-    const handleLoadLink = (path, item) => {
-        setActiveItem(item); // Cập nhật active item
-        navigate(path); // Chuyển hướng trang
-    };
+    console.log(location.pathname);
     return (
         <div className="account-menu">
             <div className="user-header">
@@ -32,42 +36,15 @@ const AccountSettingMenu = () => {
             </div>
 
             <ul className="menu-list">
-                <li
-                    className={activeItem === "Quản lý tài khoản" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/account/profile", "Quản lý tài khoản")}
-                >
-                    <PersonIcon /> Quản lý tài khoản
-                </li>
-                <li
-                    className={activeItem === "Tủ sách cá nhân" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/account/bookcase", "Tủ sách cá nhân")}
-                >
-                    <ListAltIcon /> Tủ sách cá nhân
-                </li>
-                <li
-                    className={activeItem === "Quản lý đơn hàng" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/account/orders", "Quản lý đơn hàng")}
-                >
-                    <ReceiptIcon /> Quản lý đơn hàng
-                </li>
-                <li
-                    className={activeItem === "Lịch sử giao dịch" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/account/transaction-histories", "Lịch sử giao dịch")}
-                >
-                    <ReceiptLongIcon /> Lịch sử giao dịch
-                </li>
-                <li
-                    className={activeItem === "Hỗ trợ khách hàng" ? "active" : ""}
-                    onClick={() => handleLoadLink("/utebook/account/support", "Hỗ trợ khách hàng")}
-                >
-                    <HeadphonesIcon /> Hỗ trợ khách hàng
-                </li>
-                <li
-                    className={activeItem === "Đăng xuất" ? "active" : ""}
-                    onClick={() => handleLoadLink("/logout", "Đăng xuất")}
-                >
-                    <LogoutIcon /> Đăng xuất
-                </li>
+                {menuItems.map((item) => (
+                    <li
+                        key={item.label}
+                        className={location.pathname === item.path ? "active" : ""}
+                        onClick={() => navigate(item.path)}
+                    >
+                        {item.icon} {item.label}
+                    </li>
+                ))}
             </ul>
         </div>
     );

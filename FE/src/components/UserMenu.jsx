@@ -16,13 +16,14 @@ const UserMenu = () => {
 
     const handleLoadLink = (path) => {
         navigate(path); // Chuyển hướng trang
+        window.location.reload();
     }
     return (
         <div className="user-menu-container"
             onMouseEnter={() => setIsOpen(true)} // Mở khi di chuột vào
             onMouseLeave={() => setIsOpen(false)} // Đóng khi rời chuột khỏi menu
         >
-            <div className="user-avatar" onClick={() => setIsOpen(!isOpen)}>
+            <div className="user-avatar" onClick={() => handleLoadLink("/utebook/account/profile")}>
                 <img src={testAvatar} alt="testAvatar" className="avatar" />
             </div>
 
@@ -45,27 +46,27 @@ const UserMenu = () => {
                         <PersonIcon /> Quản lý tài khoản
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/utebook/library")}
+                        onClick={() => handleLoadLink("/utebook/account/bookcase")}
                     >
                         <ListAltIcon /> Tủ sách cá nhân
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/utebook/orders")}
+                        onClick={() => handleLoadLink("/utebook/account/orders")}
                     >
                         <ReceiptIcon /> Quản lý đơn hàng
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/utebook/transactions")}
+                        onClick={() => handleLoadLink("/utebook/account/transaction-histories")}
                     >
                         <ReceiptLongIcon /> Lịch sử giao dịch
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/utebook/support")}
+                        onClick={() => handleLoadLink("/utebook/account/support")}
                     >
                         <HeadphonesIcon /> Hỗ trợ khách hàng
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/logout")}
+                        onClick={() => handleLoadLink("/")}
                     >
                         <LogoutIcon /> Đăng xuất
                     </li>

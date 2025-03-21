@@ -1,0 +1,113 @@
+.order-tracker-mini {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 10px;
+    color: black;
+    position: relative;
+    flex-direction: column;
+
+    .step {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        height: 50px;
+        text-align: center;
+
+        .icon-container {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid #005bbb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .label-container {
+            position: absolute;
+            left: 40px;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 3px;
+            gap: 10px;
+
+            .label {
+                font-size: 14px;
+                font-weight: 500;
+                width: fit-content;
+                color: #005bbb;
+            }
+
+            .time-label {
+                font-size: 12px;
+                color: black;
+                margin-top: 2px;
+            }
+        }
+
+        .connector {
+            position: absolute;
+            top: 36px;
+            left: 10px;
+            width: 5px;
+            height: 29px;
+            background-color: white;
+            border: 1px solid #005bbb;
+            z-index: 0;
+
+            &.completed {
+                background-color: #005bbb;
+            }
+        }
+
+        &.completed {
+            .icon-container {
+                background-color: #005bbb;
+
+                svg {
+                    color: white;
+                }
+            }
+
+            .label-container {
+
+                .label,
+                .sub-label {
+                    color: #005bbb;
+                }
+            }
+        }
+
+    }
+}
+
+@media (max-width: 768px) {
+    .order-tracker {
+        flex-direction: column;
+
+        .step {
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 15px;
+
+            .icon-container {
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+
+            .connector {
+                position: absolute;
+                top: 100%;
+                left: 20px;
+                width: 2px;
+                height: 15px;
+                right: auto;
+            }
+        }
+    }
+}

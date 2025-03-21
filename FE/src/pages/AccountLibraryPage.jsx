@@ -153,6 +153,7 @@ const tabsFR = [
 
 const tabsFL = [
     { id: "sach-noi", label: "Sách nói" },
+    { id: "podcast", label: "Podcast" },
 ];
 const tabsP = [
     { id: "sach-dien-tu", label: "Sách điện tử" },

@@ -20,8 +20,8 @@
     position: absolute;
     top: 40px;
     left: 0;
-    width: 750px;
-    background: #1b1b1b;
+    width: 780px;
+    background: black;
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -31,7 +31,7 @@
     transition: all 0.3s ease;
 
     &.active {
-      opacity: 0.95;
+      opacity: 0.99;
       transform: translateY(0);
       visibility: visible;
     }
@@ -60,14 +60,14 @@
         margin: 0;
 
         li {
-          padding: 12px 14px; 
-          font-size: 14px; 
+          padding: 12px 14px;
+          font-size: 14px;
           color: #ddd;
           cursor: pointer;
-          border-radius: 8px; 
+          border-radius: 8px;
           transition: background 0.3s ease;
-          text-align: left; 
-          font-weight: 500; 
+          text-align: left;
+          font-weight: 500;
 
           &:hover {
             background: #292929;
@@ -85,8 +85,8 @@
       padding-top: 10px;
 
       .menu-header {
-        grid-column: span 4; /* Header chiếm toàn bộ chiều rộng */
-        text-align: left; /* Căn lề trái */
+        grid-column: span 4;
+        text-align: left;
         font-size: 16px;
         font-weight: bold;
         color: #ddd;
@@ -98,15 +98,16 @@
         background: #292929;
         color: #ddd;
         border: none;
-        padding: 14px 20px;
+        padding: 14px;
         border-radius: 5px;
         display: flex;
-        align-items: center;
+        width: 180px;
+        align-items: start;
         gap: 8px;
         cursor: pointer;
         font-size: 14px;
         transition: background 0.3s ease;
-        justify-content: center;
+        justify-content: left;
 
         &:hover {
           background: #444;

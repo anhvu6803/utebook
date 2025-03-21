@@ -93,7 +93,7 @@ const CustomSelect = ({ options, selectedValue, handleChange, placeholder, width
                             autoFocus
                             InputProps={{
                                 startAdornment: (
-                                    <InputAdornment position="start">
+                                    <InputAdornment position="end">
                                         <SearchIcon />
                                     </InputAdornment>
                                 ),
