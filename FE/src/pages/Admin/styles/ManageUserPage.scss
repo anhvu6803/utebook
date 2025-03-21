@@ -1,0 +1,122 @@
+.user-management {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    height: 100%;
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    border: #dedede 1px solid;
+    margin-left: auto; // Đưa thanh tìm kiếm về bên phải
+  
+    .search-icon {
+      color: #555;
+      margin-right: 10px;
+    }
+  
+    input {
+      border: none;
+      background: none;
+      outline: none;
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 10px;
+  
+    thead {
+      background: #005bbb;
+      color: white;
+    }
+  
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    tr:hover {
+      background: rgba(0, 123, 255, 0.1);
+    }
+  
+    .actions {
+      display: flex;
+      gap: 10px;
+  
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+        transition: 0.3s;
+  
+        &.edit-btn {
+          color: #28a745;
+        }
+  
+        &.delete-btn {
+          color: #dc3545;
+        }
+  
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+  
+  .no-users {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: flex-end; // Đưa về góc phải
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+    padding-right: 20px; // Khoảng cách với mép phải
+  
+    .pagination-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+  
+      &:hover {
+        background: #0056b3;
+      }
+  
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+  

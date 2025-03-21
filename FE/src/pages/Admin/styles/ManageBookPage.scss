@@ -1,0 +1,154 @@
+.book-management {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  .title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  // Bố cục chứa nút thêm sách và thanh tìm kiếm
+  .header-actions {
+    display: flex;
+    justify-content: space-between; // Nút trái - Tìm kiếm phải
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  // Nút thêm sách
+  .add-book-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+
+    &:hover {
+      background: #0056b3;
+    }
+  }
+
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    max-width: 300px; 
+    flex: 1;
+
+    input {
+      flex: 1;
+      border: none;
+      padding: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-icon {
+      color: #666;
+      font-size: 20px;
+      margin-right: 5px;
+    }
+  }
+
+  // Bảng sách
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+
+    thead {
+      background-color: #005bbb;
+      color: white;
+
+      th {
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background 0.3s;
+
+        &:hover {
+          background: #f1f1f1;
+        }
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        font-size: 14px;
+      }
+    }
+
+    .book-cover {
+      width: 60px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .delete-btn {
+      color: #c82333;
+      border: none;
+      padding: 6px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      margin: auto;
+
+
+      svg {
+        font-size: 18px;
+      }
+    }
+  }
+
+  // Phân trang
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+
+    .pagination-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      transition: 0.3s;
+
+      &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

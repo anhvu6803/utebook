@@ -1,0 +1,174 @@
+
+
+.order-management {
+  margin-left: 20px;
+  position: relative;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  
+  h1 {
+      text-align: center;
+      color: #333;
+  }
+
+  /* 🔍 Thanh tìm kiếm */
+  .search-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 8px;
+      width: 350px;
+      margin-top: 40px;
+
+      .search-icon {
+          color: #555;
+          margin-right: 8px;
+          font-size: 16px;
+      }
+
+      input {
+          border: none;
+          outline: none;
+          width: 100%;
+          font-size: 14px;
+      }
+  }
+
+  /* 🎛 Bộ lọc */
+  .filter-container {
+      display: flex;
+      gap: 10px;
+      justify-content: end;
+      margin-bottom: 20px;
+
+      input, select {
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          background: white;
+          transition: 0.3s;
+
+          &:hover, &:focus {
+              border-color: #007bff;
+              box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          }
+      }
+  }
+
+  /* 📊 Bảng danh sách đơn hàng */
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+
+      th, td {
+          padding: 12px;
+          border: 1px solid #ddd;
+      }
+
+      th {
+          background-color: #007bff;
+          color: white;
+          font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+  }
+
+  /* 🏷 Trạng thái đơn hàng */
+  .status {
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 15px;
+      display: inline-block;
+      text-align: center;
+      min-width: 100px;
+      text-transform: uppercase;
+      font-size: 14px;
+
+      &.đang-xử-lý {
+          background-color: #ffc107;
+          color: #fff;
+      }
+      &.đã-giao {
+          background-color: #28a745;
+          color: #fff;
+      }
+      &.đã-hủy {
+          background-color: #dc3545;
+          color: #fff;
+      }
+  }
+
+  /* 🔘 Hành động - Các nút trạng thái */
+  .actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      .action-btn {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-size: 18px;
+          padding: 5px;
+          transition: all 0.3s ease;
+          
+          &.processing {
+              color: #ffc107;
+          }
+          &.delivered {
+              color: #28a745;
+          }
+          &.canceled {
+              color: #dc3545;
+          }
+
+          &:hover {
+              transform: scale(1.2);
+          }
+      }
+  }
+
+  /* 📑 Phân trang (Đã sửa lại) */
+  .pagination {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      margin-top: 20px;
+      gap: 10px;
+
+      .pagination-btn {
+          padding: 8px 16px;
+          border: none;
+          background: #007bff;
+          color: white;
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: bold;
+          transition: 0.3s;
+          cursor: pointer;
+
+          &:hover {
+              opacity: 0.8;
+          }
+
+          &:disabled {
+              background: #ccc;
+              cursor: not-allowed;
+              opacity: 0.6;
+          }
+      }
+  }
+}

@@ -1,0 +1,111 @@
+.user-detail-modal{
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); // Làm mờ nền
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 600px; 
+        max-width: 90%;
+        text-align: center;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+      
+      /* Nút đóng */
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+      }
+      
+      .close-btn:hover {
+        color: #000;
+      }
+      
+      /* Bố cục flex giữa avatar và thông tin */
+      .user-info-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 15px;
+      }
+      
+      .user-avatar-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+      
+      .user-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid #ddd;
+      }
+      
+      /* Thông tin người dùng */
+      .user-details {
+        flex: 2;
+        text-align: left;
+      }
+      
+      .user-details p {
+        font-size: 16px;
+        margin: 8px 0;
+      }
+      
+    .membership {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+      }
+      
+      .membership.yes {
+        color: #4caf50;
+      }
+      
+      .membership.no {
+        color: #f44336; 
+      }
+      
+     
+      .membership-days {
+        color: #007bff;
+        font-weight: bold;
+        margin-left: 5px;
+      }
+    .role {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      
+      .role.admin {
+        font-size: 16px;
+        font-weight: bold;
+    
+      }
+      
+      .role.user {
+        font-size: 16px;
+        font-weight: normal;
+      }    
+}
