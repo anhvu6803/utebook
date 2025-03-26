@@ -1,15 +1,17 @@
 .book-management {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
   .title {
     text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   // Bố cục chứa nút thêm sách và thanh tìm kiếm
@@ -17,23 +19,30 @@
     display: flex;
     justify-content: space-between; // Nút trái - Tìm kiếm phải
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    gap: 20px;
   }
 
   // Nút thêm sách
   .add-book-btn {
-    background: #007bff;
+    background: linear-gradient(45deg, #2196f3, #1976d2);
     color: white;
     border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 15px;
     cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      background: #0056b3;
+      background: linear-gradient(45deg, #1976d2, #1565c0);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -41,113 +50,141 @@
   .search-bar {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
     background: white;
-    max-width: 300px; 
+    max-width: 350px;
     flex: 1;
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      border-color: #2196f3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
 
     input {
       flex: 1;
       border: none;
-      padding: 6px;
-      font-size: 14px;
+      padding: 8px;
+      font-size: 15px;
       outline: none;
+      
+      &::placeholder {
+        color: #9e9e9e;
+      }
     }
 
     .search-icon {
-      color: #666;
-      font-size: 20px;
-      margin-right: 5px;
+      color: #757575;
+      font-size: 22px;
+      margin-right: 8px;
     }
   }
 
   // Bảng sách
   table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
     thead {
-      background-color: #005bbb;
-      color: white;
+      background: linear-gradient(45deg, #2196f3, #1976d2);
 
       th {
-        padding: 12px;
+        padding: 16px;
         text-align: center;
-        font-size: 16px;
+        font-size: 13px;
+        font-weight: 600;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
     }
 
     tbody {
       tr {
-        transition: background 0.3s;
+        transition: all 0.3s ease;
+        cursor: pointer;
 
         &:hover {
-          background: #f1f1f1;
+          background: #f5f9ff;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        td {
+          padding: 16px;
+          border-bottom: 1px solid #eeeeee;
+          text-align: center;
+          font-size: 15px;
+          color: #424242;
+          vertical-align: middle;
         }
       }
 
-      td {
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
+      .no-books {
+        padding: 30px;
         text-align: center;
-        font-size: 14px;
+        color: #757575;
+        font-style: italic;
       }
     }
 
     .book-cover {
-      width: 60px;
-      height: auto;
-      border-radius: 5px;
-    }
+      width: 70px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
 
-    .delete-btn {
-      color: #c82333;
-      border: none;
-      padding: 6px 8px;
-      border-radius: 5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-      margin: auto;
-
-
-      svg {
-        font-size: 18px;
+      &:hover {
+        transform: scale(1.1);
       }
     }
   }
 
   // Phân trang
   .pagination {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    span {
+      font-size: 15px;
+      color: #616161;
+      font-weight: 500;
+    }
 
     .pagination-btn {
-      padding: 8px 12px;
+      padding: 10px 20px;
       font-size: 14px;
       border: none;
       cursor: pointer;
-      margin: 0 5px;
-      border-radius: 5px;
-      background-color: #007bff;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #2196f3, #1976d2);
       color: white;
-      transition: 0.3s;
-
+      transition: all 0.3s ease;
+      font-weight: 600;
+      
       &:disabled {
-        background-color: #cccccc;
+        background: #e0e0e0;
         cursor: not-allowed;
+        opacity: 0.7;
       }
 
       &:hover:not(:disabled) {
-        background-color: #0056b3;
+        background: linear-gradient(45deg, #1976d2, #1565c0);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
     }
   }

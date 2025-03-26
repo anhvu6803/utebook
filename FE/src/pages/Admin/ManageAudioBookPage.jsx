@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/ManageAudiobookPage.scss";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-// import AudiobookDetailForm from "../../components/Admin/AudiobookDetail";
+import AudiobookDetailForm from "../../components/Admin/AudiobookDetail";
 import AdminPasswordModal from "../../components/Admin/AdminPasswordModal";
-// import AddAudiobookModal from "../../components/AddNewAudiobookModal";
+import AddAudiobookModal from "../../components/Admin/AddNewAudiobookModal";
 
 const audiobooksData = Array.from({ length: 50 }, (_, i) => ({
   title: `Sách nghe ${i + 1}`,
+  author: `Tác giả ${i + 1}`,
   genre: i % 2 === 0 ? "Văn học" : "Khoa học",
   price: (i + 1) * 10000,
   cover: `https://via.placeholder.com/150?text=Sách+Nghe+${i + 1}`,
@@ -21,6 +21,10 @@ const ManageAudiobookPage = () => {
   const [audiobookToDelete, setAudiobookToDelete] = useState(null);
   const [showAddAudiobookModal, setShowAddAudiobookModal] = useState(false);
   const audiobooksPerPage = 10;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   const filteredAudiobooks = audiobooks.filter((audiobook) =>
     audiobook.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,11 +53,15 @@ const ManageAudiobookPage = () => {
     setShowAddAudiobookModal(false);
   };
 
+  const handleRowClick = (audiobook) => {
+    setSelectedAudiobook(audiobook);
+  };
+
   return (
-    <div className="audiobook-management">
+    <div className="book-management">
       <div className="title">Quản lý sách nghe</div>
       <div className="header-actions">
-        <button className="add-audiobook-btn" onClick={() => setShowAddAudiobookModal(true)}>
+        <button className="add-book-btn" onClick={() => setShowAddAudiobookModal(true)}>
           + Thêm Sách Nghe Mới
         </button>
         <div className="search-bar">
@@ -71,29 +79,29 @@ const ManageAudiobookPage = () => {
           <tr>
             <th>Bìa</th>
             <th>Tiêu đề</th>
+            <th>Tác giả</th>
             <th>Thể loại</th>
             <th>Giá</th>
-            <th>Xóa</th>
           </tr>
         </thead>
         <tbody>
           {currentAudiobooks.length > 0 ? (
             currentAudiobooks.map((audiobook, index) => (
-              <tr key={index} className="clickable-row">
-                <td><img className="audiobook-cover" src={audiobook.cover} alt={audiobook.title} /></td>
+              <tr 
+                key={index} 
+                className="clickable-row"
+                onClick={() => handleRowClick(audiobook)}
+              >
+                <td><img className="book-cover" src={audiobook.cover} alt={audiobook.title} /></td>
                 <td>{audiobook.title}</td>
+                <td>{audiobook.author}</td>
                 <td>{audiobook.genre}</td>
                 <td>{audiobook.price.toLocaleString()} VND</td>
-                <td>
-                  <button className="delete-btn" onClick={() => handleDelete(audiobook)}>
-                    <DeleteIcon fontSize="small" />
-                  </button>
-                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5" className="no-audiobooks">Không tìm thấy sách nghe!</td>
+              <td colSpan="5" className="no-books">Không tìm thấy sách nghe!</td>
             </tr>
           )}
         </tbody>
@@ -111,22 +119,29 @@ const ManageAudiobookPage = () => {
         </div>
       )}
 
-      {/* {selectedAudiobook && (
-        <AudiobookDetailForm audiobook={selectedAudiobook} onClose={() => setSelectedAudiobook(null)} />
-      )} */}
-
-      {audiobookToDelete && (
-        <AdminPasswordModal
-          user={{ fullname: audiobookToDelete.title }}
-          action="delete"
-          onConfirm={confirmDelete}
-          onCancel={() => setAudiobookToDelete(null)}
+      {selectedAudiobook && (
+        <AudiobookDetailForm 
+          audiobook={selectedAudiobook} 
+          onClose={() => setSelectedAudiobook(null)}
+          onDelete={handleDelete}
         />
       )}
 
-      {/* {showAddAudiobookModal && (
-        <AddAudiobookModal onConfirm={handleAddAudiobook} onCancel={() => setShowAddAudiobookModal(false)} />
-      )} */}
+      {audiobookToDelete && (
+        <AdminPasswordModal
+          onConfirm={confirmDelete}
+          onCancel={() => setAudiobookToDelete(null)}
+          action="xóa"
+          message="Vui lòng nhập mật khẩu admin để xóa sách nghe"
+        />
+      )}
+
+      {showAddAudiobookModal && (
+        <AddAudiobookModal 
+          onConfirm={handleAddAudiobook} 
+          onCancel={() => setShowAddAudiobookModal(false)} 
+        />
+      )}
     </div>
   );
 };

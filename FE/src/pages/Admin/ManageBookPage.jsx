@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/ManageBookPage.scss";
 import DeleteIcon from "@mui/icons-material/Delete";;
 import SearchIcon from "@mui/icons-material/Search";
@@ -23,6 +23,10 @@ const ManageBookPage = () => {
   const [showAddBookModal, setShowAddBookModal] = useState(false);
   const booksPerPage = 10;
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -46,6 +50,10 @@ const ManageBookPage = () => {
   const handleAddBook = (newBook) => {
     setBooks((prevBooks) => [newBook, ...prevBooks]);
     setShowAddBookModal(false);
+  };
+
+  const handleRowClick = (book) => {
+    setSelectedBook(book);
   };
 
   return (
@@ -73,28 +81,26 @@ const ManageBookPage = () => {
             <th>Tác giả</th>
             <th>Thể loại</th>
             <th>Giá</th>
-            <th>Xóa sách</th>
           </tr>
         </thead>
         <tbody>
           {currentBooks.length > 0 ? (
             currentBooks.map((book, index) => (
-              <tr key={index} className="clickable-row">
+              <tr 
+                key={index} 
+                className="clickable-row"
+                onClick={() => handleRowClick(book)}
+              >
                 <td><img className="book-cover" src={book.cover} alt={book.title} /></td>
                 <td>{book.title}</td>
                 <td>{book.author}</td>
                 <td>{book.genre}</td>
                 <td>{book.price.toLocaleString()} VND</td>
-                <td>
-                  <button className="delete-btn" onClick={() => handleDelete(book)}>
-                    <DeleteIcon fontSize="small" />
-                  </button>
-                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="7" className="no-books">Không tìm thấy sách!</td>
+              <td colSpan="5" className="no-books">Không tìm thấy sách!</td>
             </tr>
           )}
         </tbody>
@@ -118,8 +124,6 @@ const ManageBookPage = () => {
 
       {bookToDelete && (
         <AdminPasswordModal
-          user={{ fullname: bookToDelete.title }}
-          action="delete"
           onConfirm={confirmDelete}
           onCancel={() => setBookToDelete(null)}
         />
