@@ -14,7 +14,8 @@ import ManageUserPage from "./pages/Admin/ManageUserPage";
 import ManageBookPage from "./pages/Admin/ManageBookPage";
 import ManageAudioBookPage from "./pages/Admin/ManageAudioBookPage";
 import ManageCategoryPage from "./pages/Admin/ManageCategoryPage";
-import ManageOrderPage from "./pages/Admin/ManageOrderPage";
+import ManagePointPage from "./pages/Admin/ManagePointPage";
+import ManageMembershipPage from "./pages/Admin/ManageMembershipPage";
 import StatisticsPage from "./pages/Admin/StatisticsPage";
 import HomeLayout from "./layout/HomeLayout";
 import AccountSettingPage from "./pages/AccountSettingPage";
@@ -59,8 +60,8 @@ const App = () => {
           <Route path="audio-books" element={<ManageAudioBookPage />} />
           <Route path="categories" element={<ManageCategoryPage />} />
           <Route path="statistics" element={<StatisticsPage />} />
-          <Route path="order" element={<ManageOrderPage />} />
-
+          <Route path="point" element={<ManagePointPage />} />
+          <Route path="membership" element={<ManageMembershipPage />} />
         </Route>
       </Routes>
     </Router>

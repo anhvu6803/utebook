@@ -1,28 +1,70 @@
 import { useState, useEffect } from "react";
 import "./styles/ManageCategoryPage.scss";
-import { Button, Table, Modal, Input, Form, message } from "antd";
-
-const { Search } = Input;
+// Import các icons cần thiết
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 
 const ManageCategoryPage = () => {
   const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
-  const [form] = Form.useForm();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [formData, setFormData] = useState({ name: "" });
+  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const categoriesPerPage = 10;
 
   useEffect(() => {
     const initialCategories = [
       { id: 1, name: "Tiểu thuyết" },
       { id: 2, name: "Khoa học" },
       { id: 3, name: "Lịch sử" },
+      { id: 4, name: "Truyện" },
+      { id: 5, name: "Tâm lý" },
+      { id: 6, name: "Viễn tưởng" },
+      { id: 7, name: "Kinh dị" },
+      { id: 8, name: "Viễn tưởng" },
+      { id: 9, name: "Kinh dị" },
+      { id: 10, name: "Viễn tưởng" },
+      { id: 11, name: "Kinh dị" },
+      { id: 12, name: "Viễn tưởng" },
+      { id: 13, name: "Kinh dị" },
+      { id: 14, name: "Viễn tưởng" },
+      { id: 15, name: "Kinh dị" },
+      { id: 16, name: "Viễn tưởng" },
+      { id: 17, name: "Kinh dị" },
+      { id: 18, name: "Viễn tưởng" },
+      { id: 19, name: "Kinh dị" },
+      { id: 20, name: "Viễn tưởng" },
+      { id: 21, name: "Kinh dị" },
+      
+      
     ];
     setCategories(initialCategories);
     setFilteredCategories(initialCategories);
+    setCurrentPage(1);
   }, []);
 
-  // Xử lý tìm kiếm
-  const handleSearch = (value) => {
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  // Tính toán phân trang
+  const totalPages = Math.ceil(filteredCategories.length / categoriesPerPage);
+  const indexOfLastCategory = currentPage * categoriesPerPage;
+  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+  const currentCategories = filteredCategories.slice(
+    indexOfFirstCategory,
+    indexOfLastCategory
+  );
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
     const filteredData = categories.filter((category) =>
       category.name.toLowerCase().includes(value.toLowerCase())
     );
@@ -31,133 +73,201 @@ const ManageCategoryPage = () => {
 
   const handleAddCategory = () => {
     setEditingCategory(null);
-    form.resetFields();
+    setFormData({ name: "" });
+    setError("");
     setIsModalOpen(true);
   };
 
-  const handleEditCategory = (record) => {
-    setEditingCategory(record);
-    form.setFieldsValue(record);
+  const handleEditCategory = (category) => {
+    setEditingCategory(category);
+    setFormData({ name: category.name });
+    setError("");
     setIsModalOpen(true);
   };
 
   const handleDeleteCategory = (id) => {
-    const newCategories = categories.filter((category) => category.id !== id);
-    setCategories(newCategories);
-    setFilteredCategories(newCategories);
-    message.success("Đã xóa thể loại thành công!");
+    if (window.confirm("Bạn có chắc chắn muốn xóa thể loại này?")) {
+      const newCategories = categories.filter((category) => category.id !== id);
+      setCategories(newCategories);
+      setFilteredCategories(newCategories);
+      showToast("Xóa thể loại thành công");
+    }
   };
 
-  const handleModalOk = () => {
-    form.validateFields()
-      .then((values) => {
-        const trimmedName = values.name.trim().toLowerCase();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const trimmedName = formData.name.trim();
 
-        // Kiểm tra trùng lặp
-        const isDuplicate = categories.some((cat) =>
-          cat.name.trim().toLowerCase() === trimmedName &&
-          (!editingCategory || cat.id !== editingCategory.id)
-        );
+    if (trimmedName.length < 2) {
+      setError("Tên thể loại phải có ít nhất 2 ký tự");
+      return;
+    }
 
-        if (isDuplicate) {
-          form.setFields([
-            {
-              name: "name",
-              errors: [`Thể loại "${values.name}" đã tồn tại!`],
-            },
-          ]);
-          return;
-        }
+    const isDuplicate = categories.some(
+      (cat) => cat.name.toLowerCase() === trimmedName.toLowerCase() &&
+      (!editingCategory || cat.id !== editingCategory.id)
+    );
 
-        if (editingCategory) {
-          // Cập nhật thể loại
-          const updatedCategories = categories.map((cat) =>
-            cat.id === editingCategory.id ? { ...cat, ...values } : cat
-          );
-          setCategories(updatedCategories);
-          setFilteredCategories(updatedCategories);
-          message.success(`Cập nhật thể loại "${values.name}" thành công!`);
-        } else {
-          // Thêm thể loại mới
-          const newCategory = { id: categories.length + 1, ...values };
-          const updatedCategories = [...categories, newCategory];
-          setCategories(updatedCategories);
-          setFilteredCategories(updatedCategories);
-          message.success(`Thêm thể loại "${values.name}" thành công!`);
-        }
+    if (isDuplicate) {
+      setError(`Thể loại "${trimmedName}" đã tồn tại`);
+      return;
+    }
 
-        setIsModalOpen(false);
-        form.resetFields();
-      })
-      .catch((errorInfo) => {
-        console.error("Validation Failed:", errorInfo);
-      });
+    if (editingCategory) {
+      const updatedCategories = categories.map((cat) =>
+        cat.id === editingCategory.id ? { ...cat, name: trimmedName } : cat
+      );
+      setCategories(updatedCategories);
+      setFilteredCategories(updatedCategories);
+      showToast("Cập nhật thể loại thành công");
+    } else {
+      const newCategory = {
+        id: Date.now(),
+        name: trimmedName
+      };
+      setCategories([...categories, newCategory]);
+      setFilteredCategories([...categories, newCategory]);
+      showToast("Thêm thể loại thành công");
+    }
+
+    setIsModalOpen(false);
+    setFormData({ name: "" });
   };
 
-  const columns = [
-    {
-      title: "Tên thể loại",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Hành động",
-      key: "action",
-      render: (_, record) => (
-        <div className="action-buttons">
-          <Button onClick={() => handleEditCategory(record)} type="primary">Sửa</Button>
-          <Button onClick={() => handleDeleteCategory(record.id)} danger>Xóa</Button>
-        </div>
-      ),
-    },
-  ];
+  const showToast = (message) => {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  };
 
   return (
-    <div className="book-category-management">
-      <div className="container">
-        <h2>Quản Lý Thể Loại Sách</h2>
-
-        {/* Thanh tìm kiếm */}
-        <div className="search-container">
-          <Search
-            placeholder="Tìm kiếm thể loại..."
-            allowClear
-            onSearch={handleSearch}
-            className="search-input"
-          />
+    <div className="category-page">
+      <div className="category-content">
+        <div className="page-title">
+          <h1>Quản lý thể loại</h1>
         </div>
 
-        {/* Nút thêm thể loại */}
-        <div className="button-container">
-          <Button type="primary" onClick={handleAddCategory} className="add-button">Thêm Thể Loại</Button>
+        <div className="page-actions">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Tìm kiếm thể loại..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <SearchIcon className="search-icon" />
+          </div>
+          <button className="btn-add" onClick={handleAddCategory}>
+            <AddIcon className="plus-icon" />
+            Thêm thể loại
+          </button>
         </div>
 
-        {/* Bảng danh sách thể loại */}
-        <Table
-          dataSource={filteredCategories}
-          columns={columns}
-          rowKey="id"
-          className="category-table"
-          pagination={{ pageSize: 5 }}
-        />
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên thể loại</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentCategories.length > 0 ? (
+                currentCategories.map((category, index) => (
+                  <tr key={category.id}>
+                    <td>{indexOfFirstCategory + index + 1}</td>
+                    <td>{category.name}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          className="btn-edit"
+                          onClick={() => handleEditCategory(category)}
+                        >
+                          <EditIcon />
+                        </button>
+                        <button
+                          className="btn-delete"
+                          onClick={() => handleDeleteCategory(category.id)}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="no-data">
+                    Không tìm thấy thể loại!
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-        {/* Modal thêm/sửa thể loại */}
-        <Modal
-          title={editingCategory ? "Chỉnh Sửa Thể Loại" : "Thêm Thể Loại"}
-          open={isModalOpen}
-          onOk={handleModalOk}
-          onCancel={() => setIsModalOpen(false)}
-        >
-          <Form form={form} layout="vertical">
-            <Form.Item
-              name="name"
-              label="Tên thể loại"
-              rules={[{ required: true, message: "Vui lòng nhập tên thể loại!" }]}
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button
+              className="pagination-btn"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
             >
-              <Input placeholder="Nhập tên thể loại..." />
-            </Form.Item>
-          </Form>
-        </Modal>
+              Trước
+            </button>
+            <span>
+              Trang {currentPage} / {totalPages}
+            </span>
+            <button
+              className="pagination-btn"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Tiếp
+            </button>
+          </div>
+        )}
+
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <div className="modal-header">
+                <h2>{editingCategory ? "Sửa thể loại" : "Thêm thể loại mới"}</h2>
+                <button
+                  className="btn-close"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label>Tên thể loại</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ name: e.target.value })}
+                    placeholder="Nhập tên thể loại"
+                  />
+                  {error && <span className="error">{error}</span>}
+                </div>
+                <div className="modal-footer">
+                  <button type="button" onClick={() => setIsModalOpen(false)}>
+                    Hủy
+                  </button>
+                  <button type="submit" className="btn-primary">
+                    {editingCategory ? "Cập nhật" : "Thêm"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

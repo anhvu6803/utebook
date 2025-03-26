@@ -28,11 +28,11 @@ const menuItems = [
     icon: <CategoryIcon />,
   },
   {
-    name: "Quản lý đơn hàng",
+    name: "Quản lý giao dịch",
     icon: <ReceiptIcon />,
     children: [
-      { name: "Tùy chỉnh đơn hàng", path: "/utebook-admin/order" },
-      { name: "Lịch sử đơn hàng", path: "/admin/orders/history" },
+      { name: "Hoa phượng", path: "/utebook-admin/point" },
+      { name: "Hội viên", path: "/utebook-admin/membership" },
     ],
   },
   {

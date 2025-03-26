@@ -1,78 +1,95 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
-import LockIcon from "@mui/icons-material/Lock";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 import "./styles/AdminPasswordModal.scss";
+import { Visibility, VisibilityOff, Warning, Error } from '@mui/icons-material';
 
-const MOCK_ADMIN_PASSWORD = "admin123"; // Mật khẩu admin giả lập
+const AdminPasswordModal = ({ onClose, onConfirm }) => {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Thay thế mật khẩu này bằng mật khẩu thực từ backend của bạn
+    const ADMIN_PASSWORD = "admin123"; 
 
-const AdminPasswordModal = ({ user, action, onConfirm, onCancel }) => {
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleConfirm = () => {
-    if (!password.trim()) return;
-    setLoading(true);
-    setErrorMessage("");
-
-    setTimeout(() => {
-      if (password === MOCK_ADMIN_PASSWORD) {
-        onConfirm(user);
-      } else {
-        setErrorMessage("⚠ Mật khẩu không đúng! Vui lòng thử lại.");
-        setPassword(""); // Xóa nội dung nhập
-      }
-      setLoading(false);
-    }, 1000);
+    if (password === ADMIN_PASSWORD) {
+      onConfirm();
+      setPassword('');
+      setError('');
+    } else {
+      setError('Mật khẩu không chính xác!');
+    }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleConfirm();
+  // Cải tiến hàm xử lý đóng modal
+  const handleClose = () => {
+    setError('');
+    onClose();
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
   };
 
   return (
-    <div className="admin-password-modal">
-        <div className="modal-overlay">
-        <div className="modal-content">
-            <h2><LockIcon /> Xác nhận quyền admin</h2>
-            <p>
-            {action === "delete"
-                ? `Bạn có chắc chắn muốn xóa?`
-                : `Bạn có chắc chắn muốn chỉnh sửa thông tin?`}
-            </p>
+    <div className="admin-password-modal" onClick={handleOverlayClick}>
+      <div className="admin-modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>🔒 Xác thực Admin</h2>
+        </div>
 
+        <form onSubmit={handleSubmit} className="modal-body">
+          <div className="password-input">
             <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Nhập mật khẩu admin..."
-            className="confirmation-input"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Nhập mật khẩu admin"
+              autoFocus
             />
-
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            <div className="modal-actions">
-            <button className="confirm-btn" onClick={handleConfirm} disabled={loading}>
-                {loading ? "Đang xác nhận..." : <CheckIcon />}
-            </button>
-            <button className="cancel-btn" onClick={onCancel} disabled={loading}>
-                <CloseIcon />
-            </button>
+            <div 
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
             </div>
+          </div>
+          
+          {error && (
+            <div className="error-message">
+              <Error />
+              <span>{error}</span>
+            </div>
+          )}
+        </form>
+
+        <div className="modal-footer">
+          <button 
+            type="button" 
+            className="cancel-btn" 
+            onClick={() => handleClose()}
+          >
+            Hủy bỏ
+          </button>
+          <button 
+            className="confirm-btn" 
+            onClick={handleSubmit}
+            disabled={!password}
+          >
+            Xác nhận
+          </button>
         </div>
-        </div>
+      </div>
     </div>
   );
 };
 
 AdminPasswordModal.propTypes = {
-  user: PropTypes.object.isRequired,
-  action: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
 };
 
 export default AdminPasswordModal;

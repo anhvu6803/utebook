@@ -1,20 +1,18 @@
 import PropTypes from "prop-types";
-import "./styles/BookDetail.scss";
+import "./styles/AudiobookDetail.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
 import AdminPasswordModal from "./AdminPasswordModal";
 
-const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
+const AudiobookDetail = ({ audiobook, onClose, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [actionType, setActionType] = useState(null);
-  const [editedBook, setEditedBook] = useState({ ...book });
-  const [originalBook, setOriginalBook] = useState({ ...book });
+  const [editedAudiobook, setEditedAudiobook] = useState({ ...audiobook });
 
   const handleEdit = () => {
     setActionType('edit');
@@ -26,41 +24,40 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
     setShowAdminModal(true);
   };
 
-  const handleRead = () => {
-    // Thêm logic để mở modal đọc sách hoặc chuyển đến trang đọc sách
-    console.log("Mở nội dung sách:", book.title);
+  const handlePlay = () => {
+    // Thêm logic để phát audio
+    console.log("Phát audio:", audiobook.title);
   };
 
   const handleAdminConfirm = () => {
     if (actionType === 'edit') {
       setIsEditing(true);
     } else if (actionType === 'delete') {
-      onDelete(book);
+      onDelete(audiobook);
       onClose();
     }
     setShowAdminModal(false);
   };
 
   const handleSave = () => {
-    onUpdate(editedBook);
-    setOriginalBook({ ...editedBook });
+    onUpdate(editedAudiobook);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setEditedBook({ ...originalBook });
+    setEditedAudiobook({ ...audiobook });
     setIsEditing(false);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedBook(prev => ({
+    setEditedAudiobook(prev => ({
       ...prev,
       [name]: name === 'price' ? Number(value) : value
     }));
   };
 
-  if (!book) return null;
+  if (!audiobook) return null;
 
   return (
     <div className="book-detail-overlay">
@@ -71,13 +68,13 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
         
         <div className="book-content">
           <div className="book-image-section">
-            <img src={book.cover} alt={book.title} className="book-cover" />
+            <img src={audiobook.cover} alt={audiobook.title} className="book-cover" />
             <div className="action-buttons">
               {!isEditing ? (
                 <>
-                  <button className="read-btn" onClick={handleRead}>
-                    <MenuBookIcon />
-                    Đọc sách
+                  <button className="play-btn" onClick={handlePlay}>
+                    <PlayArrowIcon />
+                    Nghe thử
                   </button>
                   <button className="edit-btn" onClick={handleEdit}>
                     <EditIcon />
@@ -95,7 +92,7 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
                     Lưu
                   </button>
                   <button className="cancel-btn" onClick={handleCancel}>
-                    <CancelIcon />
+                    <CloseIcon />
                     Hủy
                   </button>
                 </>
@@ -109,7 +106,7 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
               <input
                 type="text"
                 name="title"
-                value={editedBook.title}
+                value={editedAudiobook.title}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 className={isEditing ? 'editable' : ''}
@@ -121,7 +118,7 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
               <input
                 type="text"
                 name="author"
-                value={editedBook.author}
+                value={editedAudiobook.author}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 className={isEditing ? 'editable' : ''}
@@ -131,13 +128,13 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
             <div className="info-group">
               <label>Thể loại:</label>
               <input
-                type="text"
                 name="genre"
-                value={editedBook.genre}
+                value={editedAudiobook.genre}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 className={isEditing ? 'editable' : ''}
-              />
+              >
+              </input>
             </div>
 
             <div className="info-group">
@@ -145,7 +142,32 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
               <input
                 type="number"
                 name="price"
-                value={editedBook.price}
+                value={editedAudiobook.price}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+                className={isEditing ? 'editable' : ''}
+              />
+            </div>
+
+            <div className="info-group">
+              <label>Thời lượng:</label>
+              <input
+                type="text"
+                name="duration"
+                value={editedAudiobook.duration || "Chưa có thông tin"}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+                className={isEditing ? 'editable' : ''}
+                placeholder="VD: 2 giờ 30 phút"
+              />
+            </div>
+
+            <div className="info-group">
+              <label>Người đọc:</label>
+              <input
+                type="text"
+                name="narrator"
+                value={editedAudiobook.narrator || "Chưa có thông tin"}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 className={isEditing ? 'editable' : ''}
@@ -156,11 +178,11 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
               <label>Mô tả:</label>
               <textarea
                 name="description"
-                value={editedBook.description || "Chưa có mô tả"}
+                value={editedAudiobook.description || "Chưa có mô tả"}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 className={isEditing ? 'editable' : ''}
-                rows={4}
+                rows="4"
               />
             </div>
           </div>
@@ -170,26 +192,27 @@ const BookDetail = ({ book, onClose, onDelete, onUpdate }) => {
       {showAdminModal && (
         <AdminPasswordModal
           onClose={() => setShowAdminModal(false)}
-          isOpen={showAdminModal}
           onConfirm={handleAdminConfirm}
           onCancel={() => setShowAdminModal(false)}
           action={actionType === 'edit' ? 'sửa' : 'xóa'}
           message={`Vui lòng nhập mật khẩu admin để ${
             actionType === 'edit' ? 'sửa' : 'xóa'
-          } sách`}
+          } sách nghe`}
         />
       )}
     </div>
   );
 };
 
-BookDetail.propTypes = {
-  book: PropTypes.shape({
+AudiobookDetail.propTypes = {
+  audiobook: PropTypes.shape({
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     cover: PropTypes.string.isRequired,
+    duration: PropTypes.string,
+    narrator: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
@@ -197,4 +220,4 @@ BookDetail.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 };
 
-export default BookDetail;
+export default AudiobookDetail;

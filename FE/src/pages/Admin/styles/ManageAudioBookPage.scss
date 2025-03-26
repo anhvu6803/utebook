@@ -1,3 +1,5 @@
+@use './ManageBookPage.scss';
+
 .audiobook-management {
     background: #ffffff;
     padding: 20px;
@@ -20,7 +22,7 @@
     }
   
     .add-audiobook-btn {
-      background: #007bff;
+      background: #005bbb;
       color: white;
       border: none;
       padding: 10px 16px;
