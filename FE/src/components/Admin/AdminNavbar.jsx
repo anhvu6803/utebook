@@ -11,6 +11,10 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import CreateIcon from '@mui/icons-material/Create';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 const menuItems = [
   { name: "Quản lý người dùng", path: "/utebook-admin/", icon: <PeopleIcon /> },
@@ -38,10 +42,12 @@ const menuItems = [
   {
     name: "Quản lý khuyến mãi",
     icon: <LocalOfferIcon />,
-    children: [
-      { name: "Mã giảm giá", path: "/admin/discounts" },
-      { name: "Sự kiện", path: "/admin/events" },
-    ],
+     path: "/utebook-admin/events",
+  },
+  {
+    name: "Quản lý sáng tác",
+    icon: <EditNoteIcon />,
+    path: "/utebook-admin/writing",  
   },
   {
     name: "Thống kê",

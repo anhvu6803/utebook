@@ -1,7 +1,11 @@
-import { FaUser, FaCalendarAlt, FaStar, FaInfoCircle, FaTimes, FaBook, FaMoneyBillWave } from "react-icons/fa";
+import { useState } from "react";
+import { FaUser, FaCalendarAlt, FaStar, FaInfoCircle, FaTimes, FaBook, FaMoneyBillWave, FaCheck, FaEdit } from "react-icons/fa";
 import "./styles/ActivityDetailModal.scss";
 
-const ActivityDetailModal = ({ activity, onClose }) => {
+const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [newStatus, setNewStatus] = useState(activity?.status || 'Thành công');
+  
   if (!activity) return null;
 
   const getActionClass = (action) => {
@@ -12,6 +16,21 @@ const ActivityDetailModal = ({ activity, onClose }) => {
         return 'read';
       case 'Thu nhập':
         return 'income';
+      default:
+        return '';
+    }
+  };
+
+  const getStatusClass = (status) => {
+    switch(status) {
+      case 'Thành công':
+        return 'success';
+      case 'Đang xử lý':
+        return 'pending';
+      case 'Thất bại':
+        return 'failed';
+      case 'Hoàn tiền':
+        return 'refunded';
       default:
         return '';
     }
@@ -30,8 +49,59 @@ const ActivityDetailModal = ({ activity, onClose }) => {
         <div className="activity-card">
           <div className="activity-header">
             <div className="activity-id">Mã giao dịch: {activity.id}</div>
-            <div className={`activity-status ${activity.status === 'Thành công' ? 'success' : 'failed'}`}>
-              {activity.status}
+            <div className={`activity-status ${getStatusClass(activity.status)}`}>
+              {isEditingStatus ? (
+                <div className="status-edit-container">
+                  <select 
+                    value={newStatus} 
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    className={`status-select ${getStatusClass(newStatus)}`}
+                  >
+                    <option value="Thành công">Thành công</option>
+                    <option value="Đang xử lý">Đang xử lý</option>
+                    <option value="Thất bại">Thất bại</option>
+                    <option value="Hoàn tiền">Hoàn tiền</option>
+                  </select>
+                  <div className="status-edit-actions">
+                    <button 
+                      className="save-status" 
+                      onClick={() => {
+                        if (typeof onStatusChange === 'function') {
+                          onStatusChange(activity.id, newStatus);
+                        } else {
+                          console.log(`Status changed for activity ${activity.id}: ${newStatus}`);
+                        }
+                        setIsEditingStatus(false);
+                      }}
+                      title="Lưu thay đổi"
+                    >
+                      <FaCheck />
+                    </button>
+                    <button 
+                      className="cancel-edit" 
+                      onClick={() => {
+                        setNewStatus(activity.status);
+                        setIsEditingStatus(false);
+                      }}
+                      title="Hủy thay đổi"
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="status-display">
+                  <div className="status-indicator"></div>
+                  <span>{activity.status}</span>
+                  <button 
+                    className="edit-status-button" 
+                    onClick={() => setIsEditingStatus(true)}
+                    title="Thay đổi trạng thái"
+                  >
+                    <FaEdit />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           
