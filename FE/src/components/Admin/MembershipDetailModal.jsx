@@ -1,7 +1,11 @@
-import { FaUser, FaCalendarAlt, FaCrown, FaMoneyBillWave, FaTimes, FaCheck, FaCreditCard } from "react-icons/fa";
+import { FaUser, FaCalendarAlt, FaCrown, FaMoneyBillWave, FaTimes, FaCheck, FaCreditCard, FaEdit } from "react-icons/fa";
+import { useState } from "react";
 import "./styles/MembershipDetailModal.scss";
 
-const MembershipDetailModal = ({ membership, onClose }) => {
+const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [newStatus, setNewStatus] = useState(membership?.payment?.status || '');
+  
   if (!membership) return null;
 
   const getTypeClass = (type) => {
@@ -46,7 +50,59 @@ const MembershipDetailModal = ({ membership, onClose }) => {
           <div className="membership-header">
             <div className="membership-id">Mã giao dịch: {membership.id}</div>
             <div className={`membership-status ${getStatusClass(membership.payment.status)}`}>
-              {membership.payment.status}
+              {isEditingStatus ? (
+                <div className="status-edit-container">
+                  <select 
+                    value={newStatus} 
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    className={`status-select ${getStatusClass(newStatus)}`}
+                  >
+                    <option value="Thành công">Thành công</option>
+                    <option value="Đang xử lý">Đang xử lý</option>
+                    <option value="Thất bại">Thất bại</option>
+                    <option value="Hoàn tiền">Hoàn tiền</option>
+                  </select>
+                  <div className="status-edit-actions">
+                    <button 
+                      className="save-status" 
+                      onClick={() => {
+                        if (typeof onStatusChange === 'function') {
+                          onStatusChange(membership.id, newStatus);
+                        } else {
+                          console.log(`Status changed for membership ${membership.id}: ${newStatus}`);
+                          setIsEditingStatus(false);
+                          onClose();
+                        }
+                      }}
+                      title="Lưu thay đổi"
+                    >
+                      <FaCheck />
+                    </button>
+                    <button 
+                      className="cancel-edit" 
+                      onClick={() => {
+                        setNewStatus(membership.payment.status);
+                        setIsEditingStatus(false);
+                      }}
+                      title="Hủy thay đổi"
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="status-display">
+                  <div className="status-indicator"></div>
+                  <span>{membership.payment.status}</span>
+                  <button 
+                    className="edit-status-button" 
+                    onClick={() => setIsEditingStatus(true)}
+                    title="Thay đổi trạng thái"
+                  >
+                    <FaEdit />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           
@@ -132,7 +188,8 @@ const MembershipDetailModal = ({ membership, onClose }) => {
               </div>
               <div className="detail-row">
                 <span className="detail-label">Trạng thái:</span>
-                <span className={`detail-value ${getStatusClass(membership.payment.status)}`}>
+                <span className={`detail-value status-pill ${getStatusClass(membership.payment.status)}`}>
+                  <div className="status-indicator"></div>
                   {membership.payment.status}
                 </span>
               </div>

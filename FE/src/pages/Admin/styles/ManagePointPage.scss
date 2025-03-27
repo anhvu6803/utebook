@@ -1,13 +1,15 @@
 .point-management {
   padding: 24px;
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   
   h1 {
     font-size: 24px;
     margin: 24px 0;
     color: #1976d2;
     font-weight: 600;
+    text-align: center;
   }
 
   /* Header section with search and filters */
@@ -15,14 +17,69 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 30px;
     gap: 20px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   .search-bar {
     flex: 1;
     max-width: 400px;
+    position: relative;
     margin-bottom: 0;
+    
+    @media (max-width: 768px) {
+      max-width: 100%;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7a7a7a;
+      font-size: 16px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      font-size: 14px;
+      border-radius: 8px;
+      background-color: white;
+      transition: all 0.3s ease;
+      outline: none;
+      box-sizing: border-box;
+      height: 42px;
+      box-shadow: 0 1x 3px rgba(0, 0, 0, 0.05);
+      
+      &::placeholder {
+        color: #999;
+        opacity: 1;
+      }
+      
+      &:hover {
+        border-color: #1976d2;
+      }
+      
+      &:focus {
+        border-color: #1976d2;
+        
+        &::placeholder {
+          color: #1976d2;
+          opacity: 0.7;
+        }
+      }
+    }
   }
 
   /* Filter container */
@@ -30,35 +87,61 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
     
-    input, select {
-      padding: 8px 12px;
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    select {
+      padding: 10px 14px;
       border: 1px solid #e0e0e0;
-      border-radius: 4px;
+      border-radius: 8px;
       background: white;
       font-size: 14px;
-      min-width: 120px;
+      min-width: 150px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231976d2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+      padding-right: 35px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 
       &:hover, &:focus {
         border-color: #1976d2;
         outline: none;
+        box-shadow: 0 3px 8px rgba(25, 118, 210, 0.1);
       }
     }
 
     .sort-btn {
-      padding: 8px 12px;
-      background-color: #f0f0f0;
+      padding: 10px 14px;
+      background-color: #f5f5f5;
       border: 1px solid #e0e0e0;
-      border-radius: 4px;
+      border-radius: 8px;
       font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
       transition: all 0.2s;
+      color: #444;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 
       &:hover {
-        background-color: #e0e0e0;
+        background-color: #e9f3ff;
         border-color: #1976d2;
+        box-shadow: 0 3px 8px rgba(25, 118, 210, 0.1);
+        color: #1976d2;
+      }
+      
+      &:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
     }
   }
@@ -66,48 +149,62 @@
   /* Table styling */
   table {
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin: 24px 0;
-
-    th {
-      background-color: #f8f9fa;
-      color: #495057;
-      font-weight: 600;
-      text-align: left;
-      padding: 16px;
-      border-bottom: 2px solid #dee2e6;
-    }
-
-    td {
-      padding: 16px;
-      border-bottom: 1px solid #e0e0e0;
-      text-align: left;
-    }
-
-    tr:hover {
-      background-color: #f8f9fa;
-    }
-
     width: 100%;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
-    text-align: center;
-
+    
     th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
+      padding: 16px;
+      text-align: center; 
       font-size: 14px;
+      border: none;
     }
-
+    
     th {
       background-color: #005bbb;
       color: white;
-      font-weight: bold;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      
+      &:first-child {
+        text-align: left;
+        padding-left: 20px;
+      }
+    }
+
+    td {
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+      transition: all 0.2s;
+      
+      &:first-child {
+        text-align: left;
+        padding-left: 20px;
+        font-weight: 600;
+        color: #444;
+      }
+    }
+
+    tbody tr {
+      transition: all 0.2s ease;
+      
+      &:nth-child(even) {
+        background-color: #fafafa;
+      }
+      
+      &:last-child td {
+        border-bottom: none;
+      }
     }
 
     .points {
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 15px;
       
       &.positive {
         color: #28a745;
@@ -118,19 +215,16 @@
       }
     }
 
-    td {
-      vertical-align: middle;
-    }
-
     .action-tag {
       padding: 6px 15px;
-      border-radius: 12px;
-      font-size: 12px;
+      border-radius: 20px;
+      font-size: 13px;
       font-weight: bold;
       display: inline-block;
-      min-width: 80px;
+      min-width: 100px;
       text-align: center;
-      margin-top: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      
       &.deposit {
         background-color: #28a745;
         color: white;
@@ -143,51 +237,185 @@
       
       &.income {
         background-color: #ffc107;
-        color: #000;
+        color: #333;
+      }
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      
+      &.success {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: #2e7d32;
+        
+        &::before {
+          background-color: #4CAF50;
+          box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+      }
+      
+      &.pending {
+        background-color: rgba(255, 152, 0, 0.1);
+        color: #ed6c02;
+        
+        &::before {
+          background-color: #FF9800;
+          box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+      }
+      
+      &.failed {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #d32f2f;
+        
+        &::before {
+          background-color: #F44336;
+          box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+        }
+      }
+      
+      &.refunded {
+        background-color: rgba(97, 97, 97, 0.1);
+        color: #616161;
+        
+        &::before {
+          background-color: #9E9E9E;
+          box-shadow: 0 0 0 2px rgba(158, 158, 158, 0.2);
+        }
       }
     }
 
     .clickable-row {
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.2s;
       
       &:hover {
-        background-color: #e3f2fd;  // Màu xanh nhạt khi hover
+        background-color: #e3f2fd;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        
+        td {
+          color: #1976d2;
+        }
+      }
+      
+      &:active {
+        transform: translateY(0);
+        background-color: #bbdefb;
       }
     }
   }
 
-  /* 📑 Phân trang (Đã sửa lại) */
+  /* Phân trang */
   .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 24px;
     gap: 16px;
+    padding: 10px;
 
     .pagination-btn {
-      padding: 8px 16px;
-      background-color: #1976d2;  // Material UI primary blue color
+      padding: 10px 20px;
+      background-color: #1976d2;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
-      transition: background-color 0.2s;
+      font-weight: 500;
+      transition: all 0.2s;
+      box-shadow: 0 2px 5px rgba(25, 118, 210, 0.2);
 
       &:disabled {
         background-color: #ccc;
         cursor: not-allowed;
+        box-shadow: none;
       }
 
       &:hover:not(:disabled) {
-        background-color: #1565c0;  // Darker shade for hover
+        background-color: #1565c0;
+        box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+      }
+      
+      &:active:not(:disabled) {
+        transform: translateY(1px);
+        box-shadow: 0 1px 3px rgba(25, 118, 210, 0.2);
       }
     }
 
     span {
-      color: #666;
-      font-size: 14px;
+      color: #555;
+      font-size: 15px;
+      font-weight: 500;
+      background-color: #f5f5f5;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .point-management {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      
+      th, td {
+        min-width: 100px;
+      }
+      
+      .action-tag, .status-tag {
+        min-width: 80px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .point-management {
+    padding: 16px;
+    
+    h1 {
+      font-size: 20px;
+    }
+    
+    .filter-container {
+      gap: 8px;
+      
+      select, .sort-btn {
+        padding: 8px 10px;
+        font-size: 13px;
+        min-width: auto;
+      }
+    }
+    
+    .pagination {
+      .pagination-btn {
+        padding: 8px 16px;
+      }
+      
+      span {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
     }
   }
 }

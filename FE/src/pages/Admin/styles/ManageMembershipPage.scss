@@ -55,7 +55,6 @@
             
             &:hover {
                 border-color: #1976d2;
-                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
                 
             
                 + .search-icon {
@@ -183,7 +182,7 @@
             transition: background-color 0.2s;
             
             &:hover {
-                background-color: #e3f2fd;
+                background-color: rgba(0, 0, 0, 0.04);
             }
         }
 
@@ -213,33 +212,61 @@
             }
         }
         .status-tag {
-            padding: 6px 15px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-            min-width: 80px;
-            text-align: center;
-            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            gap: 6px;
+            margin-top: 7px;
+            
+            &::before {
+                content: "";
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+            }
             
             &.active {
-                background-color: #4CAF50;
-                color: white;
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #2e7d32;
+                
+                &::before {
+                    background-color: #4CAF50;
+                    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+                }
             }
             
             &.pending {
-                background-color: #FF9800;
-                color: white;
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ed6c02;
+                
+                &::before {
+                    background-color: #FF9800;
+                    box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+                }
             }
             
-            &.expired, &.failed {
-                background-color: #F44336;
-                color: white;
+            &.expired {
+                background-color: rgba(244, 67, 54, 0.1);
+                color: #d32f2f;
+                
+                &::before {
+                    background-color: #F44336;
+                    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+                }
             }
             
             &.refunded {
-                background-color: #607D8B;
-                color: white;
+                background-color: rgba(97, 97, 97, 0.1);
+                color: #616161;
+                
+                &::before {
+                    background-color: #9E9E9E;
+                    box-shadow: 0 0 0 2px rgba(158, 158, 158, 0.2);
+                }
             }
         }
     }
@@ -275,6 +302,55 @@
         span {
             color: #666;
             font-size: 14px;
+        }
+    }
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    
+    .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+    
+    &.success {
+        color: #2e7d32;
+        
+        .status-indicator {
+            background-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+    }
+    
+    &.pending {
+        color: #ed6c02;
+        
+        .status-indicator {
+            background-color: #FF9800;
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+    }
+    
+    &.failed {
+        color: #d32f2f;
+        
+        .status-indicator {
+            background-color: #F44336;
+            box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+        }
+    }
+    
+    &.refunded {
+        color: #616161;
+        
+        .status-indicator {
+            background-color: #9E9E9E;
+            box-shadow: 0 0 0 2px rgba(158, 158, 158, 0.2);
         }
     }
 }

@@ -2,6 +2,10 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import AdminPasswordModal from "./AdminPasswordModal";
 import "./styles/UserDetailForm.scss";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -56,8 +60,34 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
     <div className="user-detail-modal">
       <div className="modal-overlay">
         <div className="modal-content">
-          <button className="close-btn" onClick={onClose}>✖</button>
-          <h2>Thông tin người dùng</h2>
+          <div className="modal-header">
+            <h2>Thông tin người dùng</h2>
+            <div className="header-actions">
+              {!isEditing ? (
+                <>
+                  <button type="button" className="edit-btn" onClick={handleEditClick}>
+                    <EditIcon /> Sửa
+                  </button>
+                  <button type="button" className="delete-btn" onClick={handleDelete}>
+                    <DeleteIcon /> Xóa
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button type="submit" className="save-btn" onClick={handleSubmit}>
+                    <SaveIcon /> Lưu
+                  </button>
+                  <button type="button" className="cancel-btn" onClick={() => {
+                    setIsEditing(false);
+                    setFormData(user);
+                  }}>
+                    <CancelIcon /> Hủy
+                  </button>
+                </>
+              )}
+            </div>
+            <button className="close-btn" onClick={onClose}>✖</button>
+          </div>
 
           <form onSubmit={handleSubmit}>
             <div className="user-info-container">
@@ -213,34 +243,8 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                 </div>
               </div>
             </div>
-
-            <div className="modal-actions">
-              {!isEditing ? (
-                <>
-                  <button type="button" className="edit-btn" onClick={handleEditClick}>
-                    Chỉnh sửa
-                  </button>
-                  <button type="button" className="delete-btn" onClick={handleDelete}>
-                    Xóa người dùng
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button type="submit" className="save-btn">
-                    Lưu
-                  </button>
-                  <button type="button" className="cancel-btn" onClick={() => {
-                    setIsEditing(false);
-                    setFormData(user);
-                  }}>
-                    Hủy
-                  </button>
-                </>
-              )}
-            </div>
           </form>
 
-          {/* Chỉ render AdminPasswordModal khi showPasswordModal là true */}
           {showPasswordModal && (
             <AdminPasswordModal
               onClose={() => setShowPasswordModal(false)}

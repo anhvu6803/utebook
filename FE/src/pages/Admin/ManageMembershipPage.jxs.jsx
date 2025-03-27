@@ -1,49 +1,54 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import MembershipDetailModal from "../../components/Admin/MembershipDetailModal";
 import "./styles/ManageMembershipPage.scss";
 
+// Thêm nhiều thông tin hơn cho mock data
 const ordersData = [
-  { id: "ORD001", customer: "Nguyễn Văn A", total: "$120", type: "Đơn hàng", date: "2024-03-20" },
-  { id: "ORD002", customer: "Trần Thị B", total: "$200", type: "Hội viên", date: "2024-03-18" },
-  { id: "ORD003", customer: "Lê Văn C", total: "$150", type: "Đơn hàng", date: "2024-02-15" },
-  { id: "ORD004", customer: "Phạm Thị D", total: "$180", type: "Hội viên", date: "2023-12-25" },
-  { id: "ORD005", customer: "Đinh Văn E", total: "$250", type: "Đơn hàng", date: "2023-12-17" },
-  { id: "ORD006", customer: "Bùi Thị F", total: "$300", type: "Hội viên", date: "2023-11-10" },
-  { id: "ORD007", customer: "Hồ Văn G", total: "$220", type: "Đơn hàng", date: "2023-10-22" },
-  { id: "ORD008", customer: "Vũ Thị H", total: "$190", type: "Hội viên", date: "2023-09-15" },
-  { id: "ORD009", customer: "Lê Thị I", total: "$210", type: "Đơn hàng", date: "2023-08-05" },
-  { id: "ORD010", customer: "Ngô Văn K", total: "$170", type: "Hội viên", date: "2023-07-30" },
-  { id: "ORD011", customer: "Mai Văn L", total: "$320", type: "Đơn hàng", date: "2023-06-25" },
-  { id: "ORD012", customer: "Phan Thị M", total: "$140", type: "Hội viên", date: "2023-05-20" },
-  { id: "ORD013", customer: "Nguyễn Văn N", total: "$180", type: "Đơn hàng", date: "2023-04-18" },
-  { id: "ORD014", customer: "Trần Văn O", total: "$280", type: "Hội viên", date: "2023-03-11" },
-  { id: "ORD015", customer: "Lê Thị P", total: "$110", type: "Đơn hàng", date: "2023-02-25" },
-  { id: "ORD016", customer: "Đặng Văn Q", total: "$200", type: "Hội viên", date: "2023-01-15" },
-  { id: "ORD017", customer: "Hoàng Thị R", total: "$175", type: "Đơn hàng", date: "2022-12-10" },
-  { id: "ORD018", customer: "Nguyễn Văn S", total: "$310", type: "Hội viên", date: "2022-11-22" },
-  { id: "ORD019", customer: "Trần Thị T", total: "$280", type: "Đơn hàng", date: "2022-10-09" },
-  { id: "ORD020", customer: "Lê Văn U", total: "$150", type: "Hội viên", date: "2022-09-15" },
-  { id: "ORD021", customer: "Vũ Văn V", total: "$190", type: "Đơn hàng", date: "2022-08-03" },
-  { id: "ORD022", customer: "Phan Văn W", total: "$210", type: "Hội viên", date: "2022-07-28" },
-  { id: "ORD023", customer: "Đinh Văn X", total: "$350", type: "Đơn hàng", date: "2022-06-19" },
-  { id: "ORD024", customer: "Mai Thị Y", total: "$230", type: "Hội viên", date: "2022-05-14" },
-  { id: "ORD025", customer: "Hoàng Văn Z", total: "$180", type: "Đơn hàng", date: "2022-04-07" },
-  { id: "ORD026", customer: "Nguyễn Văn B", total: "$300", type: "Hội viên", date: "2022-03-25" },
-  { id: "ORD027", customer: "Trần Thị C", total: "$120", type: "Đơn hàng", date: "2022-02-15" },
-  { id: "ORD028", customer: "Lê Văn D", total: "$270", type: "Hội viên", date: "2022-01-30" },
-  { id: "ORD029", customer: "Đinh Thị E", total: "$240", type: "Đơn hàng", date: "2021-12-20" },
-  { id: "ORD030", customer: "Vũ Văn F", total: "$150", type: "Hội viên", date: "2021-11-15" },
+  { 
+    id: "ORD001", 
+    customer: "Nguyễn Văn A", 
+    total: "$120", 
+    type: "Đơn hàng", 
+    date: "2024-03-20",
+    status: "Thành công",
+    fullName: "Nguyễn Văn A",
+    userId: "U001",
+    email: "nguyenvana@example.com",
+    phone: "0901234567",
+    membershipType: "Hội viên Bạc",
+    duration: "1 năm",
+    transactionDate: "20/03/2024",
+    time: "15:30",
+    expiryDate: "20/03/2025",
+    membershipStatus: "Hoạt động",
+    payment: {
+      method: "Thẻ tín dụng",
+      amount: "$120",
+      transactionId: "TX001",
+      status: "Thành công"
+    },
+    benefits: [
+      "Giảm 10% mọi đơn hàng",
+      "Miễn phí vận chuyển",
+      "Ưu tiên hỗ trợ khách hàng"
+    ]
+  },
+  // ... (thêm thông tin tương tự cho các mục khác)
 ];
+
 const itemsPerPage = 10;
 
-const HistoryOrderPage = () => {
-  const [orders] = useState(ordersData);
+const ManageMembershipPage = () => {
+  const [orders, setOrders] = useState(ordersData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDate, setFilterDate] = useState("");
   const [filterMonth, setFilterMonth] = useState("");
   const [filterYear, setFilterYear] = useState("");
   const [filterType, setFilterType] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   // Lọc đơn hàng
   const filteredOrders = orders.filter(order => {
@@ -60,9 +65,38 @@ const HistoryOrderPage = () => {
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const displayedOrders = filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+  // Xử lý khi nhấp vào dòng trong bảng
+  const handleRowClick = (order) => {
+    setSelectedOrder(order);
+    setShowModal(true);
+  };
+
+  // Xử lý thay đổi trạng thái
+  const handleStatusChange = (orderId, newStatus) => {
+    // Cập nhật trạng thái trong orders state
+    const updatedOrders = orders.map(order => {
+      if (order.id === orderId) {
+        return {
+          ...order,
+          status: newStatus,
+          payment: {
+            ...order.payment,
+            status: newStatus
+          }
+        };
+      }
+      return order;
+    });
+    
+    setOrders(updatedOrders);
+    
+    // Đóng modal
+    setShowModal(false);
+  };
+
   return (
-    <div className="history-order">
-      <h1>Lịch sử đơn hàng</h1>
+    <div className="membership-management">
+      <h1>Quản lý Đơn Đăng Ký Hội Viên</h1>
 
       {/* Ô tìm kiếm */}
       <div className="search-container">
@@ -110,13 +144,18 @@ const HistoryOrderPage = () => {
         </thead>
         <tbody>
           {displayedOrders.map((order) => (
-            <tr key={order.id}>
+            <tr key={order.id} onClick={() => handleRowClick(order)} className="clickable-row">
               <td>{order.id}</td>
               <td>{order.customer}</td>
               <td>{order.total}</td>
               <td>{order.type}</td>
               <td>{order.date}</td>
-              <td className="success">Thành công</td>
+              <td className={`order-status ${order.status === "Thành công" ? "success" : 
+                              order.status === "Đang xử lý" ? "pending" : 
+                              order.status === "Hoàn tiền" ? "refunded" : "failed"}`}>
+                <div className="status-indicator"></div>
+                {order.status || order.payment?.status || "Thành công"}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -134,8 +173,17 @@ const HistoryOrderPage = () => {
           </button>
         </div>
       )}
+
+      {/* Modal chi tiết */}
+      {showModal && selectedOrder && (
+        <MembershipDetailModal 
+          membership={selectedOrder} 
+          onClose={() => setShowModal(false)}
+          onStatusChange={handleStatusChange}
+        />
+      )}
     </div>
   );
 };
 
-export default HistoryOrderPage;
+export default ManageMembershipPage;

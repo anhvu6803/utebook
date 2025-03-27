@@ -75,28 +75,50 @@ const ManageMembershipPage = () => {
     setShowPasswordModal(true);
   };
 
-  // Thêm hàm xử lý khi xác thực thành công
+  // Thêm hàm để xử lý thay đổi trạng thái
+  const handleStatusChange = (transactionId, newStatus) => {
+    // Cập nhật trạng thái trong transactions state
+    const updatedTransactions = transactions.map(transaction => {
+      if (transaction.id === transactionId) {
+        return {
+          ...transaction,
+          status: newStatus
+        };
+      }
+      return transaction;
+    });
+    
+    setTransactions(updatedTransactions);
+    
+    // Đóng modal sau khi cập nhật
+    setShowModal(false);
+  };
+
+  // Thêm hàm để xử lý thành công xác thực
   const handlePasswordConfirm = () => {
     setShowPasswordModal(false);
     
+    // Tìm giao dịch mới nhất từ trạng thái transactions
+    const updatedTransaction = transactions.find(t => t.id === pendingTransaction.id) || pendingTransaction;
+    
     // Tạo dữ liệu chi tiết giao dịch
     const detailedTransaction = {
-      ...pendingTransaction,
+      ...updatedTransaction,
       time: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
       userId: "U" + Math.floor(10000 + Math.random() * 90000),
-      fullName: pendingTransaction.username,
-      email: `${pendingTransaction.username.toLowerCase().replace(' ', '.')}@gmail.com`,
+      fullName: updatedTransaction.username,
+      email: `${updatedTransaction.username.toLowerCase().replace(' ', '.')}@gmail.com`,
       phone: `0${Math.floor(900000000 + Math.random() * 90000000)}`,
-      transactionDate: pendingTransaction.date,
-      membershipStatus: pendingTransaction.status === "Thành công" ? "Hoạt động" : "Chưa kích hoạt",
-      expiryDate: getExpiryDate(pendingTransaction.date, pendingTransaction.duration),
+      transactionDate: updatedTransaction.date,
+      membershipStatus: updatedTransaction.status === "Thành công" ? "Hoạt động" : "Chưa kích hoạt",
+      expiryDate: getExpiryDate(updatedTransaction.date, updatedTransaction.duration),
       payment: {
-        method: pendingTransaction.paymentMethod,
-        transactionId: pendingTransaction.id,
-        amount: pendingTransaction.price + " VNĐ",
-        status: pendingTransaction.status
+        method: updatedTransaction.paymentMethod,
+        transactionId: updatedTransaction.id,
+        amount: updatedTransaction.price + " VNĐ",
+        status: updatedTransaction.status
       },
-      benefits: getMembershipBenefits(pendingTransaction.type),
+      benefits: getMembershipBenefits(updatedTransaction.type),
     };
     
     setSelectedTransaction(detailedTransaction);
@@ -352,6 +374,7 @@ const ManageMembershipPage = () => {
         <MembershipDetailModal
           membership={selectedTransaction}
           onClose={handleCloseModal}
+          onStatusChange={handleStatusChange}
         />
       )}
     </div>

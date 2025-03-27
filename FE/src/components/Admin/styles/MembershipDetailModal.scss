@@ -87,33 +87,174 @@
       }
       
       .membership-status {
-        padding: 6px 12px;
+        padding: 0;
         border-radius: 16px;
         font-size: 14px;
         font-weight: 600;
         
-        &.success {
-          background-color: rgba(76, 175, 80, 0.1);
-          color: #2e7d32;
-          border: 1px solid rgba(76, 175, 80, 0.2);
+        .status-display {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 12px;
+          border-radius: 16px;
+          background-color: white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          border: 1px solid #eee;
+          transition: all 0.2s;
+          
+          &:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            .edit-status-button {
+              opacity: 1;
+            }
+          }
+          
+          .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+          }
         }
         
-        &.pending {
-          background-color: rgba(255, 152, 0, 0.1);
-          color: #ed6c02;
-          border: 1px solid rgba(255, 152, 0, 0.2);
+        &.success .status-indicator {
+          background-color: #4CAF50;
+          box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
         }
         
-        &.failed {
-          background-color: rgba(244, 67, 54, 0.1);
-          color: #d32f2f;
-          border: 1px solid rgba(244, 67, 54, 0.2);
+        &.pending .status-indicator {
+          background-color: #FF9800;
+          box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
         }
         
-        &.refunded {
-          background-color: rgba(97, 97, 97, 0.1);
-          color: #616161;
-          border: 1px solid rgba(97, 97, 97, 0.2);
+        &.failed .status-indicator {
+          background-color: #F44336;
+          box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+        }
+        
+        &.refunded .status-indicator {
+          background-color: #9E9E9E;
+          box-shadow: 0 0 0 2px rgba(158, 158, 158, 0.2);
+        }
+        
+        .edit-status-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 14px;
+          color: #555;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all 0.2s;
+          margin-left: 4px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #1976d2;
+          }
+        }
+        
+        .status-edit-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          animation: fadeIn 0.2s ease;
+          background-color: white;
+          border-radius: 16px;
+          padding: 4px 8px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          border: 1px solid #eee;
+          
+          .status-select {
+            padding: 6px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px auto;
+            padding-right: 28px;
+            transition: all 0.2s;
+            min-width: 130px;
+            
+            &:hover {
+              border-color: #aaa;
+            }
+            
+            &.success {
+              background-color: rgba(76, 175, 80, 0.1);
+              color: #2e7d32;
+              border: 1px solid rgba(76, 175, 80, 0.3);
+            }
+            
+            &.pending {
+              background-color: rgba(255, 152, 0, 0.1);
+              color: #ed6c02;
+              border: 1px solid rgba(255, 152, 0, 0.3);
+            }
+            
+            &.failed {
+              background-color: rgba(244, 67, 54, 0.1);
+              color: #d32f2f;
+              border: 1px solid rgba(244, 67, 54, 0.3);
+            }
+            
+            &.refunded {
+              background-color: rgba(97, 97, 97, 0.1);
+              color: #616161;
+              border: 1px solid rgba(97, 97, 97, 0.3);
+            }
+          }
+          
+          .status-edit-actions {
+            display: flex;
+            gap: 6px;
+            
+            button {
+              background: none;
+              border: none;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 28px;
+              height: 28px;
+              border-radius: 50%;
+              transition: all 0.2s;
+              
+              &.save-status {
+                color: #4CAF50;
+                background-color: rgba(76, 175, 80, 0.1);
+                &:hover {
+                  background-color: rgba(76, 175, 80, 0.2);
+                }
+              }
+              
+              &.cancel-edit {
+                color: #d32f2f;
+                background-color: rgba(244, 67, 54, 0.1);
+                &:hover {
+                  background-color: rgba(244, 67, 54, 0.2);
+                }
+              }
+            }
+          }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       }
     }
@@ -197,159 +338,159 @@
         }
       }
     }
+  }
+  
+  .membership-details {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
     
-    .membership-details {
-      padding: 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      
-      .detail-group {
-        h3 {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 16px;
-          margin-top: 0;
-          color: #1976d2;
-          margin-bottom: 16px;
-          padding-bottom: 8px;
-          border-bottom: 1px solid #eeeeee;
-        }
-        
-        .detail-row {
-          display: flex;
-          margin-bottom: 12px;
-          
-          .detail-label {
-            min-width: 140px;
-            font-weight: 500;
-            color: #555;
-          }
-          
-          .detail-value {
-            flex: 1;
-            
-            &.success {
-              color: #2e7d32;
-              font-weight: 600;
-            }
-          }
-        }
-      }
-    }
-    
-    .membership-benefits {
-      padding: 24px;
-      border-top: 1px solid #eeeeee;
-      
-      h3 {
-        font-size: 18px;
-        margin-top: 0;
-        margin-bottom: 16px;
-        color: #1976d2;
-      }
-      
-      .benefits-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 12px;
-        
-        li {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          padding: 8px 12px;
-          background-color: #f8f9fa;
-          border-radius: 6px;
-          font-size: 14px;
-          
-          .check-icon {
-            color: #4CAF50;
-            margin-top: 2px;
-            flex-shrink: 0;
-          }
-        }
-      }
-    }
-    
-    .renewal-history {
-      padding: 24px;
-      border-top: 1px solid #eeeeee;
-      
+    .detail-group {
       h3 {
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 0;
         color: #1976d2;
         margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eeeeee;
       }
       
-      .history-list {
+      .detail-row {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
+        margin-bottom: 12px;
         
-        .history-item {
-          display: flex;
-          align-items: center;
-          padding: 12px 16px;
-          background-color: #f8f9fa;
-          border-radius: 8px;
-          border: 1px solid #eeeeee;
-          transition: all 0.2s;
+        .detail-label {
+          min-width: 140px;
+          font-weight: 500;
+          color: #555;
+        }
+        
+        .detail-value {
+          flex: 1;
           
-          &:hover {
-            background-color: #f0f0f0;
-          }
-          
-          .history-date {
-            min-width: 100px;
-            font-weight: 500;
-          }
-          
-          .history-type {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
+          &.success {
+            color: #2e7d32;
             font-weight: 600;
-            margin: 0 16px;
-            min-width: 120px;
-            text-align: center;
-            
-            &.silver {
-              background-color: #E0E0E0;
-              color: #333;
-            }
-            
-            &.gold {
-              background-color: #FFD700;
-              color: #705200;
-            }
-            
-            &.platinum {
-              background-color: #E5E4E2;
-              color: #222;
-              border: 1px solid #999;
-            }
+          }
+        }
+      }
+    }
+  }
+  
+  .membership-benefits {
+    padding: 24px;
+    border-top: 1px solid #eeeeee;
+    
+    h3 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: #1976d2;
+    }
+    
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      
+      li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 8px 12px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        font-size: 14px;
+        
+        .check-icon {
+          color: #4CAF50;
+          margin-top: 2px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+  
+  .renewal-history {
+    padding: 24px;
+    border-top: 1px solid #eeeeee;
+    
+    h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      margin-top: 0;
+      color: #1976d2;
+      margin-bottom: 16px;
+    }
+    
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      
+      .history-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #eeeeee;
+        transition: all 0.2s;
+        
+        &:hover {
+          background-color: #f0f0f0;
+        }
+        
+        .history-date {
+          min-width: 100px;
+          font-weight: 500;
+        }
+        
+        .history-type {
+          padding: 4px 10px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 600;
+          margin: 0 16px;
+          min-width: 120px;
+          text-align: center;
+          
+          &.silver {
+            background-color: #E0E0E0;
+            color: #333;
           }
           
-          .history-duration {
-            min-width: 80px;
-            text-align: center;
-            margin-right: 16px;
+          &.gold {
+            background-color: #FFD700;
+            color: #705200;
           }
           
-          .history-price {
-            margin-left: auto;
-            font-weight: 600;
-            color: #1976d2;
+          &.platinum {
+            background-color: #E5E4E2;
+            color: #222;
+            border: 1px solid #999;
           }
+        }
+        
+        .history-duration {
+          min-width: 80px;
+          text-align: center;
+          margin-right: 16px;
+        }
+        
+        .history-price {
+          margin-left: auto;
+          font-weight: 600;
+          color: #1976d2;
         }
       }
     }

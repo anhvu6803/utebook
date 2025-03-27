@@ -65,15 +65,42 @@ const ManagePointPage = () => {
     setCurrentPage(1); // Reset về trang 1 khi thay đổi sắp xếp
   };
 
+  // Thêm hàm xử lý thay đổi trạng thái
+  const handleStatusChange = (activityId, newStatus) => {
+    // Cập nhật trạng thái trong pointHistory state
+    const updatedHistory = pointHistory.map(item => {
+      if (item.id === activityId) {
+        return {
+          ...item,
+          status: newStatus
+        };
+      }
+      return item;
+    });
+    
+    setPointHistory(updatedHistory);
+    
+    // Tìm và cập nhật hoạt động được chọn hiện tại để modal hiển thị đúng
+    if (selectedActivity && selectedActivity.id === activityId) {
+      setSelectedActivity({
+        ...selectedActivity,
+        status: newStatus
+      });
+    }
+
+    // Đóng modal sau khi cập nhật
+    setShowModal(false);
+  };
+
   // Hàm xử lý khi click vào một dòng trong bảng
   const handleRowClick = (activity) => {
     // Mở rộng thông tin hoạt động với dữ liệu bổ sung
     const detailedActivity = {
       ...activity,
+      status: activity.status || "Thành công", // Đảm bảo luôn có trạng thái
       time: "15:30:45", // Giả lập dữ liệu - thay bằng dữ liệu thật khi tích hợp
       description: `${activity.action} điểm thành viên`,
       userId: "U" + Math.floor(10000 + Math.random() * 90000),
-      status: "Thành công",
       previousBalance: parseInt(activity.points) >= 0 
         ? (parseInt(activity.points.replace("+", "")) - 100).toString() 
         : (Math.abs(parseInt(activity.points)) + 100).toString(),
@@ -196,6 +223,21 @@ const ManagePointPage = () => {
     currentPage * itemsPerPage
   );
 
+  const getStatusClass = (status) => {
+    switch(status) {
+      case 'Thành công':
+        return 'success';
+      case 'Đang xử lý':
+        return 'pending';
+      case 'Thất bại':
+        return 'failed';
+      case 'Hoàn tiền':
+        return 'refunded';
+      default:
+        return '';
+    }
+  };
+
   return (
     <div className="point-management">
       <h1>🎯 Lịch Sử Điểm Thành Viên</h1>
@@ -247,6 +289,7 @@ const ManagePointPage = () => {
             <th>Điểm</th>
             <th>Hoạt động</th>
             <th>Ngày</th>
+            <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
@@ -267,6 +310,11 @@ const ManagePointPage = () => {
                 </span>
               </td>
               <td>{history.date}</td>
+              <td>
+                <span className={`status-tag ${getStatusClass(history.status || 'Thành công')}`}>
+                  {history.status || 'Thành công'}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -297,6 +345,7 @@ const ManagePointPage = () => {
         <ActivityDetailModal
           activity={selectedActivity}
           onClose={handleCloseModal}
+          onStatusChange={handleStatusChange}
         />
       )}
     </div>
