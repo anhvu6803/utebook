@@ -1,0 +1,145 @@
+img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.activate-code-container {
+    text-align: center;
+    background: rgb(51, 51, 51, .5);
+    color: white;
+    padding: 20px;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .activate-code-header {
+        height: 200px;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h2 {
+            opacity: 1;
+            font-size: 50px;
+            font-weight: bold;
+            text-align: left;
+            z-index: 1000;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            font-weight: 500;
+            text-align: left;
+            margin-bottom: 20px;
+            z-index: 1000;
+        }
+    }
+
+    .activate-code-content {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 10px;
+
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 1000px;
+            background: transparent;
+
+            .rule-container {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                strong {
+                    text-align: left;
+                    color: white;
+                }
+
+                p {
+                    text-align: left;
+                    font-size: 15px;
+                    color: rgb(255, 255, 255, .8);
+                    font-weight: bold;
+                    height: fit-content;
+                }
+
+                .link {
+                    color: #005bbb;
+                    cursor: pointer;
+                    text-decoration: none;
+                }
+            }
+
+            .actions-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                .input-container-outline {
+                    display: flex;
+                    flex-direction: column;
+                    width: 450px;
+                    padding: 10px 15px;
+                    border-radius: 12px;
+                    border: 1px solid #005bbb;
+                    background: #e8f0fe;
+
+                    label {
+                        font-size: 14px;
+                        color: #005bbb;
+                        font-weight: bold;
+                        margin-bottom: 4px;
+                        height: fit-content;
+                    }
+
+                    input {
+                        width: 100%;
+                        font-size: 15px;
+                        font-weight: bold;
+                        color: black;
+                        background: #e8f0fe;
+                        border: none;
+                        outline: none;
+                        cursor: text;
+
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+
+                button {
+                    background: #005bbb;
+                    border: none;
+                    width: 200px;
+                    height: 50px;
+                    padding: 12px 0;
+                    color: white;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    position: relative;
+
+                    &:hover:not(:disabled) {
+                        opacity: 0.8;
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: default;
+
+                    }
+                }
+            }
+
+        }
+    }
+}

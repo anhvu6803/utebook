@@ -1,0 +1,187 @@
+img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.hoaphuong-container {
+    text-align: center;
+    background: rgb(51, 51, 51, .5);
+    color: white;
+    padding: 20px;
+    height: fit-content;
+
+    .hoaphuong-header {
+        height: 204px;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        background: rgb(51, 51, 51, .5);
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 0;
+
+        h2 {
+            opacity: 1;
+            font-size: 50px;
+            font-weight: bold;
+            text-align: left;
+            z-index: 1000;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            font-weight: 500;
+            text-align: left;
+            z-index: 1000;
+        }
+
+    }
+
+    .title-plans {
+        text-align: left;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0 0 20px 30px;
+        
+    }
+    .plans-hoaphuong {
+        display: grid;
+        width: 100%;
+        gap: 30px;
+        padding: 30px;
+        grid-template-columns: repeat(4, 1fr);
+        
+        .plan {
+            background: #e8f0fe;
+            border-radius: 10px;
+            padding: 30px 0;
+            width: 300px;
+            height: 310px;
+            text-align: center;
+            position: relative;
+
+            .header-plan {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #005bbb;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                padding-bottom: 10px;
+
+                .icon-header {
+                    width: 25px;
+                    height: 25px;
+                    margin: 0;
+                }
+
+                h3 {
+                    color: #005bbb;
+                    font-size: 19px;
+                    font-weight: 500;
+                    margin: 0;
+                }
+
+                .sub-header {
+                    color: #005bbb;
+                    font-size: 13px;
+                    font-weight: normal;
+                    margin: 0;
+                }
+
+                .value-container {
+                    display: flex;
+                    flex-direction: row;
+                    width: 200px;
+                    border-radius: 30px;
+                    justify-content: space-around;
+
+                    .value-item {
+                        background: rgb(51, 51, 51, .1);
+                        padding: 3px 10px;
+                        border-radius: 20px;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 5px;
+
+                        .hoaphuong-img {
+                            object-fit: cover;
+                            width: 16px;
+                            height: 16px;
+                        }
+
+                        svg {
+                            color: #6EAE43;
+                            width: 16px;
+                            height: 16px;
+                        }
+
+                        .hoaphuong-p {
+                            margin: 0px;
+                            padding-bottom: 1px;
+                            color: #ff375f;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+
+                        .leaf-p {
+                            margin: 0px;
+                            padding-bottom: 1px;
+                            color: #6EAE43;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+
+            .badge {
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: orange;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+
+            .price {
+                font-size: 26px;
+                font-weight: bold;
+                padding: 20px 0 0 0;
+                color: #005bbb;
+            }
+
+            .buy-button {
+                background: #ff8c00;
+                border: none;
+                width: 200px;
+                height: 50px;
+                padding: 12px 0;
+                color: white;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: 0.3s;
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .buy-button:hover {
+                background: #e67e00;
+            }
+        }
+
+        .popular {
+            border: 2px solid orange;
+        }
+    }
+}

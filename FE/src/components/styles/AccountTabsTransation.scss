@@ -1,0 +1,115 @@
+.tabs-history-container {
+    padding: 20px 0;
+    color: white;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .tabs {
+        display: flex;
+        justify-self: start;
+        gap: 15px;
+        margin-bottom: 20px;
+
+        .tab-btn {
+            color: black;
+            border: none;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #7FADDD;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &.active {
+                color: white;
+                background-color: #7FADDD;
+            }
+        }
+    }
+}
+
+.tabs-header {
+    display: grid;
+    grid-template-columns: 150px 1fr 150px 1.5fr;
+    background-color: #7FADDD;
+    padding: 16px;
+    border-bottom: 1px solid #005bbb;
+    font-weight: 500;
+    color: white;
+}
+
+.tabs-item {
+    padding: 8px;
+}
+
+.tabs-item {
+    display: grid;
+    grid-template-columns: 150px 1fr 150px 1.5fr;
+    padding: 16px;
+    background-color: white;
+    border-bottom: 1px solid #7FADDD;
+    align-items: center;
+
+    &:hover {
+        background-color: #e8f0fe;
+    }
+}
+
+.tabs-time {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.tabs-name {
+    font-weight: 500;
+    color: black;
+
+    .additional-info {
+        color: #005bbb;
+        font-size: 14px;
+        margin-top: 4px;
+    }
+}
+
+.tabs-price {
+    color: black;
+    font-weight: 500;
+}
+
+.tabs-details {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.tab-content {
+    text-align: center;
+
+    .no-trans {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        img {
+            margin-top: 60px;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            color: black;
+        }
+
+        .title-trans {
+            font-weight: bold;
+            font-size: 18px;
+            color: black;
+        }
+
+        .subtitle-trans {
+            color: #aaa;
+        }
+    }
+}

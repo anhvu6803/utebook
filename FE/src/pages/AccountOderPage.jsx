@@ -18,12 +18,12 @@ const AccountHistoryTransactionPage = () => {
     const [activeTab, setActiveTab] = useState(tab);
 
     //data
-    const [allOders, setAllOrders] = useState(itemData);
-    const [needConfirmOrders, setNeedConfirmOrders] = useState(itemData.filter((item) => item.trangThai === 0));
-    const [deliveringOrders, setDeliveringOrders] = useState(itemData.filter((item) => item.trangThai === 1));
-    const [deliveredOrders, setDeliveredOrders] = useState(itemData.filter((item) => item.trangThai === 2));
-    const [cancelledOrders, setCancelledOrders] = useState(itemData.filter((item) => item.trangThai === 3));
-    const [failedOrders, setFailedOrders] = useState(itemData.filter((item) => item.trangThai === 4));
+    const allOders = itemData;;
+    const needConfirmOrders = itemData.filter((item) => item.trangThai === 'need_confirm');
+    const deliveringOrders = itemData.filter((item) => item.trangThai === 'delivering');
+    const deliveredOrders = itemData.filter((item) => item.trangThai === 'delivered');
+    const cancelledOrders = itemData.filter((item) => item.trangThai === 'canceled');
+    const failedOrders = itemData.filter((item) => item.trangThai === 'failed');
 
     useEffect(() => {
         setActiveTab(tab); // Cập nhật activeTab khi URL thay đổi
@@ -157,11 +157,10 @@ export default AccountHistoryTransactionPage;
 
 const itemData = [
     {
-        id: 1,
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         tenCuaHang: "Nhà Sách Tri Thức",
         maDonHang: "DH001",
-        trangThai: 3,
+        trangThai: 'canceled',
         tienGiamGia: 20000,
         tienCu: 120000,
         tenSanPham: "Đắc Nhân Tâm",
@@ -178,7 +177,7 @@ const itemData = [
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         tenCuaHang: "Nhà Sách Tri Thức",
         maDonHang: "DH002",
-        trangThai: 0,
+        trangThai: 'delivered',
         tienGiamGia: 0,
         tienCu: 85000,
         tenSanPham: "7 Thói Quen Hiệu Quả",
@@ -195,7 +194,7 @@ const itemData = [
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         tenCuaHang: "Nhà Sách Văn Hóa",
         maDonHang: "DH003",
-        trangThai: 3,
+        trangThai: 'canceled',
         tienGiamGia: 15000,
         tienCu: 98000,
         tenSanPham: "Tuổi Trẻ Đáng Giá Bao Nhiêu",
@@ -212,7 +211,7 @@ const itemData = [
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         tenCuaHang: "BookHub",
         maDonHang: "DH004",
-        trangThai: 1,
+        trangThai: 'received',
         tienGiamGia: 30000,
         tienCu: 135000,
         tenSanPham: "Một Cuốn Sách Về Chủ Nghĩa Tối Giản",
@@ -229,7 +228,7 @@ const itemData = [
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         tenCuaHang: "BookCity",
         maDonHang: "DH005",
-        trangThai: 2,
+        trangThai: 'need_confirm',
         tienGiamGia: 25000,
         tienCu: 99000,
         tenSanPham: "Cafe Cùng Tony",
@@ -243,4 +242,3 @@ const itemData = [
         phuongThucThanhToan: "Thanh toán khi nhận hàng"
     }
 ];
-

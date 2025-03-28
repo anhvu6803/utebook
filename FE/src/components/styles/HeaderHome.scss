@@ -1,12 +1,16 @@
 .header-home {
-  background-color: #005bbb;
+  background-color: #7FADDD;
   color: #333;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   width: 100%;
   opacity: 0.85;
+
+  span {
+    text-transform: none !important;
+  }
 
   .header-left {
     display: flex;
@@ -35,12 +39,17 @@
       a {
         text-decoration: none;
         color: #fff;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 16px;
         transition: color 0.3s ease;
 
         &:hover {
           opacity: 0.5;
+        }
+
+        &.active {
+          color: #003399;
+          font-weight: bold;
         }
       }
     }
@@ -54,8 +63,8 @@
       display: flex;
       align-items: center;
       padding: 10px;
-      gap: 40px;
-      margin-right: 40px;
+      gap: 30px;
+      margin-right: 30px;
 
       .icon {
         cursor: pointer;
@@ -67,6 +76,15 @@
           opacity: 0.5;
         }
       }
+    }
+
+    .btn-member {
+      border: 2px solid #fffdd0;
+      color: #fffdd0;
+      background: rgb(254, 254, 51, .2);
+      border-radius: 25px;
+      padding: 0 6.5px;
+      cursor: pointer;
     }
 
     input {
