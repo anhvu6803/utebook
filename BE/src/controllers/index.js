@@ -3,4 +3,5 @@ const BookController = require('../controllers/book.controller');
 const CartController = require('../controllers/cart.controller');
 const OrderController = require('../controllers/order.controller');
 const ReviewController = require('../controllers/review.controller');
-module.exports={UserController, BookController, CartController, OrderController, ReviewController};
+const DriveController = require('../controllers/drive.controller');
+module.exports={UserController, BookController, CartController, OrderController, ReviewController, DriveController};
