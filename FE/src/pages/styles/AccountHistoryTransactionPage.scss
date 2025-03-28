@@ -1,9 +1,9 @@
-.order-settings {
+.transaction-settings {
     width: 1100px;
     margin: auto;
     flex-direction: column;
 
-    .order-header {
+    .transaction-header {
         width: 100%;
         border-bottom: 1px solid rgb(0, 91, 187, .3);
         height: fit-content;
@@ -37,7 +37,7 @@
         }
     }
 
-    .order-content {
+    .transaction-content {
         position: relative;
     }
 }

@@ -1,7 +1,7 @@
 .account-menu {
     position: relative;
-    width: 250px;
-    padding: 15px 30px 15px 15px;
+    width: 300px;
+    padding: 30px 25px 15px 25px;
     align-items: center;
     background-color: #fff;
     border-right: 1px solid #005bbb4d;
@@ -17,13 +17,15 @@
             gap: 8px;
             margin-top: 12px;
             padding-bottom: 15px;
+            display: flex;
+            flex-direction: row;
 
-            button {
+            .btn {
                 background: #005bbb;
                 color: white;
                 border: none;
-                width: 100%;
-                padding: 10px;
+                width: fit-content;
+                padding: 10px 15px;
                 border-radius: 20px;
                 cursor: pointer;
                 font-size: 14px;
@@ -34,48 +36,130 @@
                 &:hover {
                     opacity: 0.5;
                 }
+
+                &.vip {
+                    background: #e8f0fe;
+                    color: #005bbb;
+                    border: 1px solid #7FADDD;
+                }
             }
         }
 
         .user-info {
+            padding: 0px 0px 10px 0px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding-bottom: 30px;
             background: transparent;
             box-shadow: none;
 
-            .user-name {
-                color: black;
-                font-size: 18px;
-                font-weight: bold;
-                display: block;
+            .user-self {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                .user-name-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    .user-name {
+                        color: black;
+                        font-size: 18px;
+                        font-weight: bold;
+                        display: block;
+                    }
+
+                    .vip-expire {
+                        color: #b3b3b3;
+                        font-size: 13px;
+                        font-weight: bold;
+                        justify-self: flex-start;
+                        width: 100%;
+                    }
+                }
+
+                .user-avatar {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
             }
 
-            .user-avatar {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                overflow: hidden;
+            .type-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+                gap: 15px;
+                padding-top: 5px;
 
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
+                .amount-hoaphuong {
+                    background: white;
+                    border-radius: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 5px;
+
+                    img {
+                        object-fit: cover;
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    p {
+                        margin: 0px;
+                        padding-bottom: 1px;
+                        color: #ff375f;
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                }
+
+                .amount-leaf {
+                    background: white;
+                    border-radius: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 5px;
+
+                    svg {
+                        color: #6EAE43;
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    p {
+                        margin: 0px;
+                        padding-bottom: 1px;
+                        color: #6EAE43;
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
                 }
             }
         }
     }
 
     .menu-list {
-        margin-top: 15px;
+        margin-top: 10px;
         list-style: none;
         padding: 0;
 
         li {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 10px;
             padding: 10px;
             color: black;

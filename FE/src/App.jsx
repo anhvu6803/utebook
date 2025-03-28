@@ -1,8 +1,12 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import MainLayout from './layout/MainLayout'
+import HomeLayout from "./layout/HomeLayout";
 import UserLayout from './layout/UserLayout/UserLayout'
 import AdminLayout from "./layout/AdminLayout/AdminLayout";
+import PackageLayout from "./layout/PackageLayout";
+
 import WelcomPage from './pages/WelcomePage'
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPassPage";
@@ -16,14 +20,18 @@ import ManageAudioBookPage from "./pages/Admin/ManageAudioBookPage";
 import ManageCategoryPage from "./pages/Admin/ManageCategoryPage";
 import ManageOrderPage from "./pages/Admin/ManageOrderPage";
 import StatisticsPage from "./pages/Admin/StatisticsPage";
-import HomeLayout from "./layout/HomeLayout";
 import AccountSettingPage from "./pages/AccountSettingPage";
 import AccountSettingLayout from "./layout/AccountSettingLayout";
 import AccountHistoryTransactionPage from "./pages/AccountHistoryTransactionPage";
 import AccountLibraryPage from "./pages/AccountLibraryPage";
-import AccountOderPage from "./pages/AccountOderPage";
-import AccountSupportPage from "./pages/AccountSupportPage";
-import AccountDetailOrderPage from "./pages/AccountDetailOrderPage";
+// import AccountOderPage from "./pages/AccountOderPage";
+// import AccountDetailOrderPage from "./pages/AccountDetailOrderPage";
+import AccountAchievement from "./pages/AccountAchievement";
+import MembershipPlansPage from "./pages/MembershipPlansPage";
+import HoaPhuongPage from "./pages/HoaPhuongPage";
+import ActivateCodePage from "./pages/ActivateCodePage";
+import WhereIsCodePage from "./pages/WhereIsCodePage";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
@@ -38,15 +46,23 @@ const App = () => {
         </Route>
 
         <Route path="/utebook" element={<HomeLayout />}>
+          <Route index element={<HomePage />} />
           <Route path="account" element={<AccountSettingLayout />}>
             <Route path="profile" element={<AccountSettingPage />} />
             <Route path="bookcase" element={<AccountLibraryPage />} />
-            <Route path="orders" element={<AccountOderPage />} >
+            {/* <Route path="orders" element={<AccountOderPage />} >
               <Route path=":orderId" element={<AccountDetailOrderPage />} />
-            </Route>
+            </Route> */}
+            <Route path="achievements" element={<AccountAchievement />} />
             <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
-            <Route path="support" element={<AccountSupportPage />} />
           </Route>
+        </Route>
+
+        <Route path="/utebook/package-plan" element={<PackageLayout />}>
+          <Route path="" element={<MembershipPlansPage />} />
+          <Route path="hoa-phuong" element={<HoaPhuongPage />} />
+          <Route path="activate-code" element={<ActivateCodePage />} />
+          <Route path="thong-tin/nhan-ma-khuyen-mai" element={<WhereIsCodePage />} />
         </Route>
 
         <Route element={<UserLayout />}>

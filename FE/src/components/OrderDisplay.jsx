@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./styles/OrderDisplay.scss";
 
 import emptyOrder from "../assets/emptyOrder.png";
@@ -8,10 +9,17 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 
-const ItemStatus = ["Chờ xác nhận", "Đang giao hàng", "Đã giao", "Đã hủy", "Giao hàng không thành công"];
-
+const ItemStatus = {
+    "need_confirm": "Chờ xác nhận",
+    "delivering": "Đang giao hàng",
+    "delivered": "Đã giao",
+    "received": "Đã nhận",
+    "canceled": "Đã hủy",
+    "failed": "Giao hàng không thành công"
+};
 const OrderDisplay = ({ itemData }) => {
     const [searchText, setSearchText] = useState("");
+    const navigate = useNavigate();
 
     return (
         <div className="order-card-container">
@@ -84,14 +92,22 @@ const OrderDisplay = ({ itemData }) => {
                                     }
                                 </p>
                                 <div className="action-buttons">
-                                    {[2, 3, 4].includes(item.trangThai) ?
+                                    {['received', 'canceled', 'failed'].includes(item.trangThai) ?
                                         (
                                             <button className="btn-outline">Mua lại</button>
                                         ) : (
-                                            <button className="btn-outline">Hủy đơn hàng </button>
-                                        )}
+                                            <div>
+                                                {item.trangThai === "delivered" ?
+                                                    (
+                                                        <button className="btn-outline">Đã nhận hàng </button>
+                                                    ) : (
+                                                        <button className="btn-outline">Hủy đơn hàng </button>
+                                                    )}
 
-                                    <button className="btn-outline">Xem chi tiết</button>
+                                            </div>
+
+                                        )}
+                                    <button className="btn-outline" onClick={() => navigate(`/utebook/account/orders/${item.maDonHang}`)}>Xem chi tiết </button>
                                 </div>
                             </div>
                         </div>

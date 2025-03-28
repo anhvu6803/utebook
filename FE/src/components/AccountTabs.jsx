@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./styles/AccountTabs.scss";
-import searchResult from "./../assets/icon-search-result.png";
 
 import CustomImageList from "./CustomImageList";
 const AccountTabs = ({ itemData, tabs }) => {

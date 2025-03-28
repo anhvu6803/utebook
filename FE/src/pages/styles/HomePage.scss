@@ -1,0 +1,28 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .image-swiper {
+        width: 100%;
+        height: 500px;
+    }
+
+    .book-swiper {
+        width: 100%;
+        height: fit-content;
+        padding: 20px 0px;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        position: relative;
+
+        .book-swiper-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+    }
+}

@@ -16,7 +16,7 @@ const AccountDetailOrderPage = () => {
         <div className="detail-order-settings">
             <div className="order-left-containter">
                 <div className="order-header">
-                    <ArrowBackIosIcon className="icon" />
+                    <ArrowBackIosIcon className="icon" onClick={() => window.history.back()} />
                     <h1 className="title">Chi tiết đơn hàng</h1>
                 </div>
                 <div className="order-content">

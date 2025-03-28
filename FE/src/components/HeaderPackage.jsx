@@ -3,22 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/HeaderHome.scss";
 
-import EbookMenu from "./EbookMenu";
-import AudioMenu from "./AudioMenu";
-import NovelMenu from "./NovelMenu";
-import PodcastMenu from "./PodcastMenu";
 import NotificationMenu from "./NotificationMenu";
 import UserMenu from "./UserMenu";
 import logo from "../assets/logoUTE.png";
 
+import SupportForm from "./SupportForm";
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Crown } from "lucide-react";
-import { bool } from "prop-types";
 
-const HeaderHome = () => {
+const HeaderPackage = () => {
   const navigate = useNavigate();
-
+  const [showForm, setShowForm] = useState(false);
+  const handleShowForm = (boolean) => {
+    setShowForm(boolean);
+  }
   const [isShowSearch, SetShowSearch] = useState(false);
   const handleSearchClick = () => {
     SetShowSearch(!isShowSearch);
@@ -37,11 +36,27 @@ const HeaderHome = () => {
         </div>
 
         <nav className="nav-links">
-          <EbookMenu />
-          <AudioMenu />
-          <NovelMenu />
-          <PodcastMenu />
-          <a href="#">Sáng tác</a>
+          <a
+            className={location.pathname === "/utebook/package-plan" ? "active" : ""}
+            href="/utebook/package-plan"
+          >
+            Gói hội viên
+          </a>
+          <a className={location.pathname === "/utebook/package-plan/hoa-phuong" ? "active" : ""}
+            href="/utebook/package-plan/hoa-phuong"
+          >
+            Gói hoa phượng
+          </a>
+          <a className={location.pathname === "/utebook/package-plan/activate-code" ? "active" : ""}
+            href="/utebook/package-plan/activate-code"
+          >
+            Kích hoạt mã code
+          </a>
+          <SupportForm
+            isHeader={true}
+            showForm={showForm}
+            handleShowForm={handleShowForm}
+          />
         </nav>
 
       </div>
@@ -93,4 +108,4 @@ const HeaderHome = () => {
   );
 };
 
-export default HeaderHome;
+export default HeaderPackage;
