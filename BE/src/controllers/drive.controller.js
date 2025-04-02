@@ -28,7 +28,6 @@ class DriveController {
                     mimeType: result.mimeType,
                     size: result.size,
                     viewLink: result.webViewLink,
-                    downloadLink: result.webContentLink,
                     uploadInfo: {
                         uploadedBy: result.properties.uploadedBy,
                         uploadedAt: result.properties.uploadedAt,
@@ -99,9 +98,31 @@ class DriveController {
     static async shareFile(req, res) {
         try {
             const { fileId } = req.params;
-            const { emails } = req.body;
+            const { email } = req.body;
 
-            const result = await DriveService.shareFile(fileId, req.userEmail, emails);
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Email không được để trống'
+                });
+            }
+
+            // Xử lý cả trường hợp email đơn lẻ và mảng email
+            const emailsToShare = Array.isArray(email) ? email : [email];
+
+            // Validate tất cả các email
+            for (const email of emailsToShare) {
+                if (!emailRegex.test(email)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `Email không hợp lệ: ${email}`
+                    });
+                }
+            }
+
+            const result = await DriveService.shareFile(fileId, req.userEmail, emailsToShare);
             
             res.status(200).json({
                 success: true,
@@ -118,7 +139,17 @@ class DriveController {
 
     static async removeAccess(req, res) {
         try {
-            const { fileId, email } = req.params;
+            const { fileId } = req.params;
+            const { email } = req.body;
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Email không hợp lệ'
+                });
+            }
 
             const result = await DriveService.removeFileAccess(fileId, req.userEmail, email);
             

@@ -38,7 +38,7 @@ router.post('/files/:fileId/share',
     DriveController.shareFile
 );
 
-router.delete('/files/:fileId/access/:email', 
+router.delete('/files/:fileId/access', 
     checkAllowedEmail,
     DriveController.removeAccess
 );

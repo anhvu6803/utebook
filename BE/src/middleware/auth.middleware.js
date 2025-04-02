@@ -19,8 +19,16 @@ const checkAllowedEmail = async (req, res, next) => {
             });
         }
 
-        // Kiểm tra email có trong danh sách được phép không
         if (!ALLOWED_EMAILS.includes(userEmail.toLowerCase())) {
+            if (req.method === 'POST' && req.path.includes('/upload')) {
+                const user = await User.findOne({ email: userEmail.toLowerCase() });
+                if (user) {
+                    req.user = user;
+                    req.userEmail = userEmail.toLowerCase();
+                    return next();
+                }
+            }
+            
             return res.status(403).json({
                 success: false,
                 message: 'Email không có quyền truy cập'

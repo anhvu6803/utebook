@@ -6,69 +6,88 @@ const path = require('path');
 const fs = require('fs');
 
 exports.registerUser = async (userData) => {
-    const { username, email, password } = userData;
+    const { username, email, password, isGoogleUser } = userData;
 
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
         throw new Error('Username or email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Nếu là đăng ký thông thường
+    if (!isGoogleUser) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const token = crypto.randomBytes(20).toString('hex');
 
-    const token = crypto.randomBytes(20).toString('hex');
+        const tempUser = {
+            username,
+            fullname: userData.fullname,
+            password: hashedPassword,
+            email,
+            ngaySinh: userData.ngaySinh,
+            gioiTinh: userData.gioiTinh,
+            numberPhone: userData.numberPhone,
+            address: userData.address,
+            confirmationToken: token,
+            confirmationExpires: Date.now() + 3600000, // 1 hour
+        };
 
-    const tempUser = {
-        username,
-        fullname: userData.fullname,
-        password: hashedPassword,
-        email,
-        ngaySinh: userData.ngaySinh,
-        gioiTinh: userData.gioiTinh,
-        sachYeuThich: [],
-        sachSangTac: [],
-        confirmationToken: token,
-        confirmationExpires: Date.now() + 3600000, // 1 hour
+        global.tempUsers = global.tempUsers || {};
+        global.tempUsers[token] = tempUser;
 
-    };
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'tranthanhnam3024@gmail.com',
+                pass: 'zeku tdtg hhcd xsth'
+            }
+        });
 
-    global.tempUsers = global.tempUsers || {};
-    global.tempUsers[token] = tempUser;
-
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'tranthanhnam3024@gmail.com',
-            pass: 'zeku tdtg hhcd xsth'
-        }
-    });
-
-
-    const mailOptions = {
-        to: tempUser.email,
-        from: 'tranthanhnam3024@gmail.com',
-        subject: 'Email Confirmation',
-        text: `Please click the following link to confirm your email: 
-        http://${userData.host}/auth/confirm/${token}`,
-        html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
-               
-                <h2 style="color: #333;">Email Confirmation</h2>
-                <p>Dear ${tempUser.fullname},</p>
-                <p>Thank you for registering. Please click the button below to confirm your email address:</p>
-                <div style="text-align: center; margin: 20px 0;">
-                    <a href="http://${userData.host}/api/user/confirm/${token}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; border-radius: 5px; text-decoration: none;">Confirm Email</a>
+        const mailOptions = {
+            to: tempUser.email,
+            from: 'tranthanhnam3024@gmail.com',
+            subject: 'Email Confirmation',
+            text: `Please click the following link to confirm your email: 
+            http://${userData.host}/auth/confirm/${token}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+                    <h2 style="color: #333;">Email Confirmation</h2>
+                    <p>Dear ${tempUser.fullname},</p>
+                    <p>Thank you for registering. Please click the button below to confirm your email address:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="http://${userData.host}/api/user/confirm/${token}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; border-radius: 5px; text-decoration: none;">Confirm Email</a>
+                    </div>
+                    <p>If you did not request this, please ignore this email.</p>
+                    <p>Best regards,<br>Your Company</p>
+                    <hr style="border: 0; border-top: 1px solid #eee;">
+                    <p style="font-size: 12px; color: #999;">This is an automated message, please do not reply.</p>
                 </div>
-                <p>If you did not request this, please ignore this email.</p>
-                <p>Best regards,<br>Your Company</p>
-                <hr style="border: 0; border-top: 1px solid #eee;">
-                <p style="font-size: 12px; color: #999;">This is an automated message, please do not reply.</p>
-            </div>
-        `
-    };
+            `
+        };
 
-    await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
+        return tempUser;
+    } 
+    // Nếu là đăng ký bằng Google
+    else {
+        const newUser = new User({
+            username,
+            fullname: userData.fullname,
+            email,
+            password: await bcrypt.hash(crypto.randomBytes(20).toString('hex'), 10), // Random password for Google users
+            googleId: userData.googleId,
+            googleAccessToken: userData.googleAccessToken,
+            googleRefreshToken: userData.googleRefreshToken,
+            avatar: userData.avatar,
+            isVerified: true, // Google accounts are pre-verified
+            ngaySinh: userData.ngaySinh,
+            gioiTinh: userData.gioiTinh,
+            numberPhone: userData.numberPhone,
+            address: userData.address
+        });
 
-    return tempUser;
+        await newUser.save();
+        return newUser;
+    }
 };
 
 exports.confirmEmail = async (token) => {
