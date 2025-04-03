@@ -1,0 +1,15 @@
+.layout-author {
+    display: flex; // Sắp xếp các phần tử con theo hàng ngang
+    padding-top: 10px;
+    height: auto;
+    width: 100%;
+
+    .menu-bar {
+        display: flex;
+    }
+
+    .content-account {
+        flex-grow: 1;
+        position: relative;
+    }
+}

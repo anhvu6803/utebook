@@ -1,12 +1,8 @@
-.home-container {
+.book-page-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
-
-    .image-swiper {
-        width: 100%;
-        height: 500px;
-    }
+    padding-bottom: 20px;
 
     .book-swiper {
         width: 100%;

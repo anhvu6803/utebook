@@ -11,7 +11,7 @@ export default function NovelMenu() {
       onMouseEnter={() => setIsOpen(true)} // Mở khi di chuột vào
       onMouseLeave={() => setIsOpen(false)} // Đóng khi rời chuột khỏi menu
     >
-      <a href="#" className="category-link">
+      <a href="/utebook/novel" className="category-link">
         Sách truyện 
       </a>
 

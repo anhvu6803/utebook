@@ -8,6 +8,10 @@
     padding: 20px;
     position: relative;
 
+    .swiper {
+        width: 100%;
+    }
+
     .swiper-wrapper {
         display: flex;
         flex-direction: row;

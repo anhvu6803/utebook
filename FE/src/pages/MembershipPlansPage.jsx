@@ -12,7 +12,7 @@ const plans = [
 const MembershipPlansPage = () => {
   return (
     <>
-      <img src={background} alt="background" />
+      <img src={background} alt="background" className="img-backgound"/>
 
       <div className="membership-container">
         <div className="membership-header ">
@@ -27,7 +27,7 @@ const MembershipPlansPage = () => {
               <p className="price">{plan.price.toLocaleString()}đ</p>
               <p className="day">{plan.days} ngày đọc/nghe sách</p>
               <button className="buy-button">
-                <p style={{ fontSize: 14, fontWeight: 500 }}>Mua gói</p>
+                <span style={{ fontSize: 14, fontWeight: 500 }}>Mua gói</span>
               </button>
             </div>
           ))}

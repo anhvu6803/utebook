@@ -11,7 +11,7 @@ export default function PodcastMenu() {
       onMouseEnter={() => setIsOpen(true)} // Mở khi di chuột vào
       onMouseLeave={() => setIsOpen(false)} // Đóng khi rời chuột khỏi menu
     >
-      <a href="#" className="category-link">
+      <a href="/utebook/podcast" className="category-link">
         Podcast
       </a>
 

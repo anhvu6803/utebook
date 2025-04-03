@@ -1,6 +1,6 @@
-img {
+.img-backgound {
     width: 100%;
-    height: 200px;
+    height: 340px;
     object-fit: cover;
 }
 
@@ -10,18 +10,19 @@ img {
     color: white;
     padding: 20px;
     z-index: 1000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 
     .membership-header {
-        height: 200px;
+        height: 340px;
         padding: 0 25px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        background: rgb(51, 51, 51, .5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
         h2 {
             opacity: 1;

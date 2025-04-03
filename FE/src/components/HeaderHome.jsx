@@ -41,7 +41,7 @@ const HeaderHome = () => {
           <AudioMenu />
           <NovelMenu />
           <PodcastMenu />
-          <a href="#">Sáng tác</a>
+          <a href="/utebook/creative">Sáng tác</a>
         </nav>
 
       </div>

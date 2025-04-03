@@ -52,11 +52,13 @@ const UserMenu = () => {
                             </span>
                         </div>
                     </div>
-                    {typeMemeber !== 'vip' &&
-                        <div className="user-actions">
-                            <button>Trở thành hội viên</button>
-                        </div>
-                    }
+
+                    <div className="user-actions">
+                        {typeMemeber !== 'vip' &&
+                            <button onClick={() => handleLoadLink("/utebook/package-plan")}>Trở thành hội viên</button>
+                        }
+                        <button onClick={() => handleLoadLink("/utebook/author")}>Trở thành tác giả </button>
+                    </div>
                 </div>
 
                 <ul className="menu-list">

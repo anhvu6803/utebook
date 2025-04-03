@@ -26,6 +26,7 @@
         height: 70px;
         width: auto;
         margin-left: 40px;
+        border: none;
       }
     }
 
@@ -79,9 +80,9 @@
     }
 
     .btn-member {
-      border: 2px solid #fffdd0;
-      color: #fffdd0;
-      background: rgb(254, 254, 51, .2);
+      border: 2px solid #ff9800;
+      color: white;
+      background: linear-gradient(to right, rgb(255, 87, 34, .7), rgb(255, 152, 0, .7));
       border-radius: 25px;
       padding: 0 6.5px;
       cursor: pointer;

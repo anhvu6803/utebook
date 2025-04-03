@@ -6,7 +6,7 @@ const WhereIsCodePage = () => {
 
   return (
     <>
-      <img src={background3} alt="background" />
+      <img src={background3} alt="background" className="img-backgound"/>
 
       <div className="where-code-container">
         <div className="where-code-header ">

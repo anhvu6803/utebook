@@ -28,7 +28,7 @@ const MenuProps = {
     },
 };
 
-const CustomSelect_Nosearch = ({ options, selectedValue, handleChange, placeholder, width }) => {
+const CustomSelect_Nosearch = ({ options, selectedValue, handleChange, placeholder, width, isRequire = true }) => {
 
     return (
         <div>
@@ -58,7 +58,9 @@ const CustomSelect_Nosearch = ({ options, selectedValue, handleChange, placehold
                 <InputLabel id="label">
                     {<>
                         <span>{placeholder} </span>
-                        <span style={{ color: "#ff375f" }}>*</span>
+                        {isRequire &&
+                            <span style={{ color: "#ff375f" }}>*</span>
+                        }
                     </>}
                 </InputLabel>
                 <Select
@@ -68,7 +70,10 @@ const CustomSelect_Nosearch = ({ options, selectedValue, handleChange, placehold
                     input={
                         <OutlinedInput label=
                             {<>
-                                <span>{placeholder} *</span>
+                                <span>{placeholder}</span>
+                                {isRequire &&
+                                    <span>{' '} *</span>
+                                }
                             </>}
                         />
                     }

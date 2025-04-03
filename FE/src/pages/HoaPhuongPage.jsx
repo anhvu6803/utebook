@@ -19,7 +19,7 @@ const plans = [
 const HoaPhuongPage = () => {
   return (
     <>
-      <img src={background2} alt="background" />
+      <img src={background2} alt="background" className="img-backgound"/>
 
       <div className="hoaphuong-container">
         <div className="hoaphuong-header ">
@@ -49,7 +49,7 @@ const HoaPhuongPage = () => {
               </div>
               <p className="price">{plan.price.toLocaleString()}đ</p>
               <button className="buy-button">
-                <p style={{ fontSize: 14, fontWeight: 500 }}>Mua gói</p>
+                <span style={{ fontSize: 14, fontWeight: 500 }}>Mua gói</span>
               </button>
             </div>
           ))}

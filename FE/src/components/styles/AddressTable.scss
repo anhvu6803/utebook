@@ -12,6 +12,7 @@
             background-color: #2673C5;
             color: #f0f0f0;
             border-top-left-radius: 20px;
+            pointer-events: none;
 
             th {
                 padding: 16px 12px;
@@ -44,6 +45,7 @@
                     font-size: 14px;
                     word-wrap: break-word;
                     font-weight: 500;
+                    border: none;
                 }
 
                 td:nth-child(3) {
