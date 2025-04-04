@@ -27,6 +27,10 @@ const AccountSettingMenu = () => {
     const handleClick = (item) => {
         navigate(item.path);
     }
+    const handleLoadLink = (path) => {
+        navigate(path); // Chuyển hướng trang
+        window.location.reload();
+    }
     const handleShowForm = (boolean) => {
         setShowForm(boolean);
     }
@@ -59,14 +63,25 @@ const AccountSettingMenu = () => {
                     </div>
                 </div>
                 <div className="user-actions">
-                    <button className="btn">Mua hoa</button>
+                    <button
+                        className="btn"
+                        onClick={() => handleLoadLink("/utebook/package-plan/hoa-phuong")}
+                    >
+                        Mua hoa
+                    </button>
                     {typeMemeber === 'vip' ?
                         (
-                            <button className={`btn ${typeMemeber}`}>
+                            <button
+                                onClick={() => handleLoadLink("/utebook/package-plan")}
+                                className={`btn ${typeMemeber}`}
+                            >
                                 Xem gói cước
                             </button>
                         ) : (
-                            <button className="btn">
+                            <button
+                                className="btn"
+                                onClick={() => handleLoadLink("/utebook/package-plan")}
+                            >
                                 Trở thành hội viên
                             </button>
                         )}
@@ -90,7 +105,7 @@ const AccountSettingMenu = () => {
                     handleShowForm={handleShowForm}
                 />
             </ul>
-        </div>
+        </div >
     );
 };
 

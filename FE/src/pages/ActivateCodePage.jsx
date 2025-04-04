@@ -7,7 +7,7 @@ const ActivateCodePage = () => {
 
   return (
     <>
-      <img src={background3} alt="background" />
+      <img src={background3} alt="background" className="img-backgound"/>
 
       <div className="activate-code-container">
         <div className="activate-code-header ">

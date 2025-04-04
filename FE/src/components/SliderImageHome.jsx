@@ -27,28 +27,36 @@ const SliderImageHome = () => {
     }
   };
   return (
-    <div className="swiper-container">
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        ref={swiperRef}
-        loop={true}
-        pagination={{ clickable: true }}
-        navigation={false}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
-        className="swiper-wrapper"
-      >
-        <div className='swiper-button'>
-          <button className="swiper-button-next" onClick={handleNext} />
-          <button className="swiper-button-prev" onClick={handlePrev} />
-        </div>
-        <SwiperSlide style={{ backgroundImage: "url('https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600')" }}></SwiperSlide>
-        <SwiperSlide style={{ backgroundImage: "url('https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4012.jpg?v=1&w=1920&h=600')" }}></SwiperSlide>
-        <SwiperSlide style={{ backgroundImage: "url('https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4018.jpg?v=1&w=1920&h=600')" }}></SwiperSlide>
-      </Swiper>
+    <div className='slider-image-home'>
+      <div className="swiper-container">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          ref={swiperRef}
+          loop={true}
+          pagination={{ clickable: true }}
+          navigation={false}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          className="swiper-wrapper"
+        >
+          <div className='swiper-button'>
+            <button className="swiper-button-next" onClick={handleNext} />
+            <button className="swiper-button-prev" onClick={handlePrev} />
+          </div>
+          <SwiperSlide>
+            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
+          </SwiperSlide>
+        </Swiper>
 
+      </div>
     </div>
   );
 };

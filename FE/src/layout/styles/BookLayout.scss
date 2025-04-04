@@ -1,0 +1,11 @@
+.layout-book {
+    display: flex; // Sắp xếp các phần tử con theo hàng ngang
+    padding: 0;
+    height: auto;
+    width: 100%;
+
+    .content-book {
+        width: 100%;
+        position: relative;
+    }
+}

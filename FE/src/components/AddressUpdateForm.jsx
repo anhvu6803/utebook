@@ -10,6 +10,7 @@ import CustomSwitch from "./CustomSwitch";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
+import { Modal } from "@mui/material";
 
 const typeAddress = ['Nhà riêng', 'Văn phòng'];
 
@@ -64,219 +65,193 @@ const AddressUpdateForm = ({ isNewAddress = true }) => {
     const handleAddressTypeChange = (e) => {
         setAddressType(e.target.value);
     };
-    
+
     return (
-        <div className="address-form-container">
-
-            {showForm && <div className="backdrop" />}
-
+        <>
             <button className={isNewAddress ? "create-address-btn" : "btn-update"}
                 onClick={() => setShowForm(true)}
             >
                 {isNewAddress && <AddIcon className="icon-create" />}
                 {isNewAddress ? "Tạo địa chỉ" : "Cập nhật"}
             </button>
-            <div className={`address-form ${showForm ? "show" : ""}`}>
-                <h2>Thêm địa chỉ nhận hàng</h2>
-                <p>Vui lòng nhập đầy đủ các trường thông tin bắt buộc!</p>
-                <HighlightOffIcon className="close-icon" onClick={() => setShowForm(false)} />
-                <form >
-                    <div className="form-group">
-                        <TextField
-                            sx={{
-                                width: '260px',
-                                background: '#e8f0fe',
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#005bbb", // Màu viền cố định
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#005bbb", // Khi hover vẫn giữ màu này
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#005bbb", // Khi focus vẫn giữ màu này
-                                    },
-                                },
-                                "& .MuiInputLabel-root": {
-                                    color: "#999999", // Màu mặc định
-                                    "&.Mui-focused": {
-                                        color: "#005bbb", // Khi focus đổi màu
-                                    }
-                                }
-                            }}
-                            id="fullName"
-                            label=
-                            {<>
-                                <span>Họ và tên </span>
-                                <span style={{ color: "#ff375f" }}>*</span>
-                            </>}
-                            variant="outlined"
-                        />
-                        <TextField
-                            sx={{
-                                width: '260px',
-                                background: '#e8f0fe',
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#005bbb", // Màu viền cố định
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#005bbb", // Khi hover vẫn giữ màu này
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#005bbb", // Khi focus vẫn giữ màu này
-                                    },
-                                },
-                                "& .MuiInputLabel-root": {
-                                    color: "#999999", // Màu mặc định
-                                    "&.Mui-focused": {
-                                        color: "#005bbb", // Khi focus đổi màu
-                                    }
-                                }
-                            }}
-                            id="phoneNumber"
-                            label=
-                            {<>
-                                <span>Số điện thoại </span>
-                                <span style={{ color: "#ff375f" }}>*</span>
-                            </>}
-                            variant="outlined"
-                        />
-                        <TextField
-                            sx={{
-                                width: '260px',
-                                background: '#e8f0fe',
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#005bbb", // Màu viền cố định
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#005bbb", // Khi hover vẫn giữ màu này
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#005bbb", // Khi focus vẫn giữ màu này
-                                    },
-                                },
-                                "& .MuiInputLabel-root": {
-                                    color: "#999999", // Màu mặc định
-                                    "&.Mui-focused": {
-                                        color: "#005bbb", // Khi focus đổi màu
-                                    }
-                                }
-                            }}
-                            id="email"
-                            label="Email"
-                            variant="outlined"
-                        />
-                    </div>
+            <Modal open={showForm}
+                onClose={() => setShowForm(false)}
+            >
+                <div className="address-form-container">
 
-                    <div className="form-group">
-                        <CustomSelect
-                            options={provinces}
-                            selectedValue={selectedProvince}
-                            handleChange={handleProvinceChange}
-                            placeholder="Tỉnh/Thành phố"
-                            width={'260px'}
-                        />
 
-                        <CustomSelect
-                            options={districts}
-                            selectedValue={selectedDistrict}
-                            handleChange={handleDistrictChange}
-                            placeholder="Quận/Huyện"
-                            width={'260px'}
-                        />
 
-                        <CustomSelect
-                            options={wards}
-                            selectedValue={selectedWard}
-                            handleChange={(e) => setSelectedWard(e.target.value)}
-                            placeholder="Phường/Xã"
-                            width={'260px'}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <TextField
-                            sx={{
-                                width: '845px',
-                                background: '#e8f0fe',
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#005bbb", // Màu viền cố định
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#005bbb", // Khi hover vẫn giữ màu này
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#005bbb", // Khi focus vẫn giữ màu này
-                                    },
-                                },
-                                "& .MuiInputLabel-root": {
-                                    color: "#999999", // Màu mặc định
-                                    "&.Mui-focused": {
-                                        color: "#005bbb", // Khi focus đổi màu
-                                    }
-                                }
-                            }}
-                            id="detailAddress"
-                            label=
-                            {<>
-                                <span style={{ color: "#999999" }}>Địa chỉ chi tiết </span>
-                                <span style={{ color: "#ff375f" }}>*</span>
-                            </>}
-                            variant="outlined"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <CustomSelect_Nosearch
-                            options={typeAddress}
-                            selectedValue={selectAddressType}
-                            handleChange={handleAddressTypeChange}
-                            placeholder="Loại địa chỉ"
-                            width={'845px'}
-                        />
-                    </div>
+                    <div className={`address-form ${showForm ? "show" : ""}`}>
+                        <h2>Thêm địa chỉ nhận hàng</h2>
+                        <p>Vui lòng nhập đầy đủ các trường thông tin bắt buộc!</p>
+                        <HighlightOffIcon className="close-icon" onClick={() => setShowForm(false)} />
+                        <form >
+                            <div className="form-group">
+                                <TextField
+                                    sx={{
+                                        width: '260px',
+                                        background: '#e8f0fe',
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "#005bbb", // Màu viền cố định
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "#005bbb", // Khi hover vẫn giữ màu này
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "#005bbb", // Khi focus vẫn giữ màu này
+                                            },
+                                        },
+                                        "& .MuiInputLabel-root": {
+                                            color: "#999999", // Màu mặc định
+                                            "&.Mui-focused": {
+                                                color: "#005bbb", // Khi focus đổi màu
+                                            }
+                                        }
+                                    }}
+                                    id="fullName"
+                                    label=
+                                    {<>
+                                        <span>Họ và tên </span>
+                                        <span style={{ color: "#ff375f" }}>*</span>
+                                    </>}
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    sx={{
+                                        width: '260px',
+                                        background: '#e8f0fe',
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "#005bbb", // Màu viền cố định
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "#005bbb", // Khi hover vẫn giữ màu này
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "#005bbb", // Khi focus vẫn giữ màu này
+                                            },
+                                        },
+                                        "& .MuiInputLabel-root": {
+                                            color: "#999999", // Màu mặc định
+                                            "&.Mui-focused": {
+                                                color: "#005bbb", // Khi focus đổi màu
+                                            }
+                                        }
+                                    }}
+                                    id="phoneNumber"
+                                    label=
+                                    {<>
+                                        <span>Số điện thoại </span>
+                                        <span style={{ color: "#ff375f" }}>*</span>
+                                    </>}
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    sx={{
+                                        width: '260px',
+                                        background: '#e8f0fe',
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "#005bbb", // Màu viền cố định
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "#005bbb", // Khi hover vẫn giữ màu này
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "#005bbb", // Khi focus vẫn giữ màu này
+                                            },
+                                        },
+                                        "& .MuiInputLabel-root": {
+                                            color: "#999999", // Màu mặc định
+                                            "&.Mui-focused": {
+                                                color: "#005bbb", // Khi focus đổi màu
+                                            }
+                                        }
+                                    }}
+                                    id="email"
+                                    label="Email"
+                                    variant="outlined"
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <TextField
-                            sx={{
-                                width: '845px',
-                                background: '#e8f0fe',
-                                "& .MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                        borderColor: "#005bbb", // Màu viền cố định
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "#005bbb", // Khi hover vẫn giữ màu này
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "#005bbb", // Khi focus vẫn giữ màu này
-                                    },
-                                },
-                                "& .MuiInputLabel-root": {
-                                    color: "#999999", // Màu mặc định
-                                    "&.Mui-focused": {
-                                        color: "#005bbb", // Khi focus đổi màu
-                                    }
-                                }
-                            }}
-                            id="Note"
-                            label=
-                            {<>
-                                <span style={{ color: "#999999" }}>Ghi chú </span>
-                            </>}
-                            variant="outlined"
-                        />
-                    </div>
+                            <div className="form-group">
+                                <CustomSelect
+                                    options={provinces}
+                                    selectedValue={selectedProvince}
+                                    handleChange={handleProvinceChange}
+                                    placeholder="Tỉnh/Thành phố"
+                                    width={'260px'}
+                                />
 
-                    <div className="form-group switch">
-                        <CustomSwitch />
-                    </div>
+                                <CustomSelect
+                                    options={districts}
+                                    selectedValue={selectedDistrict}
+                                    handleChange={handleDistrictChange}
+                                    placeholder="Quận/Huyện"
+                                    width={'260px'}
+                                />
 
-                    <button type="submit">Cập nhật</button>
-                </form>
-            </div>
-        </div>
+                                <CustomSelect
+                                    options={wards}
+                                    selectedValue={selectedWard}
+                                    handleChange={(e) => setSelectedWard(e.target.value)}
+                                    placeholder="Phường/Xã"
+                                    width={'260px'}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <TextField
+                                    sx={{
+                                        width: '845px',
+                                        background: '#e8f0fe',
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "#005bbb", // Màu viền cố định
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "#005bbb", // Khi hover vẫn giữ màu này
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "#005bbb", // Khi focus vẫn giữ màu này
+                                            },
+                                        },
+                                        "& .MuiInputLabel-root": {
+                                            color: "#999999", // Màu mặc định
+                                            "&.Mui-focused": {
+                                                color: "#005bbb", // Khi focus đổi màu
+                                            }
+                                        }
+                                    }}
+                                    id="detailAddress"
+                                    label=
+                                    {<>
+                                        <span style={{ color: "#999999" }}>Địa chỉ chi tiết </span>
+                                        <span style={{ color: "#ff375f" }}>*</span>
+                                    </>}
+                                    variant="outlined"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <CustomSelect_Nosearch
+                                    options={typeAddress}
+                                    selectedValue={selectAddressType}
+                                    handleChange={handleAddressTypeChange}
+                                    placeholder="Loại địa chỉ"
+                                    width={'845px'}
+                                />
+                            </div>
+
+                            <div className="form-group switch">
+                                <CustomSwitch />
+                            </div>
+
+                            <button type="submit">Cập nhật</button>
+                        </form>
+                    </div>
+                </div>
+            </Modal>
+        </>
     );
 };
 
