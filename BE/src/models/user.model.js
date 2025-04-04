@@ -5,9 +5,6 @@ const UserSchema = new mongoose.Schema({
     fullname: { type: String, required: true },
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    googleId: { type: String, unique: true },
-    googleAccessToken: { type: String },
-    googleRefreshToken: { type: String },
     avatar: { type: String },
     isVerified: { type: Boolean, default: false },
     ngaySinh: { type: Date, required: true },
@@ -17,5 +14,7 @@ const UserSchema = new mongoose.Schema({
     numberPhone: { type: String, required: true },
     address: { type: String, required: true },
 }, { timestamps: true });
+
+// Tạo index cho googleId chỉ khi nó không null
 
 module.exports = mongoose.model('User', UserSchema);

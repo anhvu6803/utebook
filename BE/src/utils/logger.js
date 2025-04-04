@@ -1,14 +1,13 @@
 const winston = require('winston');
 const path = require('path');
 
-// Define log format
+
 const logFormat = winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
     winston.format.json()
 );
 
-// Create logger instance
 const logger = winston.createLogger({
     format: logFormat,
     transports: [

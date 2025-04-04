@@ -1,7 +1,7 @@
 const { drive } = require('../config/googleDrive.config');
 const stream = require('stream');
 const FileAccess = require('../models/fileAccess.model');
-const { ALLOWED_EMAILS } = require('../middleware/auth.middleware');
+const { ALLOWED_EMAILS } = require('../middleware/authEmail.middleware');
 
 class DriveService {
     static async uploadFile(fileObject, user, allowedEmails = []) {
