@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const DriveController = require('../controllers/drive.controller');
-const { checkAllowedEmail } = require('../middleware/auth.middleware');
+const { checkAllowedEmail } = require('../middleware/authEmail.middleware');
 
 // Cấu hình multer
 const upload = multer({
@@ -38,7 +38,7 @@ router.post('/files/:fileId/share',
     DriveController.shareFile
 );
 
-router.delete('/files/:fileId/access/:email', 
+router.delete('/files/:fileId/access', 
     checkAllowedEmail,
     DriveController.removeAccess
 );

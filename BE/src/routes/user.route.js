@@ -1,18 +1,10 @@
 const express = require('express');
-const { body } = require('express-validator');
 const router = express.Router();
-const { UserController } = require('../controllers/index');
+const userController = require('../controllers/user.controller');
 
-router.post('/register', UserController.registerUser);
-router.get('/confirm/:token', UserController.confirmEmail);
-router.post('/resend-confirmation', UserController.resendConfirmationEmail);
-router.post('/request-password-reset', [
-    body('email').isEmail().withMessage('Valid email is required')
-], UserController.requestPasswordReset);
-
-router.post('/reset-password', [
-    body('token').notEmpty().withMessage('Token is required'),
-    body('newPassword').notEmpty().withMessage('New password is required')
-], UserController.resetPassword);
-
+router.post('/send-verification-code', userController.sendVerificationCode);
+router.post('/register', userController.register);
+router.post('/verify-email', userController.verifyEmail);
+router.post('/request-password-reset', userController.requestPasswordReset);
+router.post('/reset-password', userController.resetPassword);
 module.exports = router;
