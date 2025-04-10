@@ -46,7 +46,7 @@ const authUserMiddleware = async (req, res, next) => {
                             httpOnly: true,
                             secure: process.env.NODE_ENV === 'production',
                             sameSite: 'strict',
-                            maxAge: 2 * 60 * 1000 // 15 phút
+                            maxAge: 15 * 60 * 1000 // 15 phút
                         });
 
                         req.userId = userId;

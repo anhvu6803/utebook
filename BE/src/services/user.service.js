@@ -1,5 +1,4 @@
 const User = require('../models/user.model');
-const ResetToken = require('../models/resetToken.model');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const emailUtil = require('../utils/email.util');

@@ -47,6 +47,7 @@ import NovelPage from "./pages/NovelPage";
 import PodcastPage from "./pages/PodcastPage";
 import CreativeBook from "./pages/CreativeBook";
 import DetailBookPage from "./pages/DetailBookPage";
+import PaymentResultPage from "./pages/PaymentResultPage";
 
 const App = () => {
   return (
@@ -58,6 +59,8 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/change-password" element={<ChangePasswordPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/payment/success" element={<PaymentResultPage />} />
+          <Route path="/payment/failed" element={<PaymentResultPage />} />
         </Route>
 
         <Route path="/utebook" element={<HomeLayout />}>
@@ -107,6 +110,7 @@ const App = () => {
         <Route element={<UserLayout />}>
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+
         </Route>
         <Route path="/utebook-admin" element={<AdminLayout />}>
           <Route index element={<ManageUserPage />} />

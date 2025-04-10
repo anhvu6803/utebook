@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
     isMember: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
     numberPhone: { type: String, required: true },
-    address: { type: String, required: true },
 }, { timestamps: true });
 
 // Tạo index cho googleId chỉ khi nó không null
