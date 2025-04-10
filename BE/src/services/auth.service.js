@@ -147,6 +147,18 @@ class AuthService {
                 { expiresIn: '2m' }
             );
 
+            // Tạo refresh token mới
+            const refreshToken = jwt.sign(
+                { userId },
+                process.env.JWT_REFRESH_SECRET,
+                { expiresIn: '1d' }
+            );
+
+            // Cập nhật refresh token trong database
+            auth.refreshToken = refreshToken;
+            auth.expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
+            await auth.save();
+
             return { accessToken };
         } catch (error) {
             throw new Error('Failed to refresh token');

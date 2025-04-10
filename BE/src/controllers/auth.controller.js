@@ -1,4 +1,6 @@
 const authService = require('../services/auth.service');
+const jwt = require('jsonwebtoken');
+
 class AuthController {
     async login(req, res) {
         try {
@@ -13,7 +15,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 2 * 60 * 1000 
+                maxAge: 15 * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -39,7 +41,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 2 * 60 * 1000 
+                maxAge: 15 * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -63,17 +65,23 @@ class AuthController {
     }
     async refreshToken(req, res) {
         try {
-            const userId = req.userId;
-            if (!userId) {
-                return res.status(401).json({ message: 'Unauthorized' });
+            const accessToken = req.cookies.access_token;
+            if (!accessToken) {
+                return res.status(401).json({ message: 'No access token found' });
             }
 
-            const result = await authService.refreshToken(userId);
+            // Decode the access token to get userId
+            const decoded = jwt.decode(accessToken);
+            if (!decoded || !decoded.userId) {
+                return res.status(401).json({ message: 'Invalid access token' });
+            }
+
+            const result = await authService.refreshToken(decoded.userId);
             res.cookie('access_token', result.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 2 * 60 * 1000 /
+                maxAge: 15 * 60 * 1000
             });
 
             res.json({ message: 'Token refreshed successfully' });
