@@ -73,7 +73,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 2 * 60 * 1000 /
+                maxAge: 2 * 60 * 1000 // 2 phút
             });
 
             res.json({ message: 'Token refreshed successfully' });
@@ -139,8 +139,8 @@ class AuthController {
 
     async getMe(req, res) {
         try {
-            const userId = req.userId;
-            const user = await authService.getUserById(userId);
+            const userId = req.params.userId;
+            const user = await authService.getMe(userId);
             res.json({ user });
         } catch (error) {
             res.status(400).json({

@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: process.env.WEB_URI,
+  origin: [process.env.WEB_URI, process.env.WEB_URI_2],
   credentials: true,
 }));
 
