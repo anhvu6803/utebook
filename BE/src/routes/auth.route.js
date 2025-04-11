@@ -9,5 +9,5 @@ router.post('/google-login', authController.googleLogin);
 router.post('/logout', authUserMiddleware, authController.logout);
 router.post('/refresh-token', authController.refreshToken);
 router.get('/get-me/:userId', authController.getMe);
-
+router.get('/me', authController.getMe);
 module.exports = router;

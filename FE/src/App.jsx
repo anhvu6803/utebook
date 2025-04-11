@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute';
 
 import MainLayout from './layout/MainLayout'
 import HomeLayout from "./layout/HomeLayout";
@@ -62,27 +63,30 @@ const App = () => {
           <Route path="/payment/success" element={<PaymentResultPage />} />
           <Route path="/payment/failed" element={<PaymentResultPage />} />
         </Route>
-
-        <Route path="/utebook" element={<HomeLayout />}>
+        <Route path="/utebook" element={
+          <ProtectedRoute>
+            <HomeLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<HomePage />} />
-          <Route path="ebook" element={<EbookLayout />} >
+          <Route path="ebook" element={<EbookLayout />}>
             <Route index element={<EbookPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'ebook'} />} />
             <Route path="detailBook" element={<DetailBookPage />} />
           </Route>
-          <Route path="audio" element={<AudioLayout />} >
+          <Route path="audio" element={<AudioLayout />}>
             <Route index element={<AudioBookPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'audio'} />} />
           </Route>
-          <Route path="novel" element={<NovelLayout />} >
+          <Route path="novel" element={<NovelLayout />}>
             <Route index element={<NovelPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
           </Route>
-          <Route path="podcast" element={<PodcastLayout />} >
+          <Route path="podcast" element={<PodcastLayout />}>
             <Route index element={<PodcastPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'podcast'} />} />
           </Route>
-          <Route path="creative" element={<CreativeLayout pageName={'creative'} />} >
+          <Route path="creative" element={<CreativeLayout pageName={'creative'} />}>
             <Route index element={<CreativeBook />} />
             <Route path=":category" element={<BookCategoryPage />} />
           </Route>
@@ -94,13 +98,14 @@ const App = () => {
           </Route>
 
           <Route path="/utebook/author" element={<AuthorSettingLayout />}>
-
           </Route>
         </Route>
 
-
-
-        <Route path="/utebook/package-plan" element={<PackageLayout />}>
+        <Route path="/utebook/package-plan" element={
+          <ProtectedRoute>
+            <PackageLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<MembershipPlansPage />} />
           <Route path="hoa-phuong" element={<HoaPhuongPage />} />
           <Route path="activate-code" element={<ActivateCodePage />} />
@@ -108,11 +113,23 @@ const App = () => {
         </Route>
 
         <Route element={<UserLayout />}>
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
         </Route>
-        <Route path="/utebook-admin" element={<AdminLayout />}>
+
+        <Route path="/utebook-admin" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<ManageUserPage />} />
           <Route path="books" element={<ManageBookPage />} />
           <Route path="audio-books" element={<ManageAudioBookPage />} />
@@ -125,7 +142,7 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
-
   )
 }
-export default App
+
+export default App;

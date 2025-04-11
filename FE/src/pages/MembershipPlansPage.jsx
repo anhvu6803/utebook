@@ -36,7 +36,6 @@ const MembershipPlansPage = () => {
       }
     } catch (err) {
       console.error('Payment error:', err);
-      alert('Có lỗi xảy ra khi tạo thanh toán. Vui lòng thử lại sau.');
     }
   };
 
