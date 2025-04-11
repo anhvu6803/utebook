@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import testAvatar from "../assets/testAvatar.jpg";
 import axios from 'axios';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const defaultAvatar = 'https://res.cloudinary.com/dbmynlh3f/image/upload/v1744354478/cciryt3jpun1dys5rz8s.png';
 const AccountInfoTab = ({ userData }) => {
     const [username, setUsername] = useState(userData.username);
     const [userId, setUserId] = useState(userData._id);
@@ -14,7 +16,7 @@ const AccountInfoTab = ({ userData }) => {
         ''
     );
     const [gender, setGender] = useState(userData.gioiTinh);
-    const [profilePicture, setProfilePicture] = useState(userData.avatar);
+    const [profilePicture, setProfilePicture] = useState(userData.avatar || defaultAvatar);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [alert, setAlert] = useState({
@@ -24,6 +26,7 @@ const AccountInfoTab = ({ userData }) => {
     });
     const [hasChanges, setHasChanges] = useState(false);
     const [changedFields, setChangedFields] = useState({});
+    const [isFocusFullName, setFocusFullName] = useState(false);
 
     // Kiểm tra thay đổi
     useEffect(() => {
@@ -52,42 +55,50 @@ const AccountInfoTab = ({ userData }) => {
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
+        if (file && file.size > MAX_FILE_SIZE) {
+            setAlert({
+                open: true,
+                message: 'Tệp quá lớn, kích thước tối đa là 5MB.',
+                severity: 'error'
+            });
+            return;
+        }
         if (file) {
             setSelectedFile(file);
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfilePicture(reader.result);
-            };
             reader.readAsDataURL(file);
-
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const responseImage = await axios.post(
-                    'http://localhost:5000/api/cloudinary/upload',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                );
-                if (responseImage.data.success) {
-                    setProfilePicture(responseImage.data.data.url);
-                }
-            } catch (error) {
-                console.log(error.response ? error.response.data : error.message);
-            }
         }
     };
 
-    const handleUpdate = async () => {
+    const handleUploadImage = async () => {
         try {
-            setIsLoading(true);
-            setAlert({ ...alert, open: false });
+            const formData = new FormData();
+            formData.append('file', selectedFile);
 
+            const responseImage = await axios.post(
+                'http://localhost:5000/api/cloudinary/upload',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+            if (responseImage.data.success) {
+                setProfilePicture(responseImage.data.data.url);
+            }
+        } catch (error) {
+            setAlert({
+                open: true,
+                message: 'Có lỗi khi đăng ảnh đại diện',
+                severity: 'error'
+            });
+            return;
+        }
+    };
 
+    const handleUpdateInfor = async () => {
+        try {
             const response = await axios.patch(
                 `http://localhost:5000/api/user/${userId}`,
                 {
@@ -99,14 +110,28 @@ const AccountInfoTab = ({ userData }) => {
             );
 
             if (response.data.success) {
-                setAlert({
-                    open: true,
-                    message: 'Cập nhật thông tin thành công!',
-                    severity: 'success'
-                });
-                // Reset selectedFile after successful update
                 setSelectedFile(null);
             }
+        }
+        catch (error) {
+            setAlert({
+                open: true,
+                message: error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật thông tin',
+                severity: 'error'
+            });
+        }
+    }
+
+    const handleUpdate = async () => {
+        try {
+            setIsLoading(true);
+            setAlert({ ...alert, open: false });
+
+            await handleUploadImage().
+                then(
+                    await handleUpdateInfor()
+                );
+
         } catch (error) {
             setAlert({
                 open: true,
@@ -115,6 +140,11 @@ const AccountInfoTab = ({ userData }) => {
             });
         } finally {
             setIsLoading(false);
+            setAlert({
+                open: true,
+                message: 'Cập nhật thông tin thành công!',
+                severity: 'success'
+            });
         }
     };
 
@@ -147,16 +177,27 @@ const AccountInfoTab = ({ userData }) => {
                         <label for="userid">ID người dùng</label>
                         <input type="text" id="userid" value={userId} disabled />
                     </div>
-
-                    <div class="input-container-outline">
-                        <label for="fullname">Họ và tên</label>
-                        <input
-                            type="text"
-                            id="fullname"
-                            value={fullName}
-                            onChange={handleFullNameChange}
-                            className={changedFields.fullname ? 'changed' : ''}
-                        />
+                    <div>
+                        <div class="input-container-outline">
+                            <label for="fullname">Họ và tên</label>
+                            <input
+                                type="text"
+                                id="fullname"
+                                value={fullName}
+                                onChange={handleFullNameChange}
+                                onFocus={() => { setFocusFullName(true) }}
+                                onBlur={() => { setFocusFullName(false) }}
+                                className={changedFields.fullname ? 'changed' : ''}
+                            />
+                        </div>
+                        {isFocusFullName &&
+                            <span style={{
+                                color: "#ccc",
+                                fontSize: "13px",
+                            }}>
+                                Họ và tên có độ dài từ 1 - 55 ký tự
+                            </span>
+                        }
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>

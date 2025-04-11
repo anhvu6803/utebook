@@ -4,14 +4,10 @@ import "./styles/AccountVerifyTab.scss";
 import AccountVerifyForm from "./AccountVerifyForm";
 
 const AccountVerifyTab = ({ userData }) => {
-    const [isVeryfied, setIsVerified] = useState(userData.isVerified);
     const email = userData.email || '';
-    const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-
-    const handleVerify = () => {
-        // Giả lập quá trình xác thực
-        setIsPhoneVerified(true);
-    };
+    const phoneNumber = userData.numberPhone || '';
+    const isPhoneVerified = userData.isPhoneVerified || false;
+    const isVeryfied = userData.isVerified || false;
 
     return (
         <div className="verification-container">
@@ -28,16 +24,20 @@ const AccountVerifyTab = ({ userData }) => {
             <div className="field">
                 <div class="input-container">
                     <label for="Phone">Số điện thoại</label>
-                    <input type="text" value={'Chưa xác thực'} disabled />
+                    <input type="text" value={phoneNumber} disabled />
                 </div>
                 {!isPhoneVerified && <span className="warning-text">Chưa xác thực số điện thoại</span>}
-                {!isPhoneVerified && (
-                    <div className="verify-btn">
-                        <AccountVerifyForm />
-                    </div>
+                {!isPhoneVerified ?
+                    (
+                        <div className="verify-btn">
+                            <AccountVerifyForm userId={userData._id} />
+                        </div>
 
-                    // <button className="verify-btn" onClick={handleVerify}>Xác thực</button>
-                )}
+
+                    )
+                    :
+                    (<span className="verified-text">Đã xác thực</span>)
+                }
             </div>
 
             {/* Mật khẩu */}
@@ -47,11 +47,6 @@ const AccountVerifyTab = ({ userData }) => {
                     <input type="password" value={'vu683nqa'} disabled />
                 </div>
             </div>
-
-            {/* Xóa tài khoản */}
-            <p className="delete-account">
-                Bạn không có nhu cầu sử dụng tài khoản nữa? <span>Xóa tài khoản</span>
-            </p>
         </div>
     );
 };
