@@ -3,9 +3,11 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import "../pages/styles/LoginPage.scss";
 import imgWelcome from "../assets/imgWelcome.png";
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();  
+  const { setUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,12 +28,16 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Lỗi hệ thống. Vui lòng thử lại sau");
+        throw new Error(data.message || "Đăng nhập thất bại");
       }
-      
+
+      // Cập nhật trạng thái user
+      setUser(data.user);
+
       // Chuyển hướng đến trang chủ
       navigate("/utebook");
     } catch (error) {
+      console.error('Login error:', error);
       setError(error.message);
     }
   };
@@ -39,6 +45,7 @@ const LoginPage = () => {
   const handleGoogleSuccess = async (credentialResponse) => {
     setError("");
     try {
+      // Verify token với Google
       const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credentialResponse.credential}`);
       const data = await response.json();
       
@@ -60,8 +67,11 @@ const LoginPage = () => {
       const serverData = await serverResponse.json();
 
       if (!serverResponse.ok) {
-        throw new Error(serverData.message || "Lỗi hệ thống. Vui lòng thử lại sau");
+        throw new Error(serverData.message || "Đăng nhập với Google thất bại");
       }
+
+      // Cập nhật trạng thái user
+      setUser(serverData.user);
 
       // Chuyển hướng đến trang chủ
       navigate("/utebook");
@@ -73,6 +83,7 @@ const LoginPage = () => {
 
   const handleGoogleError = () => {
     console.error("Google login failed");
+    setError("Đăng nhập với Google thất bại");
   };
 
   return (
@@ -95,7 +106,6 @@ const LoginPage = () => {
                   required
                 />
               </div>
-
               <div className="form-group">
                 <label>Mật khẩu <span className="required">(*)</span></label>
                 <input 

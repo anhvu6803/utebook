@@ -18,6 +18,9 @@ class AuthService {
             throw new Error('Mật khẩu không đúng');
         }
 
+        // Xóa refresh token cũ nếu có
+        await Auth.deleteMany({ userId: user._id });
+
         // Tạo access token
         const accessToken = jwt.sign(
             { userId: user._id },
@@ -83,6 +86,9 @@ class AuthService {
             await user.save();
         }
 
+        // Xóa refresh token cũ nếu có
+        await Auth.deleteMany({ userId: user._id });
+
         // Tạo access token
         const accessToken = jwt.sign(
             { userId: user._id },
@@ -138,6 +144,12 @@ class AuthService {
                 throw new Error('Refresh token expired');
             }
 
+            // Lấy thông tin user
+            const user = await User.findById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+
             // Tạo access token mới
             const accessToken = jwt.sign(
                 { userId },
@@ -145,19 +157,15 @@ class AuthService {
                 { expiresIn: '2m' }
             );
 
-            // Tạo refresh token mới
-            const refreshToken = jwt.sign(
-                { userId },
-                process.env.JWT_REFRESH_SECRET,
-                { expiresIn: '1d' }
-            );
-
-            // Cập nhật refresh token trong database
-            auth.refreshToken = refreshToken;
-            auth.expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
-            await auth.save();
-
-            return { accessToken };
+            return { 
+                accessToken,
+                user: {
+                    _id: user._id,
+                    email: user.email,
+                    name: user.name,
+                    avatar: user.avatar
+                }
+            };
         } catch (error) {
             throw new Error('Failed to refresh token');
         }
@@ -166,14 +174,13 @@ class AuthService {
     async getMe(userId) {
         try {
             const user = await User.findById(userId);
-
             if (!user) {
                 throw new Error('User not found');
             }
-
-            return { user: user.toObject({ getters: true }) };
+            return user;
         } catch (error) {
-            throw new Error('Failed to get user information: ' + error.message);
+            console.error('Get me service error:', error);
+            throw error;
         }
     }
 }
