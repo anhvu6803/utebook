@@ -11,11 +11,12 @@ const CloudinaryController = require('../controllers/cloudinary.controller');
 module.exports = {
     UserController,
     BookController,
-    CartController,
-    OrderController,
     ReviewController,
     DriveController,
     AuthController,
     TwilioController,
     CloudinaryController,
+    PointPackageController,
+    MembershipPackageController,
+    PaymentController
 };
