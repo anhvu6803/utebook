@@ -7,4 +7,6 @@ router.post('/register', userController.register);
 router.post('/verify-email', userController.verifyEmail);
 router.post('/request-password-reset', userController.requestPasswordReset);
 router.post('/reset-password', userController.resetPassword);
+router.patch('/:userId', userController.updateUser);
+
 module.exports = router;

@@ -147,8 +147,8 @@ class AuthController {
 
     async getMe(req, res) {
         try {
-            const userId = req.userId;
-            const user = await authService.getUserById(userId);
+            const userId = req.params.userId;
+            const user = await authService.getMe(userId);
             res.json({ user });
         } catch (error) {
             res.status(400).json({

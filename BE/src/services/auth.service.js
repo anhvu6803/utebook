@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 const Auth = require('../models/auth.model');
+const { sendVerificationCode, verifyCode } = require('../configs/twilio.config');
 
 class AuthService {
     async login(email, password) {
@@ -35,7 +36,7 @@ class AuthService {
         await Auth.create({
             userId: user._id,
             refreshToken,
-            expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) 
+            expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
         });
 
         return {
@@ -67,20 +68,17 @@ class AuthService {
                 name,
                 fullname: name,
                 username,
-                picture,
                 googleId,
+                avatar: picture.split('=')[0] + '?sz=100', // Lưu ảnh chất lượng cao hơn
                 isVerified: true,
                 password: await bcrypt.hash(googleId, 10),
                 // Các trường bắt buộc khác
                 address: "Chưa cập nhật",
                 numberPhone: "Chưa cập nhật",
                 gioiTinh: "Khác",
-                ngaySinh: new Date('2000-01-01')
             });
         } else if (!user.googleId) {
-            // Cập nhật thông tin Google nếu user đã tồn tại nhưng chưa liên kết với Google
-            user.googleId = googleId;
-            user.picture = picture;
+            user.avatar = picture.split('=')[0] + '?sz=100'; // Cập nhật ảnh chất lượng cao hơn
             user.isVerified = true;
             await user.save();
         }
@@ -103,7 +101,7 @@ class AuthService {
         await Auth.create({
             userId: user._id,
             refreshToken,
-            expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) 
+            expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
         });
 
         return {
@@ -112,7 +110,7 @@ class AuthService {
                 _id: user._id,
                 email: user.email,
                 name: user.name,
-                picture: user.picture
+                avatar: user.avatar
             }
         };
     }
@@ -164,6 +162,50 @@ class AuthService {
             throw new Error('Failed to refresh token');
         }
     }
+
+    async getMe(userId) {
+        try {
+            const user = await User.findById(userId);
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            return { user: user.toObject({ getters: true }) };
+        } catch (error) {
+            throw new Error('Failed to get user information: ' + error.message);
+        }
+    }
 }
 
-module.exports = new AuthService();
+const sendPhoneVerification = async (phoneNumber) => {
+    try {
+        // Format phone number to international format
+        const formattedPhone = phoneNumber.startsWith('0') ? `+84${phoneNumber.substring(1)}` : phoneNumber;
+        const result = await sendVerificationCode(formattedPhone);
+        return {
+            success: true,
+            message: 'Verification code sent successfully',
+            data: result
+        };
+    } catch (error) {
+        throw new Error(`Failed to send verification code: ${error.message}`);
+    }
+};
+
+const verifyPhoneCode = async (phoneNumber, code) => {
+    try {
+        // Format phone number to international format
+        const formattedPhone = phoneNumber.startsWith('0') ? `+84${phoneNumber.substring(1)}` : phoneNumber;
+        const result = await verifyCode(formattedPhone, code);
+        return {
+            success: result.status === 'approved',
+            message: result.status === 'approved' ? 'Phone number verified successfully' : 'Invalid verification code',
+            data: result
+        };
+    } catch (error) {
+        throw new Error(`Failed to verify code: ${error.message}`);
+    }
+};
+
+module.exports = module.exports = new AuthService();

@@ -3,7 +3,9 @@ import "./styles/AccountVerifyTab.scss";
 
 import AccountVerifyForm from "./AccountVerifyForm";
 
-const AccountVerifyTab = () => {
+const AccountVerifyTab = ({ userData }) => {
+    const [isVeryfied, setIsVerified] = useState(userData.isVerified);
+    const email = userData.email || '';
     const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
     const handleVerify = () => {
@@ -17,7 +19,7 @@ const AccountVerifyTab = () => {
             <div className="field">
                 <div class="input-container">
                     <label for="Email">Email</label>
-                    <input type="text" value={'vu683nqa@gmail.com'} disabled />
+                    <input type="text" value={email} disabled />
                 </div>
                 <span className="verified-text">Đã xác thực</span>
             </div>

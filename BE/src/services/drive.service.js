@@ -1,4 +1,4 @@
-const { drive } = require('../config/googleDrive.config');
+const { drive } = require('../configs/googleDrive.config');
 const stream = require('stream');
 const FileAccess = require('../models/fileAccess.model');
 const { ALLOWED_EMAILS } = require('../middleware/authEmail.middleware');

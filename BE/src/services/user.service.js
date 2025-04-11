@@ -173,6 +173,31 @@ const userService = {
             }
             throw error;
         }
+    },
+
+    async updateUser(userId, updateData) {
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            // Update user data
+            Object.keys(updateData).forEach(key => {
+                if (updateData[key] !== undefined) {
+                    user[key] = updateData[key];
+                }
+            });
+
+            await user.save();
+            return {
+                success: true,
+                message: 'User updated successfully',
+                data: user
+            };
+        } catch (error) {
+            throw new Error(`Failed to update user: ${error.message}`);
+        }
     }
 };
 

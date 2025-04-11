@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: process.env.WEB_URI,
+  origin: [process.env.WEB_URI, process.env.WEB_URI_2],
   credentials: true,
 }));
 
