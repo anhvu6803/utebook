@@ -74,7 +74,9 @@ const userController = {
                 fullname: req.body.fullname,
                 ngaySinh: req.body.ngaySinh,
                 gioiTinh: req.body.gioiTinh,
-                avatar: req.body.avatar
+                avatar: req.body.avatar,
+                numberPhone: req.body.numberPhone,
+                isPhoneVerified: req.body.isPhoneVerified
             };
 
             if (!userId) {
