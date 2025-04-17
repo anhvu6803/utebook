@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const BookService = require('../services/book.service');
+const DriveService = require('../services/drive.service');
+const CloudinaryService = require('../services/cloudinary.service');
 
 exports.addBook = async (req, res) => {
     const errors = validationResult(req);
@@ -8,73 +10,68 @@ exports.addBook = async (req, res) => {
     }
 
     try {
-        const newBook = await BookService.addBook(req.body);
-        console.log(newBook)
+        const { bookname, author, categories, price, type, pushlisher, description, image, viewlink } = req.body;
+
+        // Kiểm tra các trường bắt buộc
+        const requiredFields = {
+            bookname: 'Tên sách',
+            author: 'Tác giả',
+            categories: 'Thể loại',
+            type: 'Loại sách',
+            pushlisher: 'Nhà xuất bản',
+            description: 'Mô tả',
+            image: 'Ảnh bìa',
+            viewlink: 'Link sách'
+        };
+
+        const missingFields = [];
+        for (const [field, label] of Object.entries(requiredFields)) {
+            if (!req.body[field]) {
+                missingFields.push(label);
+            }
+        }
+
+        if (missingFields.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Vui lòng nhập đầy đủ thông tin: ${missingFields.join(', ')}`
+            });
+        }
+
+        // Kiểm tra giá nếu là sách có phí
+        if (type === "Có phí" && (!price || price <= 0)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Vui lòng nhập giá hợp lệ cho sách có phí'
+            });
+        }
+
+        // Prepare book data
+        const bookData = {
+            bookname,
+            author,
+            categories: Array.isArray(categories) ? categories : JSON.parse(categories),
+            price: type === "Có phí" ? parseFloat(price) : 0,
+            type,
+            pushlisher,
+            image,
+            viewlink,
+            description
+        };
+
+        // Add book using service
+        const newBook = await BookService.addBook(bookData);
+
         res.status(201).json({
-            message: 'Added book successfully',
-            book: newBook,
+            success: true,
+            message: 'Thêm sách thành công',
+            data: newBook
         });
     } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-exports.updateBook = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-        const updatedBook = await BookService.updateBook(req.params.bid, req.body);
-
-        res.status(201).json({
-            message: 'updated book successfully',
-            book: updatedBook,
+        console.error('Error in addBook controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi thêm sách'
         });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-exports.deleteBook = async (req, res) => {
-    try {
-        const result = await BookService.deleteBook(req.params.bid);
-
-        res.status(200).json({
-            message: result,
-        });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-exports.addCreateBook = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-        const newBook = await BookService.addCreateBook(req.body);
-
-        res.status(201).json({
-            message: 'Added create book successfully',
-            book: newBook,
-        });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-exports.deleteCreateBook = async (req, res) => {
-    try {
-        const result = await BookService.deleteCreateBook(req.params.bid);
-
-        res.status(200).json({
-            message: result,
-        });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
     }
 };

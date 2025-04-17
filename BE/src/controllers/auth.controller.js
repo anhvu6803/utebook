@@ -15,7 +15,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000
+                maxAge: 24* 60  * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -41,7 +41,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000
+                maxAge: 24* 60  * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -83,7 +83,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000 // 15 minutes
+                maxAge: 24* 60  * 60 * 1000
             });
 
             // Return user data along with the response
@@ -168,7 +168,10 @@ class AuthController {
                     return res.status(404).json({ message: 'User not found' });
                 }
                 const { password, ...userWithoutPassword } = user.toObject();
-                res.json(userWithoutPassword);
+                res.json({
+                    ...userWithoutPassword,
+                    isAdmin: user.isAdmin || false
+                });
             } catch (error) {
                 // Nếu token hết hạn, thử refresh token
                 if (error.name === 'TokenExpiredError') {
@@ -186,11 +189,14 @@ class AuthController {
                         httpOnly: true,
                         secure: process.env.NODE_ENV === 'production',
                         sameSite: 'strict',
-                        maxAge: 2 * 60 * 1000 // 2 phút
+                        maxAge: 24* 60  * 60 * 1000// 2 phút
                     });
 
                     // Trả về thông tin user mới
-                    res.json(result.user);
+                    res.json({
+                        ...result.user,
+                        isAdmin: result.user.isAdmin || false
+                    });
                 } else {
                     throw error;
                 }

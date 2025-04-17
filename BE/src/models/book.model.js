@@ -5,10 +5,11 @@ const BookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     categories: [{ type: String, required: true }],
     price: { type: Number, required: true },
-    statusbook: { type: Boolean, required: true },
-    brief: { type: String, required: true },
-    wordcontents:  { type: String, required: true },
-    audios:  { type: String, required: true }
+    type: { type: String, required: true },
+    pushlisher: { type: String, required: true },
+    image: { type: String, required: true },
+    viewlink: { type: String, required: true },
+    description: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Book', BookSchema);

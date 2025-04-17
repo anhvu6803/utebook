@@ -12,10 +12,23 @@ class DriveService {
             // Thêm email người upload và admin vào danh sách được phép
             const uniqueEmails = [...new Set([user.email, 'nguyentrandcm@gmail.com', ...allowedEmails])];
 
-            // Kiểm tra và tạo folder nếu chưa tồn tại
+            // Kiểm tra và tạo folder nếu chưa tồn tại hoặc không có quyền truy cập
             let folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+            try {
+                if (folderId) {
+                    // Kiểm tra quyền truy cập folder
+                    await drive.files.get({
+                        fileId: folderId,
+                        fields: 'id'
+                    });
+                }
+            } catch (error) {
+                console.log('Không thể truy cập folder cũ, tạo folder mới...');
+                folderId = null;
+            }
+
             if (!folderId) {
-                // Tạo folder mới nếu chưa có folder ID
+                // Tạo folder mới nếu chưa có folder ID hoặc không có quyền truy cập
                 const folderMetadata = {
                     name: 'UTEBook Files',
                     mimeType: 'application/vnd.google-apps.folder',
@@ -32,6 +45,17 @@ class DriveService {
 
                 folderId = folder.data.id;
                 process.env.GOOGLE_DRIVE_FOLDER_ID = folderId;
+
+                // Cấp quyền truy cập cho service account
+                await drive.permissions.create({
+                    fileId: folderId,
+                    requestBody: {
+                        type: 'user',
+                        role: 'writer',
+                        emailAddress: process.env.GOOGLE_DRIVE_CLIENT_EMAIL
+                    },
+                    sendNotificationEmail: false
+                });
             }
 
             // Tạo file trong Google Drive với folder ID đã xác định

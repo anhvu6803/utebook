@@ -27,6 +27,7 @@
     "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "jspdf": "^3.0.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.7",
     "prop-types": "^15.8.1",

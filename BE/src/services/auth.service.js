@@ -23,14 +23,22 @@ class AuthService {
 
         // Tạo access token
         const accessToken = jwt.sign(
-            { userId: user._id },
+            { 
+                userId: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            },
             process.env.JWT_SECRET,
             { expiresIn: '2m' }
         );
 
         // Tạo refresh token
         const refreshToken = jwt.sign(
-            { userId: user._id },
+            { 
+                userId: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            },
             process.env.JWT_REFRESH_SECRET,
             { expiresIn: '1d' }
         );
@@ -47,7 +55,8 @@ class AuthService {
             user: {
                 _id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                isAdmin: user.isAdmin || false
             }
         };
     }
@@ -91,14 +100,22 @@ class AuthService {
 
         // Tạo access token
         const accessToken = jwt.sign(
-            { userId: user._id },
+            { 
+                userId: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            },
             process.env.JWT_SECRET,
             { expiresIn: '2m' }
         );
 
         // Tạo refresh token
         const refreshToken = jwt.sign(
-            { userId: user._id },
+            { 
+                userId: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            },
             process.env.JWT_REFRESH_SECRET,
             { expiresIn: '1d' }
         );
@@ -116,7 +133,8 @@ class AuthService {
                 _id: user._id,
                 email: user.email,
                 name: user.name,
-                avatar: user.avatar
+                avatar: user.avatar,
+                isAdmin: user.isAdmin || false
             }
         };
     }
@@ -152,7 +170,11 @@ class AuthService {
 
             // Tạo access token mới
             const accessToken = jwt.sign(
-                { userId },
+                { 
+                    userId,
+                    email: user.email,
+                    isAdmin: user.isAdmin || false
+                },
                 process.env.JWT_SECRET,
                 { expiresIn: '2m' }
             );
@@ -163,7 +185,8 @@ class AuthService {
                     _id: user._id,
                     email: user.email,
                     name: user.name,
-                    avatar: user.avatar
+                    avatar: user.avatar,
+                    isAdmin: user.isAdmin || false
                 }
             };
         } catch (error) {

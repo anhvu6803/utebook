@@ -4,22 +4,43 @@ import "./styles/AddNewBookModal.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
+import Loading from "./Loading";
 
 const AddBookModal = ({ onConfirm, onCancel }) => {
+  const { user, email, userId, isAdmin } = useAuth();
+  console.log('Auth context in AddNewBookModal:', { user, email, userId, isAdmin });
+
   const [newBook, setNewBook] = useState({
-    title: "",
+    bookname: "",
     author: "",
-    genre: "Văn học",
+    categories: ["Văn học"],
     price: "",
+    type: "Tất cả",
+    pushlisher: "",
+    description: "",
     cover: null,
     content: null,
-    publisher: "",
-    publishYear: "",
-    description: "",
   });
 
   const [previewImage, setPreviewImage] = useState(null);
   const [pdfFileName, setPdfFileName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getAuthHeaders = () => {
+    if (!user || !user.email || !user._id) {
+      setError("Vui lòng đăng nhập để thực hiện thao tác này");
+      throw new Error("Vui lòng đăng nhập để thực hiện thao tác này");
+    }
+    return {
+      'x-user-email': user.email,
+      'x-user-id': user._id,
+      'x-is-admin': user.role === 'admin'
+    };
+  };
 
   const handleChange = (e) => {
     const value = e.target.type === 'number' ? 
@@ -44,14 +65,144 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const uploadCoverImage = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        ...getAuthHeaders()
+      };
+
+      const response = await axios.post('http://localhost:5000/api/cloudinary/upload', formData, {
+        headers,
+        withCredentials: true
+      });
+
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Lỗi khi tải ảnh bìa lên');
+      }
+
+      return response.data.data.url;
+    } catch (error) {
+      console.error('Error uploading cover image:', error);
+      throw new Error(error.response?.data?.message || 'Lỗi khi tải ảnh bìa lên');
+    }
+  };
+
+  const uploadPdfContent = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        ...getAuthHeaders()
+      };
+
+      const response = await axios.post('http://localhost:5000/api/drive/upload', formData, {
+        headers,
+        withCredentials: true
+      });
+      return response.data.file.viewLink;
+    } catch (error) {
+      console.error('Error uploading PDF:', error);
+      throw new Error('Lỗi khi tải PDF lên');
+    }
+  };
+
+  const addBook = async (bookData) => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      };
+
+      console.log('Sending book data:', bookData);
+      console.log('Headers:', headers);
+
+      const response = await axios.post('http://localhost:5000/api/book/add-book', bookData, {
+        headers,
+        withCredentials: true
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error adding book:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+      }
+      throw new Error(error.response?.data?.message || 'Lỗi khi thêm sách');
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!newBook.title || !newBook.author || !newBook.price || !newBook.cover || !newBook.content) {
-      alert("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+    setError(null);
+    setIsLoading(true);
+    
+    if (!user || !user.email || !user._id) {
+      setError("Vui lòng đăng nhập để thực hiện thao tác này");
+      setIsLoading(false);
       return;
     }
-    onConfirm(newBook);
+
+    if (!newBook.bookname || !newBook.author || !newBook.cover || !newBook.content) {
+      setError("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+      setIsLoading(false);
+      return;
+    }
+    if (newBook.type === "Có phí" && (!newBook.price || newBook.price <= 0)) {
+      setError("Vui lòng nhập giá hợp lệ cho sách có phí!");
+      setIsLoading(false);
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      // Upload cover image to Cloudinary
+      const coverImageUrl = await uploadCoverImage(newBook.cover);
+      console.log('Cover image uploaded:', coverImageUrl);
+      
+      // Upload PDF to Google Drive
+      const pdfUrl = await uploadPdfContent(newBook.content);
+      console.log('PDF uploaded:', pdfUrl);
+
+      // Prepare book data with URLs
+      const bookData = {
+        bookname: newBook.bookname.trim(),
+        author: newBook.author.trim(),
+        categories: Array.isArray(newBook.categories) ? newBook.categories : [newBook.categories],
+        price: newBook.type === "Có phí" ? parseFloat(newBook.price) : 0,
+        type: newBook.type,
+        pushlisher: newBook.pushlisher.trim(),
+        description: newBook.description.trim(),
+        image: coverImageUrl,
+        viewlink: pdfUrl
+      };
+
+      console.log('Final book data:', bookData);
+
+      // Add book to database
+      await addBook(bookData);
+
+      // Call the onConfirm callback
+      onConfirm(bookData);
+      
+      // Redirect to books page and force reload
+      window.location.href = '/utebook-admin/books?reload=true';
+    } catch (error) {
+      console.error('Error in handleSubmit:', error);
+      setError(error.message || 'Có lỗi xảy ra khi thêm sách');
+    } finally {
+      setIsUploading(false);
+      setIsLoading(false);
+    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="add-book-modal">
@@ -64,6 +215,12 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
             </button>
           </div>
 
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
             <div className="form-layout">
               <div className="upload-section">
@@ -74,6 +231,7 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                     accept="image/*"
                     onChange={handleImageChange}
                     className="file-input"
+                    disabled={isUploading}
                   />
                   <label htmlFor="cover-upload" className="upload-label">
                     {previewImage ? (
@@ -95,6 +253,7 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                     accept=".pdf"
                     onChange={handlePdfChange}
                     className="file-input"
+                    disabled={isUploading}
                   />
                   <label htmlFor="pdf-upload" className="upload-label">
                     <div className="upload-placeholder">
@@ -108,13 +267,14 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
 
               <div className="form-fields">
                 <div className="form-group">
-                  <label>Tiêu đề <span className="required">*</span></label>
+                  <label>Tên sách <span className="required">*</span></label>
                   <input
                     type="text"
-                    name="title"
-                    value={newBook.title}
+                    name="bookname"
+                    value={newBook.bookname}
                     onChange={handleChange}
-                    placeholder="Nhập tiêu đề sách"
+                    placeholder="Nhập tên sách"
+                    disabled={isUploading}
                   />
                 </div>
 
@@ -126,13 +286,19 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                     value={newBook.author}
                     onChange={handleChange}
                     placeholder="Nhập tên tác giả"
+                    disabled={isUploading}
                   />
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
                     <label>Thể loại <span className="required">*</span></label>
-                    <select name="genre" value={newBook.genre} onChange={handleChange}>
+                    <select 
+                      name="categories" 
+                      value={newBook.categories[0]} 
+                      onChange={handleChange}
+                      disabled={isUploading}
+                    >
                       <option value="Văn học">Văn học</option>
                       <option value="Khoa học">Khoa học</option>
                       <option value="Kinh tế">Kinh tế</option>
@@ -143,6 +309,22 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                   </div>
 
                   <div className="form-group">
+                    <label>Đối tượng <span className="required">*</span></label>
+                    <select 
+                      name="type" 
+                      value={newBook.type} 
+                      onChange={handleChange}
+                      disabled={isUploading}
+                    >
+                      <option value="Tất cả">Tất cả</option>
+                      <option value="Hội viên">Hội viên</option>
+                      <option value="Có phí">Có phí</option>
+                    </select>
+                  </div>
+                </div>
+
+                {newBook.type === "Có phí" && (
+                  <div className="form-group">
                     <label>Giá (VND) <span className="required">*</span></label>
                     <input
                       type="number"
@@ -151,32 +333,21 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                       onChange={handleChange}
                       placeholder="Nhập giá sách"
                       min="0"
+                      disabled={isUploading}
                     />
                   </div>
-                </div>
+                )}
 
                 <div className="form-row">
                   <div className="form-group">
                     <label>Nhà xuất bản</label>
                     <input
                       type="text"
-                      name="publisher"
-                      value={newBook.publisher}
+                      name="pushlisher"
+                      value={newBook.pushlisher}
                       onChange={handleChange}
                       placeholder="Nhập tên NXB"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Năm xuất bản</label>
-                    <input
-                      type="number"
-                      name="publishYear"
-                      value={newBook.publishYear}
-                      onChange={handleChange}
-                      placeholder="Nhập năm xuất bản"
-                      min="1900"
-                      max={new Date().getFullYear()}
+                      disabled={isUploading}
                     />
                   </div>
                 </div>
@@ -189,16 +360,26 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                     onChange={handleChange}
                     placeholder="Nhập mô tả sách"
                     rows="4"
+                    disabled={isUploading}
                   />
                 </div>
               </div>
             </div>
 
             <div className="modal-actions">
-              <button type="submit" className="confirm-btn">
-                Thêm sách
+              <button 
+                type="submit" 
+                className="confirm-btn"
+                disabled={isUploading}
+              >
+                {isUploading ? 'Đang tải lên...' : 'Thêm sách'}
               </button>
-              <button type="button" className="cancel-btn" onClick={onCancel}>
+              <button 
+                type="button" 
+                className="cancel-btn" 
+                onClick={onCancel}
+                disabled={isUploading}
+              >
                 Hủy
               </button>
             </div>
