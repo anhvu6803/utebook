@@ -15,7 +15,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000
+                maxAge: 24* 60  * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -41,7 +41,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000
+                maxAge: 24* 60  * 60 * 1000
             });
             res.json({
                 user: result.user
@@ -83,7 +83,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 15 * 60 * 1000 // 15 minutes
+                maxAge: 24* 60  * 60 * 1000
             });
 
             // Return user data along with the response
@@ -186,7 +186,7 @@ class AuthController {
                         httpOnly: true,
                         secure: process.env.NODE_ENV === 'production',
                         sameSite: 'strict',
-                        maxAge: 2 * 60 * 1000 // 2 phút
+                        maxAge: 24* 60  * 60 * 1000// 2 phút
                     });
 
                     // Trả về thông tin user mới

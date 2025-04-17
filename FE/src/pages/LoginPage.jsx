@@ -31,8 +31,14 @@ const LoginPage = () => {
         throw new Error(data.message || "Đăng nhập thất bại");
       }
 
-      // Cập nhật trạng thái user
-      setUser(data.user);
+      // Cập nhật trạng thái user với đầy đủ thông tin
+      const userData = {
+        ...data.user,
+        email: data.user.email,
+        userId: data.user._id,
+        isAdmin: data.user.role === 'admin'
+      };
+      setUser(userData);
 
       // Chuyển hướng đến trang chủ
       navigate("/utebook");
@@ -70,8 +76,14 @@ const LoginPage = () => {
         throw new Error(serverData.message || "Đăng nhập với Google thất bại");
       }
 
-      // Cập nhật trạng thái user
-      setUser(serverData.user);
+      // Cập nhật trạng thái user với đầy đủ thông tin
+      const userData = {
+        ...serverData.user,
+        email: serverData.user.email,
+        userId: serverData.user._id,
+        isAdmin: serverData.user.role === 'admin'
+      };
+      setUser(userData);
 
       // Chuyển hướng đến trang chủ
       navigate("/utebook");
