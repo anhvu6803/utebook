@@ -1,16 +1,18 @@
 import React from 'react';
-import './Loading.css';
+import './styles/Loading.scss';
 
 const Loading = () => {
     return (
         <div className="loading-container">
-            <div className="loading-spinner">
-                <div className="spinner-circle"></div>
-                <div className="spinner-circle"></div>
-                <div className="spinner-circle"></div>
-                <div className="spinner-circle"></div>
+            <div className="loading-content">
+                <div className="loading-spinner">
+                    <div className="spinner-circle"></div>
+                    <div className="spinner-circle"></div>
+                    <div className="spinner-circle"></div>
+                    <div className="spinner-circle"></div>
+                </div>
+                <div className="loading-text">Đang xử lý...</div>
             </div>
-            <div className="loading-text">Loading...</div>
         </div>
     );
 };

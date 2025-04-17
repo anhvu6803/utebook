@@ -11,6 +11,80 @@ export const AuthProvider = ({ children }) => {
     const [email, setEmail] = useState(null);
     const [userId, setUserId] = useState(null);
 
+    // Function to update auth state and sync with sessionStorage
+    const updateAuthState = (newUser, newIsAdmin, newEmail, newUserId) => {
+        setUser(newUser);
+        setIsAdmin(newIsAdmin);
+        setEmail(newEmail);
+        setUserId(newUserId);
+        
+        // Only store non-sensitive data in sessionStorage
+        if (newUser) {
+            sessionStorage.setItem('authState', JSON.stringify({
+                isAdmin: newIsAdmin,
+                email: newEmail,
+                userId: newUserId,
+                // Only store non-sensitive user data
+                user: {
+                    name: newUser.name,
+                    avatar: newUser.avatar
+                }
+            }));
+        }
+    };
+
+    // Function to clear auth state and sessionStorage
+    const clearAuthState = () => {
+        setUser(null);
+        setIsAdmin(false);
+        setEmail(null);
+        setUserId(null);
+        sessionStorage.removeItem('authState');
+    };
+
+    // Listen for storage events from other tabs
+    useEffect(() => {
+        const handleStorageChange = (e) => {
+            if (e.key === 'authState') {
+                if (e.newValue) {
+                    const authState = JSON.parse(e.newValue);
+                    // Only update non-sensitive data from storage
+                    setIsAdmin(authState.isAdmin);
+                    setEmail(authState.email);
+                    setUserId(authState.userId);
+                    setUser(prevUser => ({
+                        ...prevUser,
+                        name: authState.user.name,
+                        avatar: authState.user.avatar
+                    }));
+                } else {
+                    clearAuthState();
+                }
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    // Check sessionStorage on mount
+    useEffect(() => {
+        const storedAuth = sessionStorage.getItem('authState');
+        if (storedAuth) {
+            const authState = JSON.parse(storedAuth);
+            // Only restore non-sensitive data
+            setIsAdmin(authState.isAdmin);
+            setEmail(authState.email);
+            setUserId(authState.userId);
+            setUser(prevUser => ({
+                ...prevUser,
+                name: authState.user.name,
+                avatar: authState.user.avatar
+            }));
+        }
+        setLoading(false);
+    }, []);
+
     const refreshToken = async () => {
         try {
             const response = await axios.post('/auth/refresh-token', {}, {
@@ -18,23 +92,21 @@ export const AuthProvider = ({ children }) => {
             });
             
             if (response.data?.user) {
-                setUser(response.data.user);
                 const decoded = decodeToken(response.data.accessToken);
                 if (decoded) {
-                    setIsAdmin(decoded.isAdmin === true);
-                    setEmail(decoded.email);
-                    setUserId(decoded.userId);
+                    updateAuthState(
+                        response.data.user,
+                        decoded.isAdmin === true,
+                        decoded.email,
+                        decoded.userId
+                    );
                 }
                 return true;
             }
             return false;
         } catch (error) {
             console.error('Token refresh failed:', error);
-            // Clear all auth data on refresh failure
-            setUser(null);
-            setIsAdmin(false);
-            setEmail(null);
-            setUserId(null);
+            clearAuthState();
             return false;
         }
     };
@@ -66,35 +138,31 @@ export const AuthProvider = ({ children }) => {
                 if (isExpired) {
                     const refreshed = await refreshToken();
                     if (!refreshed) {
-                        setUser(null);
-                        setIsAdmin(false);
-                        setEmail(null);
-                        setUserId(null);
+                        clearAuthState();
                         setLoading(false);
                         return;
                     }
                 } else {
                     const decoded = decodeToken(token);
                     if (decoded) {
-                        setIsAdmin(decoded.isAdmin === true);
-                        setEmail(decoded.email);
-                        setUserId(decoded.userId);
                         try {
                             const response = await axios.get(`/auth/get-me/${decoded.userId}`, {
                                 withCredentials: true
                             });
                             if (response.data) {
-                                setUser(response.data);
+                                updateAuthState(
+                                    response.data,
+                                    decoded.isAdmin === true,
+                                    decoded.email,
+                                    decoded.userId
+                                );
                             }
                         } catch (error) {
                             console.error('Error fetching user data:', error);
                             if (error.response?.status === 401) {
                                 const refreshed = await refreshToken();
                                 if (!refreshed) {
-                                    setUser(null);
-                                    setIsAdmin(false);
-                                    setEmail(null);
-                                    setUserId(null);
+                                    clearAuthState();
                                 }
                             }
                         }
@@ -102,10 +170,7 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (error) {
                 console.error('Error checking auth:', error);
-                setUser(null);
-                setIsAdmin(false);
-                setEmail(null);
-                setUserId(null);
+                clearAuthState();
             } finally {
                 setLoading(false);
             }
@@ -149,18 +214,15 @@ export const AuthProvider = ({ children }) => {
         email,
         userId,
         setUser: (newUser) => {
-            setUser(newUser);
-            if (newUser?.isAdmin !== undefined) {
-                setIsAdmin(newUser.isAdmin === true);
-            }
-            if (newUser?.email) {
-                setEmail(newUser.email);
-            }
-            if (newUser?.userId) {
-                setUserId(newUser.userId);
-            }
+            updateAuthState(
+                newUser,
+                newUser?.isAdmin === true,
+                newUser?.email,
+                newUser?.userId
+            );
         },
-        refreshToken
+        refreshToken,
+        clearAuthState
     };
 
     return (

@@ -6,6 +6,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
+import Loading from "./Loading";
 
 const AddBookModal = ({ onConfirm, onCancel }) => {
   const { user, email, userId, isAdmin } = useAuth();
@@ -27,6 +28,7 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
   const [pdfFileName, setPdfFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getAuthHeaders = () => {
     if (!user || !user.email || !user._id) {
@@ -136,19 +138,23 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Reset error state
+    setError(null);
+    setIsLoading(true);
     
     if (!user || !user.email || !user._id) {
       setError("Vui lòng đăng nhập để thực hiện thao tác này");
+      setIsLoading(false);
       return;
     }
 
     if (!newBook.bookname || !newBook.author || !newBook.cover || !newBook.content) {
       setError("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+      setIsLoading(false);
       return;
     }
     if (newBook.type === "Có phí" && (!newBook.price || newBook.price <= 0)) {
       setError("Vui lòng nhập giá hợp lệ cho sách có phí!");
+      setIsLoading(false);
       return;
     }
 
@@ -182,13 +188,21 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
 
       // Call the onConfirm callback
       onConfirm(bookData);
+      
+      // Redirect to books page and force reload
+      window.location.href = '/utebook-admin/books?reload=true';
     } catch (error) {
       console.error('Error in handleSubmit:', error);
       setError(error.message || 'Có lỗi xảy ra khi thêm sách');
     } finally {
       setIsUploading(false);
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="add-book-modal">
@@ -200,6 +214,12 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
               <CloseIcon />
             </button>
           </div>
+
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="form-layout">

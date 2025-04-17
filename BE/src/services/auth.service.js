@@ -55,7 +55,8 @@ class AuthService {
             user: {
                 _id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                isAdmin: user.isAdmin || false
             }
         };
     }
@@ -132,7 +133,8 @@ class AuthService {
                 _id: user._id,
                 email: user.email,
                 name: user.name,
-                avatar: user.avatar
+                avatar: user.avatar,
+                isAdmin: user.isAdmin || false
             }
         };
     }
@@ -183,7 +185,8 @@ class AuthService {
                     _id: user._id,
                     email: user.email,
                     name: user.name,
-                    avatar: user.avatar
+                    avatar: user.avatar,
+                    isAdmin: user.isAdmin || false
                 }
             };
         } catch (error) {

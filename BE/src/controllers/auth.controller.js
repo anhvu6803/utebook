@@ -168,7 +168,10 @@ class AuthController {
                     return res.status(404).json({ message: 'User not found' });
                 }
                 const { password, ...userWithoutPassword } = user.toObject();
-                res.json(userWithoutPassword);
+                res.json({
+                    ...userWithoutPassword,
+                    isAdmin: user.isAdmin || false
+                });
             } catch (error) {
                 // Nếu token hết hạn, thử refresh token
                 if (error.name === 'TokenExpiredError') {
@@ -190,7 +193,10 @@ class AuthController {
                     });
 
                     // Trả về thông tin user mới
-                    res.json(result.user);
+                    res.json({
+                        ...result.user,
+                        isAdmin: result.user.isAdmin || false
+                    });
                 } else {
                     throw error;
                 }

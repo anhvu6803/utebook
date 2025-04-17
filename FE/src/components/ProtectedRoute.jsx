@@ -59,7 +59,23 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
             }
         };
 
-        checkAuth();
+        // Check if we're on a public route and have access token
+        const isPublicRoute = ['/', '/login', '/register', '/forgot-password', '/change-password'].includes(location.pathname);
+        const hasAccessToken = document.cookie.includes('access_token');
+
+        if (isPublicRoute && hasAccessToken) {
+            console.log('On public route with access token, attempting refresh...');
+            refreshToken().then(refreshed => {
+                if (refreshed && isMounted) {
+                    console.log('Token refresh successful on public route, redirecting to /utebook');
+                    window.location.href = '/utebook';
+                } else {
+                    checkAuth();
+                }
+            });
+        } else {
+            checkAuth();
+        }
 
         return () => {
             isMounted = false;
@@ -68,6 +84,12 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
     if (isLoading) {
         return <Loading />;
+    }
+
+    // If user is authenticated and trying to access public routes, redirect to home
+    if (isAuthenticated && ['/', '/login', '/register', '/forgot-password', '/change-password'].includes(location.pathname)) {
+        console.log('User is authenticated, redirecting to /utebook');
+        return <Navigate to="/utebook" replace />;
     }
 
     if (!isAuthenticated) {
