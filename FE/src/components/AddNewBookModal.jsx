@@ -7,21 +7,22 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import Loading from "./Loading";
+import AddChapterTab from "./AddChapterTab";
 
 const AddBookModal = ({ onConfirm, onCancel }) => {
-  const { user, email, userId, isAdmin } = useAuth();
-  console.log('Auth context in AddNewBookModal:', { user, email, userId, isAdmin });
-
+  const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState('book'); // 'book' or 'chapter'
   const [newBook, setNewBook] = useState({
     bookname: "",
     author: "",
     categories: ["Văn học"],
     price: "",
-    type: "Tất cả",
+    type: "Free",
     pushlisher: "",
     description: "",
     cover: null,
     content: null,
+    ageLimit: 0
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -119,20 +120,19 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
         ...getAuthHeaders()
       };
 
-      console.log('Sending book data:', bookData);
-      console.log('Headers:', headers);
-
       const response = await axios.post('http://localhost:5000/api/book/add-book', bookData, {
         headers,
         withCredentials: true
       });
+
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Lỗi khi thêm sách');
+      }
+
       return response.data;
     } catch (error) {
       console.error('Error adding book:', error);
-      if (error.response) {
-        console.error('Error response:', error.response.data);
-      }
-      throw new Error(error.response?.data?.message || 'Lỗi khi thêm sách');
+      throw error;
     }
   };
 
@@ -152,8 +152,15 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
       setIsLoading(false);
       return;
     }
+
     if (newBook.type === "Có phí" && (!newBook.price || newBook.price <= 0)) {
       setError("Vui lòng nhập giá hợp lệ cho sách có phí!");
+      setIsLoading(false);
+      return;
+    }
+
+    if (newBook.ageLimit === undefined || newBook.ageLimit === null) {
+      setError("Vui lòng nhập giới hạn độ tuổi!");
       setIsLoading(false);
       return;
     }
@@ -178,19 +185,24 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
         pushlisher: newBook.pushlisher.trim(),
         description: newBook.description.trim(),
         image: coverImageUrl,
-        viewlink: pdfUrl
+        viewlink: pdfUrl,
+        ageLimit: parseInt(newBook.ageLimit)
       };
 
-      console.log('Final book data:', bookData);
+      console.log('Sending book data:', bookData);
 
       // Add book to database
-      await addBook(bookData);
+      const response = await addBook(bookData);
 
-      // Call the onConfirm callback
-      onConfirm(bookData);
-      
-      // Redirect to books page and force reload
-      window.location.href = '/utebook-admin/books?reload=true';
+      if (response.success) {
+        // Call the onConfirm callback with the book data
+        onConfirm(response.data.book);
+        
+        // Redirect to books page and force reload
+        window.location.href = '/utebook-admin/books?reload=true';
+      } else {
+        throw new Error(response.message || 'Có lỗi xảy ra khi thêm sách');
+      }
     } catch (error) {
       console.error('Error in handleSubmit:', error);
       setError(error.message || 'Có lỗi xảy ra khi thêm sách');
@@ -209,9 +221,24 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
       <div className="modal-overlay">
         <div className="modal-content">
           <div className="modal-header">
-            <h2>Thêm Sách Mới</h2>
+            <h2>{activeTab === 'book' ? 'Thêm Sách Mới' : 'Thêm Chương Mới'}</h2>
             <button className="close-btn" onClick={onCancel}>
               <CloseIcon />
+            </button>
+          </div>
+
+          <div className="tab-buttons">
+            <button 
+              className={`tab-button ${activeTab === 'book' ? 'active' : ''}`}
+              onClick={() => setActiveTab('book')}
+            >
+              Thêm Sách
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'chapter' ? 'active' : ''}`}
+              onClick={() => setActiveTab('chapter')}
+            >
+              Thêm Chương
             </button>
           </div>
 
@@ -221,169 +248,189 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-layout">
-              <div className="upload-section">
-                <div className="image-upload-container">
-                  <input
-                    type="file"
-                    id="cover-upload"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="file-input"
-                    disabled={isUploading}
-                  />
-                  <label htmlFor="cover-upload" className="upload-label">
-                    {previewImage ? (
-                      <img src={previewImage} alt="Preview" className="preview-image" />
-                    ) : (
-                      <div className="upload-placeholder">
-                        <CloudUploadIcon />
-                        <span>Tải ảnh bìa lên</span>
-                        <span className="sub-text">Chọn hoặc kéo thả file ảnh vào đây</span>
-                      </div>
-                    )}
-                  </label>
-                </div>
-
-                <div className="pdf-upload-container">
-                  <input
-                    type="file"
-                    id="pdf-upload"
-                    accept=".pdf"
-                    onChange={handlePdfChange}
-                    className="file-input"
-                    disabled={isUploading}
-                  />
-                  <label htmlFor="pdf-upload" className="upload-label">
-                    <div className="upload-placeholder">
-                      <PictureAsPdfIcon />
-                      <span>{pdfFileName || "Tải nội dung PDF lên"}</span>
-                      <span className="sub-text">Chọn hoặc kéo thả file PDF vào đây</span>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <div className="form-fields">
-                <div className="form-group">
-                  <label>Tên sách <span className="required">*</span></label>
-                  <input
-                    type="text"
-                    name="bookname"
-                    value={newBook.bookname}
-                    onChange={handleChange}
-                    placeholder="Nhập tên sách"
-                    disabled={isUploading}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Tác giả <span className="required">*</span></label>
-                  <input
-                    type="text"
-                    name="author"
-                    value={newBook.author}
-                    onChange={handleChange}
-                    placeholder="Nhập tên tác giả"
-                    disabled={isUploading}
-                  />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Thể loại <span className="required">*</span></label>
-                    <select 
-                      name="categories" 
-                      value={newBook.categories[0]} 
-                      onChange={handleChange}
-                      disabled={isUploading}
-                    >
-                      <option value="Văn học">Văn học</option>
-                      <option value="Khoa học">Khoa học</option>
-                      <option value="Kinh tế">Kinh tế</option>
-                      <option value="Tâm lý">Tâm lý</option>
-                      <option value="Thiếu nhi">Thiếu nhi</option>
-                      <option value="Ngoại ngữ">Ngoại ngữ</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Đối tượng <span className="required">*</span></label>
-                    <select 
-                      name="type" 
-                      value={newBook.type} 
-                      onChange={handleChange}
-                      disabled={isUploading}
-                    >
-                      <option value="Tất cả">Tất cả</option>
-                      <option value="Hội viên">Hội viên</option>
-                      <option value="Có phí">Có phí</option>
-                    </select>
-                  </div>
-                </div>
-
-                {newBook.type === "Có phí" && (
-                  <div className="form-group">
-                    <label>Giá (VND) <span className="required">*</span></label>
+          {activeTab === 'book' ? (
+            <form onSubmit={handleSubmit}>
+              <div className="form-layout">
+                <div className="upload-section">
+                  <div className="image-upload-container">
                     <input
-                      type="number"
-                      name="price"
-                      value={newBook.price}
-                      onChange={handleChange}
-                      placeholder="Nhập giá sách"
-                      min="0"
+                      type="file"
+                      id="cover-upload"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="file-input"
                       disabled={isUploading}
                     />
+                    <label htmlFor="cover-upload" className="upload-label">
+                      {previewImage ? (
+                        <img src={previewImage} alt="Preview" className="preview-image" />
+                      ) : (
+                        <div className="upload-placeholder">
+                          <CloudUploadIcon />
+                          <span>Tải ảnh bìa lên</span>
+                          <span className="sub-text">Chọn hoặc kéo thả file ảnh vào đây</span>
+                        </div>
+                      )}
+                    </label>
                   </div>
-                )}
 
-                <div className="form-row">
+                  <div className="pdf-upload-container">
+                    <input
+                      type="file"
+                      id="pdf-upload"
+                      accept=".pdf"
+                      onChange={handlePdfChange}
+                      className="file-input"
+                      disabled={isUploading}
+                    />
+                    <label htmlFor="pdf-upload" className="upload-label">
+                      <div className="upload-placeholder">
+                        <PictureAsPdfIcon />
+                        <span>{pdfFileName || "Tải nội dung PDF lên"}</span>
+                        <span className="sub-text">Chọn hoặc kéo thả file PDF vào đây</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="form-fields">
                   <div className="form-group">
-                    <label>Nhà xuất bản</label>
+                    <label>Tên sách <span className="required">*</span></label>
                     <input
                       type="text"
-                      name="pushlisher"
-                      value={newBook.pushlisher}
+                      name="bookname"
+                      value={newBook.bookname}
                       onChange={handleChange}
-                      placeholder="Nhập tên NXB"
+                      placeholder="Nhập tên sách"
+                      disabled={isUploading}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Tác giả <span className="required">*</span></label>
+                    <input
+                      type="text"
+                      name="author"
+                      value={newBook.author}
+                      onChange={handleChange}
+                      placeholder="Nhập tên tác giả"
+                      disabled={isUploading}
+                    />
+                  </div>
+
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Thể loại <span className="required">*</span></label>
+                      <select 
+                        name="categories" 
+                        value={newBook.categories[0]} 
+                        onChange={handleChange}
+                        disabled={isUploading}
+                      >
+                        <option value="Văn học">Văn học</option>
+                        <option value="Khoa học">Khoa học</option>
+                        <option value="Kinh tế">Kinh tế</option>
+                        <option value="Tâm lý">Tâm lý</option>
+                        <option value="Thiếu nhi">Thiếu nhi</option>
+                        <option value="Ngoại ngữ">Ngoại ngữ</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Đối tượng <span className="required">*</span></label>
+                      <select 
+                        name="type" 
+                        value={newBook.type} 
+                        onChange={handleChange}
+                        disabled={isUploading}
+                      >
+                        <option value="Free">Tất cả</option>
+                        <option value="Member">Hội viên</option>
+                        <option value="HoaPhuong">Có phí</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {newBook.type === "Có phí" && (
+                    <div className="form-group">
+                      <label>Giá (VND) <span className="required">*</span></label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newBook.price}
+                        onChange={handleChange}
+                        placeholder="Nhập giá sách"
+                        min="0"
+                        disabled={isUploading}
+                      />
+                    </div>
+                  )}
+
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Nhà xuất bản</label>
+                      <input
+                        type="text"
+                        name="pushlisher"
+                        value={newBook.pushlisher}
+                        onChange={handleChange}
+                        placeholder="Nhập tên NXB"
+                        disabled={isUploading}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Giới hạn tuổi <span className="required">*</span></label>
+                      <input
+                        type="number"
+                        name="ageLimit"
+                        value={newBook.ageLimit}
+                        onChange={handleChange}
+                        placeholder="Nhập giới hạn tuổi"
+                        min="0"
+                        disabled={isUploading}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Mô tả</label>
+                    <textarea
+                      name="description"
+                      value={newBook.description}
+                      onChange={handleChange}
+                      placeholder="Nhập mô tả sách"
+                      rows="4"
                       disabled={isUploading}
                     />
                   </div>
                 </div>
-
-                <div className="form-group">
-                  <label>Mô tả</label>
-                  <textarea
-                    name="description"
-                    value={newBook.description}
-                    onChange={handleChange}
-                    placeholder="Nhập mô tả sách"
-                    rows="4"
-                    disabled={isUploading}
-                  />
-                </div>
               </div>
-            </div>
 
-            <div className="modal-actions">
-              <button 
-                type="submit" 
-                className="confirm-btn"
-                disabled={isUploading}
-              >
-                {isUploading ? 'Đang tải lên...' : 'Thêm sách'}
-              </button>
-              <button 
-                type="button" 
-                className="cancel-btn" 
-                onClick={onCancel}
-                disabled={isUploading}
-              >
-                Hủy
-              </button>
-            </div>
-          </form>
+              <div className="modal-actions">
+                <button 
+                  type="submit" 
+                  className="confirm-btn"
+                  disabled={isUploading}
+                >
+                  {isUploading ? 'Đang tải lên...' : 'Thêm sách'}
+                </button>
+                <button 
+                  type="button" 
+                  className="cancel-btn" 
+                  onClick={onCancel}
+                  disabled={isUploading}
+                >
+                  Hủy
+                </button>
+              </div>
+            </form>
+          ) : (
+            <AddChapterTab 
+              onConfirm={onConfirm}
+              onCancel={onCancel}
+            />
+          )}
         </div>
       </div>
     </div>
