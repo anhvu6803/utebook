@@ -13,9 +13,10 @@ class AuthController {
             const result = await authService.login(email, password);
             res.cookie('access_token', result.accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 24* 60  * 60 * 1000
+                secure: false,
+                sameSite: 'lax',
+                maxAge: 24 * 60 * 60 * 1000,
+                path: '/'
             });
             res.json({
                 user: result.user
@@ -39,9 +40,10 @@ class AuthController {
             const result = await authService.googleLogin(email, name, picture, googleId);
             res.cookie('access_token', result.accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 24* 60  * 60 * 1000
+                secure: false,
+                sameSite: 'lax',
+                maxAge: 24 * 60 * 60 * 1000,
+                path: '/'
             });
             res.json({
                 user: result.user
@@ -81,9 +83,10 @@ class AuthController {
             // Set new access token in cookie
             res.cookie('access_token', result.accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 24* 60  * 60 * 1000
+                secure: false,
+                sameSite: 'lax',
+                maxAge: 24 * 60 * 60 * 1000,
+                path: '/'
             });
 
             // Return user data along with the response

@@ -22,6 +22,31 @@ exports.getAllBooks = async (req, res) => {
     }
 };
 
+exports.getBookById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const book = await BookService.getBookById(id);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy thông tin sách thành công',
+            data: book
+        });
+    } catch (error) {
+        console.error('Error in getBookById controller:', error);
+        if (error.message === 'Book not found') {
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy sách'
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi lấy thông tin sách'
+            });
+        }
+    }
+};
+
 exports.addBook = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -104,5 +129,78 @@ exports.addBook = async (req, res) => {
             success: false,
             message: error.message || 'Có lỗi xảy ra khi thêm sách'
         });
+    }
+};
+
+exports.updateBook = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+
+        // Convert categories to array if it's a string
+        if (updateData.categories && typeof updateData.categories === 'string') {
+            updateData.categories = JSON.parse(updateData.categories);
+        }
+
+        // Convert ageLimit to number if it exists
+        if (updateData.ageLimit) {
+            updateData.ageLimit = parseInt(updateData.ageLimit);
+        }
+
+        const updatedBook = await BookService.updateBook(id, updateData);
+        
+        res.status(200).json({
+            success: true,
+            message: 'Cập nhật sách thành công',
+            data: updatedBook
+        });
+    } catch (error) {
+        console.error('Error in updateBook controller:', error);
+        if (error.message === 'Book not found') {
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy sách'
+            });
+        } else if (error.message === 'Book with this name already exists') {
+            res.status(400).json({
+                success: false,
+                message: 'Tên sách đã tồn tại'
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi cập nhật sách'
+            });
+        }
+    }
+};
+
+exports.deleteBook = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await BookService.deleteBook(id);
+        
+        res.status(200).json({
+            success: true,
+            message: 'Xóa sách thành công'
+        });
+    } catch (error) {
+        console.error('Error in deleteBook controller:', error);
+        if (error.message === 'Book not found') {
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy sách'
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi xóa sách'
+            });
+        }
     }
 };

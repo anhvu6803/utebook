@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./styles/AddChapterTab.scss";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import DescriptionIcon from "@mui/icons-material/Description";
 import BookIcon from "@mui/icons-material/Book";
 import TitleIcon from "@mui/icons-material/Title";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import Loading from "./Loading";
+import hoaPhuong from "../assets/hoaPhuong.png";
 
 const AddChapterTab = ({ onConfirm, onCancel }) => {
   const { user } = useAuth();
@@ -54,11 +54,30 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
     };
   };
 
-  const handleChange = (e) => {
-    const value = e.target.type === 'number' ? 
-      (e.target.value === '' ? '' : Number(e.target.value)) : 
-      e.target.value;
-    setNewChapter({ ...newChapter, [e.target.name]: value });
+  const handleBookChange = (e) => {
+    const bookId = e.target.value;
+    setSelectedBook(bookId);
+    if (bookId) {
+      const selectedBookData = books.find(book => book._id === bookId);
+      if (selectedBookData) {
+        const chapterCount = selectedBookData.chapterIds?.length || 0;
+        let chapterName = '';
+        
+        if (chapterCount === 0) {
+          // Nếu là chapter đầu tiên
+          chapterName = `${selectedBookData.bookname} - Chương 1`;
+        } else {
+          // Nếu đã có chapter trước đó
+          const nextChapterNumber = chapterCount + 1;
+          chapterName = `${selectedBookData.bookname} - Chương ${nextChapterNumber}`;
+        }
+        
+        setNewChapter(prev => ({
+          ...prev,
+          chapterName: chapterName
+        }));
+      }
+    }
   };
 
   const handlePdfChange = (e) => {
@@ -161,7 +180,7 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
             <BookIcon className="icon" />
             <select
               value={selectedBook}
-              onChange={(e) => setSelectedBook(e.target.value)}
+              onChange={handleBookChange}
               disabled={isUploading}
               className="styled-select"
             >
@@ -182,9 +201,7 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
               type="text"
               name="chapterName"
               value={newChapter.chapterName}
-              onChange={handleChange}
-              placeholder="Nhập tên chương"
-              disabled={isUploading}
+              readOnly
               className="styled-input"
             />
           </div>
@@ -192,12 +209,12 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
 
         <div className="form-group">
           <div className="input-icon">
-            <AttachMoneyIcon className="icon" />
+            <img src={hoaPhuong} alt="Hoa Phuong" className="icon" style={{ width: '24px', height: '24px' }} />
             <input
               type="number"
               name="price"
               value={newChapter.price}
-              onChange={handleChange}
+              onChange={(e) => setNewChapter({ ...newChapter, price: e.target.value })}
               placeholder="Nhập giá chương"
               min="0"
               disabled={isUploading}
@@ -210,17 +227,16 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
           <input
             type="file"
             id="pdf-upload"
-            accept=".pdf"
             onChange={handlePdfChange}
             className="file-input"
             disabled={isUploading}
           />
           <label htmlFor="pdf-upload" className="upload-label">
             <div className="upload-placeholder">
-              <PictureAsPdfIcon className="pdf-icon" />
+              <DescriptionIcon className="pdf-icon" />
               <div className="upload-text">
-                <span className="main-text">{pdfFileName || "Tải nội dung PDF lên"}</span>
-                <span className="sub-text">Chọn hoặc kéo thả file PDF vào đây</span>
+                <span className="main-text">{pdfFileName || "Tải file nội dung lên"}</span>
+                <span className="sub-text">Chọn hoặc kéo thả file nội dung vào đây</span>
               </div>
               <CloudUploadIcon className="upload-icon" />
             </div>

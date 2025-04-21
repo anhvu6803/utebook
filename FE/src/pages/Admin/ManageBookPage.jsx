@@ -1,34 +1,81 @@
 import { useState, useEffect } from "react";
 import "./styles/ManageBookPage.scss";
-import DeleteIcon from "@mui/icons-material/Delete";;
+import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import BookDetailForm from "../../components/Admin/BookDetail";
 import AdminPasswordModal from "../../components/Admin/AdminPasswordModal";
 import AddBookModal from "../../components/AddNewBookModal";
-
-const booksData = Array.from({ length: 50 }, (_, i) => ({
-  title: `Sách ${i + 1}`,
-  author: `Tác giả ${i + 1}`,
-  genre: i % 2 === 0 ? "Văn học" : "Khoa học",
-  price: (i + 1) * 10000,
-  cover: `https://via.placeholder.com/150?text=Sách+${i + 1}`,
-}));
+import axios from "axios";
 
 const ManageBookPage = () => {
-  const [books, setBooks] = useState(booksData);
+  const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBook, setSelectedBook] = useState(null);
   const [bookToDelete, setBookToDelete] = useState(null);
   const [showAddBookModal, setShowAddBookModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
   const booksPerPage = 10;
+
+  useEffect(() => {
+    fetchBooks();
+    fetchCategories();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("http://localhost:5000/api/book/books");
+      if (response.data.success) {
+        setBooks(response.data.data);
+      } else {
+        setError("Không thể lấy danh sách sách");
+      }
+    } catch (err) {
+      setError("Có lỗi xảy ra khi tải danh sách sách");
+      console.error("Error fetching books:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/category");
+      if (response.data.success) {
+        setCategories(response.data.data);
+      }
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  const fetchBookDetail = async (bookId) => {
+    try {
+      setDetailLoading(true);
+      const response = await axios.get(`http://localhost:5000/api/book/books/${bookId}`);
+      if (response.data.success) {
+        setSelectedBook(response.data.data);
+      } else {
+        setError("Không thể lấy thông tin sách");
+      }
+    } catch (err) {
+      setError("Có lỗi xảy ra khi tải thông tin sách");
+      console.error("Error fetching book detail:", err);
+    } finally {
+      setDetailLoading(false);
+    }
+  };
 
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
   const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+    book.bookname.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
@@ -40,10 +87,17 @@ const ManageBookPage = () => {
     setBookToDelete(book);
   };
 
-  const confirmDelete = () => {
-    if (bookToDelete) {
-      setBooks((prevBooks) => prevBooks.filter((b) => b.title !== bookToDelete.title));
-      setBookToDelete(null);
+  const confirmDelete = async (password) => {
+    try {
+      if (bookToDelete) {
+        await axios.delete(`http://localhost:5000/api/book/books/${bookToDelete._id}`, {
+          withCredentials: true
+        });
+        setBooks((prevBooks) => prevBooks.filter((b) => b._id !== bookToDelete._id));
+        setBookToDelete(null);
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Có lỗi xảy ra khi xóa sách');
     }
   };
 
@@ -52,9 +106,17 @@ const ManageBookPage = () => {
     setShowAddBookModal(false);
   };
 
-  const handleRowClick = (book) => {
-    setSelectedBook(book);
+  const handleRowClick = async (book) => {
+    await fetchBookDetail(book._id);
   };
+
+  if (loading) {
+    return <div className="book-management loading">Đang tải...</div>;
+  }
+
+  if (error) {
+    return <div className="book-management error">{error}</div>;
+  }
 
   return (
     <div className="book-management">
@@ -80,27 +142,39 @@ const ManageBookPage = () => {
             <th>Tiêu đề</th>
             <th>Tác giả</th>
             <th>Thể loại</th>
-            <th>Giá</th>
+            <th>Mô tả</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody>
           {currentBooks.length > 0 ? (
-            currentBooks.map((book, index) => (
+            currentBooks.map((book) => (
               <tr 
-                key={index} 
+                key={book._id} 
                 className="clickable-row"
                 onClick={() => handleRowClick(book)}
               >
-                <td><img className="book-cover" src={book.cover} alt={book.title} /></td>
-                <td>{book.title}</td>
+                <td><img className="book-cover" src={book.image} alt={book.bookname} /></td>
+                <td>{book.bookname}</td>
                 <td>{book.author}</td>
-                <td>{book.genre}</td>
-                <td>{book.price.toLocaleString()} VND</td>
+                <td>{book.categories.join(", ")}</td>
+                <td>{book.description}</td>
+                <td>
+                  <button 
+                    className="delete-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(book);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5" className="no-books">Không tìm thấy sách!</td>
+              <td colSpan="6" className="no-books">Không tìm thấy sách!</td>
             </tr>
           )}
         </tbody>
@@ -119,13 +193,20 @@ const ManageBookPage = () => {
       )}
 
       {selectedBook && (
-        <BookDetailForm book={selectedBook} onClose={() => setSelectedBook(null)} />
+        <BookDetailForm 
+          book={selectedBook} 
+          onClose={() => setSelectedBook(null)} 
+          loading={detailLoading}
+          categories={categories}
+        />
       )}
 
       {bookToDelete && (
         <AdminPasswordModal
           onConfirm={confirmDelete}
           onCancel={() => setBookToDelete(null)}
+          action="xóa"
+          message="Vui lòng nhập mật khẩu admin để xóa sách"
         />
       )}
 

@@ -2,9 +2,10 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const { addChapter, getAllChapters, getChapterById, updateChapter, deleteChapter } = require('../controllers/chapter.controller');
+const { authMiddleware } = require('../middleware/auth.middleware');
 
 // Add chapter route
-router.post('/add-chapter', addChapter);
+router.post('/add-chapter', authMiddleware, addChapter);
 
 // Get all chapters route
 router.get('/chapters', getAllChapters);

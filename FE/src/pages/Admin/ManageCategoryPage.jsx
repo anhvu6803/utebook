@@ -6,6 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
+import axios from "axios";
+import AdminPasswordModal from "../../components/Admin/AdminPasswordModal";
 
 const ManageCategoryPage = () => {
   const [categories, setCategories] = useState([]);
@@ -16,38 +18,33 @@ const ManageCategoryPage = () => {
   const [formData, setFormData] = useState({ name: "" });
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [actionType, setActionType] = useState(null);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
   const categoriesPerPage = 10;
 
   useEffect(() => {
-    const initialCategories = [
-      { id: 1, name: "Tiểu thuyết" },
-      { id: 2, name: "Khoa học" },
-      { id: 3, name: "Lịch sử" },
-      { id: 4, name: "Truyện" },
-      { id: 5, name: "Tâm lý" },
-      { id: 6, name: "Viễn tưởng" },
-      { id: 7, name: "Kinh dị" },
-      { id: 8, name: "Viễn tưởng" },
-      { id: 9, name: "Kinh dị" },
-      { id: 10, name: "Viễn tưởng" },
-      { id: 11, name: "Kinh dị" },
-      { id: 12, name: "Viễn tưởng" },
-      { id: 13, name: "Kinh dị" },
-      { id: 14, name: "Viễn tưởng" },
-      { id: 15, name: "Kinh dị" },
-      { id: 16, name: "Viễn tưởng" },
-      { id: 17, name: "Kinh dị" },
-      { id: 18, name: "Viễn tưởng" },
-      { id: 19, name: "Kinh dị" },
-      { id: 20, name: "Viễn tưởng" },
-      { id: 21, name: "Kinh dị" },
-      
-      
-    ];
-    setCategories(initialCategories);
-    setFilteredCategories(initialCategories);
-    setCurrentPage(1);
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("http://localhost:5000/api/category");
+      if (response.data.success) {
+        setCategories(response.data.data);
+        setFilteredCategories(response.data.data);
+      } else {
+        setError("Không thể lấy danh sách thể loại");
+      }
+    } catch (err) {
+      setError("Có lỗi xảy ra khi tải danh sách thể loại");
+      console.error("Error fetching categories:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -85,16 +82,29 @@ const ManageCategoryPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleDeleteCategory = (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa thể loại này?")) {
-      const newCategories = categories.filter((category) => category.id !== id);
-      setCategories(newCategories);
-      setFilteredCategories(newCategories);
-      showToast("Xóa thể loại thành công");
+  const handleDeleteCategory = (category) => {
+    setActionType('delete');
+    setCategoryToDelete(category);
+    setShowAdminModal(true);
+  };
+
+  const handleAdminConfirm = async () => {
+    try {
+      if (actionType === 'delete' && categoryToDelete) {
+        await axios.delete(`http://localhost:5000/api/category/${categoryToDelete._id}`, {
+          withCredentials: true
+        });
+        await fetchCategories(); // Refresh category list
+        showToast("Xóa thể loại thành công");
+      }
+      setShowAdminModal(false);
+      setCategoryToDelete(null);
+    } catch (error) {
+      setError(error.response?.data?.message || 'Có lỗi xảy ra');
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmedName = formData.name.trim();
 
@@ -103,35 +113,39 @@ const ManageCategoryPage = () => {
       return;
     }
 
-    const isDuplicate = categories.some(
-      (cat) => cat.name.toLowerCase() === trimmedName.toLowerCase() &&
-      (!editingCategory || cat.id !== editingCategory.id)
-    );
-
-    if (isDuplicate) {
-      setError(`Thể loại "${trimmedName}" đã tồn tại`);
-      return;
+    try {
+      if (editingCategory) {
+        // Update category
+        const response = await axios.put(
+          `http://localhost:5000/api/category/${editingCategory._id}`,
+          { name: trimmedName },
+          {
+            withCredentials: true
+          }
+        );
+        if (response.data.success) {
+          await fetchCategories(); // Refresh category list
+          showToast("Cập nhật thể loại thành công");
+        }
+      } else {
+        // Add new category
+        const response = await axios.post(
+          "http://localhost:5000/api/category",
+          { name: trimmedName },
+          {
+            withCredentials: true
+          }
+        );
+        if (response.data.success) {
+          await fetchCategories(); // Refresh category list
+          showToast("Thêm thể loại thành công");
+        }
+      }
+      setIsModalOpen(false);
+      setFormData({ name: "" });
+    } catch (error) {
+      setError(error.response?.data?.message || 'Có lỗi xảy ra');
     }
-
-    if (editingCategory) {
-      const updatedCategories = categories.map((cat) =>
-        cat.id === editingCategory.id ? { ...cat, name: trimmedName } : cat
-      );
-      setCategories(updatedCategories);
-      setFilteredCategories(updatedCategories);
-      showToast("Cập nhật thể loại thành công");
-    } else {
-      const newCategory = {
-        id: Date.now(),
-        name: trimmedName
-      };
-      setCategories([...categories, newCategory]);
-      setFilteredCategories([...categories, newCategory]);
-      showToast("Thêm thể loại thành công");
-    }
-
-    setIsModalOpen(false);
-    setFormData({ name: "" });
   };
 
   const showToast = (message) => {
@@ -143,6 +157,10 @@ const ManageCategoryPage = () => {
       toast.remove();
     }, 3000);
   };
+
+  if (loading) {
+    return <div className="category-page loading">Đang tải...</div>;
+  }
 
   return (
     <div className="category-page">
@@ -179,7 +197,7 @@ const ManageCategoryPage = () => {
             <tbody>
               {currentCategories.length > 0 ? (
                 currentCategories.map((category, index) => (
-                  <tr key={category.id}>
+                  <tr key={category._id}>
                     <td>{indexOfFirstCategory + index + 1}</td>
                     <td>{category.name}</td>
                     <td>
@@ -192,7 +210,7 @@ const ManageCategoryPage = () => {
                         </button>
                         <button
                           className="btn-delete"
-                          onClick={() => handleDeleteCategory(category.id)}
+                          onClick={() => handleDeleteCategory(category)}
                         >
                           <DeleteIcon />
                         </button>
@@ -267,6 +285,20 @@ const ManageCategoryPage = () => {
               </form>
             </div>
           </div>
+        )}
+
+        {showAdminModal && (
+          <AdminPasswordModal
+            onClose={() => setShowAdminModal(false)}
+            isOpen={showAdminModal}
+            onConfirm={handleAdminConfirm}
+            onCancel={() => {
+              setShowAdminModal(false);
+              setCategoryToDelete(null);
+            }}
+            action="xóa"
+            message="Vui lòng nhập mật khẩu admin để xóa thể loại"
+          />
         )}
       </div>
     </div>

@@ -1,0 +1,238 @@
+.chapter-management-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.chapter-management-modal {
+  background: #ffffff;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg);
+    color: #333;
+  }
+
+  svg {
+    font-size: 20px;
+  }
+}
+
+.modal-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: #2196f3;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  &::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 3px solid #2196f3;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  background-color: #fff2f2;
+  color: #ff4d4f;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid #ffccc7;
+  margin: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &::before {
+    content: "⚠️";
+    font-size: 1.2rem;
+  }
+}
+
+.chapters-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-right: -8px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f1f8ff;
+    transform: translateX(4px);
+  }
+
+  .chapter-info {
+    flex: 1;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin: 0 0 4px 0;
+    }
+
+    .chapter-price {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  .chapter-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+      background: none;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      svg {
+        font-size: 20px;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .edit-btn {
+      color: #2196f3;
+
+      &:hover {
+        background: rgba(33, 150, 243, 0.1);
+      }
+    }
+
+    .delete-btn {
+      color: #f44336;
+
+      &:hover {
+        background: rgba(244, 67, 54, 0.1);
+      }
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
