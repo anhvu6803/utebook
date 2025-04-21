@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./styles/AddNewBookModal.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import CategoryIcon from "@mui/icons-material/Category";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import Loading from "./Loading";
@@ -12,10 +14,14 @@ import AddChapterTab from "./AddChapterTab";
 const AddBookModal = ({ onConfirm, onCancel }) => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('book'); // 'book' or 'chapter'
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [newBook, setNewBook] = useState({
     bookname: "",
     author: "",
-    categories: ["Văn học"],
+    categories: [],
     price: "",
     type: "Free",
     pushlisher: "",
@@ -64,6 +70,32 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
       setNewBook({ ...newBook, content: file });
       setPdfFileName(file.name);
     }
+  };
+
+  const filteredCategories = categories.filter(category => 
+    category.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    !selectedCategories.includes(category.name)
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setIsSelectOpen(true);
+  };
+
+  const handleCategorySelect = (categoryName) => {
+    if (categoryName && !selectedCategories.includes(categoryName)) {
+      const newSelectedCategories = [...selectedCategories, categoryName];
+      setSelectedCategories(newSelectedCategories);
+      setNewBook({ ...newBook, categories: newSelectedCategories });
+      setSearchTerm('');
+      setIsSelectOpen(false);
+    }
+  };
+
+  const removeCategory = (categoryName) => {
+    const newSelectedCategories = selectedCategories.filter(name => name !== categoryName);
+    setSelectedCategories(newSelectedCategories);
+    setNewBook({ ...newBook, categories: newSelectedCategories });
   };
 
   const uploadCoverImage = async (file) => {
@@ -212,6 +244,21 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/category');
+        if (response.data.success) {
+          setCategories(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -318,24 +365,63 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                     />
                   </div>
 
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Thể loại <span className="required">*</span></label>
-                      <select 
-                        name="categories" 
-                        value={newBook.categories[0]} 
-                        onChange={handleChange}
-                        disabled={isUploading}
-                      >
-                        <option value="Văn học">Văn học</option>
-                        <option value="Khoa học">Khoa học</option>
-                        <option value="Kinh tế">Kinh tế</option>
-                        <option value="Tâm lý">Tâm lý</option>
-                        <option value="Thiếu nhi">Thiếu nhi</option>
-                        <option value="Ngoại ngữ">Ngoại ngữ</option>
-                      </select>
+                  <div className="form-group">
+                    <label>Thể loại <span className="required">*</span></label>
+                    <div className="category-select-container">
+                      <div className="category-search-wrapper">
+                        <div className="search-input-container">
+                          <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onFocus={() => setIsSelectOpen(true)}
+                            placeholder="Tìm kiếm thể loại..."
+                            className="category-search-input"
+                            disabled={isUploading}
+                          />
+                        </div>
+                        {isSelectOpen && (
+                          <div className="category-dropdown">
+                            {filteredCategories.length > 0 ? (
+                              filteredCategories.map((category) => (
+                                <div
+                                  key={category.name}
+                                  className="category-option"
+                                  onClick={() => handleCategorySelect(category.name)}
+                                >
+                                  <div className="category-icon">
+                                    <CategoryIcon />
+                                  </div>
+                                  {category.name}
+                                </div>
+                              ))
+                            ) : (
+                              <div className="category-dropdown-empty">
+                                <SentimentDissatisfiedIcon className="empty-icon" />
+                                <span>Không tìm thấy thể loại phù hợp</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="selected-categories">
+                        {selectedCategories.map((categoryName) => (
+                          <div key={categoryName} className="category-tag">
+                            {categoryName}
+                            <button 
+                              type="button" 
+                              onClick={() => removeCategory(categoryName)}
+                              className="remove-category"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                  </div>
 
+                  <div className="form-row">
                     <div className="form-group">
                       <label>Đối tượng <span className="required">*</span></label>
                       <select 

@@ -27,19 +27,18 @@ class CategoryController {
             }
 
             const result = await CategoryService.createCategory(req.body);
-            res.status(201).json(result);
+            return res.status(201).json(result);
         } catch (error) {
-            if (error.message === 'Thể loại đã tồn tại') {
-                res.status(400).json({
+            if (error.message === 'Tên thể loại đã tồn tại') {
+                return res.status(400).json({
                     success: false,
                     message: error.message
                 });
-            } else {
-                res.status(500).json({
-                    success: false,
-                    message: error.message || 'Có lỗi xảy ra khi thêm thể loại'
-                });
             }
+            return res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi thêm thể loại'
+            });
         }
     }
 

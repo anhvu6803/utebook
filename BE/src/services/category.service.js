@@ -14,9 +14,13 @@ class CategoryService {
     // Thêm thể loại mới
     static async createCategory(categoryData) {
         try {
-            const existingCategory = await Category.findOne({ name: categoryData.name });
+            // Kiểm tra trùng tên
+            const existingCategory = await Category.findOne({ 
+                name: { $regex: new RegExp('^' + categoryData.name + '$', 'i') } 
+            });
+            
             if (existingCategory) {
-                throw new Error('Thể loại đã tồn tại');
+                throw new Error('Tên thể loại đã tồn tại');
             }
 
             const newCategory = new Category(categoryData);

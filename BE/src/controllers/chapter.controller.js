@@ -21,14 +21,21 @@ exports.addChapter = async (req, res) => {
             bookId
         });
 
-        res.status(201).json({
+        if (!newChapter) {
+            return res.status(500).json({
+                success: false,
+                message: 'Không thể tạo chapter mới'
+            });
+        }
+
+        return res.status(201).json({
             success: true,
             message: 'Thêm chapter thành công',
             data: newChapter
         });
     } catch (error) {
         console.error('Error in addChapter controller:', error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: error.message || 'Có lỗi xảy ra khi thêm chapter'
         });
