@@ -11,15 +11,20 @@ const pointPackageRouter = require('./pointPackage.route');
 const driveRouter = require('./drive.route');
 const twilioRoutes = require('./twilio.route');
 const cloudinaryRoute = require('./cloudinary.route');
+const chapterRouter = require('./chapter.route');
+const categoryRouter = require('./category.route');
 
 router.use('/user', userRouter);
 router.use('/book', bookRouter);
 router.use('/review', reviewRouter);
 router.use('/drive', driveRouter);
 router.use('/auth', authRouter);
+router.use('/category', categoryRouter);
 router.use('/twilio', twilioRoutes);
 router.use('/cloudinary', cloudinaryRoute);
 router.use('/payment', paymentRouter);
 router.use('/membership-packages', membershipPackageRouter);
 router.use('/point-packages', pointPackageRouter);
+router.use('/chapter', chapterRouter);
+
 module.exports = router;

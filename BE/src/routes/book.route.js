@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
-const BookController = require('../controllers/book.controller');
+const { getAllBooks, addBook, getBookById, updateBook, deleteBook } = require('../controllers/book.controller');
 const multer = require('multer');
 
 // Configure multer for file uploads
@@ -29,6 +29,12 @@ const upload = multer({
     }
 });
 
+// Get all books route
+router.get('/books', getAllBooks);
+
+// Get book by ID route
+router.get('/books/:id', getBookById);
+
 // Add book route
 router.post('/add-book', 
     [
@@ -44,9 +50,36 @@ router.post('/add-book',
         body('pushlisher').notEmpty().withMessage('Publisher is required'),
         body('description').notEmpty().withMessage('Description is required'),
         body('image').notEmpty().withMessage('Image URL is required').isString(),
-        body('viewlink').notEmpty().withMessage('View link is required').isString()
+        body('viewlink').notEmpty().withMessage('View link is required').isString(),
+        body('ageLimit')
+            .exists().withMessage('Age limit is required')
+            .isInt({ min: 0 }).withMessage('Age limit must be a non-negative number'),
+        body('chapterIds').optional().isArray().withMessage('Chapter IDs must be an array')
     ],
-    BookController.addBook
+    addBook
 );
+
+// Update book route
+router.put('/books/:id', 
+    [
+        body('bookname').optional().notEmpty().withMessage('Book name cannot be empty'),
+        body('author').optional().notEmpty().withMessage('Author cannot be empty'),
+        body('categories')
+            .optional()
+            .isArray().withMessage('Categories must be an array')
+            .notEmpty().withMessage('Categories cannot be empty'),
+        body('type').optional().notEmpty().withMessage('Book type cannot be empty'),
+        body('pushlisher').optional().notEmpty().withMessage('Publisher cannot be empty'),
+        body('description').optional().notEmpty().withMessage('Description cannot be empty'),
+        body('image').optional().notEmpty().withMessage('Image URL cannot be empty').isString(),
+        body('ageLimit')
+            .optional()
+            .isInt({ min: 0 }).withMessage('Age limit must be a non-negative number')
+    ],
+    updateBook
+);
+
+// Delete book route
+router.delete('/books/:id', deleteBook);
 
 module.exports = router;

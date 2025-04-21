@@ -4,13 +4,10 @@ const FileAccess = require('../models/fileAccess.model');
 const { ALLOWED_EMAILS } = require('../middleware/authEmail.middleware');
 
 class DriveService {
-    static async uploadFile(fileObject, user, allowedEmails = []) {
+    static async uploadFile(fileObject, user) {
         try {
             const bufferStream = new stream.PassThrough();
             bufferStream.end(fileObject.buffer);
-
-            // Thêm email người upload và admin vào danh sách được phép
-            const uniqueEmails = [...new Set([user.email, 'nguyentrandcm@gmail.com', ...allowedEmails])];
 
             // Kiểm tra và tạo folder nếu chưa tồn tại hoặc không có quyền truy cập
             let folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
@@ -92,29 +89,26 @@ class DriveService {
                 }
             }
 
-            // Lưu thông tin file vào database
-            const fileAccess = new FileAccess({
+            // Cấp quyền truy cập công khai cho file
+            await drive.permissions.create({
                 fileId: data.id,
-                fileName: fileObject.originalname,
-                mimeType: fileObject.mimetype,
-                size: fileObject.size,
-                uploadedBy: user.email,
-                uploadedAt: new Date(),
-                allowedEmails: uniqueEmails,
-                webViewLink: data.webViewLink,
-                webContentLink: data.webContentLink
+                requestBody: {
+                    type: 'anyone',
+                    role: 'reader'
+                },
+                sendNotificationEmail: false
             });
-            await fileAccess.save();
 
+            // Cập nhật cài đặt file để cho phép xem và tải xuống
             await drive.files.update({
                 fileId: data.id,
                 requestBody: {
-                    viewersCanCopyContent: false,
-                    copyRequiresWriterPermission: true,
-                    viewersCanPrint: false,
-                    viewersCanDownload: false,
-                    viewersCanShare: false,
-                    viewersCanComment: false,
+                    viewersCanCopyContent: true,
+                    copyRequiresWriterPermission: false,
+                    viewersCanPrint: true,
+                    viewersCanDownload: true,
+                    viewersCanShare: true,
+                    viewersCanComment: true,
                     viewersCanRequestAccess: false,
                     viewersCanModify: false,
                     viewersCanMoveItemWithinDrive: false,
@@ -126,42 +120,19 @@ class DriveService {
                     viewersCanViewOnline: true
                 },
             });
-            const permissions = await drive.permissions.list({
+
+            // Lưu thông tin file vào database
+            const fileAccess = new FileAccess({
                 fileId: data.id,
-                fields: 'permissions(id,emailAddress,role)'
+                fileName: fileObject.originalname,
+                mimeType: fileObject.mimetype,
+                size: fileObject.size,
+                uploadedBy: user.email,
+                uploadedAt: new Date(),
+                webViewLink: data.webViewLink,
+                webContentLink: data.webContentLink
             });
-
-            if (permissions.data.permissions) {
-                for (const permission of permissions.data.permissions) {
-                    if (permission.role !== 'owner') {
-                        try {
-                            await drive.permissions.delete({
-                                fileId: data.id,
-                                permissionId: permission.id
-                            });
-                        } catch (error) {
-                            console.log('Không thể xóa quyền:', error.message);
-                        }
-                    }
-                }
-            }
-
-            // Cấp quyền viewer cho tất cả email được phép
-            const permissionPromises = uniqueEmails.map(email => {
-                return drive.permissions.create({
-                    fileId: data.id,
-                    requestBody: {
-                        type: 'user',
-                        role: 'reader',
-                        emailAddress: email
-                    },
-                    sendNotificationEmail: false
-                }).catch(error => {
-                    console.log(`Không thể cấp quyền cho ${email}:`, error.message);
-                });
-            });
-
-            await Promise.all(permissionPromises);
+            await fileAccess.save();
 
             // Lấy thông tin file sau khi cập nhật quyền
             const updatedFile = await drive.files.get({
@@ -175,8 +146,7 @@ class DriveService {
             await fileAccess.save();
 
             return {
-                ...updatedFile.data,
-                allowedEmails: uniqueEmails
+                ...updatedFile.data
             };
         } catch (error) {
             console.error('Upload error:', error);
