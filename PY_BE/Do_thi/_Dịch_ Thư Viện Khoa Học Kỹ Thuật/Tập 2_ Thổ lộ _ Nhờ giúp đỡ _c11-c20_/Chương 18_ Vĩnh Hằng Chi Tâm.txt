@@ -1,0 +1,53 @@
+Chương 18: Vĩnh Hằng Chi Tâm
+
+Virus tên là “Vĩnh Hằng Chi Tâm”, là một dạng biến thể của virus tống tiền “Vĩnh Hằng Chi Lam”. Giống như lần trước, nó lây lan chủ yếu qua tệp đính kèm email, các địa chỉ web lừa đảo và các liên kết URL tải xuống hàng loạt. Khi người dùng tải xuống các tệp trên các trang web độc hại, con virus “Vĩnh Hằng Chi Tâm” sẽ phát tán ra các trang web khác. Điểm khác biệt của “Vĩnh Hằng Chi Tâm” là khi nó được bật lên, virus sẽ lây nhiễm vào mạng cục bộ của máy tính, sau đó lan rộng ra khắp khu vực, tăng cường khả năng lây lan lên rất nhiều.
+
+Lần gần đây nhất, khi con virus tống tiền xuất hiện, nó chỉ khóa tài liệu, video và dữ liệu đĩa cứng. Còn lần này, toàn bộ hệ thống máy tính trực tiếp bị khóa, không thể đăng nhập vào giao diện máy tính được nữa.
+
+Phạm vi lây nhiễm của biến chủng virus tống tiền “Vĩnh Hằng Chi Tâm” ở trong nước chủ yếu vẫn là các trường đại học và các công ty lớn vì nó có thể trải rộng qua mạng lưới khu vực của trường đại học và mạng lưới công ty. Nhiều trường cao đẳng và đại học đã đóng cửa website của họ để tránh bị lây nhiễm virus “Vĩnh Hằng Chi Tâm.” Nhưng con virus vẫn lây lan và không thể dừng lại được.
+
+Ngày càng nhiều sự cố virus máy tính xuất hiện, trên Internet cũng bắt đầu sục sôi, những cảm xúc lo lắng và hả hê đan xen tồn tại. Khi lướt Internet, ai cũng trở nên thận trọng, không dám nhấp vào những trang web và phần mềm không rõ nguồn gốc.
+
+Biến thể của virus tống tiền lần còn còn hoàn thiện hơn lần trước, các kẽ hở đã bị vá lại, tốc độ lây lan nhanh hơn lần trước rất nhiều, trong thời gian ngắn nó đã phát tán trên diện rộng. Sau cuộc khủng hoảng virus tống tiền vừa qua, nguy cơ virus trên máy tính lại càn quét toàn cầu một lần nữa.
+
+Tất cả các phương tiện truyền thông tin tức đều đưa vấn đề virus tống tiền lên trang nhất.
+
+“Trung Quốc Đóng Cửa Giao Dịch Tiền Ảo, Còn Virus Máy Tính Thì Giải Thích Thế Nào?”
+
+“Biến Thể Vĩnh Hằng Chi Lam: Vĩnh hằng Chi Tâm Đã lây nhiễm Gần Một Triệu Máy Tính.”
+
+“Bị Ảnh Hưởng Bởi ‘Vĩnh Hằng Chi Tâm’, Giá Bitcoin Liên Tục Tăng Lên.”
+
+….
+
+….
+
+Trên internet có rất nhiều bài báo đưa tin khác nhau.
+
+Châu Âu, nơi mà biến thể mới của virus tống tiền ‘Vĩnh Hằng Chi Tâm’ lần đầu tiên được phát hiện, là nơi bị ảnh hưởng nặng nề nhất. Toàn bộ lục địa này đã bị rơi vào tình cảnh bi thảm. Mục tiêu chính của cuộc tấn công này chính là các trung tâm giao dịch chứng khoán, ngân hàng, cơ quan chính phủ, trường đại học, công ty nhiên liệu, hệ thống tàu điện ngầm, doanh nghiệp xí nghiệp, siêu thị, v.v.
+
+Các sàn giao dịch chứng khoán châu u khác đã buộc phải ngừng hoạt động khiến thị trường chứng khoán hỗn loạn. Máy tính của nhiều ngân hàng cũng bị tấn công, máy ATM không rút được tiền, ngân hàng không cách nào hoạt động kinh doanh như bình thường.
+
+Hệ thống dịch vụ y tế của nước Anh cũng gặp sự cố tương tự, hệ thống máy tính của tất cả các bệnh viện trong nước này cũng bị nhiễm virus, khiến một số xe cứu hộ và cứu thương không thể được điều động kịp thời.
+
+Vẻn vẹn chỉ một ngày, “Vĩnh Hằng Chi Tâm” đã lan đến vùng Trung Đông, Nam Mỹ, châu Đại Dương và Đông Nam Á.
+
+Với sự lây lan ghê gớm của “Vĩnh Hằng Chi Tâm”, virus tống tiền này chính thức trở thành một cuộc khủng hoảng virus toàn cầu. Biến thể virus tống tiền lần này đáng sợ hơn gấp nhiều lần so với cuộc khủng bố virus lần trước.
+
+Trên thế giới, hàng triệu máy tính đã bị nhiễm virus và bị khóa màn hình. Nếu cài đặt lại hệ thống, tất cả dữ liệu trong máy tính sẽ bị mất hết. Rất nhiều người vẫn còn lưu những thông tin quan trọng trong máy tính, họ chắc chắn không thể cài lại hệ thống nên vẫn đang kiên nhẫn chờ giải pháp.
+
+Bị ảnh hưởng bởi “Vĩnh Hằng Chi Tâm”, cổ phiếu của tập đoàn Micr*soft đã giảm 2%, khiến giá trị thị trường của nó bốc hơi gần mười một tỷ USD.
+
+Cục Điều tra Liên bang Hoa Kỳ cũng đã lập hồ sơ truy tìm tổ chức hacker tạo ra các biến thể của virus tống tiền trên quy mô toàn cầu. Sau khi tìm ra nguồn phát tán “Vĩnh Hằng Chi Tâm”, họ nhanh chóng phát hiện ra rằng đây là kết quả của một kế hoạch chi tiết và cẩn thận của các hacker cao cấp đã cùng nhau hợp tác trong hàng tháng trời, cho nên hiện nay họ vẫn không thể tra ra được.
+
+Nhiều công ty an ninh mạng cũng lần đầu tiên đưa ra những cảnh báo nhắc nhở người dùng không bấm vào các email rác. Nhiều biện pháp và nhiều báo cáo khác nhau đang chiếm trọn các cổng thông tin.
+
+Năm ngày trôi qua, số lượng máy tính bị lây nhiễm bởi “Vĩnh Hằng Chi Tâm” đã vượt quá một triệu.
+
+Nhiều công ty an ninh mạng chỉ có thể đưa ra biện pháp đề phòng chứ không có phần mềm nào thực sự có thể phát hiện và tiêu diệt virus tống tiền.
+
+Trong vòng hai ngày tiếp theo, nếu như không thể tìm ra được phương pháp diệt virus thì tất cả các dữ liệu trong máy tính sẽ bị phá hủy. Nhiều người trở nên tuyệt vọng và bắt đầu trả tiền cho hacker bằng các loại tiền ảo như bitcoin để lấy chìa khóa còn mở khóa máy tính.
+
+Kể từ đợt bùng phát virus tống tiền gần đây nhất, người ta đã thấy sơ hở trong việc giám sát các loại tiền ảo như Bitcoin, vốn là con đường cho các tội phạm rửa tiền, chuyển tiền và trốn thuế.
+
+Sau cuộc khủng hoảng virus đầu tiên, các cơ quan quản lý thị trường của nước C đã dần đóng cửa các sàn giao dịch tiền ảo. Điều này đã khiến rất máy tính bị nhiễm virus trong nước không thể nào “chuộc” lại được. Một số người chỉ biết cầu nguyện, mong tìm ra cách tiêu diệt virus vào giây phút cuối cùng, nếu không tất cả thông tin quan trọng trong máy tính của họ sẽ bị mất.

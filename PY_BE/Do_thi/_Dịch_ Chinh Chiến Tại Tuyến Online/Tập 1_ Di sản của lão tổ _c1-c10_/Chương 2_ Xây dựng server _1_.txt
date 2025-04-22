@@ -1,0 +1,69 @@
+Chương 2. Xây dựng server (1)
+
+Nói là làm. Sau khi xác định phương hướng, Bắc Ly (cô bé) dẫn Lục Vô đi vào cung điện Vua Bắc Kỳ đã biến thành đống đổ nát, mở một cánh cửa ngầm ở bên cạnh cây cột đã bị cháy đen thui, một con đường dẫn xuống lòng đất xuất hiện.
+
+Bước xuống dưới đó, Lục Vô mới phát hiện ra bên dưới vô cùng rộng lớn, quả thực là một cung điện dưới lòng đất.
+
+Bên trong chứa đầy các loại thiết bị kỳ quặc, có vẻ như là một phòng thí nghiệm.
+
+Qua sự giới thiệu của cô bé, Lục Vô mới biết đây là nơi mà tổ tiên đã nghiên cứu chế tạo ra thần khí. Mà Bắc Ly chính là trợ thủ duy nhất của tổ tiên, đã tham dự vào quá trình nghiên cứu thần khí từ đầu tới cuối.
+
+Cất bước vào phòng thí nghiệm, vẻ mặt của cô bé trở nên vô cùng nghiêm túc. Cô bé bảo Lục Vô chờ một lát rồi thay một bộ quần áo bằng kim loại bao bọc toàn thân, sau đó nhận lấy nhẫn chinh chiến mà Lục Vô đưa, rồi bắt đầu chạy qua chạy lại giữa các thiết bị.
+
+Trong quá trình này, Bắc Ly đã dùng các loại công cụ như búa, máy khoan điện, bàn chải các thứ để kiểm nghiệm chiếc nhẫn một cách toàn diện, sau đó lại nhảy cúng tế, lại là đọc thần chú, khiến Lục Vô thấy mà sửng sốt.
+
+Sau khi lăn qua lăn lại khoảng hai giờ, Bắc Ly mới cởi mũ giáp kim loại xuống, vẻ mặt mệt mỏi đưa nhẫn chinh chiến đã cải tạo cho Lục Vô.
+
+“Thế là xong rồi sao?” Lục Vô không dám tin.
+
+“Tăng thêm những chức năng đó cũng không khó. Bây giờ đã xây dựng server dẫn độ người chơi rồi. Bên trong cũng đã có thiết lập các loại số liệu, hoàn toàn có thể đưa vào thực tiễn.”
+
+Lục Vô nửa tin nửa ngờ đeo nhẫn vào tay. Bản thuyết minh thần khí lại xuất hiện lần nữa.
+
+Thấy nội dung bên trong, Lục Vô không khỏi kinh ngạc. Đây chính là thứ mà hắn muốn, hơn nữa thiết lập của Bắc Ly còn dồi dào hơn những gì hắn nghĩ. Thậm chí cô bé đã nghĩ cách làm thế nào để dẫn độ người chơi dương thế thay hắn luôn rồi.
+
+Điều này khiến Lục Vô rất phấn khởi: “Vất vả cho em rồi!”
+
+“Phù! Nói rồi mà, tôi là tuyệt nhất! Chúng ta thử chức năng của nó một chút đi!” Tuy rằng rất mệt mỏi, nhưng Bắc Ly vẫn phấn khởi nói.
+
+Bởi vì chức năng mới khiến Bắc Ly nhìn thấy hy vọng. Cô bé cảm thấy Lục Vô chắc chắn có thể dựa vào chức năng này để tái hiện vinh quang của Vua Bắc Kỳ.
+
+“OK!”
+
+Nói rồi Lục Vô kéo bàn tay nhỏ của Bắc Ly.
+
+Vốn Bắc Ly rất là tự nhiên, ra vẻ ta đây rất chín chắn, nhưng bây giờ khuôn mặt nhỏ nhắn của cô bé lại bất chợt đỏ bừng, sau đó né tránh tay của Lục Vô rồi chạy sang một bên.
+
+“Tôi đi thay đồ thí nghiệm cái đã. Anh… Anh chờ tôi một chút!”
+
+Một lát sau, Bắc Ly đã thay một bộ váy ngắn màu đen phong cách Goth-Loli rồi trở về bên cạnh Lục Vô.
+
+Thấy rặng mây hồng còn chưa biến mất trên gò má Bắc Ly, Lục Vô khẽ cười thầm, lại nắm tay Bắc Ly, sau đó khởi động chức năng của nhẫn chinh chiến, qua lại giữa âm dương.
+
+Lốc xoáy màu đen hình thành trước mắt. Lần này Lục Vô không kinh hoảng nữa mà mặc cho nó hút mình vào.
+
+Đến khi lại mở mắt ra, nhìn mặt trời chói chang treo trên bầu trời, Lục Vô phản xạ hít một hơi không khí trên nhân gian. Những gì hắn vừa trải qua như thể chỉ là một giấc mơ vậy.
+
+Lục Vô cúi đầu nhìn Bắc Ly nắm tay mình, dáng vẻ rất e thẹn thì không khỏi mỉm cười.
+
+Sau đó Lục Vô dẫn Bắc Ly về nhà mình ở nội thành Già Lam, một căn nhà có ba phòng ngủ, một phòng khách, một nhà vệ sinh.
+
+Sau khi dẫn Bắc Ly về nhà mình, Lục Vô khởi động máy tính, đồng thời mở trang web game của mình ra.
+
+“Tiểu Ly, có thể kết nối server chinh chiến với web game của anh được không?”
+
+Bắc Ly gật đầu rồi trèo lên ghế ngồi của Lục Vô, bắt đầu thao tác trên máy tính. Cô bé bảo Lục Vô mở trang quản lý website ra, đưa code của server thần khí vào, đồng thời còn kèm theo một bức tranh.
+
+Bức tranh này là một trận pháp hình tròn, bên trong tràn ngập các loại phù văn, thoạt nhìn rất là thần bí.
+
+Sau khi ấn phím enter, Bắc Ly gật đầu nói: “Xong rồi!”
+
+“Đơn giản vậy thôi sao?” Lục Vô kinh ngạc.
+
+“Đương nhiên. Thứ chủ yếu kết nối với server chinh chiến là bức tranh trận pháp dẫn độ linh hồn. Chỉ cần người chơi download trò chơi rỗng ruột này vào trong mũ thực tế ảo thì bức tranh trận pháp dẫn độ linh hồn sẽ tự động xuất hiện trong đầu người chơi, linh hồn của họ sẽ bị hút vào server chinh chiến, sau đó được đưa tới âm phủ.”
+
+Điều này khiến Lục Vô rất bái phục Bắc Ly. Cách làm này thật sự là an toàn đáng tin cậy, người chơi hoàn toàn không phát hiện ra sự tồn tại của âm phủ mà sẽ chỉ cho rằng đây là một trò chơi có độ chân thật cực kỳ cao mà thôi.
+
+Trong thời đại khoa học kỹ thuật phát triển vượt bậc hiện nay, vì sự ra đời của mũ thực tế ảo nên tất cả trò chơi đều theo đuổi thể nghiệm chân thật, không ngừng hoàn thiện các chi tiết thay đổi trong game.
+
+Lục Vô chỉ cần tuyên bố rằng độ thực tế của trò chơi này đã đạt tới gần như hoàn hảo là được, hầu như không ai sẽ phát hiện ra vấn đề.

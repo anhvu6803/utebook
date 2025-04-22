@@ -1,0 +1,107 @@
+Chương 5: Con đường sa mạc cô độc
+
+Mà bản thân cảnh tượng con đường sa mạc, hỗ trợ trình biên soạn điều chỉnh độ dài hành trình tự do, cảnh tượng sa mạc sẽ xuất hiện một vài thay đổi ngẫu nhiên.
+
+Sau khi tăng thêm chức năng mô phỏng thay đổi hoàn cảnh, sẽ có mặt trời mọc, mặt trời lặn, bão cát… vân vân.
+
+Bởi vì đều là mô hình thông dụng, cho nên rất nhiều người chế tác game độc lập đều mua về dùng được, cho nên đụng hàng là chuyện 100% sẽ xảy ra.
+
+Một vài người chế tác vì không đụng hàng, sẽ đặt hàng một vài tài nguyên mỹ thuật để thay thế. Đương nhiên, như vậy thì vốn đầu tư sẽ tiếp tục tăng lên.
+
+Nhưng Bùi Khiêm không quan tâm chuyện này.
+
+Đụng hàng? Cứ đụng đi! Dù sao ta làm vì lỗ tiền mà, các người chơi mà không chơi game này vì đụng hàng, ta cầu mong còn không được đâu!
+
+Bùi Khiêm bắt đầu chế tác game.
+
+Tuy nói muốn thua lỗ tiền, nhưng ít nhất, game này phải thông qua xét duyệt của ESRO, cũng thành công lên kệ.
+
+Nếu đây là một bán thành phẩm thiếu chức năng nghiêm trọng, thì không thể thông qua xét duyệt của ESRO, hệ thống có thể sẽ phán định Bùi Khiêm vi phạm quy định.
+
+Cho nên, dù game này có vua hố thế nào, thì vẫn phải làm hoàn chỉnh chức năng cơ bản.
+
+Kéo khẽ mô hình cơ sở vào trong trình biên soạn, lại kéo khuôn mẫu cảnh tượng vào.
+
+Sau đó, game này đã có dàn khung, sau khi các người chơi tiến vào game, sẽ có thể lái xe rong ruổi trên đường lớn của sa mạc.
+
+Nhưng, cũng không thể lãng phí tài nguyên mua được.
+
+Bùi Khiêm lại tăng thêm chức năng radio cho chiếc xe, sau khi người chơi lái xe có thể mở ra radio, ngẫu nhiên nghe chút âm nhạc.
+
+Đó đều là một số bài nhạc ít người nghe hoặc là âm nhạc rất truyền thống, kinh điển, những ca khúc đang hot không có khả năng mua được bằng chút tiền này.
+
+Sau đó là một vấn đề tương đối quan trọng.
+
+Cách chơi trọng tâm của game này rốt cuộc là gì?
+
+Bản thân Bùi Khiêm cũng không biết.
+
+Thi đấu đua tốc độ?
+
+Đừng nghịch, không có tiền làm.
+
+Chỉ mua được một mô hình cơ sở, chỉ có một chiếc xe được dán màng, cũng chỉ mua được một cảnh tượng.
+
+Những đường đua phức tạp kia, chiếc xe xinh đẹp xe kia, còn có trình tự cách chơi liên quan đến đua tốc độ, hắn cũng không mua nổi!
+
+Không mua nổi để làm thì chơi thế nào?
+
+Bùi Khiêm vỗ đầu, có rồi.
+
+Cách chơi trung tâm của game rất đơn giản, đó chính là lái xe!
+
+Lái từ điểm xuất phát đến điểm đích, thì qua ải!
+
+Nhưng chỉ riêng như thế thì không được, tất cả game đều do tài nguyên thông dụng gom góp lại, may vá, không có cách chơi sáng tạo đôi chút, phỏng chừng rất khó thông qua xét duyệt.
+
+Phải làm ra chút thay đổi, cam đoan game có thể qua xét duyệt, nhưng loại thay đổi này không thể quá ưu tú, đảm bảo game này chỉ có thể lỗ tiền, không ai chơi mới được!
+
+Bùi Khiêm suy nghĩ, trực tiếp kéo dài cảnh tượng đường đua sa mạc đến vô hạn.
+
+Khi kéo hết toàn bộ game thì đã dài đến tám giờ!
+
+Không sai, người chơi cần lái tám tiếng trên con đường này, mới có thể lái đến điểm đích, mà trong thời gian này, cứ cách một khoảng thời gian, đường đua sa mạc còn rẽ ngoặt một lần.
+
+Người chơi muốn chỉ ấn một nút liền qua ải là chuyện không thể nào.
+
+Cứ như vậy, cách chơi đã khác loại game lái xe mô phỏng trên thị trường, chắc là có thể thông qua xét duyệt.
+
+Hơn nữa, cách chơi vua hố như thế, không phải sẽ bị các người chơi mắng chết sao? Game này có thể kiếm tiền mới có quỷ!
+
+Bùi Khiêm rất hưng phấn, cảm thấy mình quả thực là một thiên tài.
+
+Cuối cùng, hắn lại dùng phương pháp vô cùng đơn sơ làm một giao diện qua ải của game, chỉ biểu hiện một hàng chữ là được: “Chúc mừng ngươi đã thành công lãng phí tám giờ quý giá trong cuộc đời!”
+
+Cho dù thực sự có người có thể qua ải, cũng phải khiến hắn tức giận đến nỗi không còn chơi game của công ty ta mới được!
+
+Cũng không thể lãng phí chức năng bảng xếp hạng đã mua, hắn làm một “bảng xếp hạng thời gian bị lãng phí”, thống kê “Số lần vượt ải” và “Thời gian chơi game hiệu quả” của từng người chơi.
+
+Bảng xếp hạng này cũng chẳng có tác dụng, đơn thuần là vì sắp xếp chức năng đã mua được bằng tiền.
+
+Hắn làm thành thạo, hoàn thành nhanh chóng.
+
+Những chức năng này đều thuộc về cơ sở của cơ sở trong chức năng hỗ trợ của trình biên soạn, chỉ cần thao tác kéo đơn giản, thao tác sửa đổi tham số, gần như chỉ cần có tay là làm được.
+
+Tự học trình biên soạn, mua tài nguyên, chế tác game, tính gộp tất cả lại, chỉ mất không đến hai giờ.
+
+“Game ngu ngốc như vậy, ta lỗ chắc rồi!”
+
+Bùi Khiêm làm xong game, chạy thử trên laptop của mình một chút.
+
+Năm phút đồng hồ sau, hắn đã rời khỏi game, suýt nữa ói ra.
+
+Vừa đi vào đã chỉ lái xe, lái xe, lái xe, nhàm chán đến bùng nổ!
+
+Bùi Khiêm rất hài lòng, sau đó lập tức phát hành game.
+
+Tên game: Con đường sa mạc cô độc.
+
+Giới thiệu vắn tắt của game: Trên một con đường sa mạc, cô độc lái mấy giờ, ngươi sẽ thu hoạch được chút suy nghĩ liên quan tới cuộc đời.
+
+Khi viết giới thiệu vắn tắt, Bùi Khiêm rất xoắn xuýt.
+
+Khen mình? Không thích hợp, lỡ thật sự hấp dẫn một đám theo tiêu đề giật gân đến, lỗ ít thì phải làm sao bây giờ?
+
+Bôi đen mình? Cũng không thích hợp, thế thì quá rõ ràng. Một mặt, hắn lo lắng bị hệ thống phán định là vi phạm quy định, một mặt khác cũng sợ kích thích tâm lý nghịch phản của người chơi. Ngươi càng nói game này rác rưởi, hắn càng muốn tới chơi thì làm sao bây giờ.
+
+Cho nên, viết giới thiệu vắn tắt đàng hoàng, khiến người chơi nhìn thấy lời giới thiệu vắn tắt này liền không có hứng thú mới được!

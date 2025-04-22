@@ -1,0 +1,165 @@
+Chương 15: Phỏng đoán toán học.
+
+Dương Thiên nở nụ cười, mở miệng nói: “Thằng ngốc chết tiệt, ngươi đây xem như là uy hiếp ta bằng tiền đồ của toàn bộ học sinh trong lớp này sao?”
+
+Hà Sơn ngẩng đầu lên nói: “Ta chỉ uy hiếp ngươi, ngươi làm gì ta?”
+
+“Loại người như ngươi, không xứng làm lão sư của người ta, bài học do loại cặn bã như ngươi dạy, không cần cũng được.”
+
+Dương Thiên Trực tiếp đi thẳng tới trước mặt Hà Sơn, đôi mắt đen nhánh như băng lạnh, hắn cất cao giọng nói: “Mặt khác, ta không cho rằng tên cặn bã như ngươi có thể dạy được thứ gì tốt.”
+
+Mọi người lại một lần nữa trợn mắt há mồm.
+
+Dương Thiên quả thực không để tên Hà Sơn chủ nhiệm này vào mắt chút nào.
+
+Bây giờ Hà Sơn bị hắn dẫm dưới chân, Dương Thiên xem như xả ra một ngụm ác khí, kiếp trước hắn vẫn bị đối phương giẫm dưới chân, châm chọc, khinh bỉ, đùa cợt!
+
+Phong thủy luân chuyển, đời này hắn là tiên, không sợ bất luận cái gì!
+
+Hà Sơn bị ánh mắt lạnh lẽo của Dương Thiên nhìn đến mức trong lòng phát run, sinh ra một tia sợ hãi, hắn rụt cổ lại, nhìn thấy Dương Thiên đi tới cửa, lúc này mới mở miệng đùa cợt nói: “Học tra chính là học tra, môn học toán này ngươi vĩnh viễn học không tốt, kỳ thi cao khảo ngươi đã định trước sẽ thi rớt, ta khuyên ngươi nên nhanh chóng về nhà trồng trọt đi!”
+
+Dương Thiên hơi dừng bước, quay người nhìn chủ nhiệm lớp đầu trọc bụng phệ này!
+
+Hắn đi lên bảng đen, đẩy Hà Sơn sang một bên, xoát xoát xoát viết một hàng chữ lên bảng đen.
+
+Phỏng đoán của Goldbach!!
+
+Dương Thiên đùa cợt nhìn Hà Sơn hỏi: “Ngươi có biết đây là cái gì không?”
+
+Hà Sơn cau mày ngạo nghễ nói: “Ta là giáo viên toán, đương nhiên biết suy đoán này, giới toán học còn chưa có ai giải được vấn đề này, bị coi là vấn đề khó trong ba bài toán lớn trong toán học của thế giới. Sao nào, ngươi định thảo luận với ta về cái này sao?”
+
+“Thảo luận? Ồ, ngươi không có tư cách!”
+
+Dương Thiên khinh thường châm chọc nói: “Ngươi cũng không nhìn xem ngươi là cái rễ hành nào, cũng muốn khiêu chiến phỏng đoán này?”
+
+Goldbach đoán rằng đây chính là viên minh châu mà vương miện toán học không thể nhìn thấy.
+
+((((Goldbach phỏng đoán, mỗi số lớn hơn 6 đều có thể biểu thị là tổng của hai con số nguyên tố; mỗi số lớn hơn 9 đều có thể biểu thị là tổng của ba số nguyên tố.
+
+Tuy rằng nghe thì đơn giản, nhưng muốn chính xác thì không dễ, tất cả nhà số học thiên tài hao phí gần ba trăm năm vẫn không thể luận chứng thành công.
+
+Dương Thiên biết rõ ghi chép, 150 năm Na Uy toán gia gia dùng một loại phương pháp sàng lọc cổ xưa để chứng minh, hắn đã đưa ra một kết luận: Mỗi một con số so với con số lớn hơn đều có thể biểu thị là (99). Cách thức thu nhỏ vòng vây này rất có tác dụng.
+
+Các nhà khoa học vì thế bắt đầu từ 999, từng bước giảm bớt con số nhân số trong mỗi vài dặm, cho đến cuối cùng mỗi một dặm đều là một con số nhân số mới thôi, như vậy đã chứng minh “Goldbach”.
+
+194 năm, nhà số học Mã Cáp Nhĩ đã chứng minh (7+7);
+
+19 năm, nhà số học Elena đã chứng minh (6+6);
+
+198 năm, nhà số học Bố Hách Tư Tháp Bột chứng minh (55), năm 64, ông lại chứng minh (4+4);
+
+Năm 1956, nhà số học Flegrea đã chứng minh (+);
+
+Năm 1958, Vương Nguyên của số học Hoa Hạ đã chứng minh (10).
+
+Sau đó, Trần Cảnh Nhuận của nhà số học trẻ cũng vùi đầu vào nghiên cứu phỏng đoán Ca Đức Ba Hách, trải qua mười năm khắc khổ nghiên cứu.
+
+Cuối cùng, hắn cũng lấy được một đột phá lớn trên nền tảng nghiên cứu của tiền nhân, chứng minh trước tiên là (Tán Thập).
+
+Đến tận đây, phỏng đoán của Goldbach cũng chỉ còn lại một bước cuối cùng là chứng minh được (1+1).
+
+Cuối năm 1996, khi Trần Cảnh Nhuận sắp tháo xuống viên minh châu trên vương miện số học này, ở đỉnh điểm cách suy đoán của Ca Đức Ba Hách (1+1) chỉ có gang tấc, hắn lại thể lực không chống đỡ nổi nữa, đây là tiếc nuối lớn nhất của giới số học!)))
+
+Đoạn này ta cũng không hiểu tác giả đang nói về cái gì luôn, mọi người ai có thông tin chia sẻ giúp mình với nhé, tuy nhiên đây chỉ là khúc nhạc đệm thoáng qua, không có ảnh hưởng đến mạch truyện sau này. Mình mong mn thông cảm, mình cám ơn. Hồ Thiên- Cửu vỹ
+
+－－－－－－－－－－
+
+Giờ phút này Hà Sơn trong phòng học miệt thị Dương Thiên một chút nói: “Như thế nào? Ta không có tư cách, chẳng lẽ tên học tra có thành tích toán học một mực vì không vượt được bốn mươi điểm như ngươi liền có tư cách này ah?”
+
+Dương Thiên đạm mạc liếc nhìn Hà Sơn, giống như nhìn con kiến hôi vậy, hắn không nói gì, mà cầm lấy phấn bút viết viết vẽ vẽ trên bảng đen.
+
+Tất cả mọi người nhìn thấy trên bảng đen viết đều là không hiểu ra sao, bởi vì cái này quá mức cao thâm, căn bản không phải bọn họ tiếp xúc.
+
+“Hừ, lòe người lấy tiếng!”
+
+Hà Sơn còn đang châm chọc, hắn cũng muốn nhìn xem Dương Thiên rốt cuộc có thể giả vờ tới khi nào.
+
+Dương Thiên không thèm để ý tiếng cười nhạo của mọi người, tiếp tục viết viết vẽ vẽ trên bảng đen.
+
+Suy nghĩ của hắn thông suốt, không hề dừng lại và suy nghĩ chút nào.
+
+Tiền nhân đã chứng thực đến bước cuối cùng của đoán đoán Goldbach, chỉ cần luận chứng (1 +1) là có thể đoạt được viên minh châu chói mắt nhất trong giới toán học này.
+
+Dương Thiên có được linh hồn khổng lồ của Phá Thiên Tiên Đế, hơn nữa có trí tuệ ba trăm năm, tốc độ suy nghĩ mau lẹ có thể sánh vai với một ngàn người bình thường gộp chung một chỗ.
+
+Tô Thi Nhu ôm bài làm toán học từ văn phòng đến lớp cao tam số một.
+
+Nàng là lớp trưởng lớp cao tam số ba.
+
+Nàng và Vương Tĩnh Thần là hai đóa hoa xuất sắc cùng nổi tiếng, mỗi năm học ở cao trung, nàng đều là niên cấp đệ nhất, hơn nữa tổng điểm dẫn trước đệ nhị đệ tam một khoảng chênh lệch cực lớn.
+
+Điều này làm cho tất cả học sinh khác muốn đuổi theo đều theo không kịp.
+
+Không giống với hoa khôi trường Thần Vương Tĩnh, nàng cực kỳ kín tiếng, mang theo cặp mắt kính dày nặng, lộ ra vẻ già dặn.
+
+Tuy nhìn thì bình thường, nhưng dung mạo tuyệt đối không kém Vương Tĩnh Thần.
+
+Cô gái có mái tóc đen lộng lẫy, mày ngài nghiêng, đôi mắt trong suốt.
+
+Mũi ngọc tinh xảo của nàng, má ửng hồng, có đôi môi anh đào.
+
+Mặt trái xoan trong suốt như hạt dưa, trong suốt như tuyết, như băng tuyết.
+
+Dáng người nàng ta uyển chuyển tinh tế, mềm mại không xương.
+
+Nhưng đáng tiếc là bình thường Tô Thi Nhu không ăn mặc chưng diện. Ba năm qua, tất cả mọi người đều thấy nàng mặc gì khác ngoại trừ đồng phục học sinh, hơn nữa quan trọng nhất là mỗi ngày nàng đều đeo kính màu đen dày nặng, hầu như che hơn phân nửa khuôn mặt xinh đẹp, hơn nữa sợi tóc rủ xuống che giấu nửa khuôn mặt khác.
+
+Vì vậy, thành tích của nàng mặc dù là đệ nhất nhân của toàn bộ cao tam, nhưng danh tiếng lại không bằng Vương Tĩnh Thần!
+
+Tô Thi Nhu đi tới lớp cao tam thứ 6, trong lúc vô tình phát hiện một học sinh đang viết vẽ vẽ vẽ trên bảng đen, mà thầy của hắn lại đứng ở dưới đài không ngừng châm chọc.
+
+Đối với học tập, nàng thủy chung ôm tâm tính hiếu kỳ, mở đôi mắt đẹp nhìn kỹ, nhất thời khẽ hít một ngụm khí lạnh!
+
+Bởi vì trên bảng đen viết mấy chữ to, phỏng đoán của Goldbach, sau đó phía dưới bắt đầu viết một loạt luận chứng.
+
+Học bá mà, cũng từng xem qua vấn đề toán học cấp thế giới này, nhưng lúc ấy bởi tối nghĩa khó hiểu, với tuổi tác của nàng, cho dù vắt hết óc cũng xem không hiểu.
+
+Mà hôm nay, cô ta lại nhìn thấy một cậu bé tuổi tác không chênh lệch bao nhiêu, trước mắt bao người vậy mà đang luận chứng suy đoán của Ca Ba Hách Đức.
+
+Hơn nữa dường như đang luận chứng (1 +1), điểm cuối của phỏng đoán Goldbach!
+
+Trong lịch sử toán học vẫn chưa có người luận chứng thành công.
+
+Cô giương đôi môi hồng, quên nhiệm vụ thầy số học dặn dò, cẩn thận nhìn ra ngoài lớp cao tam số sáu.
+
+Tô Thi Nhu muốn nhìn xem, thiếu niên trước mắt này sẽ luận chứng đến đâu.
+
+Thời gian từng giây từng phút trôi qua, trên trán Dương Thiên bắt đầu xuất hiện một ít mồ hôi lạnh tinh mịn, tuy có linh hồn của Phá Thiên Tiên Đế, nhưng nan đề quấy nhiễu vô số toán học gia nổi tiếng cũng không phải dễ dàng giải quyết như vậy.
+
+Vô số ký hiệu toán học cao thâm, công thức toán học không ngừng xuất hiện.
+
+Học sinh nhìn ký hiệu toán rậm rạp trên bảng đen kia, có chứng sợ hãi dày đặc thấy vậy thiếu chút nữa té xỉu.
+
+Lúc này Hà Sơn đã sớm không còn thần khí như trước, sắc mặt hắn tái nhợt, tuy rằng không hiểu Dương Thiên rốt cuộc đang viết cái gì, nhưng chỉ nhìn một số công thức toán học cùng ký hiệu hắn cũng chưa từng học qua cũng không khỏi sợ hãi.
+
+Lòng hiếu kỳ của Tô Thi Nhu càng lúc càng nặng, nàng bắt đầu cầm một cây bút viết tất cả mọi thứ trên bảng đen. ”
+
+Thành tích học tập của nàng là đệ nhất trong lớp số một, không ai có thể vượt qua nàng, nếu đối phương đang luận chứng phỏng đoán Goldbach, nàng cũng nhất định có thể luận chứng.
+
+Mà bây giờ có thể chép lại nó, chỉ là đến lúc đó so sánh với luận chứng của nàng, từ đó có thể suy ra rốt cuộc là cách làm của ai mới là đúng.
+
+Tô Thi Nhu có tự tin này, bởi vì nếu nàng không phán đoán được, phía trên nàng còn có một gia gia làm giáo sư khoa học của Thanh Hoa đã về hưu ah.
+
+Nàng không tin, luận chứng thiếu niên trước mắt ngay cả gia gia của nàng cũng không phán đoán được.
+
+Lại qua nửa giờ, lúc này trên bảng đen đã không còn khe hở, khi Dương Thiên viết xong một chuỗi số liệu cuối cùng, lúc này mới thở phào nhẹ nhõm.
+
+Hắn bóp nát số phấn bút còn lại, thấy cả lớp đều trợn mắt há hốc mồm, ngay cả Hà Sơn cũng há to miệng khó có thể tin.
+
+Dương Thiên trào phúng lấy tay quơ quơ trước mặt Hà Sơn nói: “Ngươi không phải nói qua, toán học của ta rất kém cỏi sao? Ngươi không phải nói thành tích toán học của ta vĩnh viễn không vượt qua bốn mươi điểm sao? Ngươi không phải nói ta vĩnh viễn là học tra sao? Như vậy lão sư cơ trí của ta, phiền ngươi giúp ta chứng minh một chút kết quả cuối cùng phỏng đoán Goldbach ta viết rốt cuộc là đúng hay không?”
+
+Hà Sơn á khẩu không trả lời được, bởi vì đừng nói chứng minh, với năng lực của hắn, nhìn cũng không hiểu, một chuỗi con số, trong mắt giáo viên số học này, hắn lại giống như thiên thư.
+
+Nhìn vẻ mặt này của đối phương, Dương Thiên nói tiếp: “Đúng rồi, phỏng đoán này còn có hai cách giải quyết, nhưng đối với ngươi mà nói quá khó khăn, cho dù ta viết, ngươi cũng không hiểu.”
+
+Châm chọc, châm chọc trắng trợn!
+
+Một học sinh lại nói lão sư toán học không hiểu số học! Tất cả bạn học dưới đài nghe vậy đều điên rồi.
+
+** Về phỏng đoán toán học trong chương này, nguyên văn tên chương là 章哥德巴赫, cộng với nội dung của chương nên ta mạo muội đoán là tác đang nói về phỏng đoán Goldbach nổi tiếng, tuy không giống lắm, ta trích dẫn một phần ở dưới để mn tham khảo nha.
+
+Giả thuyết Goldbach do nhà toán học người Đức Christian Goldbach (1690-1764) nêu ra vào năm 1742 trong một lá thư gửi tới Leonhard Euler, là một trong những bài toán lâu đời và nổi tiếng còn chưa giải được trong lý thuyết số nói riêng và toán học nói chung. Giả thuyết phỏng đoán rằng:
+
+Mỗi số tự nhiên chẵn lớn hơn 2 có thể biểu diễn bằng tổng của hai số nguyên tố.[1]
+
+Nếu phán đoán của ta có sai sót mong mội người góp ý, ta sẽ rút kinh nghiệm và khắc phục. Thân kìu!!!**

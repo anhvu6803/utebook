@@ -5,6 +5,7 @@ import bookCover from "../assets/background2.jpg";
 import { Star, BookOpen, Play, Heart, Crown, Share2 } from 'lucide-react';
 
 const DetailBookPage = () => {
+  const bookName = "101 cách cưa đổ đại lão hàng xóm";
   const [showFullSummary, setShowFullSummary] = React.useState(false);
 
   // Giả sử đây là dữ liệu từ database
@@ -67,7 +68,7 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
     <div className="book-page">
       <nav className="navigation">
         <div className="nav-link">
-          <a href="/">Trang chủ</a> &gt; 101 cách cưa đổ đại lão hàng xóm - Tập 9
+          <a href="/">Trang chủ</a> &gt; {bookName}
         </div>
       </nav>
 
@@ -120,7 +121,7 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
             <div className="action-buttons">
               <button className="read-btn">
                 <BookOpen size={20} />
-                Đọc sách
+                Đọc từ đầu
               </button>
               <button className="play-btn">
                 <Play size={20} />
@@ -158,6 +159,7 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
             </div>
 
             <div className="book-reviews">
+              <span className='book-reviews-title'> Độc giả nói gì về "{bookName}"</span>
               <div className="review-tabs">
                 <button className="tab">Đánh giá & nhận xét (3)</button>
               </div>
@@ -182,7 +184,7 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
                   ))}
                 </div>
               </div>
-              
+
               <button className="write-review-btn">
                 <span>Viết đánh giá</span>
               </button>

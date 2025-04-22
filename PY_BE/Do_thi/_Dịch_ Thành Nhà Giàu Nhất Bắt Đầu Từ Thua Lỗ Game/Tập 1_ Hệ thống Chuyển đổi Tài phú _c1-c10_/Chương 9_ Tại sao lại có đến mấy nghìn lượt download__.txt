@@ -1,0 +1,135 @@
+Chương 9: Tại sao lại có đến mấy nghìn lượt download?!
+
+Nói ngắn gọn một câu, mãn nguyện!
+
+Đương nhiên, nếu giàu hơn chút thì càng tốt.
+
+Chuyện đầu tiên sau khi thức giấc là gọi hệ thống!
+
+‘Hệ thống Chuyển đổi Tài phú’
+
+‘Ký chủ: Bùi Khiêm’
+
+‘Tỷ lệ chuyển hóa lợi nhuận 100:1, tỷ lệ chuyển hóa thua lỗ 1:1’
+
+‘Thời gian kết toán lần sau: 11 ngày sau’
+
+‘Quỹ hệ thống: 0(-50000)’
+
+‘Tài sản cá nhân: 367’
+
+Nhìn thấy quỹ hệ thống là “0”, Bùi Khiêm mừng thầm trong lòng.
+
+Thoải mái!
+
+Về phần con số đáng thương sau mục tài sản cá nhân, Bùi Khiêm cũng không còn cách nào.
+
+Đã tiêu tiền tiết kiệm lắm rồi, nhưng căn bản không tiết kiệm nổi!
+
+Mỗi tháng chỉ có một nghìn đồng tiền sinh hoạt, cho dù mỗi bữa đều ăn trong căng tin thì vẫn hơi thiếu.
+
+Dù sao cũng không thể chỉ dùng số tiền này vào việc ăn uống, thường ngày còn phải chi tiêu những khoản khác nữa chứ?
+
+Bùi Khiêm đã hơi không thể chờ đợi, chỉ chờ đến mười một ngày sau tiến hành kết toán, toàn bộ quỹ hệ thống thua lỗ chuyển hóa thành tài sản cá nhân, đúng là sảng khoái!
+
+Quỹ hệ thống là 0, bởi vì phân chia của nền tảng game vẫn chưa chuyển vào tài khoản công ty.
+
+Nền tảng game của chính phủ ESRO là mỗi tuần phân chia một lần, đều là hệ thống tự động tiến hành, nhà phát triển và nền tảng chia 5-5, mặt này cũng khá là công nghệ.
+
+Trước khi phân chia, nếu muốn kiểm tra số liệu về lượt tải xuống game và thu nhập của mình, có thể truy cập trình quản lý dữ liệu kiểm tra.
+
+Khi game vừa lên kệ hai ngày, Bùi Khiêm thường xuyên truy cập vào trình quản lý dữ liệu kiểm tra, phát hiện thật sự có mười mấy tên xui xẻo mua và tải xuống game của mình.
+
+Dù sao cũng là game mới, vị trí đề cử lại ở trong góc, khó tránh khỏi chỉ có mấy người chơi ngốc nghếch đi tải về chơi, đây là chuyện rất bình thường.
+
+Mười mấy lượt tải xuống, sau khi phân chia với nền tảng, đến tay Bùi Khiêm cũng chỉ mấy đồng, không ảnh hưởng toàn cục.
+
+Hơn nữa đúng như dự đoán, những người chơi này đều cho đánh giá kém một sao, điều này khiến điểm đánh giá của game ‘Con đường sa mạc cô độc’ vô cùng thê thảm, chắc hẳn sau này sẽ không còn người chơi ngốc nghếch nào tải về nữa.
+
+Sau khi chắc chắn game của mình sẽ tụt dốc không phanh, cả ngày hôm qua Bùi Khiêm trải qua trong hân hoan, không mở trình quản lý dữ liệu ra xem.
+
+Mặc dù cảm thấy hôm nay mở trình quản lý dữ liệu ra xem cũng sẽ không có gì khác biệt, nhưng Bùi Khiêm vẫn vô thức mở ra.
+
+Tâm lý của Bùi Khiêm rất kỳ lạ.
+
+Nhà thiết kế mở trình quản lý kiểm tra số liệu game của mình đều mong đợi càng cao càng tốt, hận không thể mỗi lần load lại đều có thể tăng mấy nghìn mấy chục nghìn lượt tải xuống.
+
+Mà Bùi Khiêm, sau khi mở trình quản lý lại hi vọng lượt tải xuống game của mình càng thấp càng tốt, tốt nhất là không có lượt nào.
+
+“Nếu như ta đoán không nhầm, có lẽ lượt tải xuống vẫn là hai chữ số…”
+
+“Móa nó?!”
+
+“Xảy ra chuyện gì?!”
+
+Bùi Khiêm choáng váng.
+
+Hắn bất ngờ nhìn thấy cột hiển thị lượt tải xuống game đã đạt đến bốn chữ số, hơn nữa còn đang không ngừng gia tăng đến năm chữ số!
+
+“Bốp.”
+
+Bùi Khiêm giơ tay phải vỗ lên trán một phát, suýt nữa cho rằng mắt mình có vấn đề.
+
+“Sao có thể có đến hơn tám nghìn người tải game rồi!”
+
+“Hơn nữa có vẻ sắp đột phá con số mười nghìn!”
+
+“Vẫn còn mười ngày cho đến khi hệ thống kết toán lần sau!”
+
+Bùi Khiêm hoảng hốt, hoàn toàn hoảng hốt.
+
+Chuyện thế này đã nằm ngoài dự đoán của hắn.
+
+Đây là một vấn đề toán học mà học sinh tiểu học cũng có thể tính toán rõ ràng, hơn tám nghìn người tải xuống tương đương với hơn tám nghìn lượt bán ra, nền tảng khấu trừ một nửa, vậy chính là kiếm lời hơn bốn nghìn.
+
+Dựa theo tiêu chuẩn của ESRO, hầu hết doanh thu từ game chỉ bị đánh thuế khoảng 5%, hơn nữa loại game độc lập phát hành trên nền tảng của chính phủ ESRO còn có chính sách ưu đãi về thuế, căn bản có thể bỏ qua không kể đến.
+
+Nói cách khác, chờ cuối tuần nền tảng gửi số tiền này vào tài khoản công ty, quỹ hệ thống sẽ là hơn bốn nghìn!
+
+Điều này có ý nghĩa gì?
+
+Bùi Khiêm kiếm lời hơn bốn nghìn?
+
+Không!
+
+Hoàn toàn tương phản, Bùi Khiêm thua lỗ hơn bốn nghìn!
+
+Vốn dĩ, Bùi Khiêm khiến quỹ hệ thống thua lỗ năm mươi nghìn, tài sản cá nhân của hắn sẽ kiếm lời năm mươi nghìn.
+
+Kết quả bây giờ quỹ hệ thống thu về hơn bốn nghìn, như vậy chỉ thua lỗ bốn mươi sáu nghìn, số tiền Bùi Khiêm có thể chuyển hóa cũng từ năm mươi nghìn rút xuống bốn mươi sáu nghìn!
+
+Càng đáng sợ hơn chính là, lượt tải xuống này vẫn đang vững bước đi lên!
+
+Mỗi lần Bùi Khiêm load lại trình quản lý, con số này lại tăng lên một lần, có đôi khi tăng đến mấy chục, có đôi khi tăng đến hơn trăm.
+
+Mỗi một lần tăng lên này đều giống như xát muối lên trên vết thương của Bùi Khiêm!
+
+Bởi vì, bên này kiếm lời bao nhiêu, số tiền hắn có thể cầm đến tay giảm xuống bấy nhiêu!
+
+Huống hồ vẫn còn mười ngày mới đến kết toán lần sau, nếu như trong lúc này lượt tải xuống tăng vọt mười lần…
+
+Ôi trời…
+
+Lớn chuyện rồi!
+
+Bùi Khiêm ngồi không yên được nữa.
+
+“Xảy ra chuyện gì? Trình quản lý của nền tảng này xuất hiện bug rồi sao?”
+
+“Sao loại game rác rưởi này lại có đến mấy nghìn lượt tải xuống, mẹ nó có phải ngươi đang chơi ta không?”
+
+Hắn vẫn không dám tin sự thật này, vội vàng mở nền tảng chính thức ra, tìm đến phần bình luận của game ‘Con đường sa mạc cô độc’.
+
+Khiến hắn khiếp sợ chính là, điểm đánh giá của game không có thay đổi gì lớn, nhưng bình luận lại tăng vọt lên mấy trăm cái!
+
+“Đoàn tham quan Kiều Lão Thấp!”
+
+“Đoàn tham quan Kiều Lão Thấp +1”
+
+“Cười chết ta rồi, thật sự có loại game rác rưởi phản khoa học này! Mở mang kiến thức!”
+
+“Ta tải game rồi, ta khiêu chiến rồi, và sau năm phút ta tháo chạy.”
+
+“Một đồng, dường như cũng không đáng để đòi hoàn lại, coi như khạc cục đờm rồi đi tiếp thôi, hừ… hừ!”
+
+“Ta đề cử game này cho bạn của ta, còn nói với hắn nhất định phải kiên trì đến cuối cùng, có trứng Phục Sinh và niềm vui bất ngờ cực lớn. Và bây giờ bạn ta muốn cắt đứt quan hệ với ta, phải làm sao đây?”

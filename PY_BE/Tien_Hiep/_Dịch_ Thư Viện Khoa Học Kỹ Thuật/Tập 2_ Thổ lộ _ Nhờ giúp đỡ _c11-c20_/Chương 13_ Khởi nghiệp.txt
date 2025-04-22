@@ -1,0 +1,81 @@
+Chương 13: Khởi nghiệp
+
+Mọi người trong phòng đều đã lên lớp, Trần Mặc không đi học vì hắn đã đọc hiểu toàn bộ giáo trình chuyên ngành của mình, bây giờ đến lớp cũng không để làm gì.
+
+Sau khi tắm xong, Trần Mặc đi về phía phòng làm việc của giảng viên hướng dẫn. Giảng viên hướng dẫn kiêm chủ nhiệm lớp là cô giáo Lý Hồng, ngoại hình trung bình, không quá xinh nhưng cũng không xấu, ưu điểm lớn nhất của cô chính là tính cách ôn hòa.
+
+Trần Mặc gõ cửa phòng, sau đó đi vào rồi ngồi xuống đối diện với cô ấy.
+
+“Trần Mặc, cơ thể không sao rồi chứ?”
+
+Lý Hồng hỏi: “Bây giờ không phải đang có tiết học sao? Ngươi tới đây có việc gì?
+
+“Cô giáo, ta muốn xin miễn nghe, cũng xin chuyển ra bên ngoài.”
+
+Trần Mặc mở miệng nói.
+
+“Ngươi muốn thi nghiên cứu sinh?”
+
+“Không phải.”
+
+Trần Mặc lắc đầu: “Chương trình học kỳ này ta đã nắm rõ toàn bộ, đến lớp nghe giảng cũng không để làm gì.”
+
+“Nếu không phải thi nghiên cứu sinh thì không thể miễn nghe giảng, kỳ thực tập thì cũng phải kỳ hai tới mới bắt đầu.”
+
+Lý Hồng đáp: “Không phải ngươi có bạn gái rồi nên không muốn đi học nữa chứ? Lúc ngươi hôn mê trong bệnh viện, ta thấy bạn gái ngươi cũng không tệ, còn xin nghỉ vài ngày để chăm sóc ngươi, nếu không… Ta sẽ phải thông báo cho cha mẹ ngươi.”
+
+Trần Mặc cười khổ: “Điều này không có quan hệ với bạn gái ta, huống chi khi đó cô ấy còn không phải là bạn gái ta.”
+
+“Nhưng bây giờ thì phải rồi?”
+
+“Cô giáo, đây không phải trọng điểm.”
+
+Trần Mặc bất lực nói: “Trọng điểm là ta muốn xin miễn nghe giảng và dọn ra bên ngoài.”
+
+“Lý do?”
+
+Lý Hồng trả lời: “Trường ta rất nghiêm khắc về tác phong học tập, nếu như ngươi tùy tiện xin nghỉ thì những sinh viên khác cũng sẽ bắt chước theo, điều này không thể được.”
+
+“Ta chuẩn bị khởi nghiệp.”
+
+Trần Mặc chỉ đành viện một lý do.
+
+“Khởi nghiệp thật sao?”
+
+Lý Hồng lưỡng lự nhìn Trần Mặc, trong những năm gần đây, cô đã thấy rất nhiều sinh viên lấy lí do khởi nghiệp để không phải lên lớp nghe giảng.
+
+“Ngươi định làm gì?”
+
+“Internet, phát triển phần mềm.”
+
+Trần Mặc cho biết: “Bây giờ đang trong giai đoạn chuẩn bị, chương trình học chuyên ngành ta đã học xong rồi, bây giờ ta đang học cách phát triển phần mềm, cho nên tương đối bận rộn, không có thời gian đi học.”
+
+“Trường học từng khen thưởng ngươi từng cứu người ở trong thư viện, điều đó cho thấy nhân cách của ngươi không có vấn đề gì.”
+
+Lý Hồng nói tiếp: “Ta tin tưởng ngươi một lần, trở về viết đơn rồi nộp cho ta.”
+
+Sau khi rời khỏi phòng giảng viên hướng dẫn, Trần Mặc nhanh chóng đi in hai tờ đơn, điền các thông tin cần thiết rồi nhờ giáo viên ký tên, sau đó giao cho Lý Hồng.
+
+Vấn đề miễn nghe giảng và dọn ra bên ngoài đều đã xong, Trần Mặc mang theo máy vi tính đâm đầu vào trong thư viện, hắn chọn hơn mười quyển sách lập trình máy tính các loại, kỹ thuật phần mềm và kỹ thuật hacker, sau đó cúi đầu cặm cụi đọc.
+
+Bây giờ hắn chỉ có một mục đích duy nhất chính là đọc sách, nếu đọc đủ một trăm cuốn sách, hắn sẽ có thể có nhận được một loại kỹ thuật mới và bắt đầu kiếm tiền.
+
+Vì có tiền mua tiên cũng được.
+
+Thời gian dần trôi, hơn mười ngày qua, mỗi ngày Trần Mặc đều đọc sách lập trình máy tính, trong đầu càng ngày càng có nhiều kiến thức về kỹ thuật máy tính, từ một người bình thường thời thành bậc thầy máy tính thành thạo.
+
+Thời gian phấn đấu càng dài thì càng nhận được nhiều phần thưởng xứng đáng. Mục tiêu đọc xong một trăm cuốn sách công nghệ càng ngày càng gần.
+
+Trong khoảng thời gian này, để thích ứng với sức mạnh mới, việc luyện tập thể lực đã trở thành một phần không thể thiếu trong cuộc sống của Trần Mặc, thời gian còn lại hắn sẽ cùng với Tiểu Ngư tới thư viện, ngoài việc đọc sách, hắn còn luyện tập lập trình phần mềm trên máy tính.
+
+Trong khu tự học của thư viện, Trần Mặc đang vùi đầu, lật xem sách với tốc độ chóng mặt. Ở trong đầu hắn có vô số chữ viết hiện lên, không bao lâu sau, Trần Mặc khép quyển sách trên tay lại, lộ ra một nụ cười.
+
+Thành công! Một trăm lần!
+
+Trần Mặc muốn tiến vào Thư Viện Khoa Học Kỹ Thuật để chon loại công nghệ mới ngay lập tức, nhưng bây giờ hắn đang ở thư viện, có vẻ không tiện cho lắm.
+
+Trần Mặc lập tức quay đầu nhìn về phía Tiểu Ngư đang ngồi bên cạnh: “Tiểu Ngư, hôm nay nghỉ ngơi sớm đi, ngày mai quay lại.”
+
+“Được.”
+
+Tiểu Ngư mỉm cười gật đầu, cô không hỏi nhiều mà cất sách vở rồi đi theo Trần Mặc.

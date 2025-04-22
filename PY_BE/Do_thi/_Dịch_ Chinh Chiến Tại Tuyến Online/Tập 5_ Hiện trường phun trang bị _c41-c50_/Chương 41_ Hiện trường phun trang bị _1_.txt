@@ -1,0 +1,77 @@
+Chương 41. Hiện trường phun trang bị (1)
+
+Sau khi thông báo này xuất hiện, vô số người chơi đang luyện level ở dã ngoại bắt đầu chạy về phía Minh Phủ, muốn nhìn xem thử Tu Luyện Các rốt cuộc là nơi nào.
+
+Lúc này, Lục Vô đã sớm nắm tay Bắc Ly bước vào trong lầu các.
+
+Thời Vua Bắc Kỳ còn sống, Tu Luyện Các được gọi là Tàng Thư Các, bên trong cất chứa tất cả công pháp tu luyện và kỹ xảo chiến đấu mà Vua Bắc Kỳ thu gom được.
+
+Vừa đổi tên cho Tàng Thư Các, thần khí còn vừa thu nhận và sửa sang lại tất cả sách cổ bên trong. Đồng thời dưới sự cải tạo của Bắc Ly, nơi này biến thành một nơi vừa có hương vị cổ điển lại vừa có sắc thái kỳ ảo.
+
+Bên trong, tất cả những cuốn sách đều được sửa thành từng bóng người. Người chơi bấm vào bóng người là có thể nhìn thấy giải thích kỹ lưỡng cùng với biểu thị sử dụng của skill này.
+
+Đương nhiên, muốn học skill ở đây thì cũng phải nộp hồn tệ, hơn nữa không phải cứ có hồn tệ là có thể học skill, mà còn bị hạn chế level nữa.
+
+Thiết lập điểm này chủ yếu là vì có một số người chơi, tuy rằng thân thể đã được lên level cùng với hồn điểm cường hóa rồi, nhưng vẫn không thể chịu được một số công pháp bá đạo bên trong. Cho nên Lục Vô cài đặt thêm rất nhiều giới hạn học tập.
+
+Đồng thời, để phân chia càng rõ ràng hơn, Lục Vô lại bảo Bắc Ly cải tạo Tu Luyện Các lần nữa, chia nó thành năm khu vực. Lần lượt là khu tu luyện sơ cấp, khu tu luyện trung cấp, khu tu luyện cao cấp, khu tu luyện linh cấp và khu tu luyện vương cấp.
+
+Cũng vì số lượng người chơi khổng lồ nên thiết lập của Tu Luyện Các tương đương với vô số không gian song song, mỗi không gian tối đa có thể chứa được 1000 người chơi.
+
+Cũng có nghĩa là trên thực tế, Tu Luyện Các tồn tại trong thần khí chinh chiến, đồng thời lại sáng lập ra vô số không gian bên trong, để không xuất hiện hiện tượng nhiều người chen lấn mà không thể vào được.
+
+Hai người đi dạo trong Tu Luyện Các một lần, sau khi xác nhận không có sai sót, bèn cùng nhau về dương thế.
+
+Đồng thời, rất nhiều người chơi ồ ạt tràn vào Tu Luyện Các, bắt đầu xem xét công pháp.
+
+Khu skill chức nghiệp chiến sĩ, khu skill chức nghiệp pháp sư, khu skill chức nghiệp sát thủ.
+
+Ba khu skill lớn đều xuất hiện rất đông người chơi.
+
+Đối với skill, rất nhiều người chơi đã oán giận từ lâu rồi, nhất là chức nghiệp pháp sư. Cho dù level đã đạt tới 20, nhưng vẫn chỉ có một skill Âm Khí Đạn mà thôi, khiến rất nhiều người chơi cảm thấy có phải chức nghiệp pháp sư là do mẹ kế đẻ ra hay không mà chẳng được coi trọng gì cả.
+
+Nhưng lần này, mấy skill cường lực sơ cấp xuất hiện khiến người chơi pháp sư bắt đầu nghênh đón mùa xuân.
+
+[Triệu Hồi Âm Binh (Pháp sư)]
+
+Giới thiệu vắn tắt skill: Thao túng âm khí ngưng kết chiến sĩ âm binh cống hiến cho bạn. Thực lực của từng chiến binh âm khí tương đương với người chơi level 1, tối đa có thể triệu hồi 10 chiến sĩ âm binh cùng một lúc.
+
+Yêu cầu của skill: Học tập skill này cần tốn 10 điểm hồn tệ, đạt tới level 20
+
+Skill nâng cấp: Triệu Hồi Âm Binh level 2 (Level 25 có thể học), Triệu Hồi Âm Binh level 3 (Level 30 có thể học)
+
+Chú thích: Mỗi khi lên level, số âm binh có thể triệu hồi x2
+
+[Ăn Mòn Vẩn Đục (Pháp sư)]
+
+Skill thuộc loại ác niệm, khi phóng thích sẽ kèm theo sương mù âm khí với debuff ăn mòn, có thể tạo ra tổn thương quần thể mang tính liên tục
+
+Yêu cầu của skill: Học tập skill này cần tốn 10 điểm hồn tệ, đạt tới level 20
+
+Skill nâng cấp: Ăn Mòn Vẩn Đục level 2 (Level 25 có thể học), Ăn Mòn Vẩn Đục level 3 (Level 30 có thể học)
+
+Chú thích: Mỗi lần lên level có thể tăng diện tích và cường độ gây tổn thương
+
+[Ác Niệm Quấn Quanh (Pháp sư)]
+
+Skill thuộc loại ác niệm, triệu hồi ác quỷ tự do bám vào người, bản thân sẽ được ác quỷ bảo vệ
+
+Yêu cầu của skill: Học tập skill này cần tốn 40 điểm hồn tệ, đạt tới level 30
+
+Skill nâng cấp: Hung Quỷ Nhập Hồn (Level 40), Bách Quỷ Dạ Hành (Level 80)
+
+Chú thích: Skill này có tính không chắc chắn, cường độ của ác quỷ được triệu hồi sẽ bị ảnh hưởng bởi nhân tố hoàn cảnh. Level càng cao, triệu hồi ác quỷ có thực lực càng mạnh.
+
+…
+
+Thấy một đống skill của pháp sư xuất hiện, đám người chơi vẫn coi mình là pháp sư dưới cống ngầm không khỏi khóc vì hạnh phúc.
+
+Bọn họ biết, mùa xuân đã đến thật rồi!…Trải qua trận chiến với thống lĩnh quỷ đốc lần này, những người chơi cũng ý thức được sự chênh lệch về thực lực giữa phe ta và phe Quỷ Tướng Sát Na.
+
+Bởi vậy, phe người chơi nổi lên phong trào luyện level.
+
+Đồng thời rất nhiều Cuồng Chiến Sĩ bắt đầu bước ra Minh Phủ, đi đến bên ngoài tìm kiếm nguyên liệu chuyển chức vì khát vọng được trở thành Chiến Binh Phù Văn.
+
+Để tiện cho những người chơi không phải lãng phí thời gian cho việc di chuyển, Lục Vô dùng 5000 hồn lực ngưng tụ hai truyền tống trận, lần lượt đặt ở lối vào dãy núi U Hồn và ngoài Minh Phủ.
+
+Đồng thời tuyên bố một thông báo, những khu vực mà tất cả người chơi hoàn thành việc thăm dò trăm phần trăm đều có thể xây dựng truyền tống trận.

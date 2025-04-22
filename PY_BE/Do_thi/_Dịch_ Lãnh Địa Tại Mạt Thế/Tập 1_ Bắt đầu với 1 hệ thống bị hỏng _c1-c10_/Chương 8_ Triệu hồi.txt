@@ -1,0 +1,129 @@
+Chương 8: Triệu hồi
+
+Sau khi xây dựng quán rượu xong, một dấu chấm than phát sáng trên biểu tượng của quán rượu đã được xây dựng, giới thiệu chức năng của quán rượu.
+
+Trong game hắn đã từng xây dựng qua một quán rượu, bây giờ hiện thực hắn cũng xây dựng quán rượu, Đường Vũ cũng lo lắng quy tắc sẽ có chút khác biệt so với trong game, trong lòng đang lo lắng về sự khác biệt đó thì phát hiện ra giới thiệu sơ qua về chức năng của quán rượu.
+
+Không chút do dự, Đường Vũ bấm vào phần giới thiệu chức năng.
+
+[ Trong quán rượu, Lãnh Chúa mỗi ngày có 1 lượt để triệu hồi người Mạo Hiểm, sau khi quyền miễn phí được sử dụng, nếu muốn triệu hồi thêm người Mạo Hiểm lần nữa, bạn phải tiêu tốn 500 viên Nguyên Tinh. ]
+
+[ Tư chất của người Mạo Hiểm được triệu hồi được chia thành cấp độ D, C, B, A và A trở lên. Tư chất càng cao thì thuộc tính tăng trưởng của người Mạo Hiểm càng cao, nhưng ngược lại nếu muốn triệu hồi người Mạo Hiểm với tư chất cao thì tương đương với xác suất càng thấp. Nếu nâng cấp quán rượu có thể tăng xác suất triệu hồi người Mạo Hiểm có trình độ cao. ]
+
+[ Mạo hiểm giả có năm nghề nghiệp cơ bản: chiến binh, pháp sư, linh mục, sát thủ, xạ thủ. Triệu hồi người Mạo Hiểm thực lực cũng không xác định. Quán rượu cấp 1 có thể triệu hồi tối người thức tỉnh cấp 5 và là đỉnh cao của người Mạo Hiểm. Nâng cấp quán rượu để tăng giới hạn trên sức mạnh của việc triệu hồi mạo hiểm giả. ]
+
+[Sau khi triệu hồi người Mạo Hiểm, Lãnh Chúa có thể chọn tuyển dụng hoặc không tùy theo nhu cầu của mình. Nếu bạn chọn chiêu mộ, bạn sẽ ký hợp đồng với người Mạo Hiểm. Chỉ có ba cột hợp đồng đi theo trong quán rượu cấp một. Nâng cấp quán rượu có thể tăng số lượng người theo dõi ký hợp đồng. ]
+
+[Lãnh chúa triệu hồi lần đầu tiên xác suất xuất hiện người Mạo Hiểm có trình độ từ B trở lên. ]
+
+Luật chơi không khác mấy so với trong game nên Đường Vũ cũng yên tâm.
+
+Tại sao hắn lại chọn quán rượu làm nơi xây dựng đầu tiên? Không phải vì quán rượu hiện tại là nơi hỗ trợ tốt nhất hay sao!
+
+Đặc biệt, đối với quyền lợi tuyển mộ lần đầu tiên, nhất định sẽ triệu hồi người Mạo Hiểm có trình độ cấp B trở lên, nghĩ đến đây cũng cảm thấy rất phấn khích.
+
+Đường Vũ đã quen với việc các trò chơi triệu hồi, nếu mà nói triệu hồi cấp B trở lên, thì chắc chắn cấp A và cấp S sẽ không bao giờ xuất hiện, nhưng một người Mạo Hiểm có trình độ B đã là một trợ thủ đắc lực cho hắn.
+
+Trình độ B nghe có vẻ bình thường, nhưng nghĩ đến ngày đó khi hắn chơi game hắn đã cố gắng triệu hồi hơn 1 tháng qua cũng chưa từng triệu hồi qua cấp A, vì vậy có thể thấy xác suất này khó triệu hồi như thế nào.
+
+Đặc biệt, hệ thống trò chơi đã trở thành hiện thực Đường Vũ suy đoán rằng cách phân loại tư chất này có thể giống với cách phân loại tư chất của người hiện đại, nhưng trên thực tế, phương tiện kiểm tra tư chất vẫn còn tương đối lạc hậu, và hầu như không thể phát hiện ra tư chất của người đó. Nói một cách đại khái, không thể phân chia rõ ràng về trình độ.
+
+Hắn vốn là người thuộc cấp E không có năng khiếu thức tỉnh, và hầu hết những người thức tỉnh đều là cấp D. Có lẽ những người được gọi là đứa con của trời mới có thể đạt được tư chất cấp B. Hơn nữa, người Mạo Hiểm có nghề nghiệp, có nghề nghiệp thì có kỹ năng, cũng có nguyên bộ nghề nghiệp hoàn chỉnh, hoàn toàn đè bẹp những kẻ không hiểu gì về thực tại và chỉ có thể dựa vào những người thức tỉnh bình thường.
+
+Đường Vũ gạt những suy nghĩ hỗn độn của mình sang một bên và tập trung chú ý vào buổi lễ triệu hồi tiếp theo.
+
+“Tới đi!”
+
+Đường Vũ hít sâu một hơi, bật hệ thống lên, chọn triệu hồi.
+
+Ở trung tâm của quán rượu, một vòng tròn khổng lồ nổi lên, trên đó có khắc dày đặc các kí tự cổ.
+
+Kí tự cổ giống như một con trỏ, xoay và kết hợp, và có một ánh sáng chiếu xung quanh vòng tròn, nó giống như một vòng tròn lớn, đang từ từ co lại.
+
+“Tới rồi”
+
+Sắp triệu hồi nghề nghiệp của người Mạo Hiểm, và sức mạnh của người Mạo Hiểm, vẫn chưa được biết!
+
+Đường Vũ nín thở!
+
+Vòng tròn được thu nhỏ và một ánh sáng màu tím bật ra.
+
+“Màu tím! Màu tím!”
+
+Tim Đường Vũ đột nhiên đập hai lần, trong lòng không khỏi thầm đếm…
+
+Ánh sáng trắng thể hiện trình độ cấp D
+
+Ánh sáng xanh lá cây là viết tắt của trình độ cấp C
+
+Ánh sáng xanh lam là viết tắt của cấp B
+
+Ánh sáng tím đó…
+
+Đây chắc chắn là ảo a!
+
+Ánh sáng màu tím biến thành một hư ảnh con người. Người Mạo Hiểm này mặc một chiếc áo choàng rách nát và không thể nhìn thấy vóc dáng trông như thế nào.
+
+Đường Vũ cẩn thận quan sát một lúc, mới nhận ra đây hẳn là một nữ Mạo Hiểm
+
+“Dingdong! Nhà thám hiểm Y Liên Trình độ A, Nghề nghiệp: Pháp Sư, Chúa tể bạn có chắc chắn ký hợp đồng theo dõi với nhà thám hiểm này hay không?”
+
+Đây mà cũng hỏi ngu à?
+
+“Kí ngay”
+
+… … … … … … … …
+
+Trong một căn nhà gỗ đổ nát, 1 người đang khoác trên mình tấm áo choàng rách nát ngồi trên cái giường gỗ trên tay đang cầm một cuốn sách cũ kĩ, đang tập trung đọc.
+
+Đệ tử gia tộc được bao quanh bởi những bức tường, đây là nhà của Y Liên.
+
+Đã mấy năm trôi qua loại cuộc sống này, từ khi bắt đầu đến nay, Y Liên đã rất quen với cuộc sống như vậy. Với cô, môi trường sống có tốt đến đâu cũng không quan trọng bằng cuốn sách trên tay.
+
+Đây là cuốn sách pháp thuật cơ bản.
+
+Nó được Y Liên phát hiện từ gầm giường của cô, ngoại trừ di vật của cha mẹ cô để lại, đây là vật duy nhất trong gia đình mà cô tìm thấy.
+
+Woo-
+
+Tiếng chuông báo động vang lên khắp thành phố, Y Liên giật mình trông có vẻ buồn bã.
+
+Đây là tiếng còi báo động vang lên khi làn sóng Ma Thú tấn công, cô đã quá quen thuộc với tiếng cảnh báo như thế, giống như khắc sâu vào linh hồn của cô.
+
+Ba năm trước, cùng một tiếng còi vang lên vụ tấn công của làn sóng Ma Thú đã làm cha và mẹ cô làm việc bên ngoài không bao giờ trở về
+
+Ngày đó cô trở thành trẻ mồ côi, từ 1 mái ấm hạnh phúc của cô lại càng trở nên dột nát.
+
+Trong đau buồn, Y Liên thức tỉnh, nàng nhận ra sức mạnh của các nguyên tố và rất ngạc nhiên khi thấy mình có thể sử dụng khả năng Hàn Băng. Đây là sức mạnh chỉ có pháp sư mới sở hữu, pháp sư rất mạnh mẽ và cao quý, địa vị cao hơn nhiều so với chiến binh bình thường.
+
+Nhưng để sử dụng thuần thục khả năng Băng chỉ là điều kiện tiên quyết để trở thành một pháp sư, chứ Y Liên không có cách nào để học được phép thuật.
+
+Ở thành phố này, tất cả những gì cô biết là chỉ có Lãnh Chúa thành phố mới có sách về các kỹ năng ma thuật, những cuốn sách này trân quý đến nỗi Y Liên biết rằng họ sẽ không bao giờ lấy được, trừ khi cô trung thành với Lãnh Chúa thành phố. Tuy nhiên, Lãnh Chúa thành phố là một quý tộc cực đoan, ông luôn tin rằng chỉ có dòng máu quý tộc mới có thể làm chủ được sức mạnh của ma thuật…
+
+Y Liên lắc đầu, cô chỉ có thể sống sót trong khu ổ chuột một mình.
+
+Nếu không có nguồn thu nhập ổn định, lại sống 1 mình, cô ấy vẫn còn trẻ. Ở một khu ổ chuột, nơi người ta ăn thịt người, Y Liên có một cuộc sống rất khó khăn. May mắn thay, cô ấy đã thức tỉnh, nhận thức về thể chất và các khả năng khác của cô ấy cao hơn người thường nhờ vậy cô mới sống sót đến bây giờ.
+
+Cho đến một lần, một cuốn sách ma thuật tàn tạ được tìm thấy trong sàn nhà bị hỏng của chiếc giường ở nhà.
+
+Nội dung của cuốn sách ma thuật không liên tục, Y Liên không có bất kỳ nền tảng ma thuật nào, nhưng dựa trên điều này, sự hiểu biết của cô ấy về các phép thuật vẫn tiến bộ nhảy vọt, cô ấy đã học được hết thứ này đến thứ khác.
+
+“Hả”
+
+Y Liên thở ra và bước ra khỏi nhà gỗ nhỏ
+
+Cô ấy đội mũ trùm đầu và một chiếc áo choàng lớn che chắn kín toàn thân, sau vài năm sống trong khu ổ chuột, điều này đã trở thành thói quen của Y Liên. Đây là nơi thành phần tốt hay xấu đều có, một cô gái sống một mình, cách tốt nhất chính là ẩn tàng tốt chính bản thân
+
+Khu ổ chuột nằm ở phía ngoài cùng của thành phố, nhìn vào từng dãy nhà bừa bộn, xa hơn là bức tường thành cao ngất ngưởng, Y Liên có thể thấy rất nhiều binh lính đang lo lắng chạy đến nơi đã định.
+
+Bên ngoài bức tường thành phố là một bầu trời xám xịt, trong kí ức của cô, thế giới đã có màu này. Sau khi Y Liên giấu cuốn sách quan trọng nhất trên người, trong gia đình không có thứ gì có giá trị, sau khi suy nghĩ kỹ, cô quyết định xem xét tình hình trước.
+
+Lúc này do báo động nên xung quanh lộn xộn, nhiều người chạy loạn xạ.
+
+Bỗng nhiên.
+
+Bùm!
+
+Một ngọn lửa chói lọi bùng lên từ xa, khói bốc lên nghi ngút, kèm theo âm thanh ầm ầm, bức tường thành cao ngất đã sụp đổ!
+
+Ánh mắt Y Liên kinh ngạc, trong ấn tượng của cô, bức tường thành này luôn không thể phá hủy, ngay cả trong trận chiến phòng ngự bi thảm ba năm trước cũng chưa xuất hiện tượng thành phá hủy nhưng lần này Ma thú ập tới, tường thành đã bị phá hủy.

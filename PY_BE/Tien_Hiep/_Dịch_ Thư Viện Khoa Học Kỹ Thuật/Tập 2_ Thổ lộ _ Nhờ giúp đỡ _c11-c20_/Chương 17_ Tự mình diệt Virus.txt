@@ -1,0 +1,69 @@
+Chương 17: Tự mình diệt Virus
+
+Vẫn là những kệ sách cao hàng trăm mét, nhìn không thấy điểm cuối. Chỉ cần nhìn thấy cảnh tượng như thế này, Trần Mặc mới có thể cảm khái, tri thức đúng là vô tận.
+
+Trần Mặc đi tới trước bàn và mở cuốn sách màu đỏ sậm, bóng dáng của Thư Lão trong nháy mắt xuất hiện ở bên trong thư viện.
+
+Ông nhìn Trần Mặc, khẽ gật đầu: “Cũng khá nỗ lực, nhanh vậy đã đọc xong một trăm quyển sách rồi. Bây giờ ngươi có cơ hội nhận thêm một loại kỹ thuật mới, có muốn nhận nó ngay bây giờ không?”
+
+“Thư Lão, ta muốn hỏi một chút, nơi này có phần mềm diệt virus máy tính nào không?”
+
+Trần Mặc hỏi Thư Lão. Nếu hắn tự mình đi tìm, chắc chắn vẫn có thể tìm ra được phần mềm diệt virus, nhưng sẽ rất mất thời gian, hắn cũng không có nhiều năng lượng như vậy, chi bằng dùng khoảng thời gian đó để chuyên tâm đọc sách rồi đổi lấy một loại kỹ thuật.
+
+“Loại virus tống tiền nào?”
+
+Thư Lão hỏi.
+
+“Là loại virus ở trên hai chiếc máy tính trong phòng ta.”
+
+Trần Mặc đáp.
+
+Thư Lão nhắm mắt lại, một lát sau, ông ta điểm nhẹ ngón tay một cái. Bầu trời phía trên thư viện bỗng xuất hiện một quầng sáng khổng lồ, bên trong quầng sáng là màn hình khóa của virus tống tiền.
+
+“Chính là nó?”
+
+Thư Lão hỏi.
+
+“Đúng vậy.”
+
+“Kiểm tra và diệt loại virus máy tính này rất dễ. Ngươi vẫn có thể giải quyết nó.”
+
+Thư lão nói tiếp: “Ta cho ngươi hai lựa chọn, một là ngươi đổi lấy cuốn sách liên quan đến phần mềm diệt virus, hai là ta đưa mã virus cho ngươi, ngươi tự thiết kế chương trình diệt virus cho riêng mình. Đổi lại, ngươi không thể tự do lựa chọn loại kỹ thuật nữa mà chỉ được chọn ngẫu nhiên.”
+
+“Thư Lão, ngài đang thử thách ta sao?
+
+“Ngươi có thể xem là như vậy.”
+
+Thư Lão đáp: “Ngay từ đầu ta đã nói, Thư Viện Khoa Học Kỹ Thuật không phải là nơi để cho ngươi miệng ăn núi lở, bằng không… Sẽ không thể có nhiều bộ sách như vậy.”
+
+Thư lão chỉ vào kệ sách nhìn không thấy điểm cuối.
+
+“Vậy ta chọn cách thứ hai!”
+
+Trần Mặc dứt khoát trả lời. Sau khi đọc gần một trăm cuốn sách về công nghệ máy tính và kỹ thuật hacker, cộng với mã nguồn của virus tống tiền, hắn tin rằng mình có thể thiết kế một chương trình diệt virus trong một thời gian ngắn.
+
+Chỉ là việc lựa chọn ngẫu nhiên một loại kỹ thuật có hơi mạo hiểm, hiện tại hắn không có việc gì cả, nếu ngẫu nhiên được ban cho một loại kỹ thuật không dùng được hoặc một kỹ thuật rất nhàm chán, hắn vẫn có thể đợi lần sau, còn bây giờ là lúc dựa vào may mắn.
+
+“Không tệ.”
+
+Thư Lão gật gật đầu, ngón tay hướng về phía quầng sáng, các dãy số chằng chịt bày ra ở phía trên màn hình, sau đó thu nhỏ lại biến thành một quyển sách rồi rơi vào tay Thư Lão, sau đó ông ấy lại truyền vào trong đầu Trần Mặc.
+
+Những dãy số chằng chịt này khắc sâu vào đầu Trần Mặc, gốc rễ của loại virus tống tiền này cũng trở nên rõ ràng trong tâm trí hắn.
+
+Trần Mặc bỗng dưng có nhiều suy nghĩ đan xen.
+
+“Chờ sau khi ngươi tự thiết kế phần mềm diệt virus của riêng, lại tới lựa chọn kỹ thuật nữa! Có thể lúc đó sẽ có thu hoạch bất ngờ.”
+
+Thư lão nói đầy ẩn ý.
+
+Sau khi ra khỏi Thư Viện Khoa Học Kỹ Thuật, Trần Mặc ngồi im ở trước máy vi tính. Hắn đã có mã nguồn của virus, việc tiếp theo trở nên đơn giản hơn rất nhiều. Bây giờ hắn đã có ý tưởng, chỉ là ý tưởng này còn phải đợi hắn theo trình tự thiết kế ra để có thể nghiệm chứng.
+
+Mở máy tính ra, Trần Mặc bắt đầu nhập số liệu.
+
+….
+
+….
+
+Sự việc Đại học Tân Hải bị virus tống tiền tấn công đã nhanh chóng được lan truyền trên mạng. Trong thời đại công nghệ thông tin này, mọi sự kiện đều có thể bị lan rộng khắp đất nước chỉ trong thời gian ngắn.
+
+Sự xuất hiện của tin tức này dường như gióng lên hồi chuông đầu cho cuộc tấn công. Các trường đại học lớn trong nước lần lượt thông báo rằng họ đã bị tấn công bởi virus tống tiền, trong vòng bạn bè mỗi người và trên khắp diễn đàn vang lên tiếng than thở.

@@ -47,7 +47,9 @@ import NovelPage from "./pages/NovelPage";
 import PodcastPage from "./pages/PodcastPage";
 import CreativeBook from "./pages/CreativeBook";
 import DetailBookPage from "./pages/DetailBookPage";
+import DetailNovelPage from "./pages/DetailNovelPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
+import ReaderBookPage from "./pages/ReaderBookPage";
 
 const App = () => {
   return (
@@ -77,6 +79,7 @@ const App = () => {
           <Route path="novel" element={<NovelLayout />} >
             <Route index element={<NovelPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
+            <Route path="detailBook" element={<DetailNovelPage />} />
           </Route>
           <Route path="podcast" element={<PodcastLayout />} >
             <Route index element={<PodcastPage />} />
@@ -92,12 +95,10 @@ const App = () => {
             <Route path="achievements" element={<AccountAchievement />} />
             <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
           </Route>
-
           <Route path="/utebook/author" element={<AuthorSettingLayout />}>
-
           </Route>
         </Route>
-
+        <Route path="utebook-reader" element={<ReaderBookPage />} />
 
 
         <Route path="/utebook/package-plan" element={<PackageLayout />}>
