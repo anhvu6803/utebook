@@ -1,0 +1,129 @@
+Chương 19: Tiêu tiền!
+
+Bùi Khiêm chốt đơn chẳng chút do dự!
+
+Hắn thích nhất là những vật phẩm bị chém giá cao như vậy, vừa đốt được tiền lại không bị hệ thống cảnh cáo.
+
+Sau khi mua mẫu này, lối chơi cơ bản đều có cả rồi, bước tiếp theo là bổ sung đồ họa.
+
+Đồ họa bao gồm hàng loạt nội dung như thiết kế giao diện người dùng, hiệu ứng chiến đấu, bản phác thảo thẻ bài vân vân.
+
+Trừ khoản đó ra còn phải mua hiệu ứng âm thanh, thuê ECS vân vân nhưng những khoản này chẳng tốn bao tiền.
+
+Nhức đầu nhất vẫn là đồ họa.
+
+Bùi Khiêm định giữ lại hai ba chục nghìn làm hiệu ứng âm thanh với hơn mười nghìn cho các chi tiêu khác, một trăm sáu một trăm bảy mươi nghìn còn lại đập hết vào đồ họa.
+
+Số tiền một trăm sáu một trăm bảy mươi nghìn nói ít không ít, nói nhiều cũng chẳng nhiều.
+
+Nhưng Bùi Khiêm vẫn chưa nghĩ kỹ rốt cuộc nên thiết kế đồ họa như thế nào.
+
+Game thẻ bài là game thích hợp nhất để đổi skin.
+
+Cũng có thể hiểu rằng đối với game thẻ bài mà nói, “skin” là quan trọng nhất.
+
+Cũng vì skin quan trọng đến vậy nên Bùi Khiêm mới phải đảm bảo nó phải thật phèn!
+
+Đương nhiên không được cố ý vẽ xấu.
+
+Bởi vì hệ thống quy định không được mua những vật phẩm hoặc dịch vụ rõ ràng có chất lượng quá thấp.
+
+Nếu tốn một trăm sáu một trăm bảy mươi nghìn mà chỉ mua được đồ họa trị giá năm sáu chục nghìn thì không qua được cửa của hệ thống đâu.
+
+Phải mua dịch vụ tương đương với giá trị, được phép dao động một chút nhưng không thể dao động quá nhiều.
+
+Lúc này Bùi Khiêm cần phải động não một chút.
+
+Phải làm sao mới mua được đồ họa vừa có chất lượng không tồi lại đảm bảo người chơi không thích nhỉ?
+
+Đáp án rất đơn giản, chẳng phải bảo họa sĩ dùng tài vẽ tranh tinh tế để vẽ ra phong cách mà người chơi không chấp nhận nổi là được sao?
+
+Điểm mấu chốt vẫn là đề ra một phương án yêu cầu mỹ thuật.
+
+Bùi Khiêm không quá tự tin với năng lực bản thân trong lĩnh vực này, dù sao hắn từng có kinh nghiệm thất bại từ “Con Đường Sa Mạc Cô Độc” nên hơi nghi ngờ khả năng điều hành của mình.
+
+Lúc này mới thấy được tác dụng của Mã Dương!
+
+Bùi Khiêm tải xuống một mẫu bảng yêu cầu đồ họa thông dụng trên trạm tài nguyên.
+
+Bảng yêu cầu này ghi rõ yêu cầu về kích thước của các loại tài nguyên rồi cần phải mô tả đơn giản về những tài nguyên này.
+
+Tài nguyên đại khái được chia làm hai loại, một loại là bản phác thảo. Loại này khá đắt, đồng thời có yêu cầu khá cao đối với họa sĩ, phải vẽ tương đối cẩn thận nên đương nhiên yêu cầu cũng phải hết sức rõ ràng.
+
+Loại còn lại là những tài nguyên khác, ví dụ như thiết kế giao diện người dùng, hiệu ứng vân vân.
+
+Tài nguyên trên internet đều có những loại na ná nhau, chỉnh sửa một chút là dùng được rồi.
+
+Nhưng Bùi Khiêm đương nhiên không thỏa mãn với việc tùy tiện chỉnh sửa, tùy tiện chỉnh sửa thì sao tốn tiền được?
+
+Cho nên toàn bộ đồ họa đều phải thiết kế riêng!
+
+Đầu tiên Bùi Khiêm liệt kê toàn bộ những tài nguyên không quá quan trọng như hệ thống giao diện người dùng, hiệu ứng, sau đó tự điền thêm một vài yêu cầu vô cùng đơn giản.
+
+Ví dụ như phải cool ngầu!
+
+Phải phù hợp với phong cách Tam Quốc!
+
+Đều là cái kiểu ăn nói hàm hồ.
+
+Về việc thành phẩm cuối cùng sẽ thế nào…
+
+Bùi Khiêm không quan tâm, thích ra sao thì ra!
+
+Sau đó, Bùi Khiêm trực tiếp gửi bảng này cho Mã Dương.
+
+Giờ Mã Dương đã tỉnh ngủ rồi.
+
+Nhưng hắn mới ôm quyển sách vĩ đại kia đọc được hai phút đã lại thấy buồn ngủ.
+
+Thấy Bùi Khiêm gửi cho mình một cái bảng, Mã Dương lập tức lấy lại tinh thần rồi ném quyển sách trong tay lên giường. Hắn thò đầu từ giường trên xuống nhỏ giọng nói: “Bắt đầu làm việc rồi à?”
+
+Bùi Khiêm gật đầu: “Điền bảng. Phát huy trí tưởng tượng của ngươi, cứ mạnh dạn điền đi!”
+
+Mã Dương gật đầu thật mạnh: “Không thành vấn đề!”
+
+Lòng nhiệt tình với công việc dâng cao!
+
+Mã Dương xem qua, đây là một bảng yêu cầu đồ họa. Phần hắn cần điền khá nhiều, chủ yếu là mô tả yêu cầu đối với bản phác thảo nhân vật.
+
+Bùi Khiêm đã xác định đề tài game là Tam Quốc rồi.
+
+Nhân vật trong Tam Quốc quanh đi quẩn lại cũng chỉ có bằng đó người, Bùi Khiêm chọn ra tổng cộng năm mươi nhân vật, trong đó có mười lăm thẻ hiếm, hai mươi lăm thẻ xuất sắc, mười thẻ thường.
+
+Về mặt giá cả, giá một bản phác thảo vẫn dao động rất lớn, rẻ nhất thì bảy tám trăm đồng, đắt nhất tầm bốn năm nghìn.
+
+Tìm học sinh học viện Mỹ thuật của thành phố loại II loại III thì một trăm đồng một tấm cũng có.
+
+Tìm đại thần nổi tiếng thiết kế riêng thì một thẻ bài có giá bảy tám nghìn cũng chẳng lạ.
+
+Dù sao tiền nào của nấy.
+
+Bùi Khiêm chắc chắn không thể tìm đại thần nổi tiếng để thiết kế riêng được, dù rằng như vậy có thể khiến hắn tốn tiền hơn.
+
+Bởi vì tên tuổi của những đại thần có tiếng rành rành ra đó, trái lại rất có thể sẽ tuyên truyền cho game!
+
+Tương tự, bốn năm nghìn một bản phác thảo đúng là có thể tốn nhiều tiền nhưng một khi bản phác thảo đẹp như vậy được công bố, nhỡ người chơi lại thích thì sao?!
+
+Vẫn câu nói đó, game thẻ bài trên điện thoại quan trọng nhất chính là skin, ngươi làm skin đẹp quá thì dù lối chơi có rác rưởi đến đâu cũng có thể kiếm ra tiền!
+
+Cho nên Bùi Khiêm quyết định mua mấy bản phác thảo tương đối rẻ!
+
+Muốn tốn tiền thì mua nhiều!
+
+Năm mươi nhân vật cộng thêm những trạng thái khác nhau khi các nhân vật khác nhau tăng cấp, tăng sao nữa.
+
+Điều đó cũng tương đương với năm mươi tấm phác thảo gốc, mỗi tấm lại có bốn phiên bản khác nhau để thể hiện hiệu quả tăng cấp.
+
+Tính theo giá ba nghìn một bản phác thảo cộng bốn trạng thái khác nhau thì tổng cộng là một trăm năm mươi nghìn, dự toán của Bùi Khiêm vừa đủ.
+
+Dù sao game thẻ bài đời đầu cũng không cần mô hình, tiết kiệm được một khoản lớn.
+
+Đương nhiên vẫn cần đối phương báo giá cụ thể, Bùi Khiêm chỉ ước tính sơ bộ thôi.
+
+Mã Dương thấy hơi nghi ngờ, mấy thứ này đều quyết định xong cả rồi, vậy công việc chủ yếu của ta gì?
+
+Sau khi đọc kỹ ghi chú Bùi Khiêm viết, hắn hiểu rồi.
+
+Công việc của hắn là cải tạo, remake!
+
+Nói cách khác chính là phát huy trí tưởng tượng để lột xác hoàn toàn cho năm mươi nhân vật này, tốt nhất là thay đổi đến mức khác trước một trời một vực!

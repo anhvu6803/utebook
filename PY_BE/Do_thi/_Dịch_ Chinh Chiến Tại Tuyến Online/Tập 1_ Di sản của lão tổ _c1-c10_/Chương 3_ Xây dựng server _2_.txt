@@ -1,0 +1,81 @@
+Chương 3. Xây dựng server (2)
+
+“Em cảm thấy mình nên đặt tên cho trò chơi này là gì?” Lục Vô mong chờ hỏi.
+
+Thân là người nghiên cứu và phát minh thực sự của trò chơi này, Lục Vô cảm thấy mình nên giao quyền đặt tên cho Bắc Ly thì tốt hơn.
+
+Bắc Ly sửng sốt trong giây lát. Sự coi trọng của Lục Vô khiến cô bé cảm thấy ấm lòng.
+
+“Vậy thì đặt tên theo tên của thần khí đi, cứ gọi là “Chinh Chiến Online” đi. Đây cũng là dã vọng của Vua Bắc Kỳ đại nhân.”
+
+Lục Vô gật đầu thật mạnh, bế Bắc Ly xuống dưới ghế, mở trang quản lý website ra rồi bỏ thêm icon cho trò chơi này, đồng thời điền bốn chữ “Chinh Chiến Online” vào khung đặt tên.
+
+Ngay sau đó, trò chơi này nhanh chóng xuất hiện trên web game của Lục Vô.
+
+Để thu hút du khách, Lục Vô trực tiếp gắn trò chơi này lên trang chủ của web.
+
+Sau đó hai người cứ thế ngồi chờ.
+
+Một giờ, hai giờ, ba giờ nhanh chóng trôi qua. Bắc Ly quay đầu nhìn Lục Vô.
+
+“Tại sao tới giờ mà chưa có ai download chơi thử hết vậy?”
+
+Câu hỏi này khiến Lục Vô hơi xấu hổ. Hắn biết lượng truy cập vào trang web game của mình xác thực là rất thấp.
+
+Hơn nữa còn có một nguyên nhân khác, đó là bây giờ cho dù chỉ là game online đơn giản thì cũng có dung lượng mấy chục, mấy trăm GB.
+
+Có những game độ chân thật đạt tới hơn 50% lại càng có dung lượng file được tính bằng đơn vị TB. Mà trò chơi rỗng ruột này của mình chỉ vỏn vẹn 800 MB thôi, khiến người ta vừa thấy đã không có hứng thú thể nghiệm gì rồi.
+
+Sau khi suy nghĩ một lát, Lục Vô lại đăng nhập vào trang quản lý website, gõ thêm một dòng chữ ở chỗ giới thiệu vắn tắt về trò chơi.
+
+[Trò chơi này được trang web chúng tôi nghiên cứu tỉ mỉ suốt mười năm, trải qua nhiều lần thí nghiệm, độ chân thật đã đạt tới gần 100%. Hơn nữa trang web chúng tôi xin thông báo rõ ràng, trò chơi này không có cổng nạp tiền.]
+
+Sau khi gõ dòng chữ giới thiệu này xong, Lục Vô và Bắc Ly lại bắt đầu chờ đợi với kỳ vọng tràn trề.
+
+Một giờ… Hai giờ…
+
+Ngay tại lúc hai người đều uể oải, chuẩn bị nghĩ cách khác thì thần khí bỗng lóe lên, sau đó một tin tức xuất hiện trong đầu Lục Vô.
+
+[Ting! Người chơi Vương Đại Mãng đăng ký server chinh chiến!]
+
+Thấy vẻ mặt của Lục Vô, Bắc Ly lập tức nắm lấy tay hắn, cũng nhắm mắt lại để quan sát người chơi mới xuất hiện.
+
+…
+
+Vương Đại Mãng chán ngán thoát khỏi game online “Atlantis” đã bắt đầu cập nhật phiên bản mới.
+
+“Atlantis” là một trong những game online hot nhất hiện nay, có rất nhiều người chơi, chiếm 8% định mức thị trường, độ chân thực đạt tới cực cao 55%, hơn nữa nội dung game phong phú, phù hợp với nhiều lứa tuổi. Mà Vương Đại Mãng chính là một game thủ chuyên nghiệp.
+
+Sau khi thoát khỏi game online, anh ta bắt đầu tìm đồ ăn trong tủ lạnh, sau đó trở lại máy tính mở trình duyệt web lên, tiện tay click vào một icon trong số mười trang web game, định chơi đại một trò chơi nào đó trước khi cập nhật phiên bản mới kết thúc.
+
+Rất trùng hợp là web game mà anh ta mở ra lại là trang web của Lục Vô.
+
+Vương Đại Mãng nhìn lướt qua vô số icon trò chơi trên trang web, sau đó tập trung vào icon game dễ khiến người ta chú ý nhất trên trang chủ, click vào.
+
+“Phụt! Khụ khụ!”
+
+Lúc Vương Đại Mãng liếc thấy giới thiệu vắn tắt về game online, thức ăn trong miệng anh ta lập tức phun ra, không nhịn được bắt đầu ho khan.
+
+Một game online 800 MB mà độ chân thật đạt tới gần như trăm phần trăm, còn có cam đoan của trang web không nạp tiền nữa chứ.
+
+Điều này khiến Vương Đại Mãng mở to mắt: “Admin trang web này muốn có tiền tới mức điên rồi sao? Sao trong giới thiệu vắn tắt không chú thích thêm là thăng cấp cực nhanh đi!”
+
+Vương Đại Mãng lắc đầu, đang định click vào dấu X tắt giao diện trang web đi thì bỗng dưng tay anh ta khựng lại. Anh ta nhớ là hình như bây giờ có thể tố cáo game online có nội dung giả dối thì phải.
+
+Hình như sau khi tố cáo thành công còn có thể nhận được tiền thưởng nữa kìa.
+
+Vương Đại Mãng không khỏi cười gian xảo. Anh ta định thể nghiệm thử xem, sau đó viết bài tố cáo nội dung lừa đảo, rồi gửi cho cảnh sát mạng.
+
+Thế là sai lầm ngẫu nhiên, Vương Đại Mãng ấn nút download game.
+
+Với tốc độ internet hiện giờ, game online 800 MB thì chỉ cần một giây là tải xong. Vương Đại Mãng nhét thức ăn trong tay vào miệng, sau đó đội mũ thực tế ảo, mặc đồ chơi game vào.
+
+Ngay sau đó, trước mắt anh ta xuất hiện một loạt icon game. Đó đều là những game online mà anh ta từng tải xuống để chơi.
+
+Anh ta thò tay quẹt một phát, icon lướt qua. Sau khi tìm được icon game “Chinh Chiến Online”, Vương Đại Mãng cười thầm, đã chuẩn bị tinh thần bị hấp diêm thị giác rồi.
+
+Sau khi ấn vào bắt đầu trò chơi, thân thể của Vương Đại Mãng trong hiện thực bỗng trở nên mềm oặt.
+
+Mà trong tầm mắt của anh ta xuất hiện hình ảnh trận pháp, sau đó là cảm giác không trọng lực truyền tới. Khi lại mở mắt ra lần nữa, anh ta đã hoàn toàn sợ ngây người vì cảnh tượng trước mắt.
+
+Dưới ánh sáng mơ hồ của mặt trăng máu, bầu trời rải rác mưa máu, gió lạnh thổi chung quanh, cứ như thể đang đứng trong địa ngục vậy.

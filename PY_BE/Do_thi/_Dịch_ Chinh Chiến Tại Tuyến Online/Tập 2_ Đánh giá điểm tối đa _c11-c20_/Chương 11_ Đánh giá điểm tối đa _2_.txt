@@ -1,0 +1,75 @@
+Chương 11. Đánh giá điểm tối đa (2)
+
+Cái gọi là nhiệm vụ chính tuyến đương nhiên phải phát huy từ chủ đề chinh chiến rồi.
+
+Nghĩ tới dã vọng của lão tổ nhà mình, trong lòng Lục Vô không khỏi nảy sinh khí phách. Chỉ cần trò chơi này đủ hot, hắn sẽ có thể có được vô tận người chơi bất tử làm việc cho hắn. Sau này khi thực lực của người chơi tăng lên, một khu vực Bắc Kỳ có là gì? Hắn muốn cả âm phủ luôn!
+
+Bắc Ly cực kỳ hiểu biết về địa hình của cả khu vực Bắc Kỳ nên làm quân sự nhắc nhở Lục Vô về những thế lực đáng chú ý trong khu vực này.
+
+Theo lời của Bắc Ly, dưới trướng của Vua Bắc Kỳ có ba vị Quỷ Vương, mười vị Quỷ Tướng. Sau khi Vua Bắc Kỳ qua đời, cả Bắc Kỳ bị những thế lực này phân hóa thành mười ba khu vực.
+
+Khu vực nơi Minh Phủ tồn tại nằm ở phía Đông, bị một gã Quỷ Tướng tên là Sát Na chiếm cứ.
+
+Làm thế nào để đoạt lại địa bàn từ tay Sát Na chính là nhiệm vụ chính mà Lục Vô suy xét đầu tiên.
+
+Lục Vô thiết lập mở ra nhiệm vụ chính ở level 15. Dù sao thì level của người chơi quá thấp, ngay cả một con quỷ tốt cũng không đánh được, cơ bản là không thể hình thành sức chiến đấu có quy mô được.
+
+Đồng thời, hai người còn suy xét thiết kế hình mẫu NPC.
+
+Chế tạo những con NPC tăng sức hấp dẫn cho game rất đơn giản, chỉ cần dùng thần khí chinh chiến ngưng tụ một thân thể là được. Quan trọng là làm thế nào để cho NPC có trí tuệ.
+
+Muốn trò chơi trở nên nổi bật thì địa vị của NPC là rất quan trọng. Làm thế nào để khiến nó có ý thức của bản thân trở thành điểm mấu chốt.
+
+Lục Vô không thể giải quyết được vấn đề này, chỉ cần vứt nó cho người nghiên cứu phát minh trò chơi Bắc Ly là được.
+
+Nhưng khiến Lục Vô bất ngờ là Bắc Ly lại vỗ ngực một cách tự tin.
+
+“Cứ giao cho tôi. Thật ra chuyện này cũng không khó đâu. Phải biết rằng âm phủ chính là nơi quy tụ của các sinh linh, chúng ta hoàn toàn có thể tìm kiếm những sinh linh nguyên thủy vừa được sinh ra, còn chưa có linh trí trong âm phủ, dùng thần khí tái tạo lại linh hồn của chúng, giao cho chúng ký ức và sứ mệnh mới là được.”
+
+“Nhưng loại linh hồn này phải tìm ở chỗ nào?” Lục Vô kinh ngạc.
+
+“Sau khi tử vong, những sinh linh đó sẽ được sinh ra ở bất kỳ địa điểm nào trong âm phủ. Chỗ nào cũng có thể tìm thấy hết. Chúng ta hoàn toàn có thể phát nhiệm vụ để người chơi tìm linh hồn mới sinh cho chúng ta chế tác NPC!”
+
+“Được!”
+
+Lục Vô gật đầu, dùng ý tức phát một nhiệm vụ mới trong game:
+
+[Nhiệm vụ vĩnh cửu: Kẻ Thu Thập Linh Hồn]
+
+Tìm kiếm những linh hồn mới được sinh ra ở một nơi ngẫu nhiên trong cõi âm. Sau khi phát hiện có thể bán cho Thương Thành. Mỗi linh hồn mới sinh có giá 100 hồn tệ.
+
+Đồng thời, để khiến người chơi hiểu được cái gì là linh hồn mới sinh, Lục Vô còn bảo Bắc Ly tạo hình ảnh, dán trong list nhiệm vụ để người chơi có thể phân biệt dễ dàng hơn.
+
+Phần thưởng của nhiệm vụ này có thể nói là cao nhất trong tất cả các nhiệm vụ. Đồng thời loại nhiệm vụ hoàn toàn dựa vào may mắn này cũng tăng mức độ thú vị của game.
+
+May mắn S hay may mắn E chỉ cần xem mặt.
+
+…
+
+Game online phát hành ngày thứ ba.
+
+Trong khoảng thời gian này, số lượng người chơi Chinh Chiến Online tăng lên 48 người. Trong đó phần lớn đều do nhóm người Trần Tử Vũ, Vương Đại Mãng muốn lập công hội đầu tiên trong game đề cử nên mới đến chơi.
+
+Đối với trò chơi này, cơ bản là trước khi chơi, mọi người đều có thái độ cực kỳ nghi ngờ. Nhưng sau khi chơi rồi mới biết trò chơi này vượt thời đại cỡ nào, độ thú vị cực kỳ cao. Chỉ cần đã thể nghiệm thì hoàn toàn không nỡ bỏ đi.
+
+Lục Vô và Bắc Ly thường xuyên quan sát những hành động của họ thông qua thần khí nên biết rõ ý tưởng của Trần Tử Vũ. Hai người cũng dự định tăng thêm chức năng lập công hội trong lần cập nhật game tiếp theo.
+
+Để tiện cho việc quan sát tình huống của các người chơi, trong giai đoạn này Lục Vô và Bắc Ly lại xuống âm phủ một lần nữa để Bắc Ly tạo ra nhẫn phụ của nhẫn chinh chiến trong phòng thí nghiệm.
+
+Chiếc nhẫn này không có năng lực tự chủ mà phụ thuộc vào sự tồn tại của nhẫn chủ, còn tăng thêm chức năng quan sát người chơi và phát nhiệm vụ. Bắc Ly cũng chính thức trở thành GM của trò chơi này.
+
+…
+
+Mục Thanh Thủy là người đánh giá trò chơi chuyên dụng của web game 173, nhiệm vụ hằng ngày là thử nghiệm game mới, sau đó viết báo cáo thể nghiệm, đăng lên diễn đàn trang web. Tuy rằng tiền lương không thấp, nhưng anh ta lại cảm thấy rất nhàm chán.
+
+Lại tắt một trò chơi, Mục Thanh Thủy tháo mũ thực tế ảo xuống, xoa đầu với vẻ mặt bất đắc dĩ: “Loại sáng ý chạy đầy đường như thế này, rốt cuộc nghĩ sao mà lại đi tham dự bảng PK game mới không biết. Thật là lãng phí thời gian của mình!”
+
+Sau đó anh ta mở trang web ra, đánh giá 2 điểm ở bên dưới game online này, đồng thời quăng trò chơi này vào danh sách đào thải.
+
+Kéo mục lục đánh giá xuống, thấy còn hơn trăm trò chơi cần thí nghiệm, Mục Thanh Thủy cảm thấy cực kỳ bực bội.
+
+Nhìn những người đánh giá khác cũng đang thí nghiệm những trò chơi khác, Mục Thanh Thủy hít sâu một hơi, lại mở mục lục ra, theo thứ tự click vào trò chơi tiếp theo nên thí nghiệm.
+
+“Hửm?”
+
+Vốn Mục Thanh Thủy định trực tiếp thí nghiệm luôn, nhưng giới thiệu vắn tắt của trò chơi này khiến anh ta phải trợn tròn mắt.

@@ -1,0 +1,67 @@
+Chương 16. Trung tâm mua sắm
+
+[Cảm giác] là sự nhận biết của ý thức đối với các thông tin bên trong và bên ngoài cơ thể. Chỉ số này được biểu hiện qua các hình thức cụ thể là năng lực dò bẫy và năng lực điều tra những điều bất thường của Người chơi, hay trực giác về số mệnh đã định sẵn. Về phần trị số [Quyến rũ], đó là mức độ thu hút cá nhân của Người chơi đối với môi trường xung quanh.
+
+Đối với nam giới trưởng thành bình thường, sáu giá trị này đều là 5, trong khi bảng thuộc tính của Lý Ngang hiển thị là:
+
+[Sức mạnh: 6] (Mức độ tương đương với Gymer thâm niên)
+
+[Nhanh nhẹn: 6] (Mức độ tương đương với những người đam mê Parkour thâm niên)
+
+[Trí lực: 7] (Thiên tài)
+
+[Thể chất: 6] (Mức độ tương đương với những người đam mê Marathon thâm niên)
+
+[Cảm giác: 6] (Mức độ tương đương với những người đam mê săn bắn thâm niên)
+
+[Quyến rũ: 4] (Ngoại hình tầm thường, ăn nói và hành vi khá kỳ lạ)
+
+Sáu giá trị này chỉ là những chỉ số thô do hệ thống đưa ra dựa trên chức năng sinh lý của người chơi. Chúng không đại diện cho lợi thế trong thực chiến dù một trong các phe đánh nhau có chỉ số cao hay thấp hơn.
+
+Ví dụ, một huấn luyện viên fitness vai u thịt bắp và một võ sĩ quyền anh chuyên nghiệp đều có chỉ số thuộc tính [Sức mạnh] (sức mạnh tương đối) là 7.
+
+Thế nhưng, kỹ năng bộc phát sức mạnh của cả hai gần như khác nhau hoàn toàn. Người võ sĩ quyền anh có thể siết chặt các sợi cơ trong nháy mắt, để rồi bộc phát ra một sức mạnh vượt bậc trong từng đòn đánh, tấn công người huấn luyện viên fitness kia. Giả sử có một cuộc chiến thực tế, thì ví dụ trên sẽ là một trận bán hành đơn phương của người võ sĩ quyền anh.
+
+Hiện tại, các tay chơi có thể nhận được điểm thuộc tính sau khi thăng cấp. Rõ ràng rằng, cho dù người chơi chỉ là một kẻ tầm thường, không có kỹ năng gì đặc biệt, thì sau khi thăng cấp lên level 10 cũng có thể đạt đến trạng thái đỉnh cao sinh học của nhân loại, ngang ngửa với các vận động viên chuyên nghiệp giỏi nhất.
+
+Còn từ level 15 đến level 20 thì sao? Trò Chơi Chết Chóc đã bắt đầu được bảy tháng. Trời mới biết có bao nhiêu X-men hay những vị Thần tăng đã xuất hiện từ nền dân số đa quốc gia rồi…
+
+Lý Ngang thở dài một hơi, lại cảm thấy vô cùng gấp gáp.
+
+Suy đi tính lại, hắn cộng 1 điểm thuộc tính của mình vào cột [Cảm giác], từ 6 điểm ở “Mức độ tương đương với những người đam mê săn bắn thâm niên” lên 7 điểm ở “Mức độ tương đương với những thợ săn chuyên nghiệp”.
+
+Rốt cuộc, khi đối mặt với một linh thể kỳ lạ và khó đoán, thuộc tính [Cảm giác] có thể quan trọng hơn các thuộc tính khác rất nhiều.
+
+Bên dưới thanh Thuộc tính, có thanh Vật phẩm và thanh Trang bị. Không có giới hạn nào trong các trường tương ứng của hai ô này. Thanh Vật phẩm đang ở trạng thái trống rỗng và thanh Trang bị đang hiển thị: [Vật phẩm đeo: Nhãn cầu kì lạ]
+
+Sau khi kích hoạt giao diện Người chơi hoàn toàn, các giá trị cụ thể của Nhãn cầu kì lạ cũng được công bố.
+
+Theo lời nhắc của Hệ thống, sức mạnh tinh thần mà Nhãn cầu kì lạ tiêu hao có liên quan đến hai thuộc tính là [Trí lực] và [Cảm giác]. Công thức tính là [(50% điểm Trí lực + 50% điểm Cảm giác) × 100 = điểm Sức mạnh tinh thần].
+
+Mỗi khi Nhãn cầu kì lạ kích hoạt hiệu ứng đặc biệt, nó tiêu thụ một cơ số điểm Sức mạnh tinh thần/giây, và tiêu hao 5 điểm/giây khi hoạt động cường độ cao. Tổng số điểm Sức mạnh tinh thần mà Lý Ngang sở hữu là 700 điểm. Nhãn cầu kỳ lạ tiêu thụ một điểm trí lực mỗi giây khi hiệu ứng đặc biệt được kích hoạt, và năm điểm mỗi giây khi hoạt động cường độ cao, và tổng số điểm trí lực mà Lý Ngang sở hữu là 700 điểm.
+
+-Có thể đạt đến 700 giây nếu chỉ sử dụng khả năng nhìn xuyên ảo ảnh. Nếu tạo và duy trì ảo ảnh, có thể kéo dài 140 giây. Giá trị này tương tự như những gì mình từng thử nghiệm trước đây.
+
+Lý Ngang gật đầu rồi nhìn sang phần Nhật ký nhiệm vụ và phần Trung tâm mua sắm.
+
+Không có gì quá đặc biệt về Nhật ký nhiệm vụ, chỉ có hai nội dung về [Đánh giết mèo mặt người] và [Đánh giết Quỷ ám người]. Phỏng chừng hắn có thể kiểm tra lại các nội dung và mục tiêu được giao tại đây khi thực hiện các nhiệm vụ trong tương lai.
+
+Trong giao diện trung tâm mua sắm, hiện tại chỉ có thể truy cập vào phần kệ hàng hóa. Có 20 mặt hàng trên kệ, được làm mới hàng ngày, nhưng với mức giá này…
+
+[Gươm Laser thần lực của Sith Warrior], [Trường kích của Red Skeleton], [Tòa nhà Asakusa 12 tầng tị quỷ trừ tà], [Giáp ngực hạng nặng của Griffin], [Gauss Pistol], [Quyền trượng thứ cấp của Nhà giả kim], [Thuốc hồi phục trung cấp], [Pháo nổi xỏ dây của đế quốc]…
+
+Trong số hai mươi vật phẩm này, thứ rẻ nhất có giá 2.000 Gcoin. Đây không phải là thứ mà những newbie ngơ ngác có thể mua được.
+
+Lý Ngang thở dài khi nhìn các kệ hàng tại trung tâm mua sắm.
+
+Hắn thở dài không phải vì giá tiền mà vì nếu những thiết bị này có thể phân tích nghiên cứu, như vậy đối với cơ quan quốc gia nó có ý nghĩa cực kỳ trọng đại.
+
+Chỉ với một thanh gươm laser của người Sith, chính phủ có thể có nắm giữ được một số công nghệ cao bao gồm siêu pin, thiết bị tích trữ plasma và máy phát từ trường mạnh di động. Ngoài ra, nó cũng có thể đóng vai trò định hướng chung cho nghiên cứu khoa học trên tổng thể của một quốc gia.
+
+Gauss Pistol về mặt công nghệ; Pháo nổi, hay Quyền trượng của Nhà giả kim về mặt ma thuật, mỗi thứ sẽ tạo ra sự đổi mới chưa từng có trong lĩnh vực nghiên cứu khoa học của con người.
+
+-Nếu quốc gia có một đoàn đội chơi chính thức, thì hẳn là lúc này họ sẽ chạy vòng quanh thế giới để kích hoạt các nhiệm vụ nhằm kiếm Gcoin trong trò chơi nhỉ?
+
+Lý Ngang nghĩ:
+
+-Hơn nữa, vì những trang bị này có thể xuất hiện trên kệ trung tâm mua sắm, điều đó có nghĩa là người chơi có thể tiếp xúc với những vật phẩm đặc biệt tương tự trong nhiệm vụ, và thậm chí có thể đi xa hơn, tiếp xúc và thậm chí tiến vào thế giới khác …

@@ -1,0 +1,97 @@
+Chương 4: Chút thay đổi của thế giới. (2)
+
+Trạm tài nguyên chính phủ ESRO, có thể được coi là chợ toàn bộ tài nguyên thị trường game trong nước. Ở đây, có thể dùng tiền mua được một vài tài nguyên mỹ thuật thông dụng, mô hình chương trình, bản thảo thiết kế, cũng có thể dùng tiền tìm tới một vài người chuyên nghiệp, tiến hành “Đặt hàng” game của mình.
+
+Những các loại tài nguyên mỹ thuật, mô hình chương trình,… này đều do công ty hoặc cá nhân trong ngành tự nguyện chia sẻ, trả tiền sử dụng.
+
+Đương nhiên, đây đều là một số tài nguyên tương đối cấp thấp, thường thấy.
+
+Ở trạm tài nguyên, cũng có thể liên hệ được một số người có quyền lực trong ngành, ví dụ như họa sĩ đứng đầu, được trực tiếp kết nối, thương lượng công việc với bọn họ.
+
+Ngoài ra, ESRO cũng đẩy ra trình biên soạn game phía chính phủ, chỉnh hợp trình biên soạn game tương đối thường thấy trên thị trường, cũng tiến hành đơn giản hoá phương pháp sử dụng, chỉ cần học tập trong một khoảng thời gian, dù phần lớn người không có nền tảng kỹ thuật lập trình, cũng có thể nắm giữ.
+
+Những thay đổi này đều phát sinh trong vòng hai, ba năm kỹ thuật nhanh chóng đột phá, tức là khoảng vào năm 2007 đến 2009.
+
+Chính bởi vì có tổ chức chính phủ mạnh mẽ như ESRO ra sức nâng đỡ ngành game, nên ngành này mới có thể phát sinh thay đổi lớn như thế.
+
+Đương nhiên, những ngành nghề khác, ví dụ ngành văn hóa như phim, Anime,… vân vân, đều có thay đổi tương tự, nhưng Bùi Khiêm tạm thời không cần đi tìm hiểu.
+
+…
+
+“Ta xem một chút yêu cầu cấu hình của Client và trình biên soạn của trạm tài nguyên này…”
+
+“Ừm, vẫn được, laptop của ta miễn cưỡng có thể tải được. Nhưng cấu hình máy tính vẫn tồn tại hạn chế, không làm được loại game cỡ quá lớn.”
+
+“Không sao, dù sao ta cũng không có ý định làm game quy mô lớn.”
+
+Bùi Khiêm mới mua laptop không lâu sau khi nhập học đại học, đến bây giờ mới được mấy tháng, cho nên còn có thể tải được client và trình biên soạn ESRO của trạm tài nguyên.
+
+Nhưng bởi vì laptop Bùi Khiêm mua chỉ là loại cấu hình thấp, cho nên cũng không quá tốt về mặt cấu hình, làm game thì được, nhưng không làm được game cỡ lớn.
+
+Điều này cũng không có gì. Dù sao Bùi Khiêm căn bản không có ý định làm game quy mô lớn. Không đủ người, không đủ tài chính, hơn nữa, hắn cũng không định kiếm tiền.
+
+Chỉ một mình hắn, làm một game độc lập chịu đựng có thể thông qua xét duyệt cũng không tệ.
+
+Bùi Khiêm mở ra trình biên soạn trước, nghiêm túc học tập giáo trình biên soạn.
+
+Một tiếng sau, Bùi Khiêm buồn ngủ.
+
+“Đã nói là không có cơ sở lập trình cũng có thể học được mà? Vứt!”
+
+Bùi Khiêm rất cạn lời.
+
+Tuy nói chi phí học tập trình biên soạn này đã hạ thấp trên diện rộng so với chương trình ngôn ngữ hoặc một vài trình biên soạn game truyền thống, nhưng đối với Bùi Khiêm, người hoàn toàn không có bất cứ cơ sở lập trình nào, nó vẫn rất khó như cũ!
+
+Thế nhưng, những thao tác tương đối đơn giản như sử dụng mô hình game có sẵn, thay đổi tài nguyên mỹ thuật, hắn lại học được.
+
+“Hay là lướt trạm tài nguyên trước, phân tích một vài game trên thị trường.”
+
+Bùi Khiêm tiến vào trạm tài nguyên, xem xét một vài tài nguyên hiện có.
+
+Chủng loại vẫn tương đối nhiều, các loại loại hình game như lái xe mô phỏng, đánh lộn, bắn súng, RPG,… đều có một số mô hình thông dụng.
+
+Những mô hình này tương đối cơ sở, giá bán cũng không cao lắm.
+
+Ví dụ như mô hình game bắn súng, đưa mô hình này vào trong trình biên soạn, là có thể thực hiện một loạt chức năng cơ bản như đi lại, nổ súng, đổi băng đạn,… một vài loại súng ống cũng có đường đạn mặc định.
+
+Lại mua một số tài nguyên mỹ thuật dán lên, thì coi như có được một game bắn súng vô cùng đơn giản, có một loại cách chơi.
+
+Muốn làm phức tạp, thì phải học tập cách dùng trình biên soạn cấp cao.
+
+Một vài chức năng quá khó làm, còn cần tìm chuyên gia trên trạm tài nguyên hoàn thành.
+
+Còn về hoàn cảnh lớn của ngành game trước mắt, trên cơ bản lại khá tương tự tình huống năm 2009 ở kiếp trước của Bùi Khiêm.
+
+Ví dụ như, game online hot nhất trước mắt từ WOW biến thành “Thế giới Kỳ Ảo”, CS biến thành “Kế hoạch chống khủng bố”, DOTA biến thành “Thần Khải”, bề ngoài không giống nhau lắm, nhưng cách chơi thì không khác nhau là bao.
+
+Game mobile lại có sự tăng trưởng rõ ràng, có thể bởi vì phần cứng phát triển nhanh hơn kiếp trước.
+
+Ví dụ như game mobile đánh bài ở kiếp trước của Bùi Khiêm được lợi bởi làn sóng smartphone mà phổ cập, mới xuất hiện vào năm 2012. Mà trong thế giới song song, bởi vì smartphone xuất hiện sớm hơn, cho nên vào khoảng năm 2008 năm đã xuất hiện game tương tự, hiện tại loại hình game này đã cực kỳ hoàn thiện.
+
+“Như vậy, tình huống sẽ rất rõ lãng.”
+
+“Ta chỉ cần dùng tiền mua sắm mô hình, mua sắm tài nguyên mỹ thuật ở trạm tài nguyên, tiêu hết tất cả năm mươi nghìn đồng, sau đó làm ra một game mà không ai chơi, không bán được, hai tuần sau thì tương đương thua lỗ sạch rồi.”
+
+“Hoàn mỹ!”
+
+Hạ quyết tâm, Bùi Khiêm bắt đầu tìm kiếm mô hình mình muốn trong trạm tài nguyên.
+
+“Mô hình cơ sở loại lái xe mô phỏng, hai mươi nghìn đồng, tặng kèm một chiếc xe được dán màng trong ngoài.”
+
+“Khuôn mẫu cảnh tượng, mô hình con đường trên sa mạc, mười lăm nghìn đồng, nếu có động thái thay đổi hoàn cảnh, cần thêm tám nghìn, tổng cộng hai mươi ba nghìn.”
+
+“Hơi đắt, nhưng điều ta muốn chính là đắt!”
+
+“Còn lại chút tiền chưa tiêu sạch.”
+
+“Radio âm nhạc, trong một trăm bài có ba mươi bài ca đầu vui tươi tuỳ ý, hoặc ngẫu nhiên phát từ kho nhạc của hệ thống, sáu nghìn.”
+
+“Còn lại một nghìn đồng, ừm… Mua chức năng bảng xếp hạng đơn giản đi, không mua nổi thứ khác rồi.”
+
+Sau khi cân nhắc sơ qua, Bùi Khiêm điên cuồng đặt hàng trên trạm tài nguyên, mau chóng tiêu sạch sành sanh năm mươi nghìn đồng.
+
+Nói thật, những tài nguyên này không đắt.
+
+Ví dụ như mô hình cơ sở loại lái xe mô phỏng này, đưa vào trong trình biên soạn game là có thể thực hiện chức năng cơ bản của game loại lái xe mô phỏng.
+
+Chân ga, phanh lại, rẽ ngoặt, va chạm,… vân vân, đầy đủ mọi thứ.

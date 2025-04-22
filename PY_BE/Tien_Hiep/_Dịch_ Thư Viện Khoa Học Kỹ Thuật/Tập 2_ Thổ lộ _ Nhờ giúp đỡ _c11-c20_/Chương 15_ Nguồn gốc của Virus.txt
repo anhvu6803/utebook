@@ -1,0 +1,91 @@
+Chương 15: Nguồn gốc của Virus
+
+Màn hình máy tính của Tiểu Ngư đã chuyển sang màu đen sẫm. Trên màn hình là chiếc cổng sắt đen bóng cùng chiếc khóa sắt to tướng, tạo cho người nhìn cảm giác nặng nề và bí bách. Phía trên cánh cổng có đồng hồ đếm ngược màu đỏ như máu, bên dưới là dòng chữ nhắc nhở bằng tiếng Trung. Sau khi đọc rõ nội dung lời nhắc bằng tiếng Trung, khuôn mặt của bốn cô gái sụp đổ.
+
+“Đúng là dính virus thật.”
+
+Chu Đồng Đồng ngơ ngác nói: “Nó giống virus tống tiền lần trước, lời nhắc cũng tương tự.”
+
+(*) Mã độc tống tiền hay Ransomware bao gồm nhiều lớp phần mềm ác ý với chức năng hạn chế truy cập đến hệ thống máy tính mà nó đã lây nhiễm, và đòi hỏi một khoản tiền cho người đã tạo ra malware đó nhằm mục đích xóa bỏ việc hạn chế truy cập mà nó đã tạo ra trước đó.
+
+“Thử khởi động lại xem.”
+
+Lý Nhược Hi vội vàng mở lại máy vi tính. Nửa phút sau, máy tính lại được bật lên, màn hình vẫn hiển thị như cũ, hoàn toàn không vào được giao diện máy tính.
+
+“Không lẽ virus từ “phim hành động” sao?”
+
+Vương Hiểu Lan hỏi. Cả ba cô gái cùng nhìn Lý Nhược Hi.
+
+“Không thể nào, ta đã xem qua rồi, không có khả năng có virus.”
+
+Lý Nhược Hi cười khổ, lúc nói lời này cô ấy cũng hơi hoang mang.
+
+“Ta có người bạn ở học viện kế bên, tí nữa ta sẽ nhắn tin xin giúp đỡ.”
+
+Chu Đồng Đồng phản ứng kịp.
+
+“Ta sẽ search xem loại virus này là virus gì.”
+
+Vương Hiểu Lan cũng không chậm trễ. Tiểu Ngư và Lý Nhược Hi nhìn nhau.
+
+“Ta cũng dùng máy tính của ta mở thử xem.”
+
+Lý Nhược Hi đi về chỗ của mình, mở máy vi tính ra, gắn USB vào, bắt đầu copy dữ liệu.
+
+“Tìm được, tìm được rồi.”
+
+Lý Nhược Hi vừa mới mở máy tính ra, giọng nói Vương Hiểu Lan vang lên. Ba cô gái vội vàng xúm lại.
+
+“Biến thể virus tống tiền, theo giờ thủ đô là 6 giờ 30 phút chiều nay, trường hợp đầu tiên được tìm thấy ở Châu Âu, hiện tại đã hơn tám mươi nghìn máy tính đã bị nhiễm. Vào khoảng 7 giờ tối nay, nó tiếp tục bùng phát ở Bắc Mỹ, theo thống kê chưa đầy đủ, số lượng máy tính bị nhiễm virus ở Bắc Mỹ vượt quá năm mươi nghìn máy, con số này vẫn đang tiếp tục gia tăng, virus lây lan qua các tệp đính kèm email và đường dẫn url lừa đảo, sau đó nhanh chóng lây nhiễm sang các khu vực có internet khác…”
+
+“Chỗ này của ta cũng có tin tức.”
+
+Chu Đồng Đồng đưa tin từ vòng bạn bè tới trước mặt mấy cô gái: “Trong trường học của chúng ta rất nhiều người có máy tính bị nhiễm virus. Các ngươi xem, mới vừa rồi có người báo rằng, khi đăng nhập vào mạng của trường sẽ bị nhiễm virus ngay lập tức.”
+
+“Mịa nó.”
+
+Lý Nhược Hi vội vàng chạy về vị trí của mình, rút dây mạng ra khỏi máy tính, trong lòng còn sợ hãi. May mà còn chưa kịp vào website của trường, bằng không… Máy tính của cô cũng gặp nạn.
+
+Ba cô gái đột nhiên phản ứng, nhìn về phía Chu Đồng Đồng. Chu Đồng Đồng chớp mắt nhìn về phía máy tính của mình, hình ảnh bên trên giống như máy tính của Tiểu Ngư, biến thành một cánh cổng sắt bí ẩn.
+
+“Hình như ta cũng dính virus rồi.”
+
+Chu Đồng Đồng ngơ ngác nói: “À? Trúng virus, trúng virus rồi, làm sao bây giờ?”
+
+Sau khi phản ứng lại, Chu Đồng Đồng bật dậy thật nhanh, chạy lại máy tính bấm loạn xạ.
+
+“Làm sao bây giờ? Ta còn chưa xem hết phim.”
+
+Ba cô gái đỡ trán nhìn Chu Đồng Đồng đang nhảy dựng lên, phản xạ thần kinh của cô nàng chậm nửa nhịp, giờ này mà còn quan tâm đến phim truyền hình.
+
+“Khác với con virus tống tiền lần trước, lần này nó không chỉ khóa dữ liệu nữa mà là khóa luôn máy tính, hệ thống máy tính bị khóa rồi. Mục đích của hacker chính là tiền. Các giao dịch phải hoàn thành trong vòng một tuần lễ, hacker yêu cầu chuyển bằng bitcoin, nếu không hủy hết các tệp tài liệu bên trong ổ cứng máy tính.”
+
+Lý Nhược Hi nhìn dòng chữ nhắc nhở trên màn hình mà thở phào nhẹ nhõm. May mắn thay, đó không phải là do bộ phim hành động của mình, nếu không, cô ấy sẽ chết vì tội lỗi.
+
+“Ta còn lưu tài liệu ôn tập cho kỳ thi kế toán ở trong máy tính, phải làm sao bây giờ?”
+
+Tiểu Ngư hốt hoảng hỏi.
+
+“Bạn học ở học viện kế bên vừa mới đăng bài trong vòng bạn bè, nói rằng trước giờ không có phương pháp diệt virus, chỉ có cách duy nhất là cài đặt lại hệ thống.”
+
+Ngay sau đó, trong đầu Tiểu Ngư hiện ra dáng vẻ tự tin của Trần Mặc, cô định dùng điện thoại gọi cho hắn. Ngay khi cô chuẩn bị gọi điện, ba khuôn mặt đang nhếch mép cười gian, dán chặt lỗ tai qua đây.
+
+Lúc này, Trần Mặc đang trên đường trở về phòng trọ, tốc độ có hơi gấp gáp, khẩn trương chạy về phòng. Bỗng nhiên, tiếng chuông điện thoại từ trong túi vang lên.
+
+Tiểu Ngư?
+
+Thấy cuộc gọi của Tiểu Ngư, Trần Mặc nở một nụ cười, tỏ vẻ hiểu rõ rồi bắt máy ngay lập tức.
+
+“Tiểu Ngư.”
+
+“Trần Mặc.”
+
+Tiểu Ngư xấu hổ đỏ mặt, bởi vì lúc này bên cạnh cô ấy còn có ba cô gái như ba con mực quấn lên nghe ké.
+
+“Nhớ ta à?”
+
+Trần Mặc cười nói. Ba ngườiLý Nhược Hi nhanh chóng che miệng, con mắt cong thành hình lưỡi liềm. Tiểu Ngư không dám trả lời, sắc mặt đỏ bừng.
+
+“Máy tính của ta nhiễm virus.”
+
+“Nhiễm virus?”

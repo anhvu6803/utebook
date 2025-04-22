@@ -1,0 +1,99 @@
+Chương 3: Công nghệ phát triển tiềm năng con người ở trình độ thấp
+
+Trần Mặc liếc mắt nhìn quyển sách đỏ sẫm trên bàn, nhẹ nhàng bước tới rồi mở ra. Quả nhiên hắn đã có thể xem được trang thứ hai, trước khi hắn ký tên mình lên trên sách, bên trong đều là giấy trắng.
+
+Sau khi Trần Mặc đọc nội dung bên trong sách, ánh mắt trở nên ngưng trệ.
+
+Trang nào trong sách cũng có phần giới thiệu sơ lược về từng loại công nghệ, khiến Trần Mặc đọc đến đâu là hoa mắt đến đó.
+
+[Mã nguồn phần mềm diệt vi rút máy tính]. Lĩnh vực: máy tính. Cấp thẩm quyền: Thực Tập Sinh. Giới thiệu sơ lược: Cho phép diệt hầu hết các loại virus máy tính, mã độc và các chương trình độc hại.
+
+[Công nghệ và chế tạo vật liệu gốm mềm]. Lĩnh vực: Hóa học, vật lý. Cấp thẩm quyền: Thực Tập Sinh. Giới thiệu sơ lược: Nhẹ, không dẫn điện, chịu được nhiệt độ cao, chất liệu gốm sứ có độ dẻo nhất định, thích hợp làm vỏ xe ô tô thông thường, vỏ điện thoại di động, vỏ máy tính.
+
+[Bí quyết sắc đẹp]. Lĩnh vực: sinh học, hóa học. Cấp thẩm quyền: Thực Tập Sinh. Giới thiệu sơ lược: bôi ngoài da, làm trắng da, thích hợp làm mỹ phẩm, dùng được cho bà bầu, không ăn được.
+
+[Công nghệ pin lithium cấp thấp]. Lĩnh vực: vật lý, hóa học. Cấp thẩm quyền: Thực Tập Sinh. Giới thiệu sơ lược: pin sạc lithium-ion thông thường.
+
+….
+
+….
+
+Trần Mặc nhìn thấy đa dạng các tên của từng loại kỹ thuật của các lĩnh vực khác nhau, nhưng vì cấp thẩm quyền của hắn mới là thực tập sinh, cho nên không thể thấy các công nghệ cấp cao.
+
+Dù chỉ vậy thôi cũng đủ để Trần Mặc xúc động vô cùng. Nếu có thể áp dụng những kỹ thuật kể trên vào trong đời sống, vậy cũng đủ để tạo ra một cuộc cách mạng kỹ thuật công nghệ quy mô toàn thế giới.
+
+Trần Mặc nhìn thấy quá nhiều loại công nghệ, hắn cảm thấy có chút rối rắm, không biết nên chọn cái nào. Bất kỳ loại nào ở đây đều có thể mang lại cho hắn danh vọng, nhưng vì nhiều món quá nên hắn không biết nên ăn món nào.
+
+“Thư Lão, ngài có lời khuyên gì không?”
+
+Trần Mặc nhìn Thư Lão.
+
+“Muốn ta cho ngươi lời khuyên?”
+
+Thư Lão nói: “Nơi này cất giữ rất nhiều loại kỹ thuật, ngươi muốn chúng giúp ngươi kiếm tiền sao?”
+
+“Đúng vậy, rất nhiều tiền.”
+
+Trần Mặc gật đầu.
+
+“Ngươi nghĩ xem, tiền tài quan trọng hay cơ thể quan trọng?”
+
+Thư Lão hỏi lại.
+
+“Cơ thể.”
+
+Trần Mặc không do dự trả lời. Cho dù có rất nhiều tiền nhưng cơ thể không khỏe mạnh thì mọi thứ đều trở nên vô nghĩa. Mọi người đều biết đạo lý này.
+
+“Thư Lão, ý ngài kêu ta đừng chọn sách nữa mà ra ngoài chạy bộ, rèn luyện cơ thể sao?”
+
+“Ha ha ha … Ngươi nói rất hay.”
+
+Thư Lão cười ha hả: “Ta hỏi câu này, ví dụ ngươi chọn một loại kỹ thuật và tung ra thị trường, chẳng hạn như công nghệ pin lithium này, cho dù ngươi chưa từng nghiên cứu về công nghệ này, lúc đó người khác sẽ hỏi ngươi nguồn gốc của loại công nghệ này ở đâu, ngươi sẽ trả lời như thế nào? Là do ngươi ăn trộm được sao?”
+
+Nghe Thư Lão nói xong, Trần Mặc khẽ gật đầu.
+
+Thư Lão nói tiếp: “Có những người bụng dạ nham hiểm, nếu ngươi công bố kỹ thuật ra bên ngoài, bọn hắn sẽ cản trở ngươi rồi đánh cắp nó, ngưoi sẽ làm gì? Ngươi chỉ là người bình thường, không quyền không thế, ngươi có thể giữ được nó sao?”
+
+“Không được.”
+
+Trần Mặc lắc đầu. Hắn không hề nghi ngờ lời nói của Thư Lão. Đôi khi cuộc sống còn cẩu huyết hơn cả những bộ phim truyền hình.
+
+“Vì vậy, khiêm tốn giấu tài, hậu thích bạc phát.”
+
+(*) hậu thích bạc phát: tích luỹ nhiều, dùng ít một
+
+Thư Lão thâm thuý nói: “Đây chẳng phải là văn hóa quốc gia ngươi sao?”
+
+“Ta nên làm gì đây? Ta phải chọn như thế nào?”
+
+Trần Mặc đặt câu hỏi.
+
+“Có hai phương pháp, thứ nhất, ngươi chọn một loại kỹ thuật có thể kiếm tiền, nhưng đừng công bố vội, hãy tìm hiểu về lĩnh vực này trước, im lặng nghiên cứu một thời gian rồi sau đó tìm cơ hội phát triển. Thứ hai, ngươi có thể chọn một công nghệ có ích cho ngươi ngay hiện tại.”
+
+“Cái nào thì được?”
+
+Trần Mặc lật sách, vẻ mặt phiền muộn, có quá nhiều loại kỹ thuật, công dụng gần như tương tự nhau, hắn không biết cái nào tốt nhất với hắn.
+
+“Cái nào tốt cho cơ thể nhỉ?”
+
+Thư Lão ẩn ý: “Ngươi thử nhìn danh mục khoa học sinh học xem, đó là “Công nghệ phát triển tiềm năng con người trình độ thấp.”
+
+Theo sự hướng dẫn của Thư Lão, Trần Mặc nhanh chóng lật mục lục phân loại và tìm ra loại kỹ thuật mà Thư Lão đã nói.
+
+[Công nghệ phát triển tiềm năng con người ở trình độ thấp]. Lĩnh vực: sinh học. Cấp thẩm quyền: Thực Tập Sinh. Giới thiệu sơ lược: khai phá tiềm năng cơ bản của cơ thể con người, nâng cao sức sống, tăng cường khả năng miễn dịch, sức mạnh, nhanh nhẹn, khả năng chịu đựng, dẻo dai của con người.
+
+“Không cần phải nói đến mấy việc phát triển tiềm năng của con người. Phiên bản tiên tiến nhất của kỹ thuật này có thể giúp con người phát huy tiềm năng lớn nhất của cơ thể, họ có thể sở hữu sức mạnh siêu phàm nhất, có thể hủy diệt địa cầu, và thậm chí còn kinh dị hơn nữa.”
+
+Thư Lão nói.
+
+“Ồ …”
+
+Trần Mặc tròn mắt, hắn cảm thấy sốc trước những lời của Thư Lão: “Nghe hơi ảo ma nhỉ?”
+
+“Không ảo đâu, không gian con thoi, trường sinh bất lão, phi thiên độn địa, dời núi khai hoang. Những việc nghe như chỉ có trong truyền thuyết này, khoa học đều có thể làm được.”
+
+(*) phi thiên độn địa: bay lên trời, chui xuống đất
+
+Thục Lão nhìn về nơi sâu nhất của thư viện, có chút trầm mặc.
+
+“Cảnh giới tối cao nhất của khoa học chính là thần học.”

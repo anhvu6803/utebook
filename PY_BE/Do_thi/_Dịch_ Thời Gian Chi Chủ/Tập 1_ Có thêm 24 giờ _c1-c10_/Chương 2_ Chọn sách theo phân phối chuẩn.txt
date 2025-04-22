@@ -1,0 +1,135 @@
+Chương 2. Chọn sách theo phân phối chuẩn
+
+Trương Hằng chạy quanh sân thể dục bảy vòng, hết 2800 mét
+
+Chạy xong, hắn vào nhà tắm công cộng tắm rửa, thay quần jeans và áo phông trắng sạch sẽ rồi ung dung ngồi trong căn tin ăn sáng. Sau đó mới cầm theo quyển “ Kính Vạn Hoa Yoiyama” (2) vừa xem xong tới thư viện.
+
+Cũng giống như chạy bộ vào mỗi buổi sáng, đọc sách cũng là một trong những thói quen của Trương Hằng. Hắn vẫn duy trì tốc độ mỗi tuần một quyển sách.
+
+Nhưng khác với việc bị ông ngoại ép ra ngoài chạy bộ vào mỗi buổi sáng, đọc sách có thể mang lại khá nhiều niềm vui cho hắn, xem như một thú tiêu khiển mà bản thân hắn cũng vẫn luôn lấy làm hưởng thụ.
+
+Kỳ thật, nếu như không phải thời gian có hạn thì hắn rất mong mỗi tuần có thể đọc được nhiều sách hơn nữa.
+
+Làm thủ tục trả sách ở quầy xong, Trương Hằng rút điện thoại trong túi ra.
+
+Mở chương trình tên Trình tạo số ngẫu nhiên lên, cài đặt tám số rồi bắt đầu quay số đầy hứng khởi.
+
+Phải thừa nhận không phải tự nhiên mà tên này bị mọi người cho là dị hợm.
+
+Người bình thường mượn sách trong thư viện tuyệt đối sẽ không làm ra cái trò quay số ngẫu nhiên để chọn sách thế này.
+
+Thế nhưng Trương Hằng có một sở thích, hoặc nên nói là sở thích kỳ quặc khi đọc sách. Có thể do đã đọc quá nhiều sách nên tên này đọc khá tạp, sức miễn dịch max điểm, từ tác phẩm nổi tiếng thế giới đến mấy quyển sách ba xu, thậm chí ngay cả tiểu thuyết tổng tài trên Tấn Giang hắn cũng có thể đọc say sưa. Hơn nữa tình trạng này ngày càng nặng hơn. Đến nay, ngay cả “catalogue bản thảo” và “cẩm nang nuôi heo một cách khoa học” mà hắn cũng có thể nuốt nổi, đúng là hết thuốc chữa.
+
+Để tránh phải đau đầu trong việc chọn sách, đồng thời được hưởng thụ niềm vui đơn thuần khi ngẫu nhiên chọn được sách hay, hắn đã viết ra một app chọn sách ngẫu nhiên.
+
+Tiếc là khi đi xin cấp phép và phần thưởng nghiên cứu khoa học của nhà trường thì xui xẻo bị đánh rớt, nên không có vốn để phát triển tiếp.
+
+Vậy mới nói, thị trường tư bản chẳng có tầm nhìn gì cả.
+
+Trương Hằng đi tới kệ sách tương ứng với hai số cuối trong dãy số vừa quay được.
+
+Lần này xem như khá may mắn, tuy không phải dòng văn học chính thống gì nhưng quản lý cũng thú vị lắm. Ít ra thì hay hơn quyển “Dự toán khối lượng báo giá công trình cấp thoát nước, sưởi ấm, gas” mà hắn quay được hồi tháng trước.
+
+Hắn vươn tay rút mục tiêu lần này ở trên giá ra.
+
+“Tìm hiểu về bản chất và nguồn gốc của cải của các quốc gia” – Adam Smith.
+
+Xem ra nay có thể có một buổi sáng vui vẻ rồi.
+
+Trương Hằng tìm một chỗ gần cửa sổ rồi ngồi xuống, bắt đầu thời gian đọc sách nhãn nhã của mình.
+
+Xem tới đây, chắc hẳn sẽ có người nhịn không được mà muốn lật bàn bức xúc, như vậy cũng được à? Hắn cứ mặc kệ cái đồng hồ thành tinh của mình như thế ư?
+
+Trương Hằng bày tỏ, đúng là hắn chẳng quản nổi vụ này.
+
+Sau khi xảy ra chuyện, phản ứng tích cực là đúng, nhưng phải là chuyện nằm trong phạm vi bạn có thể giải quyết. Chứ loại hiện tượng siêu nhiên thế này, trong tình huống quá ít manh mối, có lẽ không làm gì hết mới là sự lựa chọn chính xác nhất. Không thấy trong phim kinh dị, đám tò mò khi bị vỗ lưng trong một căn nhà cũ tối om mà quay đầu lại đều chịu chung cảnh đi lãnh catxe sớm à.
+
+Trái lại, nếu bạn như nó không tồn tại, cứ bình tĩnh đi thẳng tới cuối đường, nói không chừng sẽ là một chuyến khám phá nhà ma hơi đáng sợ nhưng không hề nguy hiểm chút nào.
+
+Cho nên, đôi khi giữ bình tĩnh mới là chuyện quan trọng nhất.
+
+Bây giờ Trường Hằng vẫn vô cùng bình tình. Nhìn từ bên ngoài, tuyệt đối sẽ không nhìn ra bản thân hắn đang vướng vào một sự kiện linh dị. Tên này dùng thời gian trốn học để chạy bù buổi sáng, đọc“Tìm hiểu về bản chất và nguồn gốc của cải của các quốc gia” trong thư viện suốt cả buổi sáng, đến chiều lại ngoan ngoãn lên lớp để học môn tư duy phản biện tự chọn. Buổi tối thì thực hiện lời hứa của mình, mời đám bạn cùng phòng đi ăn thịt xiên nướng ở phố ẩm thực đối diện trường. Thậm chí lúc ăn xong về phòng hắn còn có tâm trạng xem vài tập phim Mỹ.
+
+Tới Trương Hằng giờ 30 thì ký túc xá đúng giờ ngắt điện.
+
+Tuy laptop của Trương Hằng vẫn còn pin, có thể dùng thêm vài giờ nữa, nhưng hắn không muốn ảnh hưởng tới việc nghỉ ngơi của đám bạn cùng phòng nên cũng tắt máy ngay.
+
+Còn nửa tiếng nữa thì ngày hôm nay sẽ kết thúc rồi. Đồng hồ của người khác đã chạy được hai vòng, nhưng kim giờ trên chiếc Seastar vừa quen thuộc lại lạ lẫm của hắn chỉ mới gần hết một vòng.
+
+Sẽ xảy ra chuyện gì ư? Trương Hằng không biết.
+
+Việc duy nhất hắn có thể làm lúc này chính là chờ đợi.
+
+Trương Hằng đeo tai nghe, mở mp3 lên, nằm trên giường, lẳng lặng vượt qua nửa tiếng cuối cùng trong ngày.
+
+00:00
+
+Khi ba cây kim trên mặt đồng hồ cùng dừng lại tại một điểm, đại khái là chỉ dừng lại một thoáng rồi tiếp tục chuyển động.
+
+Trương Hằng cũng không thấy có gì khác thường cả.
+
+Đoán sai rồi ư? Hắn tháo tai nghe ra.
+
+Nhưng hắn lập tức cảm thấy có chỗ nào đó không đúng.
+
+Xung quanh quá yên tĩnh.
+
+Đêm hè lúc nào cũng khá ồn ào, tiếng lạch cạch phát ra từ cái quạt điện khi quay, tiếng muỗi vo ve bên tai. Vòi nước trong nhà vệ sinh sát vách bị rỉ, tiếng nước rơi tí tách vào bồn rửa, tiếng mèo hoang kêu khi chạy qua qua vườn hoa dưới lầu. Đương nhiên còn có tiếng ngáy phát ra từ giường đối diện…
+
+Nhưng đêm nay, hết thảy đều biến mất.
+
+Dường như toàn bộ âm thanh trên thế giới này bỗng chốc biến mất, trở nên yên tĩnh đến lạ.
+
+Nếu như không phải còn nghe loáng thoáng tiếng nhạc phát ra từ tai nghe trước ngực, Trương Hằng đã hoài nghi thính giác của bản thân có vấn đề gì đó rồi.
+
+Nhờ ánh sáng lờ mờ phát ra từ màn hình mp3, hắn thử nhìn lại thời gian trên đồng hồ.
+
+Bây giờ là 00:01
+
+Thường thì giờ này, phòng ngủ đối diện vẫn còn đang nối máy đánh chơi Liên Minh, có thể nghe thấy tiếng hú hét phấn kích khi giết địch hoặc kêu gào cổ vũ khi chạy trốn.
+
+Ngoài ra, Trương Hằng còn phát hiện một chuyện kỳ lạ khác, bên mé phải mặt đồng hồ Seastar có hiện ngày tháng. Theo lý mà nói, sau khi quá 0 giờ thì chỗ ngày tháng cũng phải thay đổi theo, nhưng lần này nó vẫn dừng lại ở ngày hôm qua.
+
+Một suy nghĩ lướt qua đầu Trương Hằng, dường như hắn đã nghĩ ra điều gì đó.
+
+Tối nay lúc lên giường hắn vẫn chưa cởi đồ, nên cứ nhảy thẳng xuống giường.
+
+Khởi động máy tính, quá trình mở máy chưa đến bảy giây, vô cùng thuận lợi. Giao diện đăng nhập QQ (1) cũng bật ra, nhưng Trương Hằng không chú ý đến cái đó. Hắn chuyển mắt tới thanh công lão, ngày tháng lẫn thời gian trên đó vô cùng chói mắt.
+
+00:00
+
+20/09/2017
+
+Qủa nhiên đúng là khoảnh khắc cuối cùng của “ngày hôm qua” ư?
+
+Trương Hằng lại đợi thêm một lát, hắn không xem giờ trên đồng hồ của mình mà ép tay đếm nhịp tim tới tầm 200. Dựa theo nhịp tim 72 nhịp một phút của hắn thì ít nhất đã hơn hai phút, nhưng thời gian trên máy tính vẫn dừng lại ở 00:00.
+
+Trương Hằng nhíu mày, nhưng vẫn không đưa ra kết luận vội.
+
+Hắn đi tới giường đối diện, đẩy Trần Hoa Đống đang ngủ say một cái. Cậu ta là đứa dễ tỉnh nhất phòng, bình thường buổi tối ai mà xuống giường uống nước đều có thể làm tên này giật mình thức giấc, nhưng lần này dù Trương Hằng đẩy kiểu gì thì cậu ta cũng chẳng có phản ứng nào hết.
+
+“Xin lỗi người anh em, dù tao không có bạn gái đi nữa, nhưng cũng không phải loại như mày nghĩ đâu…”
+
+Trương Hằng vừa đưa ngón tay xuống dưới mũi đối phương, vừa có thể kéo thời gian trong bầu không khí quỷ dị này.
+
+Chỉ có thể nói, tố chất tâm lý của tên này thật sự quá tốt.
+
+Qua năm phút, Trương Hằng vẫn không cảm nhận được hơi thở.
+
+Nếu bảo đây là một phần của trò đùa dai, vậy thì khả năng nín thở của Trần Hoa Đống cũng đỉnh quá rồi, có thể đăng ký tham gia kỷ lục Guinness luôn ấy chứ.
+
+Đã làm một lần, ngại gì không chơi thêm lần thứ hai thứ ba.
+
+Tiếp theo Trương Hằng lặp lại kê ngón tay dưới mũi của hai đứa còn lại.
+
+Kết quả cũng giống hệt Trần Hoa Đống.
+
+Trương Hằng đã có thể kết luận đại khái rằng đúng là mình đã gặp phải hiện tượng siêu nhiên mà khoa học không thể giải thích được.
+
+Bây giờ hắn đang ở trong một khoảng thời gian không nên tồn tại.
+
+Hay nói cách khác, giống như dòng thời gian đã phân ra một nhánh nhỏ khác dành riêng cho hắn.
+
+(1) Phân phối chuẩn – phân phối Gauss là một phân phối quan trọng trong thống kê, thường được dùng trong thống kê suy luận dùng suy luận trung bình tổng thể và kiểm định giả thiết thống kê.
+
+(2) Tác phẩm văn học nhật của Tomihiko Morimi (07/2009)

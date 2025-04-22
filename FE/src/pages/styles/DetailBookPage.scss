@@ -192,10 +192,11 @@ $button-text: white;
       height: 48px;
       padding: 0;
       border-radius: 25px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 500;
       cursor: pointer;
       gap: 8px;
-      flex: 0 0 233px;
+      flex: 0 0 190px;
       transition: background-color 0.2s;
 
       &:hover {
@@ -203,7 +204,30 @@ $button-text: white;
       }
     }
 
-    .like-btn, .play-btn {
+    .continue-read-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $card-background;
+      color: $text-color;
+      border: 1px solid $border-color;
+      height: 48px;
+      padding: 0;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      gap: 8px;
+      flex: 0 0 190px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .like-btn,
+    .play-btn {
       display: flex;
       width: 48px;
       height: 48px;
@@ -316,7 +340,7 @@ $button-text: white;
         margin: 0 0 15px 20px;
         padding: 0;
         color: $text-color;
-        
+
         li {
           margin-bottom: 8px;
           line-height: 1.6;
@@ -342,10 +366,44 @@ $button-text: white;
     }
   }
 
+  .list-chapter {
+    margin-top: 30px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .list-chapter-title {
+      margin: 15px 0 15px 0;
+      font-size: 26px;
+      color: $text-color;
+    }
+
+    .list-chapter-item {
+      background-color: $card-background;
+      border-radius: 8px;
+      height: 80px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+  }
+
   .book-reviews {
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+
+    .book-reviews-title {
+      margin: 15px 0 15px 0;
+      font-size: 26px;
+      color: $text-color;
+    }
 
     .review-tabs {
       display: flex;

@@ -1,0 +1,85 @@
+Chương 15. Bảng điều khiển
+
+… Ò í e…
+
+Sau khi cúp máy, Lý Ngang nhét điện thoại trở lại túi của Thạch Thanh Tùng rồi xé quần áo của ông thành hai mảnh vải dài, buộc chặt lên vị trí xương sườn bị gãy.
+
+Sau đó, hắn cẩn thận kéo Thạch Thanh Tùng đến lối vào của bãi đậu xe ngầm để đảm bảo rằng bên cấp cứu sẽ tìm thấy ông nhanh chóng.
+
+Quay lại bãi đậu xe dọn dẹp mọi dấu vết có thể làm lộ thông tin cá nhân, bao gồm dấu chân, dấu vân tay và tóc.
+
+Thu dọn xong, Lý Ngang đi ra từ lối ra khác của bãi đậu xe, xác định bản thân đã nghe thấy tiếng còi xe cứu thương, liền đi thẳng đến tòa nhà dạy học.
+
+-Ồ, lại đây, khách quý đến chơi nha, Lý Ngang, có ngày nào trò không đi học muộn không vậy?
+
+Trong phòng học, giáo viên dạy tiếng Anh bất lực than thở.
+
+Chuyện Lý Ngang đi học muộn đã trở thành thói quen hàng ngày của lớp này. Nếu không vì điểm số cực cao của hắn, thậm chí thuộc hàng cao nhất trong cả thành phố Ân Thị, thì hội đồng giáo viên, bao gồm cả thầy chủ nhiệm của hắn, cũng đã thuyết phục hắn thôi học rồiChỉ cần không ảnh hưởng đến các học sinh khác là được rồi …
+
+Lý Ngang mỉm cười, ngồi vào chỗ của mình một cách thành thạo, bắt đầu kiểm tra hệ thống.
+
+Bảng điều khiển hệ thống được hiển thị trong tầm mắt theo mô thức Thực tế ảo VR*, với tổng cộng tám mô-đun bao gồm thông tin người chơi, thanh thuộc tính, thanh vật phẩm, thanh trang bị, thanh kỹ năng, nhật ký nhiệm vụ, hệ thống trung tâm mua sắm và thanh ba lô.
+
+*Chú thích: Thực tế ảo hay còn gọi là thực tại ảo – Virtual Reality, viết tắt là VR – là thuật ngữ miêu tả một môi trường được giả lập được tạo ra bởi con người nhờ vào các phần mềm chuyên dụng, và được điều khiển bởi một thiết bị thông minh.
+
+Đầu tiên là thông tin người chơi.
+
+Bốn mục [Họ & tên], [Tuổi], [Chủng tộc] và [Số hiệu Người chơi] đã được điền đầy đủ. Tuy nhiên, còn lại một ô [Biệt hiệu của người chơi] vẫn còn bỏ trống.
+
+[Số hiệu người chơi] bao gồm một chuỗi các chữ và số vô cùng phức tạp. Dựa theo câu chú thích bên cạnh của Hệ thống, số hiệu người chơi chủ yếu được Hệ thống sử dụng để phân biệt riêng từng người chơi cụ thể.
+
+Trong khi đó, [Biệt hiệu của người chơi] được sử dụng chính cho các hoạt động giao lưu giữa các nhóm người chơi.
+
+Lý Ngang bèn nhập biệt hiệu vào ô trống:
+
+“Jugemu Jugemu Go-Kō-no-Surikire Kaijari-suigyo no Suigyō-matsu Unrai-matsu Fūrai-matsu Kū-Neru Tokoro ni Sumu Tokoro Yaburakōji no Burakōji Paipo Paipo Paipo no Shūringan Shūringan no Gūrindai Gūrindai no Ponpokopii no Ponpokonaa no Chōkyūmei no Chōsuke.”
+
+[Biệt hiệu khả dụng, xác nhận chọn? Có – Không]
+
+Lý Ngang cau mày, chọn “Không”, và nhập lại một biệt hiệu khác: “Thượng Đế”.
+
+[Biệt hiệu khả dụng, xác nhận chọn? Có – Không]
+
+“Yeao Nai He”, “→ 檰 ~ 婲 ~ 餹 ←”, “Áp dụng 177*9527”, “Tìm giòi trong nhà vệ sinh”…
+
+Lý Ngang đã thử hàng trăm cái ID. Đây không phải vì hắn không biết chọn tên nào cho hay hoặc thích nghịch ngợm kiểu đó, mà để kiểm tra điểm giới hạn của Hệ thống.
+
+-Một số ID thô tục cũng được xét duyệt. Một số ID rõ ràng là khá phổ biến mà cũng không thấy cái câu “biệt hiệu này đã được sử dụng, vui lòng chọn một tên khác.” Thậm chí, mình nhập vào vài nghìn chữ số của Pi cũng được luôn.
+
+-Hệ thống của trò chơi này thực sự rất mạnh…
+
+Lý Ngang cong môi gõ biệt hiệu Lý Nhật Thăng.
+
+Đơn giản ngắn gọn.
+
+Bên dưới biệt hiệu của người chơi, có một dải màu xanh lá cây. Bởi vì Lý Ngang vừa hoàn thành nhiệm vụ và nhận được 120 kinh nghiệm nên ô kinh nghiệm xanh đã được lấp đầy.
+
+[Nhắc nhở: Giá trị kinh nghiệm hiện tại của người chơi là 120/100 và có thể được nâng cấp từ lv1 lên lv2. Sau khi cấp độ của người chơi tăng lên, có thể nhận được một điểm thuộc tính tự do. Có nâng cấp hay không?]
+
+Sau khi đọc xong các thông tinh tương quan về Hệ thống, xác nhận rằng việc thăng cấp sẽ không gây ra hiện tượng kim quang lấp lánh hoặc có tác dụng buff phục hồi vết thương toàn thân, Lý Ngang đã chọn thăng cấp.
+
+[Xin nhắc, người chơi Lý Nhật Thăng đã được nâng cấp lên lv2 và nhận được một điểm thuộc tính tự do, giá trị kinh nghiệm hiện tại là 20/200]
+
+[Sau mỗi lần nâng cấp, giới hạn trên của hạn mức cao nhất của kinh nghiệm sẽ tăng thêm 100 điểm…]
+
+Lý Ngang gật đầu, di chuyển ánh mắt của mình đến thanh thuộc tính.
+
+Cột thuộc tính hiển thị giá trị gần đúng của chức năng thể chất hiện tại của người chơi, được chia thành [Sức mạnh], [Nhanh nhẹn], [Trí lực], [Thể lực], [Cảm giác] và [Quyến rũ].
+
+[Sức mạnh], [Nhanh nhẹn] và [Thể lực] khá dễ hiểu trên mặt chữ, gần như được xác định bởi các yếu tố như sức mạnh cơ bắp và tốc độ phản xạ thần kinh.
+
+[Trí lực] không giống như trí tuệ. Trí lực là khả năng nhận thức của con người, độ hiểu biết về các sự vật khách quan và sử dụng kiến thức, kinh nghiệm ấy để giải quyết vấn đề.
+
+Trong khi đó, trí tuệ là một dạng năng lực được hình thành nên từ một hệ thống cực kỳ phức tạp bao gồm trí lực, tri thức, phương pháp và kỹ năng và một chuỗi đa dạng các nhân tố khác.
+
+Nói một cách đơn giản, cao lắm thì việc tăng điểm [Trí lực] của người chơi có thể giúp tăng khả năng tính toán, sức quan sát và năng lực tư duy, tăng tốc độ cộng, trừ, nhân, chia và giải phương trình đa nguyên.
+
+Tuy nhiên, chỉ số này không thể giúp kẻ đó phóng một bước lên trời ngay lập tức, không thể biến một người chỉ biết giải toán lớp 4 trở thành chuyên gia trong Lý thuyết nhóm* và Hình học không gian, Đại số Clifford.
+
+*Chú thích:
+
+Lý thuyết nhóm: Trong toán học và đại số trừu tượng, lý thuyết nhóm nghiên cứu về cấu trúc đại số như nhóm.
+
+Hình học không gian: Trong toán học và hình học, hình học không gian là một nhánh của hình học nghiên cứu các đối tượng trong không gian 3 chiều Euclid.
+
+Đại số Clifford: Trong toán học, đại số Clifford là đại số được tạo nên từ không gian vector có dạng quadratic, và là một đại số liên kết unita.
