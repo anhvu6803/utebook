@@ -4,18 +4,20 @@ import "./styles/MembershipDetailModal.scss";
 
 const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
   const [isEditingStatus, setIsEditingStatus] = useState(false);
-  const [newStatus, setNewStatus] = useState(membership?.payment?.status || '');
+  const [newStatus, setNewStatus] = useState(membership?.status || '');
   
   if (!membership) return null;
 
   const getTypeClass = (type) => {
     switch(type) {
-      case 'Hội viên Bạc':
-        return 'silver';
-      case 'Hội viên Vàng':
-        return 'gold';
-      case 'Hội viên Bạch Kim':
-        return 'platinum';
+      case 'UTEBOOK 1 ngày':
+        return 'daily';
+      case 'UTEBOOK 1 tháng':
+        return 'monthly';
+      case 'UTEBOOK 6 tháng':
+        return 'six-month';
+      case 'UTEBOOK 1 năm':
+        return 'yearly';
       default:
         return '';
     }
@@ -48,8 +50,11 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
 
         <div className="membership-card">
           <div className="membership-header">
-            <div className="membership-id">Mã giao dịch: {membership.id}</div>
-            <div className={`membership-status ${getStatusClass(membership.payment.status)}`}>
+            <div className="membership-id">
+              <span className="label">Mã giao dịch:</span>
+              <span className="value">{membership._id}</span>
+            </div>
+            <div className={`membership-status ${getStatusClass(membership.status)}`}>
               {isEditingStatus ? (
                 <div className="status-edit-container">
                   <select 
@@ -67,9 +72,9 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
                       className="save-status" 
                       onClick={() => {
                         if (typeof onStatusChange === 'function') {
-                          onStatusChange(membership.id, newStatus);
+                          onStatusChange(membership._id, newStatus);
                         } else {
-                          console.log(`Status changed for membership ${membership.id}: ${newStatus}`);
+                          console.log(`Status changed for membership ${membership._id}: ${newStatus}`);
                           setIsEditingStatus(false);
                           onClose();
                         }
@@ -81,7 +86,7 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
                     <button 
                       className="cancel-edit" 
                       onClick={() => {
-                        setNewStatus(membership.payment.status);
+                        setNewStatus(membership.status);
                         setIsEditingStatus(false);
                       }}
                       title="Hủy thay đổi"
@@ -93,7 +98,7 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
               ) : (
                 <div className="status-display">
                   <div className="status-indicator"></div>
-                  <span>{membership.payment.status}</span>
+                  <span>{membership.status}</span>
                   <button 
                     className="edit-status-button" 
                     onClick={() => setIsEditingStatus(true)}
@@ -108,23 +113,48 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
           
           <div className="membership-main-info">
             <div className="membership-type-container">
-              <div className={`membership-type ${getTypeClass(membership.type)}`}>
+              <div className={`membership-type ${getTypeClass(membership.packageId?.name)}`}>
                 <FaCrown />
-                <span>{membership.type}</span>
+                <span>{membership.packageId?.name}</span>
               </div>
               <div className="membership-duration">
-                {membership.duration}
+                <FaCalendarAlt />
+                <span>{membership.packageId?.expire} ngày</span>
               </div>
             </div>
             
             <div className="membership-description">
-              <h3>{membership.fullName}</h3>
-              <div className="membership-date">
-                <FaCalendarAlt /> Ngày giao dịch: {membership.transactionDate} 
-                <span style={{marginLeft: '10px', fontSize: '12px', color: '#777'}}>({membership.time})</span>
+              <div className="user-info">
+                <FaUser />
+                <h3>{membership.id_user?.fullname}</h3>
               </div>
-              <div className="membership-expiry">
-                <FaCreditCard /> Phương thức: {membership.payment.method}
+              <div className="transaction-info">
+                <div className="info-item">
+                  <FaCalendarAlt />
+                  <div className="info-content">
+                    <span className="label">Ngày giao dịch:</span>
+                    <span className="value">
+                      {new Date(membership.createdAt).toLocaleDateString('vi-VN', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                      })}
+                    </span>
+                    <span className="time">
+                      {new Date(membership.createdAt).toLocaleTimeString('vi-VN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <FaCreditCard />
+                  <div className="info-content">
+                    <span className="label">Phương thức:</span>
+                    <span className="value">{membership.transactionId?.vnp_CardType}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -132,80 +162,81 @@ const MembershipDetailModal = ({ membership, onClose, onStatusChange }) => {
           <div className="membership-details">
             <div className="detail-group">
               <h3><FaUser /> Thông tin người dùng</h3>
-              <div className="detail-row">
-                <span className="detail-label">Tên đầy đủ:</span>
-                <span className="detail-value">{membership.fullName}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Mã người dùng:</span>
-                <span className="detail-value">{membership.userId}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Email:</span>
-                <span className="detail-value">{membership.email}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Số điện thoại:</span>
-                <span className="detail-value">{membership.phone}</span>
+              <div className="detail-grid">
+                <div className="detail-item">
+                  <span className="detail-label">Tên đầy đủ:</span>
+                  <span className="detail-value">{membership.id_user?.fullname}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mã người dùng:</span>
+                  <span className="detail-value">{membership.id_user?._id}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Email:</span>
+                  <span className="detail-value">{membership.id_user?.email}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Tên đăng nhập:</span>
+                  <span className="detail-value">{membership.id_user?.username}</span>
+                </div>
               </div>
             </div>
             
             <div className="detail-group">
               <h3><FaCrown /> Thông tin gói hội viên</h3>
-              <div className="detail-row">
-                <span className="detail-label">Loại hội viên:</span>
-                <span className="detail-value">{membership.type}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Thời hạn:</span>
-                <span className="detail-value">{membership.duration}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Trạng thái hội viên:</span>
-                <span className={`detail-value ${membership.membershipStatus === "Hoạt động" ? "success" : "pending"}`}>
-                  {membership.membershipStatus}
-                </span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Ngày hết hạn:</span>
-                <span className="detail-value">{membership.expiryDate}</span>
+              <div className="detail-grid">
+                <div className="detail-item">
+                  <span className="detail-label">Loại hội viên:</span>
+                  <span className="detail-value">{membership.packageId?.name}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Thời hạn:</span>
+                  <span className="detail-value">{membership.packageId?.expire} ngày</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mô tả:</span>
+                  <span className="detail-value">{membership.packageId?.description}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Giá gói:</span>
+                  <span className="detail-value highlight">{membership.packageId?.price.toLocaleString()} VNĐ</span>
+                </div>
               </div>
             </div>
             
             <div className="detail-group">
               <h3><FaMoneyBillWave /> Thông tin thanh toán</h3>
-              <div className="detail-row">
-                <span className="detail-label">Phương thức:</span>
-                <span className="detail-value">{membership.payment.method}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Số tiền:</span>
-                <span className="detail-value">{membership.payment.amount}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Mã giao dịch:</span>
-                <span className="detail-value">{membership.payment.transactionId}</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Trạng thái:</span>
-                <span className={`detail-value status-pill ${getStatusClass(membership.payment.status)}`}>
-                  <div className="status-indicator"></div>
-                  {membership.payment.status}
-                </span>
+              <div className="detail-grid">
+                <div className="detail-item">
+                  <span className="detail-label">Phương thức:</span>
+                  <span className="detail-value">{membership.transactionId?.vnp_CardType}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Số tiền:</span>
+                  <span className="detail-value highlight">{membership.transactionId?.amount.toLocaleString()} VNĐ</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mã giao dịch:</span>
+                  <span className="detail-value">{membership.transactionId?._id}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mã ngân hàng:</span>
+                  <span className="detail-value">{membership.transactionId?.vnp_BankCode}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mã giao dịch ngân hàng:</span>
+                  <span className="detail-value">{membership.transactionId?.vnp_BankTranNo}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mã giao dịch VNPay:</span>
+                  <span className="detail-value">{membership.transactionId?.vnp_TransactionNo}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Thời gian thanh toán:</span>
+                  <span className="detail-value">{membership.transactionId?.vnp_PayDate}</span>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="membership-benefits">
-            <h3>Lợi ích gói hội viên</h3>
-            <ul className="benefits-list">
-              {membership.benefits.map((benefit, index) => (
-                <li key={index}>
-                  <FaCheck className="check-icon" />
-                  {benefit}
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

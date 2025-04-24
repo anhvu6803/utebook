@@ -13,6 +13,9 @@ const twilioRoutes = require('./twilio.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const chapterRouter = require('./chapter.route');
 const categoryRouter = require('./category.route');
+const pointRouter = require('./point.route');
+const historyPointRouter = require('./historyPoint.route');
+const historyPackageRouter = require('./historyPackage.routes');
 
 router.use('/user', userRouter);
 router.use('/book', bookRouter);
@@ -26,5 +29,7 @@ router.use('/payment', paymentRouter);
 router.use('/membership-packages', membershipPackageRouter);
 router.use('/point-packages', pointPackageRouter);
 router.use('/chapter', chapterRouter);
-
+router.use('/points', pointRouter);
+router.use('/history-points', historyPointRouter);
+router.use('/history-packages', historyPackageRouter);
 module.exports = router;

@@ -1,38 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./styles/ManageMembershipPage.scss";
 import MembershipDetailModal from "../../components/Admin/MembershipDetailModal";
 import AdminPasswordModal from "../../components/Admin/AdminPasswordModal";
-
-// Sample data - replace with actual data from your backend
-const transactionData = [
-  { id: "TX001", username: "Nguyễn Văn A", type: "Gói 1 ngày", duration: "1 ngày", price: "20000", status: "Thành công", date: "2024-03-20", paymentMethod: "MoMo E-Wallet" },
-  { id: "TX002", username: "Trần Thị B", type: "Gói 1 tháng", duration: "1 tháng", price: "150000", status: "Thành công", date: "2024-03-18", paymentMethod: "Ngân hàng VietComBank" },
-  { id: "TX003", username: "Lê Văn C", type: "Gói 1 năm", duration: "1 năm", price: "1500000", status: "Thành công", date: "2024-03-15", paymentMethod: "Thẻ Visa/Mastercard" },
-  { id: "TX004", username: "Phạm Thị D", type: "Gói 1 ngày", duration: "1 ngày", price: "20000", status: "Thành công", date: "2024-02-12", paymentMethod: "ZaloPay" },
-  { id: "TX005", username: "Nguyễn Văn E", type: "Gói 1 tháng", duration: "1 tháng", price: "150000", status: "Thành công", date: "2024-02-08", paymentMethod: "VNPay" },
-  { id: "TX006", username: "Trần Thị F", type: "Gói 1 năm", duration: "1 năm", price: "1500000", status: "Đang xử lý", date: "2024-02-05", paymentMethod: "Ngân hàng BIDV" },
-  { id: "TX007", username: "Lê Văn G", type: "Gói 1 ngày", duration: "1 ngày", price: "20000", status: "Thất bại", date: "2024-01-20", paymentMethod: "MoMo E-Wallet" },
-  { id: "TX008", username: "Phạm Thị H", type: "Gói 1 tháng", duration: "1 tháng", price: "150000", status: "Thành công", date: "2024-01-18", paymentMethod: "Ngân hàng VietComBank" },
-  { id: "TX009", username: "Nguyễn Văn I", type: "Gói 1 năm", duration: "1 năm", price: "1500000", status: "Thành công", date: "2024-01-15", paymentMethod: "Thẻ Visa/Mastercard" },
-  { id: "TX010", username: "Trần Thị K", type: "Gói 1 ngày", duration: "1 ngày", price: "20000", status: "Hoàn tiền", date: "2023-12-20", paymentMethod: "ZaloPay" },
-  { id: "TX011", username: "Lê Văn M", type: "Gói 1 tháng", duration: "1 tháng", price: "150000", status: "Thành công", date: "2023-12-15", paymentMethod: "VNPay" },
-  { id: "TX012", username: "Phạm Thị N", type: "Gói 1 năm", duration: "1 năm", price: "1500000", status: "Thành công", date: "2023-12-10", paymentMethod: "Ngân hàng BIDV" },
-  { id: "TX013", username: "Nguyễn Văn P", type: "Gói 1 ngày", duration: "1 ngày", price: "20000", status: "Thất bại", date: "2023-11-05", paymentMethod: "MoMo E-Wallet" },
-  { id: "TX014", username: "Trần Thị Q", type: "Gói 1 tháng", duration: "1 tháng", price: "150000", status: "Hoàn tiền", date: "2023-10-31", paymentMethod: "Ngân hàng VietComBank" },
-  { id: "TX015", username: "Lê Văn R", type: "Gói 1 năm", duration: "1 năm", price: "1500000", status: "Thành công", date: "2023-10-25", paymentMethod: "Thẻ Visa/Mastercard" },
-  // ... more data ...
-];
+import axios from 'axios';
 
 const itemsPerPage = 8;
 
 const ManageMembershipPage = () => {
-  const [transactions, setTransactions] = useState(transactionData);
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: 'date',
-    direction: 'desc' // Sắp xếp mặc định theo thời gian giảm dần (mới nhất)
+    direction: 'desc'
   });
   const [typeFilter, setTypeFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -41,22 +24,43 @@ const ManageMembershipPage = () => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [pendingTransaction, setPendingTransaction] = useState(null);
 
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/api/history-packages');
+        if (response.data.success) {
+          setTransactions(response.data.data);
+        } else {
+          setError('Failed to fetch data');
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Hàm xử lý khi thay đổi tìm kiếm
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
+    setCurrentPage(1);
   };
 
   // Hàm xử lý khi thay đổi bộ lọc loại hội viên
   const handleTypeFilterChange = (e) => {
     setTypeFilter(e.target.value);
-    setCurrentPage(1); // Reset về trang 1 khi lọc
+    setCurrentPage(1);
   };
 
   // Hàm xử lý khi thay đổi bộ lọc trạng thái
   const handleStatusFilterChange = (e) => {
     setStatusFilter(e.target.value);
-    setCurrentPage(1); // Reset về trang 1 khi lọc
+    setCurrentPage(1);
   };
 
   // Hàm xử lý khi thay đổi cách sắp xếp
@@ -66,62 +70,50 @@ const ManageMembershipPage = () => {
       direction = 'desc';
     }
     setSortConfig({ key, direction });
-    setCurrentPage(1); // Reset về trang 1 khi thay đổi sắp xếp
+    setCurrentPage(1);
   };
 
   // Hàm xử lý khi click vào một dòng trong bảng
-  const handleRowClick = (transaction) => {
-    setPendingTransaction(transaction);
-    setShowPasswordModal(true);
+  const handleRowClick = async (transaction) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/history-packages/${transaction._id}`);
+      if (response.data.success) {
+        setPendingTransaction(response.data.data);
+        setShowPasswordModal(true);
+      }
+    } catch (error) {
+      console.error('Error fetching transaction details:', error);
+    }
   };
 
   // Thêm hàm để xử lý thay đổi trạng thái
-  const handleStatusChange = (transactionId, newStatus) => {
-    // Cập nhật trạng thái trong transactions state
-    const updatedTransactions = transactions.map(transaction => {
-      if (transaction.id === transactionId) {
-        return {
-          ...transaction,
-          status: newStatus
-        };
+  const handleStatusChange = async (transactionId, newStatus) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/api/history-packages/${transactionId}`, { status: newStatus });
+      if (response.data.success) {
+        // Cập nhật trạng thái trong transactions state
+        const updatedTransactions = transactions.map(transaction => {
+          if (transaction._id === transactionId) {
+            return {
+              ...transaction,
+              status: newStatus
+            };
+          }
+          return transaction;
+        });
+        
+        setTransactions(updatedTransactions);
+        setShowModal(false);
       }
-      return transaction;
-    });
-    
-    setTransactions(updatedTransactions);
-    
-    // Đóng modal sau khi cập nhật
-    setShowModal(false);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
   // Thêm hàm để xử lý thành công xác thực
   const handlePasswordConfirm = () => {
     setShowPasswordModal(false);
-    
-    // Tìm giao dịch mới nhất từ trạng thái transactions
-    const updatedTransaction = transactions.find(t => t.id === pendingTransaction.id) || pendingTransaction;
-    
-    // Tạo dữ liệu chi tiết giao dịch
-    const detailedTransaction = {
-      ...updatedTransaction,
-      time: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-      userId: "U" + Math.floor(10000 + Math.random() * 90000),
-      fullName: updatedTransaction.username,
-      email: `${updatedTransaction.username.toLowerCase().replace(' ', '.')}@gmail.com`,
-      phone: `0${Math.floor(900000000 + Math.random() * 90000000)}`,
-      transactionDate: updatedTransaction.date,
-      membershipStatus: updatedTransaction.status === "Thành công" ? "Hoạt động" : "Chưa kích hoạt",
-      expiryDate: getExpiryDate(updatedTransaction.date, updatedTransaction.duration),
-      payment: {
-        method: updatedTransaction.paymentMethod,
-        transactionId: updatedTransaction.id,
-        amount: updatedTransaction.price + " VNĐ",
-        status: updatedTransaction.status
-      },
-      benefits: getMembershipBenefits(updatedTransaction.type),
-    };
-    
-    setSelectedTransaction(detailedTransaction);
+    setSelectedTransaction(pendingTransaction);
     setShowModal(true);
     setPendingTransaction(null);
   };
@@ -138,72 +130,28 @@ const ManageMembershipPage = () => {
     setSelectedTransaction(null);
   };
 
-  // Hàm phụ trợ để tính ngày hết hạn
-  const getExpiryDate = (startDate, duration) => {
-    const date = new Date(startDate);
-    let months = 1;
-    
-    if (duration === "3 tháng") months = 3;
-    else if (duration === "6 tháng") months = 6;
-    
-    date.setMonth(date.getMonth() + months);
-    return date.toISOString().split('T')[0];
-  };
-
-  // Hàm phụ trợ để lấy lợi ích theo loại hội viên
-  const getMembershipBenefits = (type) => {
-    switch(type) {
-      case "Gói 1 ngày":
-        return [
-          "Đọc không giới hạn sách trong 24 giờ",
-          "Tải xuống 2 sách",
-          "Hỗ trợ trực tuyến cơ bản"
-        ];
-      case "Gói 1 tháng":
-        return [
-          "Đọc không giới hạn sách trong 30 ngày",
-          "Tải xuống 15 sách",
-          "Hỗ trợ trực tuyến ưu tiên",
-          "Truy cập sớm vào sách mới"
-        ];
-      case "Gói 1 năm":
-        return [
-          "Đọc không giới hạn sách trong 365 ngày",
-          "Tải xuống không giới hạn",
-          "Hỗ trợ trực tuyến 24/7",
-          "Ưu đãi đặc biệt từ các đối tác",
-          "Không có quảng cáo",
-          "Giảm giá đặc biệt cho năm tiếp theo"
-        ];
-      default:
-        return [];
-    }
-  };
-
   // Lọc và sắp xếp danh sách giao dịch
   const filteredTransactions = transactions
     .filter(transaction => {
       return (
-        (transaction.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         transaction.id.toLowerCase().includes(searchQuery.toLowerCase())) &&
-        (!typeFilter || transaction.type === typeFilter) &&
+        (transaction.id_user?.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         transaction._id?.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        (!typeFilter || transaction.packageId?.name === typeFilter) &&
         (!statusFilter || transaction.status === statusFilter)
       );
     })
     .sort((a, b) => {
       if (sortConfig.key === 'date') {
-        // Sắp xếp theo ngày tháng
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
         if (sortConfig.direction === 'asc') {
           return dateA - dateB;
         } else {
           return dateB - dateA;
         }
       } else if (sortConfig.key === 'price') {
-        // Sắp xếp theo giá
-        const priceA = parseInt(a.price);
-        const priceB = parseInt(b.price);
+        const priceA = parseInt(a.transactionId?.amount);
+        const priceB = parseInt(b.transactionId?.amount);
         if (sortConfig.direction === 'asc') {
           return priceA - priceB;
         } else {
@@ -241,6 +189,14 @@ const ManageMembershipPage = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   const displayedTransactions = filteredTransactions.slice(
     (currentPage - 1) * itemsPerPage,
@@ -268,9 +224,10 @@ const ManageMembershipPage = () => {
             onChange={handleTypeFilterChange}
           >
             <option value="">Tất cả gói hội viên</option>
-            <option value="Gói 1 ngày">Gói 1 ngày</option>
-            <option value="Gói 1 tháng">Gói 1 tháng</option>
-            <option value="Gói 1 năm">Gói 1 năm</option>
+            <option value="UTEBOOK 1 ngày">Gói 1 ngày</option>
+            <option value="UTEBOOK 1 tháng">Gói 1 tháng</option>
+            <option value="UTEBOOK 6 tháng">Gói 6 tháng</option>
+            <option value="UTEBOOK 1 năm">Gói 1 năm</option>
           </select>
 
           <select 
@@ -316,26 +273,32 @@ const ManageMembershipPage = () => {
         <tbody>
           {displayedTransactions.map((transaction) => (
             <tr 
-              key={transaction.id} 
+              key={transaction._id} 
               onClick={() => handleRowClick(transaction)}
               className="clickable-row"
             >
-              <td>{transaction.id}</td>
-              <td>{transaction.username}</td>
+              <td>{transaction._id}</td>
+              <td>{transaction.id_user?.username}</td>
               <td>
-                <span className={`type-tag ${getTypeClass(transaction.type)}`}>
-                  {transaction.type}
+                <span className={`type-tag ${getTypeClass(transaction.packageId?.name)}`}>
+                  {transaction.packageId?.name}
                 </span>
               </td>
-              <td>{transaction.duration}</td>
-              <td>{parseInt(transaction.price).toLocaleString()} VNĐ</td>
-              <td>{transaction.paymentMethod}</td>
+              <td>{transaction.packageId?.expire} ngày</td>
+              <td>{parseInt(transaction.transactionId?.amount).toLocaleString()} VNĐ</td>
+              <td>{transaction.transactionId?.vnp_CardType}</td>
               <td>
                 <span className={`status-tag ${getStatusClass(transaction.status)}`}>
                   {transaction.status}
                 </span>
               </td>
-              <td>{transaction.date}</td>
+              <td>
+                {new Date(transaction.createdAt).toLocaleDateString('vi-VN', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+                })}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -361,7 +324,6 @@ const ManageMembershipPage = () => {
         </div>
       )}
 
-      {/* Thêm Modal Password */}
       {showPasswordModal && (
         <AdminPasswordModal
           onClose={handlePasswordModalClose}
@@ -369,7 +331,6 @@ const ManageMembershipPage = () => {
         />
       )}
 
-      {/* Modal chi tiết giao dịch */}
       {showModal && selectedTransaction && (
         <MembershipDetailModal
           membership={selectedTransaction}
