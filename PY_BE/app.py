@@ -1,11 +1,16 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from text_to_speech import doc_tu_drive, doc_theo_dong, pause_audio, resume_audio, stop_audio
-
+from flask_socketio import SocketIO
+from text_to_speech import doc_theo_dong, pause_audio, resume_audio, stop_audio, get_is_reading
+from Get_filedrive import doc_tu_drive
 from threading import Thread
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["http://localhost:5173"])
+socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins=["http://localhost:5173"] )
 
 # API để đọc văn bản từ Google Drive
 @app.route('/api/get_drive', methods=['POST'])
@@ -35,14 +40,14 @@ def doc_theo_dong_api():
     try:
         # Nhận dữ liệu từ yêu cầu
         data = request.get_json()
-        text = data.get('text', '')
+        text = data.get('text', [])
         delay = data.get('delay', 0.2)
         
         if not text:
             return jsonify({'error': 'Văn bản không hợp lệ'}), 400
         
         # Gọi hàm đọc theo dòng trong một thread riêng
-        thread = Thread(target=doc_theo_dong, args=(text, delay))
+        thread = Thread(target=doc_theo_dong, args=(text, delay, socketio))
         thread.start()
         
         return jsonify({'message': 'Đọc văn bản theo dòng thành công'}), 200
@@ -75,6 +80,12 @@ def stop_audio_api():
         return jsonify({'message': 'Đã dừng'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
+@app.route('/api/speech/get_reading', methods=['GET'])
+def get_reading():
+    try:
+        return jsonify({'reading': get_is_reading()}), 200
+    except Exception as e:
+            return jsonify({'error': str(e)}), 500
+    
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000)
+    socketio.run(app, host='0.0.0.0', port=3000)
