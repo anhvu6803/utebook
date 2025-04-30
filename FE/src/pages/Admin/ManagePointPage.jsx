@@ -1,47 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./styles/ManagePointPage.scss";
 import ActivityDetailModal from "../../components/Admin/ActivityDeailModal";
-
-// Sample data - replace with actual data from your backend
-const pointHistoryData = [
-  { id: "PH001", username: "Nguyễn Văn A", points: "+100", action: "Nạp", date: "2024-03-20" },
-  { id: "PH002", username: "Trần Thị B", points: "-10", action: "Đọc", date: "2024-03-18" },
-  { id: "PH003", username: "Lê Văn C", points: "+50", action: "Thu nhập", date: "2024-03-15" },
-  { id: "PH004", username: "Phạm Thị D", points: "-20", action: "Đổi quà", date: "2024-03-12" },
-  { id: "PH005", username: "Nguyễn Văn E", points: "+10", action: "Mua hàng", date: "2024-03-08" },
-  { id: "PH006", username: "Trần Thị F", points: "-5", action: "Đổi quà", date: "2024-03-05" },
-  { id: "PH007", username: "Lê Văn G", points: "+20", action: "Thu nhập", date: "2024-03-02" },
-  { id: "PH008", username: "Phạm Thị H", points: "-10", action: "Đọc", date: "2024-02-28" },
-  { id: "PH009", username: "Nguyễn Văn I", points: "+10", action: "Mua hàng", date: "2024-02-25" },
-  { id: "PH010", username: "Trần Thị K", points: "-5", action: "Đổi quà", date: "2024-02-20" },
-  { id: "PH011", username: "Lê Văn M", points: "+20", action: "Thu nhập", date: "2024-02-15" },
-  { id: "PH012", username: "Phạm Thị N", points: "-10", action: "Đọc", date: "2024-02-10" },
-  { id: "PH013", username: "Nguyễn Văn P", points: "+10", action: "Mua hàng", date: "2024-02-05" },
-  { id: "PH014", username: "Trần Thị Q", points: "-5", action: "Đổi quà", date: "2024-01-31" },
-  { id: "PH015", username: "Lê Văn R", points: "+20", action: "Thu nhập", date: "2024-01-25" },
-  { id: "PH016", username: "Phạm Thị S", points: "-10", action: "Đọc", date: "2024-01-20" },
-  { id: "PH017", username: "Nguyễn Văn T", points: "+10", action: "Mua hàng", date: "2024-01-15" },
-  { id: "PH018", username: "Trần Thị U", points: "-5", action: "Đổi quà", date: "2024-01-10" },
-  { id: "PH019", username: "Lê Văn V", points: "+20", action: "Thu nhập", date: "2024-01-05" },
-  { id: "PH020", username: "Phạm Thị W", points: "-10", action: "Đọc", date: "2024-01-01" },
-  
-  // ... more data ...
-];
+import axios from "axios";
 
 const itemsPerPage = 8;
 
 const ManagePointPage = () => {
-  const [pointHistory, setPointHistory] = useState(pointHistoryData);
+  const [pointHistory, setPointHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({
-    key: 'date',
+    key: 'time',
     direction: 'desc' // Sắp xếp mặc định theo thời gian giảm dần (mới nhất)
   });
   const [actionFilter, setActionFilter] = useState("");
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchHistoryPoints = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/api/history-points');
+        if (response.data && response.data.success) {
+          setPointHistory(response.data.data);
+        } else {
+          setError('Failed to fetch data');
+        }
+      } catch (err) {
+        console.error('Error fetching history points:', err);
+        setError(err.message || 'An error occurred while fetching data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistoryPoints();
+  }, []);
 
   // Hàm xử lý khi thay đổi tìm kiếm
   const handleSearchChange = (e) => {
@@ -69,7 +68,7 @@ const ManagePointPage = () => {
   const handleStatusChange = (activityId, newStatus) => {
     // Cập nhật trạng thái trong pointHistory state
     const updatedHistory = pointHistory.map(item => {
-      if (item.id === activityId) {
+      if (item._id === activityId) {
         return {
           ...item,
           status: newStatus
@@ -81,7 +80,7 @@ const ManagePointPage = () => {
     setPointHistory(updatedHistory);
     
     // Tìm và cập nhật hoạt động được chọn hiện tại để modal hiển thị đúng
-    if (selectedActivity && selectedActivity.id === activityId) {
+    if (selectedActivity && selectedActivity._id === activityId) {
       setSelectedActivity({
         ...selectedActivity,
         status: newStatus
@@ -98,50 +97,51 @@ const ManagePointPage = () => {
     const detailedActivity = {
       ...activity,
       status: activity.status || "Thành công", // Đảm bảo luôn có trạng thái
-      time: "15:30:45", // Giả lập dữ liệu - thay bằng dữ liệu thật khi tích hợp
-      description: `${activity.action} điểm thành viên`,
-      userId: "U" + Math.floor(10000 + Math.random() * 90000),
-      previousBalance: parseInt(activity.points) >= 0 
-        ? (parseInt(activity.points.replace("+", "")) - 100).toString() 
-        : (Math.abs(parseInt(activity.points)) + 100).toString(),
-      currentBalance: parseInt(activity.points) >= 0 
-        ? (parseInt(activity.points.replace("+", "")) + 100).toString() 
-        : (100 - Math.abs(parseInt(activity.points))).toString(),
+      time: activity.createdAt || activity.time, // Sử dụng createdAt nếu có, nếu không thì dùng time
+      description: `${activity.type} điểm thành viên`,
+      userId: activity.id_user,
+      previousBalance: activity.type === "Nạp" || activity.type === "Thu nhập" 
+        ? (activity.number_point_HoaPhuong - 100).toString() 
+        : (Math.abs(activity.number_point_HoaPhuong) + 100).toString(),
+      currentBalance: activity.type === "Nạp" || activity.type === "Thu nhập" 
+        ? (activity.number_point_HoaPhuong + 100).toString() 
+        : (100 - Math.abs(activity.number_point_HoaPhuong)).toString(),
       
       // Thông tin cho nạp điểm
-      ...(activity.action === "Nạp" && {
-        paymentMethod: getRandomPaymentMethod(),
-        transactionId: "TX" + Math.floor(10000000 + Math.random() * 90000000),
-        amount: parseInt(activity.points.replace("+", "")) * 1000, // Giả sử 1 điểm = 1000đ
+      ...(activity.type === "Nạp" && {
+        paymentMethod: activity.transactionInfo?.vnp_BankCode || 'Chưa xác định',
+        transactionId: activity.transactionInfo?._id,
+        amount: activity.transactionInfo?.amount,
         adminApproved: "Admin001",
-        approvalDate: `${activity.date} 15:35:20`,
-        remarks: "Thanh toán thành công"
+        approvalDate: new Date(activity.createdAt || activity.time).toLocaleString(),
+        remarks: "Thanh toán thành công",
+        transactionInfo: activity.transactionInfo // Thêm thông tin transaction
       }),
       
       // Thông tin cho đọc sách
-      ...(activity.action === "Đọc" && {
+      ...(activity.type === "Đọc" && activity.bookInfo && {
         book: {
-          id: "BOOK" + Math.floor(1000 + Math.random() * 9000),
-          title: "Đắc Nhân Tâm",
-          author: "Dale Carnegie",
-          category: "Kỹ năng sống",
+          id: activity.bookInfo._id,
+          title: activity.bookInfo.title,
+          author: "Tác giả sách",
+          category: "Thể loại sách",
           coverImage: "https://example.com/book-cover.jpg"
         },
         pagesRead: Math.floor(10 + Math.random() * 20),
-        description: "Đọc sách Đắc Nhân Tâm"
+        description: `Đọc sách ${activity.bookInfo.title}`
       }),
       
       // Thông tin cho thu nhập
-      ...(activity.action === "Thu nhập" && {
+      ...(activity.type === "Thu nhập" && activity.bookInfo && {
         book: {
-          id: "BOOK" + Math.floor(1000 + Math.random() * 9000),
-          title: "Nhà Giả Kim",
-          author: "Paulo Coelho",
-          category: "Tiểu thuyết",
+          id: activity.bookInfo._id,
+          title: activity.bookInfo.title,
+          author: "Tác giả sách",
+          category: "Thể loại sách",
           coverImage: "https://example.com/book-cover.jpg"
         },
         incomeType: "Hoàn thành đọc sách",
-        description: "Thu nhập từ việc hoàn thành đọc sách Nhà Giả Kim"
+        description: `Thu nhập từ việc hoàn thành đọc sách ${activity.bookInfo.title}`
       }),
       
       relatedActivities: [
@@ -169,23 +169,23 @@ const ManagePointPage = () => {
 
   // Lọc các hoạt động không phải Nạp, Đọc hoặc Thu nhập
   const validHistory = pointHistory.filter(history => 
-    history.action === "Nạp" || history.action === "Đọc" || history.action === "Thu nhập"
+    history.type === "Nạp" || history.type === "Đọc" || history.type === "Thu nhập"
   );
 
   // Lọc và sắp xếp lịch sử điểm
   const filteredHistory = validHistory
     .filter(history => {
       return (
-        (history.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         history.id.toLowerCase().includes(searchQuery.toLowerCase())) &&
-        (!actionFilter || history.action === actionFilter)
+        (history.userInfo?.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         history._id.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        (!actionFilter || history.type === actionFilter)
       );
     })
     .sort((a, b) => {
-      if (sortConfig.key === 'date') {
+      if (sortConfig.key === 'time') {
         // Sắp xếp theo ngày tháng
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
+        const dateA = new Date(a.time);
+        const dateB = new Date(b.time);
         if (sortConfig.direction === 'asc') {
           return dateA - dateB;
         } else {
@@ -193,8 +193,8 @@ const ManagePointPage = () => {
         }
       } else if (sortConfig.key === 'points') {
         // Sắp xếp theo điểm
-        const pointsA = parseInt(a.points);
-        const pointsB = parseInt(b.points);
+        const pointsA = a.number_point_HoaPhuong;
+        const pointsB = b.number_point_HoaPhuong;
         if (sortConfig.direction === 'asc') {
           return pointsA - pointsB;
         } else {
@@ -238,6 +238,29 @@ const ManagePointPage = () => {
     }
   };
 
+  // Format date to display
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('vi-VN');
+  };
+
+  // Format points to display with + or -
+  const formatPoints = (points, type) => {
+    if (type === "Nạp" || type === "Thu nhập") {
+      return `+${points}`;
+    } else {
+      return `${points}`;
+    }
+  };
+
+  if (loading) {
+    return <div className="loading">Đang tải dữ liệu...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Lỗi: {error}</div>;
+  }
+
   return (
     <div className="point-management">
       <h1>🎯 Lịch Sử Điểm Thành Viên</h1>
@@ -262,14 +285,13 @@ const ManagePointPage = () => {
             <option value="Nạp">Nạp</option>
             <option value="Đọc">Đọc</option>
             <option value="Thu nhập">Thu nhập</option>
-
           </select>
 
           <button 
             className="sort-btn" 
-            onClick={() => handleSort('date')}
+            onClick={() => handleSort('time')}
           >
-            Sắp xếp theo thời gian {sortConfig.key === 'date' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            Sắp xếp theo thời gian {sortConfig.key === 'time' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
           </button>
 
           <button 
@@ -295,21 +317,21 @@ const ManagePointPage = () => {
         <tbody>
           {displayedHistory.map((history) => (
             <tr 
-              key={history.id} 
+              key={history._id} 
               onClick={() => handleRowClick(history)}
               className="clickable-row"
             >
-              <td>{history.id}</td>
-              <td>{history.username}</td>
-              <td className={`points ${parseInt(history.points) >= 0 ? 'positive' : 'negative'}`}>
-                {history.points}
+              <td>{history._id}</td>
+              <td>{history.userInfo?.username || 'Không xác định'}</td>
+              <td className={`points ${history.type === "Nạp" || history.type === "Thu nhập" ? 'positive' : 'negative'}`}>
+                {formatPoints(history.number_point_HoaPhuong, history.type)}
               </td>
               <td>
-                <span className={`action-tag ${getActionClass(history.action)}`}>
-                  {history.action}
+                <span className={`action-tag ${getActionClass(history.type)}`}>
+                  {history.type}
                 </span>
               </td>
-              <td>{history.date}</td>
+              <td>{formatDate(history.time)}</td>
               <td>
                 <span className={`status-tag ${getStatusClass(history.status || 'Thành công')}`}>
                   {history.status || 'Thành công'}

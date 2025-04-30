@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./styles/AdminNavbar.scss";
 import testAvatar from "../../assets/testAvatar.jpg";
+import axios from 'axios';
 
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -94,6 +95,18 @@ const AdminNavbar = () => {
     }));
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/auth/logout', {}, {
+        withCredentials: true
+      });
+      // Chuyển hướng về localhost:5173/ sau khi đăng xuất
+      window.location.href = 'http://localhost:5173/';
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <div className="admin-menu">
       <div className="admin-header-navbar">
@@ -130,7 +143,7 @@ const AdminNavbar = () => {
             )}
           </li>
         ))}
-        <li className="menu-item logout" onClick={() => handleLoadLink("/logout", "Đăng xuất")}>
+        <li className="menu-item logout" onClick={handleLogout}>
           <div className="menu-icon"><LogoutIcon /></div>
           <span>Đăng xuất</span>
         </li>

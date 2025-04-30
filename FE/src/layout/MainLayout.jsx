@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import Toast from "../components/Toast";
-import { ToastProvider, useToast } from "../context/ToastContext";
+import { ToastProvider, useToast } from "../contexts/ToastContext.jsx";
 import "./styles/MainLayout.scss";
 
 const MainLayoutContent = () => {

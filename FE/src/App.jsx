@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
+import { AuthProvider } from './contexts/AuthContext';
 
 import MainLayout from './layout/MainLayout'
 import HomeLayout from "./layout/HomeLayout";
@@ -33,8 +35,6 @@ import AccountSettingPage from "./pages/AccountSettingPage";
 import AccountSettingLayout from "./layout/AccountSettingLayout";
 import AccountHistoryTransactionPage from "./pages/AccountHistoryTransactionPage";
 import AccountLibraryPage from "./pages/AccountLibraryPage";
-// import AccountOderPage from "./pages/AccountOderPage";
-// import AccountDetailOrderPage from "./pages/AccountDetailOrderPage";
 import AccountAchievement from "./pages/AccountAchievement";
 import MembershipPlansPage from "./pages/MembershipPlansPage";
 import HoaPhuongPage from "./pages/HoaPhuongPage";
@@ -55,95 +55,80 @@ import ReaderBookPage from "./pages/ReaderBookPage";
 const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<WelcomPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/change-password" element={<ChangePasswordPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/payment/success" element={<PaymentResultPage />} />
-          <Route path="/payment/failed" element={<PaymentResultPage />} />
-        </Route>
-        <Route path="/utebook" element={
-          <ProtectedRoute>
-            <HomeLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<HomePage />} />
-          <Route path="ebook" element={<EbookLayout />}>
-            <Route index element={<EbookPage />} />
-            <Route path=":category" element={<BookCategoryPage pageName={'ebook'} />} />
-            <Route path="detailBook" element={<DetailBookPage />} />
+      <AuthProvider>
+        <Routes>
+          {/* Public routes with MainLayout */}
+          <Route path="/" element={<PublicRoute><MainLayout /></PublicRoute>}>
+            <Route index element={<WelcomPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="change-password" element={<ChangePasswordPage />} />
+            <Route path="payment/success" element={<PaymentResultPage />} />
+            <Route path="payment/failed" element={<PaymentResultPage />} />
           </Route>
-          <Route path="audio" element={<AudioLayout />}>
-            <Route index element={<AudioBookPage />} />
-            <Route path=":category" element={<BookCategoryPage pageName={'audio'} />} />
+          
+          {/* Protected routes */}
+          <Route path="/utebook" element={<ProtectedRoute><HomeLayout /></ProtectedRoute>}>
+            <Route index element={<HomePage />} />
+            <Route path="ebook" element={<EbookLayout />}>
+              <Route index element={<EbookPage />} />
+              <Route path=":category" element={<BookCategoryPage pageName={'ebook'} />} />
+              <Route path="detailBook" element={<DetailBookPage />} />
+            </Route>
+            <Route path="audio" element={<AudioLayout />}>
+              <Route index element={<AudioBookPage />} />
+              <Route path=":category" element={<BookCategoryPage pageName={'audio'} />} />
+            </Route>
+            <Route path="novel" element={<NovelLayout />}>
+              <Route index element={<NovelPage />} />
+              <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
+              <Route path="detailBook" element={<DetailNovelPage />} />
+            </Route>
+            <Route path="podcast" element={<PodcastLayout />}>
+              <Route index element={<PodcastPage />} />
+              <Route path=":category" element={<BookCategoryPage pageName={'podcast'} />} />
+            </Route>
+            <Route path="creative" element={<CreativeLayout pageName={'creative'} />}>
+              <Route index element={<CreativeBook />} />
+              <Route path=":category" element={<BookCategoryPage />} />
+            </Route>
+            <Route path="account" element={<AccountSettingLayout />}>
+              <Route path="profile" element={<AccountSettingPage />} />
+              <Route path="bookcase" element={<AccountLibraryPage />} />
+              <Route path="achievements" element={<AccountAchievement />} />
+              <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
+            </Route>
+            <Route path="author" element={<AuthorSettingLayout />} />
           </Route>
-          <Route path="novel" element={<NovelLayout />}>
-            <Route index element={<NovelPage />} />
-            <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
-            <Route path="detailBook" element={<DetailNovelPage />} />
+          
+          <Route path="/utebook-reader" element={<ProtectedRoute><ReaderBookPage /></ProtectedRoute>} />
+          
+          <Route path="/utebook/package-plan" element={<ProtectedRoute><PackageLayout /></ProtectedRoute>}>
+            <Route index element={<MembershipPlansPage />} />
+            <Route path="hoa-phuong" element={<HoaPhuongPage />} />
+            <Route path="activate-code" element={<ActivateCodePage />} />
+            <Route path="thong-tin/nhan-ma-khuyen-mai" element={<WhereIsCodePage />} />
           </Route>
-          <Route path="podcast" element={<PodcastLayout />}>
-            <Route index element={<PodcastPage />} />
-            <Route path=":category" element={<BookCategoryPage pageName={'podcast'} />} />
+          
+          <Route element={<UserLayout />}>
+            <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
+            <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
           </Route>
-          <Route path="creative" element={<CreativeLayout pageName={'creative'} />}>
-            <Route index element={<CreativeBook />} />
-            <Route path=":category" element={<BookCategoryPage />} />
+          
+          <Route path="/utebook-admin" element={<ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>}>
+            <Route index element={<ManageUserPage />} />
+            <Route path="books" element={<ManageBookPage />} />
+            <Route path="audio-books" element={<ManageAudioBookPage />} />
+            <Route path="categories" element={<ManageCategoryPage />} />
+            <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="point" element={<ManagePointPage />} />
+            <Route path="membership" element={<ManageMembershipPage />} />
+            <Route path="events" element={<ManageEventPage />} />
+            <Route path="writing" element={<ManageWritingPage />} />
           </Route>
-          <Route path="account" element={<AccountSettingLayout />}>
-            <Route path="profile" element={<AccountSettingPage />} />
-            <Route path="bookcase" element={<AccountLibraryPage />} />
-            <Route path="achievements" element={<AccountAchievement />} />
-            <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
-          </Route>
-          <Route path="/utebook/author" element={<AuthorSettingLayout />}>
-          </Route>
-        </Route>
-        <Route path="utebook-reader" element={<ReaderBookPage />} />
-
-        <Route path="/utebook/package-plan" element={
-          <ProtectedRoute>
-            <PackageLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<MembershipPlansPage />} />
-          <Route path="hoa-phuong" element={<HoaPhuongPage />} />
-          <Route path="activate-code" element={<ActivateCodePage />} />
-          <Route path="thong-tin/nhan-ma-khuyen-mai" element={<WhereIsCodePage />} />
-        </Route>
-
-        <Route element={<UserLayout />}>
-          <Route path="/cart" element={
-            <ProtectedRoute>
-              <CartPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/checkout" element={
-            <ProtectedRoute>
-              <CheckoutPage />
-            </ProtectedRoute>
-          } />
-        </Route>
-
-        <Route path="/utebook-admin" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<ManageUserPage />} />
-          <Route path="books" element={<ManageBookPage />} />
-          <Route path="audio-books" element={<ManageAudioBookPage />} />
-          <Route path="categories" element={<ManageCategoryPage />} />
-          <Route path="statistics" element={<StatisticsPage />} />
-          <Route path="point" element={<ManagePointPage />} />
-          <Route path="membership" element={<ManageMembershipPage />} />
-          <Route path="events" element={<ManageEventPage />} />
-          <Route path="writing" element={<ManageWritingPage />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </AuthProvider>
     </Router>
   )
 }

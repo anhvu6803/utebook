@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
     ngaySinh: { type: Date, required: false },
     gioiTinh: { type: String, enum: ['Nam', 'Nữ', 'Khác'], required: true },
     isMember: { type: Boolean, default: false },
+    membershipExpirationDate: { type: Date },
     isAdmin: { type: Boolean, default: false },
     numberPhone: { type: String, required: true },
     isPhoneVerified: { type: Boolean, default: false },

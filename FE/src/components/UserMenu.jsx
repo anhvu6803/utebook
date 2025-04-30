@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/UserMenu.scss"; // Import SCSS
 import testAvatar from "../assets/testAvatar.jpg";
 import hoaPhuong from "../assets/hoaPhuong.png";
+import axios from 'axios';
 
 import SupportForm from "./SupportForm";
 import { Medal } from "lucide-react";
@@ -26,6 +27,19 @@ const UserMenu = () => {
         navigate(path); // Chuyển hướng trang
         window.location.reload();
     }
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:5000/api/auth/logout', {}, {
+                withCredentials: true
+            });
+            // Chuyển hướng về localhost:5173/ sau khi đăng xuất
+            window.location.href = 'http://localhost:5173/';
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+
     return (
         <div className="user-menu-container"
             onMouseEnter={() => setIsOpen(true)} // Mở khi di chuột vào
@@ -88,7 +102,7 @@ const UserMenu = () => {
                         setOpenMenu={setIsOpen}
                     />
                     <li
-                        onClick={() => handleLoadLink("/")}
+                        onClick={handleLogout}
                     >
                         <LogoutIcon /> Đăng xuất
                     </li>

@@ -613,3 +613,144 @@
       }
     }
   }
+
+.transaction-details {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 15px;
+
+  .transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+
+    .transaction-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.9rem;
+
+      &.success {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      &.pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      svg {
+        font-size: 0.8rem;
+      }
+    }
+
+    .transaction-amount {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #28a745;
+    }
+  }
+
+  .transaction-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .info-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+      }
+
+      .info-value {
+        font-weight: 500;
+        color: #212529;
+      }
+    }
+  }
+
+  .transaction-details-section {
+    background: white;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    h4 {
+      color: #495057;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .vnpay-details {
+      display: grid;
+      gap: 12px;
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f1f3f5;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .detail-label {
+          color: #6c757d;
+          font-size: 0.9rem;
+        }
+
+        .detail-value {
+          font-weight: 500;
+          color: #212529;
+
+          .response-code {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+
+            &.success {
+              background: #d4edda;
+              color: #155724;
+            }
+
+            &.error {
+              background: #f8d7da;
+              color: #721c24;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.no-transaction-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  color: #6c757d;
+  font-size: 0.9rem;
+
+  svg {
+    font-size: 1.1rem;
+  }
+}

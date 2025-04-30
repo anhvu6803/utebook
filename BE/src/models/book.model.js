@@ -5,9 +5,9 @@ const BookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     categories: { type: [String], required: true },
     type: { type: String, enum: ['Free', 'Member','HoaPhuong'], required: true },
-    pushlisher: { type: String, required: true },
+    pushlisher: { type: String },
     image: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String},
     chapterIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' }],
     ageLimit: { type: Number, required: true },
 }, { timestamps: true });
