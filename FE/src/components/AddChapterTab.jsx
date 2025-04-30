@@ -5,7 +5,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DescriptionIcon from "@mui/icons-material/Description";
 import BookIcon from "@mui/icons-material/Book";
 import TitleIcon from "@mui/icons-material/Title";
-import axios from "axios";
+import axios from "../utils/axios";
 import { useAuth } from "../contexts/AuthContext";
 import Loading from "./Loading";
 import hoaPhuong from "../assets/hoaPhuong.png";
@@ -17,12 +17,14 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
   const [newChapter, setNewChapter] = useState({
     chapterName: "",
     price: "",
-    pdfFile: null
+    pdfFile: null,
+    chapterNumber: ""
   });
   const [pdfFileName, setPdfFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   useEffect(() => {
     fetchBooks();
@@ -60,24 +62,23 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
     if (bookId) {
       const selectedBookData = books.find(book => book._id === bookId);
       if (selectedBookData) {
-        const chapterCount = selectedBookData.chapterIds?.length || 0;
-        let chapterName = '';
-        
-        if (chapterCount === 0) {
-          // Nếu là chapter đầu tiên
-          chapterName = `${selectedBookData.bookname} - Chương 1`;
-        } else {
-          // Nếu đã có chapter trước đó
-          const nextChapterNumber = chapterCount + 1;
-          chapterName = `${selectedBookData.bookname} - Chương ${nextChapterNumber}`;
-        }
-        
         setNewChapter(prev => ({
           ...prev,
-          chapterName: chapterName
+          chapterName: `${selectedBookData.bookname} - Chương ${prev.chapterNumber || ''}`
         }));
       }
     }
+  };
+
+  const handleChapterNumberChange = (e) => {
+    const number = e.target.value;
+    setNewChapter(prev => ({
+      ...prev,
+      chapterNumber: number,
+      chapterName: selectedBook ? 
+        `${books.find(book => book._id === selectedBook)?.bookname} - Chương ${number}` : 
+        prev.chapterName
+    }));
   };
 
   const handlePdfChange = (e) => {
@@ -109,9 +110,18 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
     }
   };
 
+  const validateFields = () => {
+    const errors = {};
+    if (!selectedBook) errors.selectedBook = 'Vui lòng chọn sách';
+    if (!newChapter.chapterNumber || isNaN(newChapter.chapterNumber)) errors.chapterNumber = 'Vui lòng nhập số chương hợp lệ';
+    if (!newChapter.pdfFile) errors.pdfFile = 'Vui lòng tải file nội dung lên';
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setFieldErrors({});
     setIsLoading(true);
     
     if (!user || !user.email || !user._id) {
@@ -120,8 +130,9 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
       return;
     }
 
-    if (!selectedBook || !newChapter.chapterName || !newChapter.pdfFile) {
-      setError("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+    const errors = validateFields();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       setIsLoading(false);
       return;
     }
@@ -182,7 +193,7 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
               value={selectedBook}
               onChange={handleBookChange}
               disabled={isUploading}
-              className="styled-select"
+              className={`styled-select${fieldErrors.selectedBook ? ' error' : ''}`}
             >
               <option value="">Chọn sách</option>
               {books.map(book => (
@@ -192,6 +203,23 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
               ))}
             </select>
           </div>
+          {fieldErrors.selectedBook && <div className="field-error">{fieldErrors.selectedBook}</div>}
+        </div>
+
+        <div className="form-group">
+          <div className="input-icon">
+            <TitleIcon className="icon" />
+            <input
+              type="text"
+              name="chapterNumber"
+              value={newChapter.chapterNumber}
+              onChange={handleChapterNumberChange}
+              placeholder="Nhập số chương"
+              className={`styled-input${fieldErrors.chapterNumber ? ' error' : ''}`}
+              disabled={isUploading}
+            />
+          </div>
+          {fieldErrors.chapterNumber && <div className="field-error">{fieldErrors.chapterNumber}</div>}
         </div>
 
         <div className="form-group">
@@ -232,7 +260,7 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
             disabled={isUploading}
           />
           <label htmlFor="pdf-upload" className="upload-label">
-            <div className="upload-placeholder">
+            <div className={`upload-placeholder${fieldErrors.pdfFile ? ' error' : ''}`}>
               <DescriptionIcon className="pdf-icon" />
               <div className="upload-text">
                 <span className="main-text">{pdfFileName || "Tải file nội dung lên"}</span>
@@ -241,6 +269,7 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
               <CloudUploadIcon className="upload-icon" />
             </div>
           </label>
+          {fieldErrors.pdfFile && <div className="field-error">{fieldErrors.pdfFile}</div>}
         </div>
 
         <div className="form-actions">

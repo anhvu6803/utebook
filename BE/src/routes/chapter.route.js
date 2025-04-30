@@ -2,10 +2,9 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const { addChapter, getAllChapters, getChapterById, updateChapter, deleteChapter } = require('../controllers/chapter.controller');
-const { authMiddleware } = require('../middleware/auth.middleware');
-
+const { adminMiddleware } = require('../middleware/auth.middleware');
 // Add chapter route
-router.post('/add-chapter', authMiddleware, addChapter);
+router.post('/add-chapter', adminMiddleware, addChapter);
 
 // Get all chapters route
 router.get('/chapters', getAllChapters);
@@ -15,6 +14,7 @@ router.get('/chapter/:id', getChapterById);
 
 // Update chapter route
 router.put('/update-chapter/:id', 
+    adminMiddleware,
     [
         body('chapterName').optional().notEmpty().withMessage('Chapter name cannot be empty'),
         body('price').optional().isFloat({ min: 0 }).withMessage('Price must be a non-negative number'),
@@ -24,6 +24,6 @@ router.put('/update-chapter/:id',
 );
 
 // Delete chapter route
-router.delete('/delete-chapter/:id', deleteChapter);
+router.delete('/delete-chapter/:id', adminMiddleware, deleteChapter);
 
 module.exports = router;

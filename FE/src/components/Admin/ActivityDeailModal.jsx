@@ -39,7 +39,7 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
 
     fetchRelatedActivities();
   }, [activity]);
-
+  
   if (!activity) return null;
 
   const getActionClass = (action) => {
@@ -304,11 +304,11 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
                           <span className="detail-label">Mã giao dịch VNPay:</span>
                           <span className="detail-value">{activity.transactionInfo.vnp_TransactionNo}</span>
                         </div>
-                        <div className="detail-row">
+                <div className="detail-row">
                           <span className="detail-label">Mã giao dịch ngân hàng:</span>
                           <span className="detail-value">{activity.transactionInfo.vnp_BankTranNo}</span>
-                        </div>
-                        <div className="detail-row">
+                </div>
+                  <div className="detail-row">
                           <span className="detail-label">Thời gian thanh toán:</span>
                           <span className="detail-value">
                             {new Date(
@@ -362,12 +362,12 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
                     </div>
                     <div className={`related-points ${related.type === "Nạp" || related.type === "Thu nhập" ? 'positive' : 'negative'}`}>
                       {related.type === "Nạp" || related.type === "Thu nhập" ? '+' : ''}{related.number_point_HoaPhuong}
-                    </div>
+                      </div>
                     <div className="related-date">
                       {formatDate(related.time)} {formatTime(related.time)}
                     </div>
-                  </div>
-                ))}
+                    </div>
+                  ))}
               </div>
             </div>
           )}

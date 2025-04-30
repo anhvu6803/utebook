@@ -1,33 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/ManageUserPage.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import UserDetailForm from "../../components/Admin/UserDetailForm";
 import UserEditForm from "../../components/Admin/EditUserModal";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const usersData = Array.from({ length: 50 }, (_, i) => ({
-  id: `user${i + 1}`,
-  username: `user${i + 1}`,
-  fullname: `Người Dùng ${i + 1}`,
-  email: `user${i + 1}@example.com`,
-  phone: `012345678${i % 10}`,
-  address: `Địa chỉ ${i + 1}, Thành phố XYZ`,
-  avatar: `https://i.pravatar.cc/100?img=${i % 70}`,
-  membership: i % 2 === 0,
-  membershipDays: i % 2 === 0 ? Math.floor(Math.random() * 365) + 1 : 0,
-  role: i % 2 === 0 ? "Admin" : "User",
-  points: Math.floor(Math.random() * 10000),
-}));
+const API_URL = 'http://localhost:5000/api/user';
 
 const ManageUserPage = () => {
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const usersPerPage = 10;
 
+  // Fetch users data
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(API_URL);
+      setUsers(response.data.data);
+    } catch (error) {
+      toast.error("Không thể tải danh sách người dùng");
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
@@ -36,15 +47,36 @@ const ManageUserPage = () => {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   // Lưu user sau khi chỉnh sửa
-  const handleSaveUser = (updatedUser) => {
-    setUsers(users.map((u) => (u.username === updatedUser.username ? updatedUser : u)));
-    setEditingUser(null);
+  const handleSaveUser = async (updatedUser) => {
+    try {
+      const response = await axios.patch(`${API_URL}/${updatedUser._id}`, updatedUser);
+      setUsers(users.map((u) => (u._id === updatedUser._id ? response.data.data : u)));
+      setEditingUser(null);
+      setSelectedUser(null); // Đóng modal sau khi cập nhật
+      toast.success("Cập nhật người dùng thành công");
+      fetchUsers(); // Refresh danh sách người dùng
+    } catch (error) {
+      toast.error("Không thể cập nhật người dùng");
+      console.error("Error updating user:", error);
+    }
   };
 
-  const handleDeleteUser = (userId) => {
-    setUsers(users.filter(u => u.username !== userId));
-    setSelectedUser(null);
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`${API_URL}/${userId}`);
+      setUsers(users.filter(u => u._id !== userId));
+      setSelectedUser(null); // Đóng modal
+      toast.success("Xóa người dùng thành công");
+      fetchUsers(); // Load lại dữ liệu
+    } catch (error) {
+      toast.error("Không thể xóa người dùng");
+      console.error("Error deleting user:", error);
+    }
   };
+
+  if (loading) {
+    return <div className="loading">Đang tải...</div>;
+  }
 
   return (
     <div className="user-management">
@@ -74,13 +106,15 @@ const ManageUserPage = () => {
         </thead>
         <tbody>
           {currentUsers.length > 0 ? (
-            currentUsers.map((user, index) => (
-              <tr key={index} className="clickable-row" onClick={() => setSelectedUser(user)}>
+            currentUsers.map((user) => (
+              <tr key={user._id} className="clickable-row" onClick={() => setSelectedUser(user)}>
                 <td>{user.username}</td>
                 <td>{user.fullname}</td>
                 <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td className={`role ${user.role.toLowerCase()}`}>{user.role}</td>
+                <td>{user.numberPhone}</td>
+                <td className={`role ${user.isAdmin ? "admin" : "user"}`}>
+                  {user.isAdmin ? "Admin" : "User"}
+                </td>
               </tr>
             ))
           ) : (

@@ -1,21 +1,22 @@
 .add-chapter-tab {
-  padding: 20px;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
   .error-message {
-    background-color: #fff2f2;
-    color: #ff4d4f;
-    padding: 12px 20px;
-    border-radius: 8px;
+    background: #fff2f0;
     border: 1px solid #ffccc7;
-    margin-bottom: 24px;
+    color: #ff4d4f;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
-    animation: slideIn 0.3s ease-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    gap: 0.5rem;
+    font-size: 0.9rem;
 
     .error-icon {
       font-size: 1.2rem;
@@ -23,57 +24,67 @@
   }
 
   .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 
     .input-icon {
       position: relative;
       display: flex;
       align-items: center;
+      background: #f8f9fa;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+
+      &:hover, &:focus-within {
+        background: #f0f2f5;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
 
       .icon {
         position: absolute;
-        left: 12px;
-        color: #757575;
-        font-size: 20px;
+        left: 1rem;
+        color: #6c757d;
+        font-size: 1.2rem;
       }
 
-      .styled-input, .styled-select {
+      .styled-select,
+      .styled-input {
         width: 100%;
-        padding: 12px 16px 12px 40px;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
-        font-size: 15px;
+        padding: 1rem 1rem 1rem 3rem;
+        border: none;
+        background: transparent;
+        font-size: 1rem;
+        color: #2c3e50;
+        border-radius: 12px;
         transition: all 0.3s ease;
-        background: #fff;
 
         &:focus {
-          border-color: #2196f3;
-          box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
           outline: none;
+          background: #f0f2f5;
+        }
+
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
         }
 
         &::placeholder {
           color: #adb5bd;
         }
-
-        &:disabled {
-          background-color: #f5f5f5;
-          cursor: not-allowed;
-        }
       }
 
       .styled-select {
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 12px center;
-        cursor: pointer;
+        background-position: right 1rem center;
+        background-size: 1.2rem;
+        padding-right: 3rem;
       }
     }
   }
 
   .pdf-upload-container {
-    margin-bottom: 24px;
+    margin-bottom: 2rem;
 
     .file-input {
       display: none;
@@ -82,136 +93,143 @@
     .upload-label {
       display: block;
       cursor: pointer;
-      padding: 24px;
-      border: 2px dashed #e0e0e0;
-      border-radius: 12px;
-      background: #f8f9fa;
       transition: all 0.3s ease;
 
       &:hover {
-        border-color: #2196f3;
-        background: #f1f8ff;
+        transform: translateY(-2px);
+      }
+    }
 
-        .upload-icon {
-          transform: translateY(-2px);
+    .upload-placeholder {
+      background: #f8f9fa;
+      border: 2px dashed #dee2e6;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: #6c757d;
+        background: #f0f2f5;
+      }
+
+      .pdf-icon {
+        font-size: 2.5rem;
+        color: #6c757d;
+        margin-bottom: 1rem;
+      }
+
+      .upload-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .main-text {
+          font-size: 1.1rem;
+          color: #2c3e50;
+          font-weight: 500;
+        }
+
+        .sub-text {
+          font-size: 0.9rem;
+          color: #6c757d;
         }
       }
 
-      .upload-placeholder {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-
-        .pdf-icon {
-          font-size: 48px;
-          color: #e74c3c;
-        }
-
-        .upload-text {
-          flex: 1;
-          text-align: left;
-
-          .main-text {
-            display: block;
-            font-size: 16px;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 4px;
-          }
-
-          .sub-text {
-            font-size: 14px;
-            color: #757575;
-          }
-        }
-
-        .upload-icon {
-          font-size: 24px;
-          color: #2196f3;
-          transition: transform 0.3s ease;
-        }
+      .upload-icon {
+        font-size: 2rem;
+        color: #6c757d;
+        margin-top: 1rem;
       }
     }
   }
 
   .form-actions {
     display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 2px solid #f0f0f0;
+    gap: 1rem;
+    margin-top: 2rem;
 
     button {
-      padding: 12px 28px;
+      flex: 1;
+      padding: 1rem 2rem;
       border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
 
-      &:hover {
-        transform: translateY(-2px);
-      }
-
       &:disabled {
-        opacity: 0.6;
+        opacity: 0.7;
         cursor: not-allowed;
-        transform: none;
-      }
-    }
-
-    .confirm-btn {
-      background: #2196f3;
-      color: white;
-
-      &:hover {
-        background: #1976d2;
-        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
       }
 
-      .loading-text {
-        display: flex;
-        align-items: center;
-        gap: 4px;
+      &.confirm-btn {
+        background: #4CAF50;
+        color: white;
 
-        .loading-dots {
-          animation: loadingDots 1.5s infinite;
+        &:hover:not(:disabled) {
+          background: #43a047;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .loading-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+
+          .loading-dots {
+            animation: loading 1.4s infinite;
+          }
+        }
+      }
+
+      &.cancel-btn {
+        background: #f8f9fa;
+        color: #6c757d;
+
+        &:hover:not(:disabled) {
+          background: #e9ecef;
+          transform: translateY(-2px);
         }
       }
     }
+  }
 
-    .cancel-btn {
-      background: #f5f5f5;
-      color: #666;
+  .field-error {
+    color: #ff4d4f;
+    font-size: 0.88rem;
+    margin-top: 0.3rem;
+    margin-left: 0.5rem;
+    animation: shake 0.2s linear;
+    font-weight: 500;
+  }
 
-      &:hover {
-        background: #e0e0e0;
-      }
-    }
+  .styled-input.error,
+  .styled-select.error {
+    border: 1.5px solid #ff4d4f !important;
+    background: #fff2f0 !important;
+    color: #d32f2f;
+  }
+
+  .upload-placeholder.error {
+    border-color: #ff4d4f !important;
+    background: #fff2f0 !important;
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
   }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes loadingDots {
-  0%, 20% {
-    content: ".";
-  }
-  40% {
-    content: "..";
-  }
-  60%, 100% {
-    content: "...";
-  }
+@keyframes loading {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
 } 

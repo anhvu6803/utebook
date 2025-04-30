@@ -1,95 +1,142 @@
-const pointService = require('../services/point.service');
+const Point = require('../models/point.model');
 
 const pointController = {
-    // Create a new point record
-    async createPoint(req, res) {
-        try {
-            const pointData = req.body;
-            
-            // Check if point record already exists for this user
-            const existingPoint = await pointService.getPointByUserId(pointData.id_user);
-            
-            if (existingPoint) {
-                return res.status(400).json({ 
-                    error: 'Point record already exists for this user. Use update instead.' 
-                });
-            }
-            
-            const point = await pointService.createPoint(pointData);
-            res.status(201).json({
-                message: 'Point created successfully',
-                point
-            });
-        } catch (error) {
-            res.status(400).json({ error: error.message });
-        }
-    },
-
-    // Get all points
+    // Lấy tất cả điểm
     async getAllPoints(req, res) {
         try {
-            const points = await pointService.getAllPoints();
-            res.status(200).json(points);
+            const points = await Point.find();
+            res.status(200).json({
+                success: true,
+                data: points
+            });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
         }
     },
 
-    // Get point by user ID
+    // Lấy điểm theo user ID
     async getPointByUserId(req, res) {
         try {
             const { userId } = req.params;
-            const point = await pointService.getPointByUserId(userId);
+            const point = await Point.findOne({ id_user: userId });
             
             if (!point) {
-                return res.status(404).json({ message: 'Point not found' });
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy điểm cho người dùng này'
+                });
             }
-            
-            res.status(200).json(point);
+
+            res.status(200).json({
+                success: true,
+                data: point
+            });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
         }
     },
 
-    // Update point by user ID
+    // Tạo điểm mới
+    async createPoint(req, res) {
+        try {
+            const { id_user, quantity_HoaPhuong, quantity_La } = req.body;
+
+            // Kiểm tra xem điểm đã tồn tại cho user này chưa
+            const existingPoint = await Point.findOne({ id_user });
+            if (existingPoint) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Điểm đã tồn tại cho người dùng này'
+                });
+            }
+
+            const newPoint = new Point({
+                id_user,
+                quantity_HoaPhuong: quantity_HoaPhuong || 0,
+                quantity_La: quantity_La || 0
+            });
+
+            const savedPoint = await newPoint.save();
+            res.status(201).json({
+                success: true,
+                data: savedPoint
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    },
+
+    // Cập nhật điểm
     async updatePoint(req, res) {
         try {
             const { userId } = req.params;
-            const updateData = req.body;
-            
-            // Ensure we're not updating the user ID
-            if (updateData.id_user) {
-                delete updateData.id_user;
+            const { quantity_HoaPhuong, quantity_La } = req.body;
+
+            // Kiểm tra xem điểm có tồn tại không
+            const existingPoint = await Point.findOne({ id_user: userId });
+            if (!existingPoint) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy điểm cho người dùng này'
+                });
             }
-            
-            const result = await pointService.updatePoint(userId, updateData);
-            
-            if (!result) {
-                return res.status(404).json({ message: 'Point not found' });
-            }
-            
+
+            // Cập nhật điểm
+            const updatedPoint = await Point.findOneAndUpdate(
+                { id_user: userId },
+                { 
+                    quantity_HoaPhuong: quantity_HoaPhuong !== undefined ? quantity_HoaPhuong : existingPoint.quantity_HoaPhuong,
+                    quantity_La: quantity_La !== undefined ? quantity_La : existingPoint.quantity_La
+                },
+                { new: true, runValidators: true }
+            );
+
             res.status(200).json({
-                message: 'Point updated successfully',
-                point: result
+                success: true,
+                data: updatedPoint
             });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
         }
     },
 
-    // Delete point by user ID
+    // Xóa điểm
     async deletePoint(req, res) {
         try {
             const { userId } = req.params;
-            const result = await pointService.deletePoint(userId);
-            
-            if (!result) {
-                return res.status(404).json({ message: 'Point not found' });
+
+            // Kiểm tra xem điểm có tồn tại không
+            const existingPoint = await Point.findOne({ id_user: userId });
+            if (!existingPoint) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy điểm cho người dùng này'
+                });
             }
-            
-            res.status(200).json({ message: 'Point deleted successfully' });
+
+            await Point.findOneAndDelete({ id_user: userId });
+
+            res.status(200).json({
+                success: true,
+                message: 'Đã xóa điểm thành công'
+            });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
         }
     }
 };

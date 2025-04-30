@@ -1,15 +1,30 @@
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 const ChapterService = require('../services/chapter.service');
 
 exports.addChapter = async (req, res) => {
     try {
         const { chapterName, price, viewlink, bookId } = req.body;
+        const errors = {};
 
-        // Validate required fields
-        if (!chapterName || !viewlink || !bookId) {
+        if (!chapterName || typeof chapterName !== 'string' || !chapterName.trim()) {
+            errors.chapterName = 'Tên chương không được để trống';
+        }
+        if (price === undefined || price === null || isNaN(price) || Number(price) < 0) {
+            errors.price = 'Giá chương phải là số không âm';
+        }
+        if (!viewlink || typeof viewlink !== 'string' || !viewlink.trim()) {
+            errors.viewlink = 'Link nội dung không hợp lệ';
+        }
+        if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) {
+            errors.bookId = 'BookId không hợp lệ';
+        }
+
+        if (Object.keys(errors).length > 0) {
             return res.status(400).json({
                 success: false,
-                message: 'Vui lòng nhập đầy đủ thông tin bắt buộc'
+                message: 'Dữ liệu đầu vào không hợp lệ',
+                errors
             });
         }
 
@@ -21,13 +36,7 @@ exports.addChapter = async (req, res) => {
             bookId
         });
 
-        if (!newChapter) {
-            return res.status(500).json({
-                success: false,
-                message: 'Không thể tạo chapter mới'
-            });
-        }
-
+        // Return success response
         return res.status(201).json({
             success: true,
             message: 'Thêm chapter thành công',
@@ -35,10 +44,13 @@ exports.addChapter = async (req, res) => {
         });
     } catch (error) {
         console.error('Error in addChapter controller:', error);
-        return res.status(500).json({
-            success: false,
-            message: error.message || 'Có lỗi xảy ra khi thêm chapter'
-        });
+        // Đảm bảo chỉ gửi một response lỗi
+        if (!res.headersSent) {
+            return res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi thêm chapter'
+            });
+        }
     }
 };
 

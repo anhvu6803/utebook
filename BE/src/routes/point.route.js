@@ -2,19 +2,19 @@ const express = require('express');
 const router = express.Router();
 const pointController = require('../controllers/point.controller');
 
-// Create a new point record
-router.post('/', pointController.createPoint);
-
-// Get all points
+// Lấy tất cả điểm
 router.get('/', pointController.getAllPoints);
 
-// Get point by user ID
+// Lấy điểm theo user ID
 router.get('/:userId', pointController.getPointByUserId);
 
-// Update point by user ID
+// Tạo điểm mới
+router.post('/', pointController.createPoint);
+
+// Cập nhật điểm theo user ID
 router.patch('/:userId', pointController.updatePoint);
 
-// Delete point by user ID
+// Xóa điểm theo user ID
 router.delete('/:userId', pointController.deletePoint);
 
 module.exports = router; 
