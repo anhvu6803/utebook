@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
-const { getAllBooks, addBook, getBookById, updateBook, deleteBook } = require('../controllers/book.controller');
+const { getAllBooks, addBook, getBookById, updateBook, deleteBook, syncChaptersToBook, syncAllChaptersToBooks } = require('../controllers/book.controller');
 const multer = require('multer');
 
 // Configure multer for file uploads
@@ -81,5 +81,11 @@ router.put('/books/:id',
 
 // Delete book route
 router.delete('/books/:id', deleteBook);
+
+// Sync chapters to book
+router.post('/:bookId/sync-chapters', syncChaptersToBook);
+
+// Sync all chapters to books
+router.post('/sync-all-chapters', syncAllChaptersToBooks);
 
 module.exports = router;
