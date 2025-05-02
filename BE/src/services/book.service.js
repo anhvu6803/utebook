@@ -99,3 +99,36 @@ exports.deleteBook = async (bookId) => {
         throw error;
     }
 };
+
+exports.getRandomBooks = async () => {
+    try {
+        const randomBooks = await Book.aggregate([{ $sample: { size: 10 } }]);
+        return randomBooks;
+    } catch (error) {
+        throw error;
+    }
+};
+exports.getBooksByCategory = async (category) => {
+    try {
+        const regex = new RegExp(category, 'i'); // 'i' để không phân biệt chữ hoa - thường
+        const books = await Book.find({ categories: { $regex: regex } });
+        return books;
+    } catch (error) {
+        throw error;
+    }
+};
+exports.getRandomBooksByCategory = async (category) => {
+    try {
+        const regex = new RegExp(category, 'i'); // không phân biệt hoa thường
+
+        const books = await Book.aggregate([
+            { $match: { categories: { $regex: regex } } },
+            { $sample: { size: 10 } } // lấy ngẫu nhiên 10 cuốn
+        ]);
+
+        return books;
+    } catch (error) {
+        throw error;
+    }
+};
+

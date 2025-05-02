@@ -1,26 +1,68 @@
 // App.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/ReaderBookPage.scss';
-import { ChevronLeft, Headphones, Maximize } from 'lucide-react';
+import { ChevronLeft, Headphones, Maximize, Pause, StepForward, X } from 'lucide-react';
+import { Spin } from 'antd';
+import io from 'socket.io-client';
 import CustomSlider from '../components/CustomSlider';
 import SliderPageReader from '../components/SliderPageReader';
+import CircleLoading from '../components/CircleLoading';
 // Import text content
 //import chapterText from '../assets/chapterText.txt';
 const ReaderBookPage = () => {
+    const { content } = useParams();
+
+    const readingRef = useRef(false);
+    const pauseRef = useRef(false);
+    const loadingButtonRef = useRef(null);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(30);
-
+    const [isReading, setIsReading] = useState(readingRef.current);
+    const [isLoadingButton, setIsLoadingButton] = useState(loadingButtonRef.current);
+    const [isPause, setIsPause] = useState(pauseRef.current);
+    const [isLoading, setIsLoading] = useState(true);
     const [textChunks, setTextChunks] = useState([]);
     const linesPerSlide = 5; // Number of lines per slide
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+
+        const newSocket = io('http://localhost:3000'); // Điều chỉnh URL phù hợp với máy chủ của bạn
+
+        newSocket.on('reading_completed', (data) => {
+            console.log('Đã nhận sự kiện reading_completed:', data);
+            readingRef.current = data.is_reading;
+            setIsReading(readingRef.current);
+
+            if (!data.is_reading) {
+                console.log('Đọc văn bản đã hoàn tất');
+            }
+        });
+
+        setSocket(newSocket);
+
+        return () => {
+            newSocket.disconnect();
+        };
+    }, []);
 
     useEffect(() => {
         const fetchTextFromDrive = async () => {
             try {
-                // Gửi yêu cầu POST để lấy văn bản từ Google Drive
+                setIsLoading(true);
+
+                const responseChapter = await axios.get(
+                    `http://localhost:5000/api/chapter/chapter/${content}`
+                );
+
+                console.log(responseChapter.data.data.viewlink);
+
                 const response = await axios.post(
                     'http://localhost:3000/api/get_drive',
-                    { drive_link: "https://drive.google.com/file/d/10yiPZrx58Rn8BFD1aTSldGdXFzRzVrdL/view?usp=sharing" }
+                    { drive_link: responseChapter.data.data.viewlink }
                 );
 
                 // Lấy văn bản từ phản hồi API
@@ -41,6 +83,9 @@ const ReaderBookPage = () => {
 
             } catch (error) {
                 console.error('Error fetching or processing the text:', error);
+            }
+            finally {
+                setIsLoading(false);
             }
         };
 
@@ -101,6 +146,52 @@ const ReaderBookPage = () => {
             enterFullScreen();
         }
     };
+    console.log(currentPage)
+    const handleReadingCurrentPage = async (text) => {
+        try {
+            loadingButtonRef.current = true;
+            setIsLoadingButton(loadingButtonRef.current);
+            await handleStopSpeech();
+
+            const response = await fetch('http://localhost:3000/api/speech_line', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: text,
+                    delay: 0.2
+                })
+            });
+            console.log(response);
+        }
+        catch (error) {
+            console.error('Error fetching speech:', error);
+        }
+        finally {
+            loadingButtonRef.current = false;
+            setIsLoadingButton(loadingButtonRef.current);
+            readingRef.current = true;
+            setIsReading(readingRef.current);
+        }
+    }
+    const handleStopSpeech = async () => {
+        readingRef.current = false;
+        setIsReading(readingRef.current);
+        pauseRef.current = false;
+        setIsPause(pauseRef.current);
+        await axios.post('http://localhost:3000/api/speech/stop');
+    }
+    const handlPauseSpeech = async () => {
+        pauseRef.current = true;
+        setIsPause(pauseRef.current);
+        await axios.post('http://localhost:3000/api/speech/pause');
+    }
+    const handleResumeSpeech = async () => {
+        pauseRef.current = false;
+        setIsPause(pauseRef.current);
+        await axios.post('http://localhost:3000/api/speech/resume');
+    }
 
     return (
         <div className="ebook-reader">
@@ -113,9 +204,51 @@ const ReaderBookPage = () => {
                     <p className='chapter-title'>Chương 24: Ngài Tổng nhìn xa trông rộng</p>
                 </div>
                 <div className="right-controls">
-                    <button className="control-button">
-                        <Headphones />
-                    </button>
+                    {isReading ?
+                        (
+                            <>
+                                <button
+                                    className="control-button"
+                                    onClick={() => handleStopSpeech()}
+                                >
+                                    <X />
+                                </button>
+
+                                {isPause ?
+                                    (
+                                        <button
+                                            className="control-button"
+                                            onClick={() => handleResumeSpeech()}
+                                        >
+                                            <StepForward />
+                                        </button>
+                                    )
+                                    :
+                                    (
+                                        <button
+                                            className="control-button"
+                                            onClick={() => handlPauseSpeech()}
+                                        >
+                                            <Pause />
+                                        </button>
+                                    )
+
+                                }
+                            </>
+                        )
+                        :
+                        (
+                            <Spin spinning={isLoadingButton}>
+                                <button
+                                    className="control-button"
+                                    onClick={() => handleReadingCurrentPage(textChunks[currentPage - 1])}
+                                >
+                                    <Headphones />
+                                </button>
+                            </Spin>
+                        )
+                    }
+
                     <button
                         className="control-button"
                         onClick={toggleFullScreen}
@@ -126,10 +259,18 @@ const ReaderBookPage = () => {
             </div>
 
             <div className="content-area">
-                <SliderPageReader
-                    textChunks={textChunks}
-                    setCurrentPage={setCurrentPage}
-                />
+                {isLoading ?
+                    <CircleLoading size={100} />
+                    :
+                    <SliderPageReader
+                        textChunks={textChunks}
+                        setCurrentPage={setCurrentPage}
+                        readingRef={readingRef}
+                        isReading={isReading}
+                        setIsReading={setIsReading}
+                    />
+                }
+
             </div>
 
             <div className="bottom-bar">

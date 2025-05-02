@@ -68,7 +68,7 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
     <div className="book-page">
       <nav className="navigation">
         <div className="nav-link">
-          <a href="/">Trang chủ</a> &gt; {bookName}
+          <a href="/utebook">Trang chủ</a> &gt; {bookName}
         </div>
       </nav>
 

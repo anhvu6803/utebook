@@ -1,7 +1,16 @@
 const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
-const { getAllBooks, addBook, getBookById, updateBook, deleteBook } = require('../controllers/book.controller');
+const {
+    getAllBooks,
+    addBook,
+    getBookById,
+    updateBook,
+    deleteBook,
+    getRandomBooks,
+    getBooksByCategory,
+    getRandomBooksByCategory,
+} = require('../controllers/book.controller');
 const multer = require('multer');
 
 // Configure multer for file uploads
@@ -36,7 +45,7 @@ router.get('/books', getAllBooks);
 router.get('/books/:id', getBookById);
 
 // Add book route
-router.post('/add-book', 
+router.post('/add-book',
     [
         body('bookname').notEmpty().withMessage('Book name is required'),
         body('author').notEmpty().withMessage('Author is required'),
@@ -60,7 +69,7 @@ router.post('/add-book',
 );
 
 // Update book route
-router.put('/books/:id', 
+router.put('/books/:id',
     [
         body('bookname').optional().notEmpty().withMessage('Book name cannot be empty'),
         body('author').optional().notEmpty().withMessage('Author cannot be empty'),
@@ -81,5 +90,11 @@ router.put('/books/:id',
 
 // Delete book route
 router.delete('/books/:id', deleteBook);
+
+router.get('/books/categories/category', getBooksByCategory);
+
+router.get('/random-books', getRandomBooks);
+
+router.get('/random-books/:category', getRandomBooksByCategory);
 
 module.exports = router;

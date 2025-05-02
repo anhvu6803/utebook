@@ -59,7 +59,6 @@ export default function EbookMenu() {
           <div class="menu-header">Khám phá ngay</div>
           <button className="menu-btn"><Star size={16} /> Sách mới nhất</button>
           <button className="menu-btn"><Book size={16} /> Sách đọc nhiều</button>
-          <button className="menu-btn"><ShoppingBag size={16} /> Sách mua lẻ</button>
           <button className="menu-btn"><Wallet size={16} /> Sách miễn phí</button>
           <button className="menu-btn"><Sparkles size={16} /> Sách đề cử</button>
         </div>

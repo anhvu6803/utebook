@@ -1,24 +1,68 @@
 // BookPage.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
 import './styles/DetailBookPage.scss';
 import bookCover from "../assets/background2.jpg";
-import { Star, BookOpen, Play, Heart, Crown, Share2 } from 'lucide-react';
+import { Star, BookOpen, Heart, Crown } from 'lucide-react';
 import ChapterItem from '../components/ChapterItem';
 
+const formatDescription = (description) => {
+  const parts = description.split('\n\n');
+  const shortDesc = parts[0];
+
+  // Xử lý phần bullet points
+  const bulletPoints = parts.find(part => part.includes('•'))?.split('•').filter(Boolean) || [];
+
+  return {
+    short: shortDesc,
+    full: parts.filter(part => !part.includes('•')),
+    bulletPoints: bulletPoints.map(point => point.trim())
+  };
+};
+
+const invalidCategory = [
+  { value: 'Đô thị' },
+  { value: 'Tiên hiệp' },
+  { value: 'Trinh thám' },
+  { value: 'Ngôn tình' },
+  { value: 'Linh dị' },
+  { value: 'Truyện ma' },
+];
+
+const showCategories = (categories) => {
+  const theLoai = categories.flatMap(category => category.split(',').map(str => str.trim().toLowerCase()));
+  const filteredCategories = theLoai.filter((category) =>
+    invalidCategory.some((invalid) =>
+      category.toLowerCase().includes(invalid.value.toLowerCase())
+    )
+  );
+
+  return filteredCategories.map(category =>
+    category
+      .split(' ') // Tách thành các từ
+      .filter(word => word.toLowerCase() !== 'truyện') // Loại bỏ từ "truyen"
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Viết hoa chữ cái đầu mỗi từ còn lại
+      .join(' ') // Ghép lại thành chuỗi
+  );
+};
+
 const DetailBookPage = () => {
-  const bookName = "101 cách cưa đổ đại lão hàng xóm";
-  const [showFullSummary, setShowFullSummary] = React.useState(false);
+  const { idNovel } = useParams();
+  const navigate = useNavigate();
 
-  // Giả sử đây là dữ liệu từ database
-  const bookDescription = `Ở Việt Nam, nhắc đến Đắc Nhân Tâm của Dale Carnegie là nhắc đến một cuốn sách gối đầu giường của biết bao thế hệ. Cuốn sách đã có hơn 70 năm gắn bó cùng độc giả Việt Nam kể từ lần xuất bản đầu tiên vào năm 1951 qua bản dịch "Đắc Nhân Tâm - Bí quyết thành công" của học giả Nguyễn Hiến Lê.Trong 70 năm có mặt tại Việt Nam, cuốn sách đã giúp rất nhiều người thành công nhờ áp dụng những triết lí này. Ông Phạm Phú Ngọc Trai, Chủ tịch và Tổng Giám đốc PepsiCo Đông Dương chia sẻ: "Đắc Nhân Tâm không đơn thuần là cách cư xử chỉ để được lòng người. Đó là một trong những nhận thức hình thành nhân cách con người theo những tiêu chuẩn giá trị được đa số đồng ý và chia sẻ." Hi vọng rằng, cuốn sách sẽ tiếp tục giúp những thế hệ tiếp theo của người Việt trở nên tốt đẹp, chân thành, được mọi người yêu quý và thành công hơn.Cuốn sách này sẽ cung cấp cho bạn những nguyên tắc để giúp bạn ứng xử khéo léo trong từng trường hợp với:
-• 3 quy tắc ứng xử cơ bản
-• 6 cách để gây thiện cảm ban đầu
-• 12 cách dẫn người khác theo suy nghĩ của bạn
-• 9 cách khiến người khác thay đổi mà không gây oán giận
+  const [bookName, setBookName] = useState('');
+  const [bookImage, setBookImage] = useState('');
+  const [author, setAuthor] = useState('');
+  const [publisher, setPublisher] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [description, setDescription] = useState('');
+  const [type, setType] = useState('');
+  const [rated, setRated] = useState('');
+  const [chapters, setChapters] = useState([]);
 
-Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
+  const [showFullSummary, setShowFullSummary] = useState(false);
 
-  // Giả sử đây là dữ liệu đánh giá từ database
   const ratings = {
     5: 2,  // 2 đánh giá 5 sao
     4: 3,  // 3 đánh giá 4 sao
@@ -35,55 +79,79 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
     return acc + (Number(star) * count);
   }, 0) / totalRatings;
 
-  // Tính phần trăm cho mỗi mức sao
   const calculatePercentage = (starCount) => {
     if (totalRatings === 0) return 0;
     return (ratings[starCount] / totalRatings) * 100;
   };
-
-  const formatDescription = (description) => {
-    const parts = description.split('\n\n');
-    const shortDesc = parts[0];
-
-    // Xử lý phần bullet points
-    const bulletPoints = parts.find(part => part.includes('•'))?.split('•').filter(Boolean) || [];
-
-    return {
-      short: shortDesc,
-      full: parts.filter(part => !part.includes('•')),
-      bulletPoints: bulletPoints.map(point => point.trim())
-    };
-  };
-
-  const formattedDesc = formatDescription(bookDescription);
-
-  const handleShare = () => {
-    // Implement the share functionality
-  };
-
   const handleShowMore = () => {
     setShowFullSummary(!showFullSummary);
   };
+
+  useEffect(() => {
+    const getBookById = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/book/books/${idNovel}`);
+
+        const bookData = response.data.data;
+        setBookName(bookData.bookname);
+        setBookImage(bookData.image);
+        setAuthor(bookData.author);
+        setPublisher(bookData.publisher);
+        setCategories(showCategories(bookData.categories));
+        console.log(showCategories(bookData.categories))
+        setDescription(bookData?.description || 'Đang cập nhật');
+        setType(bookData.type);
+        setRated(bookData.ageLimit);
+
+        if (bookData.chapterIds !== null) {
+          try {
+            const chapterPromises = bookData.chapterIds.map(async (chapter) => {
+              try {
+                const response = await axios.get(`http://localhost:5000/api/chapter/chapter/${chapter}`);
+                return response.data.data; // trả về data nếu request thành công
+              } catch (error) {
+                console.error(`Error fetching chapter ${chapter}:`, error);
+                return null; // nếu có lỗi, trả về null để không ảnh hưởng đến các chapter khác
+              }
+            });
+            const chaptersData = await Promise.all(chapterPromises);
+
+            const validChapters = chaptersData.filter((chapter) => chapter !== null);
+            setChapters(validChapters);
+
+            console.log(validChapters); // Log các chapter hợp lệ
+          } catch (error) {
+            console.error('Error fetching chapters:', error);
+          }
+        }
+
+      }
+      catch (err) {
+        console.log(err);
+      }
+    };
+    getBookById();
+  }, []);
 
   return (
     <div className="book-page">
       <nav className="navigation">
         <div className="nav-link">
-          <a href="/">Trang chủ</a> &gt; {bookName}
+          <a href="/utebook">Trang chủ</a> &gt; {bookName}
         </div>
       </nav>
 
       <div className="content-container">
         <div className="book-details">
           <div className="book-cover">
-            <img src={bookCover} alt="Book cover" />
+            <img src={bookImage || bookCover} alt="Book cover" />
             <div className="member-badge">
               HỘI VIÊN <Crown />
             </div>
           </div>
 
           <div className="book-info">
-            <h1 className="book-title">101 cách cưa đổ đại lão hàng xóm - Tập 9</h1>
+            <h1 className="book-title">{bookName}</h1>
 
             <div className="book-rating">
               <span className="rating-value">5</span>
@@ -101,26 +169,46 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
             <div className="book-metadata">
               <div className="metadata-section">
                 <div className="metadata-label">Tác giả</div>
-                <div className="metadata-value">Đồng Vụ</div>
+                <div className="metadata-value">{author}</div>
                 <div className="metadata-label">Nhà xuất bản</div>
-                <div className="metadata-value">Đang Cập Nhật</div>
+                <div className="metadata-value">{publisher || "Đang cập nhật"}</div>
               </div>
 
               <div className="metadata-section">
                 <div className="metadata-label">Thể loại</div>
-                <div className="metadata-value">Ngôn tình</div>
+                <div className="metadata-value">
+                  {categories && categories.length > 0 ? (
+                    categories.map((category) => (
+                      <p
+                        key={category}
+                        className="category-item"  // Assuming you want to apply some styles here
+                        onClick={() => navigate(`/utebook/novel/${category}`)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {category}
+                      </p>
+                    ))
+                  ) : (
+                    "Đang cập nhật"
+                  )}
+                </div>
+
                 <div className="metadata-label">Gói cước</div>
-                <div className="metadata-value">Hội viên</div>
+                <div className="metadata-value">Hoa phượng</div>
               </div>
 
               <div className="metadata-section">
                 <div className="metadata-label">Tình trạng</div>
-                <div className="metadata-value">9/50</div>
+                <div className="metadata-value">Đang cập nhật</div>
+                <div className="metadata-label">Xếp hạng</div>
+                <div className="metadata-value">{rated}+</div>
               </div>
             </div>
 
             <div className="action-buttons">
-              <button className="read-btn">
+              <button className="read-btn"
+                onClick={() => navigate(`/utebook-reader/6812446658f389d6680c07c1`)}
+              >
                 <BookOpen size={20} />
                 Đọc từ đầu
               </button>
@@ -128,9 +216,6 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
                 <BookOpen size={20} />
                 Đọc tiếp
               </button>
-              {/* <button className="play-btn">
-                <Play size={20} />
-              </button> */}
               <button className="like-btn">
                 <Heart size={20} />
               </button>
@@ -139,22 +224,12 @@ Waka xin trân trọng giới thiệu Đắc Nhân Tâm - Dale Carnegie!`;
             <div className="book-summary">
               <h3>Tóm tắt sách</h3>
               <div className={`summary-content ${showFullSummary ? 'expanded' : ''}`}>
-                <p>{formattedDesc.short}</p>
+                <p>{formatDescription(description).short}</p>
                 {showFullSummary && (
                   <>
-                    {formattedDesc.full.slice(1).map((paragraph, index) => (
+                    {formatDescription(description).full.slice(1).map((paragraph, index) => (
                       <p key={index}>{paragraph}</p>
                     ))}
-                    {formattedDesc.bulletPoints.length > 0 && (
-                      <>
-                        <p>Cuốn sách này sẽ cung cấp cho bạn những nguyên tắc để giúp bạn ứng xử khéo léo trong từng trường hợp với:</p>
-                        <ul>
-                          {formattedDesc.bulletPoints.map((point, index) => (
-                            <li key={index}>{point}</li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
                   </>
                 )}
               </div>

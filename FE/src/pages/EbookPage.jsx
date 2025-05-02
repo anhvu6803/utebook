@@ -6,7 +6,7 @@ const EbookPage = () => {
 
   return (
     <div className="book-page-container">
-      <RecommendationBook pageName={"ebook"} />
+      <RecommendationBook pageName={"ebook"}/>
       <div className="book-swiper">
         <p className="book-swiper-title">UTEBOOK đề xuất</p>
         <BookSwiper />

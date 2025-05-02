@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./styles/RecommendationBook.scss"; // Import the SCSS file for styling
 
 import SliderImageBook from "./SliderImageBook";
@@ -9,16 +10,52 @@ import { BookOpen, Play } from "lucide-react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function RecommendationBook({ pageName, category }) {
+const setCategoriesForPage = (pageName) => {
+    if (pageName === 'novel') {
+        return categoriesNovel;
+    }
+    else if (pageName === 'ebook') {
+        return categoriesEbook;
+    }
+    else if (pageName === 'audio') {
+        return categoriesAudio;
+    }
+    else if (pageName === 'creative') {
+        return categoriesCreative;
+    }
+}
+
+function RecommendationBook({ pageName, category, listBooks }) {
     const navigate = useNavigate();
+    const categories = setCategoriesForPage(pageName);
+
+    const listBooksTemp = listBooks?.map(book => book) || bookContents;
+    const listImagesTemp = listBooks?.map(book => book.image) || imageBooks;
+
     const [isShow, setIsShow] = useState('');
     const [selectedCategory, setSelectedCategory] = useState("Chọn thể loại");
     const [indexBook, setIndexBook] = useState(0);
     const [isViewLiked, setIsViewLiked] = useState(bookContents.map(book => book.isLiked));
+    const [books, setBooks] = useState([]);
+    const [imageBooks, setBookImages] = useState([]);
 
+    const getListBooksByCategory = async (category) => {
+        try {
+            const res = await axios.get(
+                `http://localhost:5000/api/book/random-books/${category}`,
+            );
+            setBooks(res.data.data);
+            setBookImages(res.data.data.map(book => book.image));
+        } catch (err) {
+            console.log(err);
+        }
+    }
     const handleCategoryChange = (value) => {
         navigate(`/utebook/${pageName}/${value}`);
         setSelectedCategory(value);
+        if (pageName === 'novel') {
+            getListBooksByCategory(value);
+        }
     };
 
     const handleLikeBook = (index) => {
@@ -28,6 +65,23 @@ function RecommendationBook({ pageName, category }) {
             return newLikes;
         });
         bookContents[index].isLiked = isViewLiked[index];
+    };
+    const handleShowBookId = (index) => {
+        if (books.length <= 0) return listBooksTemp[index]?._id;
+        return books[index]?._id;
+    };
+    const handleShowBookName = (index) => {
+        if (books.length <= 0) return listBooksTemp[index]?.bookname;
+        return books[index]?.bookname;
+    };
+
+    const handleShowBookDescription = (index) => {
+        if (books.length <= 0) return listBooksTemp[index]?.description;
+        return books[index]?.description;
+    };
+    const handleShowImages = () => {
+        if (imageBooks.length <= 0) return listImagesTemp;
+        return imageBooks;
     };
     return (
         <div className="book-recommend-container"
@@ -47,26 +101,28 @@ function RecommendationBook({ pageName, category }) {
 
                 <div className="description-container">
                     <span className="tab-recommend">UTEBOOK đề xuất</span>
-                    <p className="title-book">{bookContents[indexBook].title}</p>
-                    {bookContents[indexBook].description.map(
-                        (des, index) => (
-                            <p key={index} className="description">
-                                {des}
-                            </p>
-                        )
-                    )}
+                    <p className="title-book">{handleShowBookName(indexBook) || 'Đang cập nhật'}</p>
+                    <div className="description">
+                        {
+                            handleShowBookDescription(indexBook)
+                            || "Hiện đang cập nhật mô tả"
+                        }
+                    </div>
                 </div>
 
                 <div className="book-actions">
-                    <button className="btn-read">
+                    <button
+                        className="btn-read"
+                        onClick={() => navigate(`/utebook/${pageName}/view/${handleShowBookId(indexBook)}`)}
+                    >
                         <BookOpen />
                         Đọc ngay
                     </button>
-                    {bookContents[indexBook].isAudio &&
+                    {/* {bookContents[indexBook].isAudio &&
                         <button className="btn-play">
                             <Play />
                         </button>
-                    }
+                    } */}
                     <button
                         className="btn-favorite"
                         onClick={() => handleLikeBook(indexBook)}
@@ -82,7 +138,7 @@ function RecommendationBook({ pageName, category }) {
             </div>
             <div className='main-swiper'>
                 <SliderImageBook
-                    images={images}
+                    images={handleShowImages()}
                     isShow={isShow}
                     setIndexBook={setIndexBook}
                 />
@@ -101,26 +157,45 @@ const pageNames = [
     { label: 'Sáng tác', value: 'creative' }
 ]
 
-const categories = [
-    { label: 'Tiểu thuyết', value: 'tieu-thuyet' },
-    { label: 'Phi hư cấu', value: 'phi-hu-cau' },
-    { label: 'Khoa học viễn tưởng', value: 'khoa-hoc-vien-tuong' },
-    { label: 'Giả tưởng', value: 'gia-tuong' },
-    { label: 'Hồi ký', value: 'hoi-ky' },
-    { label: 'Trinh thám', value: 'trinh-tham' },
-    { label: 'Lãng mạn', value: 'lang-man' },
-    { label: 'Lịch sử', value: 'lich-su' },
-    { label: 'Kinh dị', value: 'kinh-di' },
-    { label: 'Tự giúp', value: 'tu-giup' }
+const categoriesNovel = [
+    { label: 'Đô thị', value: 'Đô thị' },
+    { label: 'Tiên hiệp', value: 'Tiên hiệp' },
+    { label: 'Trinh thám', value: 'Trinh thám' },
+    { label: 'Ngôn tình', value: 'Ngôn tình' },
+    { label: 'Linh dị', value: 'Linh dị' },
+    { label: 'Ma', value: 'Ma' },
 ];
 
+const categoriesEbook = [
+    { label: 'Đô thị', value: 'do-thi' },
+    { label: 'Tiên hiệp', value: 'tien-hiep' },
+    { label: 'Trinh thám', value: 'trinh-tham' },
+    { label: 'Ngôn tình', value: 'ngon-tinh' },
+    { label: 'Linh dị', value: 'linh-di' },
+    { label: 'Truyện ma', value: 'truyen-ma' },
+];
+const categoriesCreative = [
+    { label: 'Đô thị', value: 'do-thi' },
+    { label: 'Tiên hiệp', value: 'tien-hiep' },
+    { label: 'Trinh thám', value: 'trinh-tham' },
+    { label: 'Ngôn tình', value: 'ngon-tinh' },
+    { label: 'Linh dị', value: 'linh-di' },
+    { label: 'Truyện ma', value: 'truyen-ma' },
+];
+const categoriesAudio = [
+    { label: 'Đô thị', value: 'do-thi' },
+    { label: 'Tiên hiệp', value: 'tien-hiep' },
+    { label: 'Trinh thám', value: 'trinh-tham' },
+    { label: 'Ngôn tình', value: 'ngon-tinh' },
+    { label: 'Linh dị', value: 'linh-di' },
+    { label: 'Truyện ma', value: 'truyen-ma' },
+];
 const images = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
-    { id: 2, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
-    { id: 3, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
-    { id: 4, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
-    { id: 5, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
-    { id: 6, image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
+    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
 ];
 
 const bookContents = [

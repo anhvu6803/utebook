@@ -52,7 +52,6 @@ export default function AudioMenu() {
           <div class="menu-header">Khám phá ngay</div>
           <button className="menu-btn"><Star size={16} /> Sách mới nhất</button>
           <button className="menu-btn"><Headphones size={16} /> Sách nghe nhiều</button>
-          <button className="menu-btn"><ShoppingBag size={16} /> Sách mua lẻ</button>
           <button className="menu-btn"><Wallet size={16} /> Sách miễn phí</button>
           <button className="menu-btn"><Sparkles size={16} /> Sách đề cử</button>
         </div>

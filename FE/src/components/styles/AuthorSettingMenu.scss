@@ -1,0 +1,97 @@
+.author-menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 300px;
+    padding: 30px 25px 15px 25px;
+    align-items: center;
+    background-color: #fff;
+    border-right: 1px solid #005bbb4d;
+
+    .author-header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        border-bottom: 1px solid rgb(0, 91, 187, 0.3);
+
+        .author-info {
+            padding: 0px 0px 10px 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: transparent;
+            box-shadow: none;
+
+            .author-self {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                gap: 20px;
+
+                .author-name {
+                    color: black;
+                    font-size: 18px;
+                    font-weight: bold;
+                    display: block;
+                }
+
+                .author-avatar {
+                    width: 250px;
+                    height: 250px;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+
+    .menu-list {
+        margin-top: 10px;
+        list-style: none;
+        padding: 0;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+
+            &:hover {
+                color: #005bbb;
+                font-weight: 500;
+                
+                svg {
+                    color: #005bbb;
+                }
+            }
+
+            &.active {
+                color: #005bbb;
+                font-weight: bold;
+
+                svg {
+                    color: #005bbb;
+                }
+            }
+
+            svg {
+                color: black;
+            }
+        }
+    }
+}

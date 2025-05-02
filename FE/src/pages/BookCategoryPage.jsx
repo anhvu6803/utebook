@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import "./styles/BookCategoryPage.scss";
 
 import RecommendationBook from "../components/RecommendationBook";
 import CustomImageList from "../components/CustomImageList";
 const BookCategoryPage = ({ pageName }) => {
   const { category } = useParams();
-  console.log(category);
+  const [listBooks, setListBooks] = useState([]);
+  useEffect(() => {
+    const getListNovelsCategory = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/book/random-books/${category}`,
+        );
+        setListBooks(res.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getListNovelsCategory();
+  }, [])
 
   return (
     <div className="book-category-container">
       <RecommendationBook
         pageName={pageName}
         category={category}
+        listBooks={listBooks}
       />
 
       <p className="book-swiper-title">{category}</p>
