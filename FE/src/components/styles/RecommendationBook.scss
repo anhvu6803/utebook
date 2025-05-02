@@ -29,6 +29,8 @@
             width: 720px;
             margin-top: 50px;
             padding: 0;
+            overflow: hidden;
+            max-height: 600px;
 
             .tab-recommend {
                 background: #7FADDD;

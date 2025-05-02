@@ -1,5 +1,6 @@
 // App.jsx
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/ReaderBookPage.scss';
 import { ChevronLeft, Headphones, Maximize, Pause, StepForward, X } from 'lucide-react';
@@ -11,9 +12,12 @@ import CircleLoading from '../components/CircleLoading';
 // Import text content
 //import chapterText from '../assets/chapterText.txt';
 const ReaderBookPage = () => {
+    const { content } = useParams();
+
     const readingRef = useRef(false);
     const pauseRef = useRef(false);
     const loadingButtonRef = useRef(null);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(30);
     const [isReading, setIsReading] = useState(readingRef.current);
@@ -25,26 +29,21 @@ const ReaderBookPage = () => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        // Kết nối đến máy chủ Socket.IO của bạn
+
         const newSocket = io('http://localhost:3000'); // Điều chỉnh URL phù hợp với máy chủ của bạn
 
-        // Lắng nghe sự kiện 'reading_completed'
         newSocket.on('reading_completed', (data) => {
             console.log('Đã nhận sự kiện reading_completed:', data);
             readingRef.current = data.is_reading;
             setIsReading(readingRef.current);
 
-            // Thực hiện các hành động khác khi đọc hoàn tất
             if (!data.is_reading) {
                 console.log('Đọc văn bản đã hoàn tất');
-                // Ví dụ: hiển thị thông báo, cập nhật UI, v.v.
             }
         });
 
-        // Lưu socket vào state để sử dụng sau này
         setSocket(newSocket);
 
-        // Dọn dẹp khi component unmount
         return () => {
             newSocket.disconnect();
         };
@@ -54,10 +53,16 @@ const ReaderBookPage = () => {
         const fetchTextFromDrive = async () => {
             try {
                 setIsLoading(true);
-                // Gửi yêu cầu POST để lấy văn bản từ Google Drive
+
+                const responseChapter = await axios.get(
+                    `http://localhost:5000/api/chapter/chapter/${content}`
+                );
+
+                console.log(responseChapter.data.data.viewlink);
+
                 const response = await axios.post(
                     'http://localhost:3000/api/get_drive',
-                    { drive_link: "https://drive.google.com/file/d/1A4LAsIEXV2ZARRg04dx5yR_BKeZyl85G/view?usp=sharing" }
+                    { drive_link: responseChapter.data.data.viewlink }
                 );
 
                 // Lấy văn bản từ phản hồi API
@@ -208,7 +213,7 @@ const ReaderBookPage = () => {
                                 >
                                     <X />
                                 </button>
-                                
+
                                 {isPause ?
                                     (
                                         <button

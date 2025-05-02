@@ -1,0 +1,129 @@
+// UserProfile.scss
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.section {
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .leaf-icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    h2 {
+        font-size: 22px;
+        color: #333;
+        margin: 0;
+    }
+}
+
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.stat-box {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        background-color: #8CC63F;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+
+        svg {
+            color: white;
+        }
+    }
+
+    .stat-info {
+        h3 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+    }
+}
+
+.info-form {
+    width: 100%;
+
+    .form-row {
+        display: flex;
+        margin-bottom: 20px;
+
+        label {
+            flex: 0 0 150px;
+            color: #666;
+            padding-top: 5px;
+        }
+
+        .form-value {
+            flex: 1;
+            color: #333;
+        }
+    }
+
+    .update-button {
+        display: block;
+        margin-left: auto;
+        background-color: #8CC63F;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #7bb52f;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+    }
+
+    .form-row {
+        flex-direction: column;
+
+        label {
+            margin-bottom: 5px;
+        }
+    }
+}

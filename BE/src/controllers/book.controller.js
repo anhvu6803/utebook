@@ -153,7 +153,7 @@ exports.updateBook = async (req, res) => {
         }
 
         const updatedBook = await BookService.updateBook(id, updateData);
-        
+
         res.status(200).json({
             success: true,
             message: 'Cập nhật sách thành công',
@@ -184,7 +184,7 @@ exports.deleteBook = async (req, res) => {
     try {
         const { id } = req.params;
         await BookService.deleteBook(id);
-        
+
         res.status(200).json({
             success: true,
             message: 'Xóa sách thành công'
@@ -202,5 +202,57 @@ exports.deleteBook = async (req, res) => {
                 message: error.message || 'Có lỗi xảy ra khi xóa sách'
             });
         }
+    }
+};
+
+exports.getRandomBooks = async (req, res) => {
+    try {
+        const books = await BookService.getRandomBooks();
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách ngẫu nhiên thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getRandomBooks controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
+    }
+};
+
+exports.getBooksByCategory = async (req, res) => {
+    try {
+        const { category } = req.body;
+        const books = await BookService.getBooksByCategory(category);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách ngẫu nhiên thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getRandomBooks controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
+    }
+};
+exports.getRandomBooksByCategory = async (req, res) => {
+    try {
+        const { category } = req.params;
+        const books = await BookService.getRandomBooksByCategory(category);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách ngẫu nhiên thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getRandomBooks controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
     }
 };

@@ -12,29 +12,33 @@ export default function NovelMenu() {
       onMouseLeave={() => setIsOpen(false)} // Đóng khi rời chuột khỏi menu
     >
       <a href="/utebook/novel" className="category-link">
-        Sách truyện 
+        Sách hoa phượng
       </a>
 
       <div className={`category-menu ${isOpen ? "active" : ""}`}>
         <div className="menu-header">
-          <span> Sách truyện </span>
+          <span> Sách hoa phượng </span>
         </div>
         <div className="menu-grid">
           <ul>
-            <li>Hiện đại</li>
+            <li>Đô thị</li>
+            <li>Ngôn tình</li>
           </ul>
 
           <ul>
-            <li>Cổ đại </li>
-          </ul>
-
-          <ul>
-            <li>Huyền huyễn</li>
+            <li>Linh dị </li>
+            <li>Truyện ma</li>
           </ul>
 
           <ul>
             <li>Tiên hiệp </li>
           </ul>
+
+          <ul>
+            <li>Trinh thám </li>
+          </ul>
+
+
         </div>
 
         <div className="menu-footer">

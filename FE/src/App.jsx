@@ -51,6 +51,8 @@ import DetailBookPage from "./pages/DetailBookPage";
 import DetailNovelPage from "./pages/DetailNovelPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReaderBookPage from "./pages/ReaderBookPage";
+import AuthorChannelPage from "./pages/AuthorChannelPage";
+
 
 const App = () => {
   return (
@@ -83,7 +85,7 @@ const App = () => {
           <Route path="novel" element={<NovelLayout />}>
             <Route index element={<NovelPage />} />
             <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
-            <Route path="detailBook" element={<DetailNovelPage />} />
+            <Route path="view/:idNovel" element={<DetailNovelPage />} />
           </Route>
           <Route path="podcast" element={<PodcastLayout />}>
             <Route index element={<PodcastPage />} />
@@ -94,15 +96,19 @@ const App = () => {
             <Route path=":category" element={<BookCategoryPage />} />
           </Route>
           <Route path="account" element={<AccountSettingLayout />}>
+            <Route index element={<AccountSettingPage />} />
             <Route path="profile" element={<AccountSettingPage />} />
             <Route path="bookcase" element={<AccountLibraryPage />} />
             <Route path="achievements" element={<AccountAchievement />} />
             <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
           </Route>
-          <Route path="/utebook/author" element={<AuthorSettingLayout />}>
+          <Route path="author" element={<AuthorSettingLayout />}>
+            <Route index element={<AuthorChannelPage />} />
+            <Route path="channel" element={<AuthorChannelPage />} />
+            <Route path="my-story" element={<AccountLibraryPage />} />
           </Route>
         </Route>
-        <Route path="utebook-reader" element={<ReaderBookPage />} />
+        <Route path="utebook-reader/:content" element={<ReaderBookPage />} />
 
         <Route path="/utebook/package-plan" element={
           <ProtectedRoute>

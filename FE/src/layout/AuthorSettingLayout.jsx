@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import AccountSettingMenu from "../components/AccountSettingMenu";
+import AuthorSettingMenu from "../components/AuthorSettingMenu";
 import "./styles/AuthorSettingLayout.scss";
 
 const AuthorSettingLayout = () => {
   return (
     <div className="layout-author">
-      <AccountSettingMenu className="menu-bar" />
+      <AuthorSettingMenu className="menu-bar" />
       <main className="content-account">
         <Outlet />
       </main>

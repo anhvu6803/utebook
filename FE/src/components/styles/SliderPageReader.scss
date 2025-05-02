@@ -7,13 +7,14 @@
     height: 100%;
 
     .text-content {
-      padding: 20px;
       width: 900px;
       height: 500px;
-      display: block;
+      display: flex;
+      flex-direction: column;
       text-align: left;
+      justify-content: center;
       position: absolute;
-      top: 60%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
 

@@ -6,7 +6,7 @@ const CreativeBook = () => {
 
   return (
     <div className="book-page-container">
-      <RecommendationBook pageName={"creative"} />
+      <RecommendationBook pageName={"creative"}/>
       <div className="book-swiper">
         <p className="book-swiper-title">UTEBOOK đề xuất</p>
         <BookSwiper />
@@ -16,3 +16,4 @@ const CreativeBook = () => {
 };
 
 export default CreativeBook;
+

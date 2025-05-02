@@ -10,6 +10,7 @@ import 'swiper/css/autoplay';
 
 const SliderImageBook = ({ images, isShow, setIndexBook }) => {
     const swiperRef = useRef(null);
+    const imagesTemp = images.map((image) => image);
     const handleNext = () => {
         if (swiperRef.current) {
             swiperRef.current.swiper.slideNext();
@@ -46,12 +47,11 @@ const SliderImageBook = ({ images, isShow, setIndexBook }) => {
                 className="mySwiper"
                 onSlideChange={() => setIndexBook(swiperRef.current.swiper.realIndex)}
             >
-                {images.map((image) => (
-                    <SwiperSlide key={image.id}>
+                {imagesTemp.map((image, index) => (
+                    <SwiperSlide key={index}>
                         <img
-                            srcSet={`${image.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                            src={`${image.image}?w=248&fit=crop&auto=format`}
-                            alt={`Slide ${image.id}`}
+                            srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            src={`${image}?w=248&fit=crop&auto=format`}
                             loading="lazy"
                             className='img-slide'
                         />

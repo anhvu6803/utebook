@@ -6,7 +6,7 @@ const AudioBookPage = () => {
 
   return (
     <div className="book-page-container">
-      <RecommendationBook pageName={"audio"} />
+      <RecommendationBook pageName={"audio"}/>
       <div className="book-swiper">
         <p className="book-swiper-title">UTEBOOK đề xuất</p>
         <BookSwiper />
@@ -16,3 +16,4 @@ const AudioBookPage = () => {
 };
 
 export default AudioBookPage;
+
