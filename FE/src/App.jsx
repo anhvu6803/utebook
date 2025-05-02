@@ -69,7 +69,7 @@ const App = () => {
             <Route path="payment/success" element={<PaymentResultPage />} />
             <Route path="payment/failed" element={<PaymentResultPage />} />
           </Route>
-          
+
           {/* Protected routes */}
           <Route path="/utebook" element={<ProtectedRoute><HomeLayout /></ProtectedRoute>}>
             <Route index element={<HomePage />} />
@@ -85,7 +85,7 @@ const App = () => {
             <Route path="novel" element={<NovelLayout />}>
               <Route index element={<NovelPage />} />
               <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
-              <Route path="detailBook" element={<DetailNovelPage />} />
+              <Route path="view/:idNovel" element={<DetailNovelPage />} />
             </Route>
             <Route path="podcast" element={<PodcastLayout />}>
               <Route index element={<PodcastPage />} />
@@ -101,27 +101,27 @@ const App = () => {
               <Route path="achievements" element={<AccountAchievement />} />
               <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
             </Route>
-            <Route path="author" element={<AuthorSettingLayout />} />
+            <Route path="author" element={<AuthorSettingLayout />}>
+              <Route index element={<AuthorChannelPage />} />
+              <Route path="channel" element={<AuthorChannelPage />} />
+              <Route path="my-story" element={<AccountLibraryPage />} />
+            </Route>
           </Route>
-          
-          <Route path="/utebook-reader" element={<ProtectedRoute><ReaderBookPage /></ProtectedRoute>} />
-          
+
+          <Route path="/utebook-reader/:content" element={<ProtectedRoute><ReaderBookPage /></ProtectedRoute>} />
+
           <Route path="/utebook/package-plan" element={<ProtectedRoute><PackageLayout /></ProtectedRoute>}>
             <Route index element={<MembershipPlansPage />} />
             <Route path="hoa-phuong" element={<HoaPhuongPage />} />
             <Route path="activate-code" element={<ActivateCodePage />} />
             <Route path="thong-tin/nhan-ma-khuyen-mai" element={<WhereIsCodePage />} />
-          <Route path="novel" element={<NovelLayout />}>
-            <Route index element={<NovelPage />} />
-            <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
-            <Route path="view/:idNovel" element={<DetailNovelPage />} />
           </Route>
-          
+
           <Route element={<UserLayout />}>
             <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
             <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
           </Route>
-          
+
           <Route path="/utebook-admin" element={<ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>}>
             <Route index element={<ManageUserPage />} />
             <Route path="books" element={<ManageBookPage />} />
@@ -135,63 +135,8 @@ const App = () => {
           </Route>
         </Routes>
       </AuthProvider>
-          <Route path="account" element={<AccountSettingLayout />}>
-            <Route index element={<AccountSettingPage />} />
-            <Route path="profile" element={<AccountSettingPage />} />
-            <Route path="bookcase" element={<AccountLibraryPage />} />
-            <Route path="achievements" element={<AccountAchievement />} />
-            <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
-          </Route>
-          <Route path="author" element={<AuthorSettingLayout />}>
-            <Route index element={<AuthorChannelPage />} />
-            <Route path="channel" element={<AuthorChannelPage />} />
-            <Route path="my-story" element={<AccountLibraryPage />} />
-          </Route>
-        </Route>
-        <Route path="utebook-reader/:content" element={<ReaderBookPage />} />
-
-        <Route path="/utebook/package-plan" element={
-          <ProtectedRoute>
-            <PackageLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<MembershipPlansPage />} />
-          <Route path="hoa-phuong" element={<HoaPhuongPage />} />
-          <Route path="activate-code" element={<ActivateCodePage />} />
-          <Route path="thong-tin/nhan-ma-khuyen-mai" element={<WhereIsCodePage />} />
-        </Route>
-
-        <Route element={<UserLayout />}>
-          <Route path="/cart" element={
-            <ProtectedRoute>
-              <CartPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/checkout" element={
-            <ProtectedRoute>
-              <CheckoutPage />
-            </ProtectedRoute>
-          } />
-        </Route>
-
-        <Route path="/utebook-admin" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<ManageUserPage />} />
-          <Route path="books" element={<ManageBookPage />} />
-          <Route path="audio-books" element={<ManageAudioBookPage />} />
-          <Route path="categories" element={<ManageCategoryPage />} />
-          <Route path="statistics" element={<StatisticsPage />} />
-          <Route path="point" element={<ManagePointPage />} />
-          <Route path="membership" element={<ManageMembershipPage />} />
-          <Route path="events" element={<ManageEventPage />} />
-          <Route path="writing" element={<ManageWritingPage />} />
-        </Route>
-      </Routes>
-    </Router>
-  )
+    </Router >
+  );
 }
 
 export default App;
