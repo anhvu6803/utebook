@@ -3,14 +3,45 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/ReaderBookPage.scss';
-import { ChevronLeft, Headphones, Maximize, Pause, StepForward, X } from 'lucide-react';
+import { ChevronLeft, Headphones, Maximize, Pause, StepForward, X, List, BookOpen } from 'lucide-react';
 import { Spin } from 'antd';
 import io from 'socket.io-client';
 import CustomSlider from '../components/CustomSlider';
 import SliderPageReader from '../components/SliderPageReader';
 import CircleLoading from '../components/CircleLoading';
+import MenuChapter from '../components/MenuChapter';
 // Import text content
 //import chapterText from '../assets/chapterText.txt';
+const parseChapterName = (chapterName) => {
+    const match = chapterName.match(/^Chương\s+(\d+)[\s_:.-]*\s*(.+)?$/i);
+    if (match) {
+        return {
+            chapterNumber: parseInt(match[1], 10),
+            title: match[2] ? match[2].trim() : ''
+        };
+    } else {
+        return {
+            chapterNumber: null,
+            title: chapterName.trim()
+        };
+    }
+};
+
+const sortChapters = (chapterList, reverse = false) => {
+    return chapterList
+        .map(ch => ({
+            ...ch,
+            _parsed: parseChapterName(ch.chapterName)
+        }))
+        .filter(ch => ch._parsed.chapterNumber !== null)
+        .sort((a, b) =>
+            reverse
+                ? b._parsed.chapterNumber - a._parsed.chapterNumber
+                : a._parsed.chapterNumber - b._parsed.chapterNumber
+        )
+        .map(({ _parsed, ...original }) => original); // Trả lại object gốc, bỏ `_parsed`
+};
+
 const ReaderBookPage = () => {
     const { content } = useParams();
 
@@ -27,6 +58,10 @@ const ReaderBookPage = () => {
     const [textChunks, setTextChunks] = useState([]);
     const linesPerSlide = 5; // Number of lines per slide
     const [socket, setSocket] = useState(null);
+
+    const [bookName, setBookName] = useState('');
+    const [currentChapterName, setCurrentChapterName] = useState('');
+    const [chapters, setChapters] = useState([]);
 
     useEffect(() => {
 
@@ -57,29 +92,58 @@ const ReaderBookPage = () => {
                 const responseChapter = await axios.get(
                     `http://localhost:5000/api/chapter/chapter/${content}`
                 );
+                if (responseChapter.data.success) {
+                    setCurrentChapterName(responseChapter.data.data.chapterName);
+                    const idNovel = responseChapter.data.data.bookId;
+                    const responseBook = await axios.get(`http://localhost:5000/api/book/books/${idNovel}`);
 
-                console.log(responseChapter.data.data.viewlink);
+                    console.log(responseBook.data.data);
+                    if (responseBook.data.success) {
+                        const bookData = responseBook.data.data;
+                        setBookName(bookData.bookname);
+                        if (bookData.chapterIds !== null) {
+                            try {
+                                const chapterPromises = bookData.chapterIds.map(async (chapter) => {
+                                    try {
+                                        const response = await axios.get(`http://localhost:5000/api/chapter/chapter/${chapter}`);
+                                        return response.data.data; // trả về data nếu request thành công
+                                    } catch (error) {
+                                        console.error(`Error fetching chapter ${chapter}:`, error);
+                                        return null; // nếu có lỗi, trả về null để không ảnh hưởng đến các chapter khác
+                                    }
+                                });
+                                const chaptersData = await Promise.all(chapterPromises);
 
-                const response = await axios.post(
-                    'http://localhost:3000/api/get_drive',
-                    { drive_link: responseChapter.data.data.viewlink }
-                );
+                                const validChapters = chaptersData.filter((chapter) => chapter !== null);
+                                setChapters(sortChapters(validChapters)); // sắp xếp lịch sử cơ bản (validChapters);
+                                console.log(sortChapters(validChapters));
+                            } catch (error) {
+                                console.error('Error fetching chapters:', error);
+                            }
+                        }
+                    }
 
-                // Lấy văn bản từ phản hồi API
-                const chapterText = response.data.text;
+                    const response = await axios.post(
+                        'http://localhost:3000/api/get_drive',
+                        { drive_link: responseChapter.data.data.viewlink }
+                    );
 
-                // Tiến hành xử lý văn bản sau khi nhận được
-                const allLines = chapterText.split('\n').filter(line => line.trim() !== '');
+                    // Lấy văn bản từ phản hồi API
+                    const chapterText = response.data.text;
 
-                // Chia văn bản thành các nhóm nhỏ mỗi nhóm 5 dòng
-                const chunks = [];
-                for (let i = 0; i < allLines.length; i += linesPerSlide) {
-                    chunks.push(allLines.slice(i, i + linesPerSlide));
+                    // Tiến hành xử lý văn bản sau khi nhận được
+                    const allLines = chapterText.split('\n').filter(line => line.trim() !== '');
+
+                    // Chia văn bản thành các nhóm nhỏ mỗi nhóm 5 dòng
+                    const chunks = [];
+                    for (let i = 0; i < allLines.length; i += linesPerSlide) {
+                        chunks.push(allLines.slice(i, i + linesPerSlide));
+                    }
+
+                    // Cập nhật state với các đoạn văn bản đã phân nhóm
+                    setTextChunks(chunks);
+                    setTotalPages(chunks.length);
                 }
-
-                // Cập nhật state với các đoạn văn bản đã phân nhóm
-                setTextChunks(chunks);
-                setTotalPages(chunks.length);
 
             } catch (error) {
                 console.error('Error fetching or processing the text:', error);
@@ -196,12 +260,15 @@ const ReaderBookPage = () => {
     return (
         <div className="ebook-reader">
             <div className="top-bar">
-                <button className="nav-button">
+                <button
+                    className="nav-button"
+                    onClick={() => window.history.back()}
+                >
                     <ChevronLeft />
                 </button>
                 <div className='title-container'>
-                    <h1 className="book-title">Bảo bối của ngài Tổng</h1>
-                    <p className='chapter-title'>Chương 24: Ngài Tổng nhìn xa trông rộng</p>
+                    <h1 className="book-title">{bookName}</h1>
+                    <p className='chapter-title'>{currentChapterName}</p>
                 </div>
                 <div className="right-controls">
                     {isReading ?
@@ -248,7 +315,10 @@ const ReaderBookPage = () => {
                             </Spin>
                         )
                     }
-
+                    <MenuChapter
+                        currentChapter={content}
+                        chapters={chapters}
+                    />
                     <button
                         className="control-button"
                         onClick={toggleFullScreen}
@@ -275,7 +345,7 @@ const ReaderBookPage = () => {
 
             <div className="bottom-bar">
                 <div className='bottom-bar-text'>
-                    <div className="chapter-info">Chương 24: Ngài Tổng nhìn xa trông rộng</div>
+                    <div className="chapter-info">{currentChapterName}</div>
                     <div className="progress-text">{((currentPage / totalPages) * 100).toFixed(0)}%</div>
                 </div>
 

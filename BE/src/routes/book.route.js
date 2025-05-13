@@ -10,8 +10,8 @@ const {
     getRandomBooks,
     getBooksByCategory,
     getRandomBooksByCategory,
-    syncChaptersToBook,
-    syncAllChaptersToBooks
+    syncAllChaptersToBooks,
+    syncChaptersToBook
 } = require('../controllers/book.controller');
 const multer = require('multer');
 
@@ -93,7 +93,7 @@ router.put('/books/:id',
 // Delete book route
 router.delete('/books/:id', deleteBook);
 
-router.get('/books/categories/category', getBooksByCategory);
+router.get('/books/categories/:category', getBooksByCategory);
 
 router.get('/random-books', getRandomBooks);
 

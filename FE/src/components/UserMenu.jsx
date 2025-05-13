@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/UserMenu.scss"; // Import SCSS
 import testAvatar from "../assets/testAvatar.jpg";
-import hoaPhuong from "../assets/hoaPhuong.png";
+import { Flower } from "lucide-react";
 import axios from 'axios';
 
 import SupportForm from "./SupportForm";
@@ -61,7 +61,7 @@ const UserMenu = () => {
                                 {typeMemeber === 'vip' ? (<p>Hội viên</p>) : (<p>Gói thường</p>)}
                             </div>
                             <span className="amount-hoaphuong">
-                                <img src={hoaPhuong} alt="testAvatar" className="avatar-hoaphuong" />
+                                <Flower />
                                 <p>{(hoaPhuongAmount).toLocaleString('vi-VN')}</p>
                             </span>
                         </div>

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./styles/AccountInfoTab.scss";
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import testAvatar from "../assets/testAvatar.jpg";
 import axios from 'axios';
+
+import CustomAlert from "./CustomAlert";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const defaultAvatar = 'https://res.cloudinary.com/dbmynlh3f/image/upload/v1744354478/cciryt3jpun1dys5rz8s.png';
 const AccountInfoTab = ({ userData }) => {
-    const [username, setUsername] = useState(userData.username);
-    const [userId, setUserId] = useState(userData._id);
+    const username = userData.username;
+    const userId = userData._id;
+    
     const [fullName, setFullName] = useState(userData.fullname);
     const [dob, setDob] = useState(userData.ngaySinh ?
         new Date(userData.ngaySinh).toISOString().split('T')[0] :
         ''
     );
     const [gender, setGender] = useState(userData.gioiTinh);
-    const [profilePicture, setProfilePicture] = useState(userData.avatar || defaultAvatar);
+    const [profilePicture, setProfilePicture] = useState(userData?.avatar || defaultAvatar);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [alert, setAlert] = useState({
@@ -63,12 +63,17 @@ const AccountInfoTab = ({ userData }) => {
             });
             return;
         }
+    
         if (file) {
             setSelectedFile(file);
+    
             const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfilePicture(reader.result);
+            };
             reader.readAsDataURL(file);
         }
-    };
+    };    
 
     const handleUploadImage = async () => {
         try {
@@ -93,6 +98,7 @@ const AccountInfoTab = ({ userData }) => {
                 message: 'Có lỗi khi đăng ảnh đại diện',
                 severity: 'error'
             });
+            setIsLoading(false);
             return;
         }
     };
@@ -116,9 +122,11 @@ const AccountInfoTab = ({ userData }) => {
         catch (error) {
             setAlert({
                 open: true,
-                message: error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật thông tin',
+                message: error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật thông tin cá nhân',
                 severity: 'error'
             });
+            setIsLoading(false);
+            return;
         }
     }
 
@@ -138,6 +146,8 @@ const AccountInfoTab = ({ userData }) => {
                 message: error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật thông tin',
                 severity: 'error'
             });
+            setIsLoading(false);
+            return;
         } finally {
             setIsLoading(false);
             setAlert({
@@ -257,24 +267,7 @@ const AccountInfoTab = ({ userData }) => {
                 </div>
             </div>
 
-            <Snackbar
-                open={alert.open}
-                autoHideDuration={6000}
-                onClose={handleCloseAlert}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                sx={{
-                    left: '10px !important',
-                    bottom: '80px !important'
-                }}
-            >
-                <Alert
-                    onClose={handleCloseAlert}
-                    severity={alert.severity}
-                    sx={{ width: '100%' }}
-                >
-                    {alert.message}
-                </Alert>
-            </Snackbar>
+            <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
         </div>
     );
 };

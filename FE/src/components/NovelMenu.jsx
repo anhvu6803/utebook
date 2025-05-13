@@ -1,9 +1,33 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Star, Book, Wallet, Sparkles } from "lucide-react";
 import "./styles/CategoryMenu.scss"; // Import SCSS
 
+const menuItems = [
+  { path: '/utebook/novel/Đô thị', label: "Đô thị" },
+  { path: "/utebook/novel/Ngôn tình", label: "Ngôn tình" },
+  { path: "/utebook/novel/Linh dị", label: "Linh dị" },
+  { path: "/utebook/novel/Ma", label: "Truyện ma" },
+  { path: "/utebook/novel/Tiên hiệp", label: "Tiên hiệp" },
+  { path: "/utebook/novel/Trinh thám", label: "Trinh thám" },
+];
+
+const groupIntoFour = (items) => {
+  const groups = [[], [], [], []];
+  items.forEach((item, index) => {
+    groups[index % 4].push(item); // phân tán đều qua 4 nhóm
+  });
+  return groups;
+};
+
 export default function NovelMenu() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLoadLink = (link) => {
+    navigate(link);
+    window.location.reload();
+  };
 
   return (
     <div
@@ -20,27 +44,16 @@ export default function NovelMenu() {
           <span> Sách hoa phượng </span>
         </div>
         <div className="menu-grid">
-          <ul>
-            <li>Đô thị</li>
-            <li>Ngôn tình</li>
-          </ul>
-
-          <ul>
-            <li>Linh dị </li>
-            <li>Truyện ma</li>
-          </ul>
-
-          <ul>
-            <li>Tiên hiệp </li>
-          </ul>
-
-          <ul>
-            <li>Trinh thám </li>
-          </ul>
-
-
+          {groupIntoFour(menuItems).map((group, index) => (
+            <ul key={index}>
+              {group.map((item, idx) => (
+                <li key={idx} onClick={() => handleLoadLink(item.path)}>
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          ))}
         </div>
-
         <div className="menu-footer">
           <div class="menu-header">Khám phá ngay</div>
           <button className="menu-btn"><Star size={16} /> Sách mới nhất</button>

@@ -1,14 +1,13 @@
 // UserProfile.jsx
 import React from 'react';
-import './styles/AuthorChannelPage.scss';
+import './styles/AuthorSettingPage.scss';
 import { FileText, List, Heart, Star } from 'lucide-react';
 
-const AuthorChannelPage = () => {
+const AuthorSettingPage = () => {
     return (
         <div className="profile-container">
             <div className="section achievements">
                 <div className="section-header">
-                    <span className="leaf-icon">🍃</span>
                     <h2>Thành tích</h2>
                 </div>
 
@@ -57,7 +56,6 @@ const AuthorChannelPage = () => {
 
             <div className="section personal-info">
                 <div className="section-header">
-                    <span className="leaf-icon">🍃</span>
                     <h2>Thông tin cá nhân</h2>
                 </div>
 
@@ -79,4 +77,4 @@ const AuthorChannelPage = () => {
     );
 };
 
-export default AuthorChannelPage;
+export default AuthorSettingPage;

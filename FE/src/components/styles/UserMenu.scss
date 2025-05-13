@@ -126,11 +126,10 @@
                         align-items: center;
                         gap: 5px;
 
-                        img {
+                        svg {
                             width: 13px;
                             height: 13px;
-                            object-fit: cover;
-                            border: none;
+                            color: #ff375f;
                         }
 
                         p {

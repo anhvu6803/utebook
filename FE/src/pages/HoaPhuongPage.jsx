@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./styles/HoaPhuongPage.scss";
 import background2 from "../assets/background2.jpg";
-import hoaPhuong from "../assets/hoaPhuong.png";
-import { Leaf } from "lucide-react";
+
+import { Leaf, Flower } from "lucide-react";
 import axios from "../utils/axios";
 import PaymentMethodModal from "../components/PaymentMethodModal";
 
@@ -71,18 +71,18 @@ const HoaPhuongPage = () => {
         <div className="plans-hoaphuong">
           {plans.map((plan) => (
             <div key={plan._id} className={`plan ${plan.popular ? "popular" : ""}`}>
-              {plan.popular && <span className="badge">PHỔ BIẾN</span>}
+              {plan.price === 399000 && <span className="badge">PHỔ BIẾN</span>}
               <div className="header-plan">
-                <img src={hoaPhuong} alt="hoaPhuong" className="icon-header" />
+                <Flower className="icon-header" />
                 <h3>{plan.name}</h3>
                 <p className="sub-header">Khuyến mãi kênh thanh toán tới</p>
                 <div className="value-container">
                   <span className="value-item">
-                    <img src={hoaPhuong} className="hoaphuong-img" />
+                    <Flower className="hoaphuong-img" />
                     <p className="hoaphuong-p">{plan.quantity_HoaPhuong.toLocaleString('vi-VN')}</p>
                   </span>
                   <span className="value-item">
-                    <Leaf />
+                    <Leaf className="leaf-img"/>
                     <p className="leaf-p">{plan.quantity_La.toLocaleString('vi-VN')}</p>
                   </span>
                 </div>

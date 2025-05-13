@@ -51,7 +51,8 @@ import DetailBookPage from "./pages/DetailBookPage";
 import DetailNovelPage from "./pages/DetailNovelPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReaderBookPage from "./pages/ReaderBookPage";
-import AuthorChannelPage from "./pages/AuthorChannelPage";
+import AuthorSettingPage from "./pages/AuthorSettingPage";
+import AuthorProfile from "./pages/AuthorProfilePage";
 import ManageNotificationPage from "./pages/Admin/ManageNotification";
 
 const App = () => {
@@ -98,14 +99,14 @@ const App = () => {
             <Route path="account" element={<AccountSettingLayout />}>
               <Route path="profile" element={<AccountSettingPage />} />
               <Route path="bookcase" element={<AccountLibraryPage />} />
-              <Route path="achievements" element={<AccountAchievement />} />
               <Route path="transaction-histories" element={<AccountHistoryTransactionPage />} />
             </Route>
             <Route path="author" element={<AuthorSettingLayout />}>
-              <Route index element={<AuthorChannelPage />} />
-              <Route path="channel" element={<AuthorChannelPage />} />
+              <Route index element={<AuthorSettingPage />} />
+              <Route path="channel" element={<AuthorSettingPage />} />
               <Route path="my-story" element={<AccountLibraryPage />} />
             </Route>
+            <Route path="author-profile" element={<AuthorProfile />} />
           </Route>
 
           <Route path="/utebook-reader/:content" element={<ProtectedRoute><ReaderBookPage /></ProtectedRoute>} />

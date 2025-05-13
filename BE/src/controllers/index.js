@@ -8,6 +8,7 @@ const PaymentController = require('../controllers/payment.controller');
 const AuthController = require('../controllers/auth.controller')
 const TwilioController = require('../controllers/twilio.controller')
 const CloudinaryController = require('../controllers/cloudinary.controller');
+const HistoryReadingController = require('../controllers/historyReading.controller');
 module.exports = {
     UserController,
     BookController,
@@ -18,5 +19,6 @@ module.exports = {
     CloudinaryController,
     PointPackageController,
     MembershipPackageController,
-    PaymentController
+    PaymentController,
+    HistoryReadingController
 };

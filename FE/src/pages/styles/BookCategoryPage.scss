@@ -1,23 +1,23 @@
 .book-category-container {
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 20px;
     padding-bottom: 20px;
 
-    .book-swiper {
-        width: 100%;
+    .book-page {
+        width: 1400px;
         height: fit-content;
-        padding: 20px 0px;
+        padding: 0px;
         display: flex;
         flex-direction: column;
-        text-align: left;
         position: relative;
 
-        .book-swiper-title {
+        .book-page-title {
             font-size: 24px;
             font-weight: 500;
+            text-align: left;
             margin-bottom: 20px;
-            margin-left: 20px;
         }
 
     }
