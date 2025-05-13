@@ -10,8 +10,9 @@ const {
     getRandomBooks,
     getBooksByCategory,
     getRandomBooksByCategory,
+    syncAllChaptersToBooks,
+    syncChaptersToBook
 } = require('../controllers/book.controller');
-const { getAllBooks, addBook, getBookById, updateBook, deleteBook, syncChaptersToBook, syncAllChaptersToBooks } = require('../controllers/book.controller');
 const multer = require('multer');
 
 // Configure multer for file uploads
@@ -92,7 +93,7 @@ router.put('/books/:id',
 // Delete book route
 router.delete('/books/:id', deleteBook);
 
-router.get('/books/categories/category', getBooksByCategory);
+router.get('/books/categories/:category', getBooksByCategory);
 
 router.get('/random-books', getRandomBooks);
 

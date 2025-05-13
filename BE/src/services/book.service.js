@@ -13,8 +13,8 @@ exports.getAllBooks = async () => {
 
 exports.getBookById = async (bookId) => {
     try {
-        const book = await Book.findById(bookId)
-            .select('bookname _id chapterIds image author categories description type pushlisher ageLimit');
+        const book = await Book.findById(bookId);
+        
         if (!book) {
             throw new Error('Book not found');
         }

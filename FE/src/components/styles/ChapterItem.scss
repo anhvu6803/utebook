@@ -29,10 +29,11 @@
     align-items: center;
     gap: 5px;
 
-    img {
+    svg {
         object-fit: cover;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
+        color: #ff375f;
     }
 
     p {

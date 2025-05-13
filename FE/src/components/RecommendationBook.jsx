@@ -52,6 +52,7 @@ function RecommendationBook({ pageName, category, listBooks }) {
     }
     const handleCategoryChange = (value) => {
         navigate(`/utebook/${pageName}/${value}`);
+        window.location.reload();
         setSelectedCategory(value);
         if (pageName === 'novel') {
             getListBooksByCategory(value);
@@ -163,7 +164,7 @@ const categoriesNovel = [
     { label: 'Trinh thám', value: 'Trinh thám' },
     { label: 'Ngôn tình', value: 'Ngôn tình' },
     { label: 'Linh dị', value: 'Linh dị' },
-    { label: 'Ma', value: 'Ma' },
+    { label: 'Truyện Ma', value: 'Truyện Ma' },
 ];
 
 const categoriesEbook = [

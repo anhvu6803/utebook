@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 import "./styles/AccountSettingMenu.scss"; // Import SCSS
-import testAvatar from "../assets/testAvatar.jpg";
-import hoaPhuong from "../assets/hoaPhuong.png";
 
 import SupportForm from "./SupportForm";
-import { Medal, Leaf } from "lucide-react";
+import { Leaf, Flower } from "lucide-react";
 import PersonIcon from '@mui/icons-material/Person';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
 
 const menuItems = [
     { path: "/utebook/account/profile", label: "Quản lý tài khoản", icon: <PersonIcon /> },
     { path: "/utebook/account/bookcase", label: "Tủ sách cá nhân", icon: <ListAltIcon /> },
-    { path: "/utebook/account/achievements", label: "Thành tích", icon: <Medal /> },
+    // { path: "/utebook/account/achievements", label: "Thành tích", icon: <Medal /> },
     // { path: "/utebook/account/orders", label: "Quản lý đơn hàng", icon: <ReceiptIcon /> },
     { path: "/utebook/account/transaction-histories", label: "Lịch sử giao dịch", icon: <ReceiptLongIcon /> },
 ];
+const defaultAvatar = 'https://res.cloudinary.com/dbmynlh3f/image/upload/v1744354478/cciryt3jpun1dys5rz8s.png';
 
-const hoaPhuongAmount = 100000;
 const typeMemeber = 'normal';
 const AccountSettingMenu = () => {
+    const auth = useAuth();
+    const userData = auth.user;
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(userData?.avatar || defaultAvatar);
+    const [hoaPhuongAmount, setHoaPhuongAmout] = useState(0);
+    const [leafAmount, setLeafAmount] = useState(0);
     const handleClick = (item) => {
         navigate(item.path);
     }
@@ -34,18 +38,43 @@ const AccountSettingMenu = () => {
     const handleShowForm = (boolean) => {
         setShowForm(boolean);
     }
+
+    useEffect(() => {
+        if (userData) {
+            const getPoints = async () => {
+                try {
+                    const res = await axios.get(
+                        `http://localhost:5000/api/points/${userData._id}`
+                    )
+                    if (res.data.success) {
+                        setHoaPhuongAmout(res.data.data.quantity_HoaPhuong);
+                        setLeafAmount(res.data.data.quantity_La);
+                    }
+                }
+                catch(err){
+                    console.log(err); // eslint-disable-line no-consolen
+                }
+            }
+            getPoints();
+        }
+    }, []);
     return (
         <div className="account-menu">
             <div className="user-header">
                 <div className="user-info">
                     <div className="user-self ">
                         <div className="user-name-container">
-                            <span className="user-name">Anh Vu</span>
-                            {typeMemeber === 'vip' &&
-                                <span className="vip-expire">Hội viên hết hạn 08/12/2025</span>
+                            <span className="user-name">{userData?.fullname || 'Unknown'}</span>
+                            {userData?.isMember &&
+                                <span className="vip-expire">Hội viên hết hạn {new Date(userData?.membershipExpirationDate).toLocaleDateString('vi-VN')}</span>
                             }
                         </div>
-                        <img src={testAvatar} alt="testAvatar" className="user-avatar" />
+                        <img
+                            src={profilePicture}
+                            alt="testAvatar"
+                            className="user-avatar"
+                            onError={() => setProfilePicture(defaultAvatar)}
+                        />
                     </div>
 
                     <div className="type-container">
@@ -53,12 +82,12 @@ const AccountSettingMenu = () => {
                             {typeMemeber === 'vip' ? (<p>Hội viên</p>) : (<p>Gói thường</p>)}
                         </div> */}
                         <span className="amount-hoaphuong">
-                            <img src={hoaPhuong} />
+                            <Flower />
                             <p>{(hoaPhuongAmount).toLocaleString('vi-VN')}</p>
                         </span>
                         <span className="amount-leaf">
                             <Leaf />
-                            <p>{(hoaPhuongAmount).toLocaleString('vi-VN')}</p>
+                            <p>{(leafAmount).toLocaleString('vi-VN')}</p>
                         </span>
                     </div>
                 </div>

@@ -1,0 +1,220 @@
+// BookCard.scss
+@use "sass:color";
+
+$primary-color: #10b981; // emerald-500
+$secondary-color: #4b5563; // gray-600
+$background-color: #2a2a2a; // dark gray
+$text-color: #ffffff;
+$text-secondary: #cccccc;
+$hot-label-color: #dc2626; // red-600
+$star-color: #ffba08; // yellow-500
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.card-wrapper {
+    &.reversed {
+        transform: scaleX(-1);
+    }
+
+    .card-container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 700px;
+        height: 320px;
+        padding: 1rem;
+        border-radius: 18px;
+        backdrop-filter: blur(8px);
+        background-color: rgba(0, 0, 0, 0.7);
+        animation: fadeIn 0.3s ease;
+        gap: 5px;
+        backdrop-filter: blur(8px);
+
+        .card-image {
+            display: flex;
+            width: 180px;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            gap: 10px;
+            width: 72%;
+            height: 100%;
+            padding: 20px;
+            transition: transform 0.3s ease;
+
+            .card-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: white;
+                margin-bottom: 10px;
+
+                &.reversed {
+                    transform: scaleX(-1);
+                }
+            }
+
+            .card-author {
+                font-size: 15px;
+                color: white;
+                margin-bottom: 15px;
+
+                &.reversed {
+                    transform: scaleX(-1);
+                }
+            }
+
+            .book-rating {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+
+                .rating-value {
+                    font-weight: bold;
+                    font-size: 20px;
+                    color: $text-color;
+
+                    &.reversed {
+                        transform: scaleX(-1);
+                    }
+                }
+
+                .rating-star {
+                    color: $star-color;
+                    font-size: 20px;
+
+                    &.reversed {
+                        transform: scaleX(-1);
+                    }
+                }
+            }
+
+            .card-description {
+                color: white;
+                font-size: 16;
+                font-weight: normal;
+                width: 100%;
+                margin: 0;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                line-clamp: 4;
+                -webkit-box-orient: vertical;
+
+                &.reversed {
+                    transform: scaleX(-1);
+                }
+            }
+
+            .card-actions {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 10px;
+
+                &.reversed {
+                    transform: scaleX(-1);
+                }
+
+                .btn-read {
+                    background: #005bbb;
+                    padding: 5px 10px;
+                    border-radius: 25px;
+                    border: none;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: 400;
+                    width: 120px;
+                    height: 48px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+
+                    &.reversed {
+                        transform: scaleX(-1);
+                    }
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.8;
+                    }
+                }
+
+                .btn-favorite {
+                    background-color: rgb(204, 204, 204, .2);
+                    padding: 0;
+                    margin: 0;
+                    border-radius: 50%;
+                    border: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 48px;
+                    height: 48px;
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 1px;
+                        margin-top: 1px;
+                        color: #005bbb;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+// Media queries for responsiveness
+@media (max-width: 640px) {
+    .book-container {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .book-cover {
+        position: relative;
+        width: 100%;
+        height: 200px;
+    }
+
+    .book-details {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+
+        .book-description {
+            height: auto;
+            max-height: 120px;
+        }
+    }
+}

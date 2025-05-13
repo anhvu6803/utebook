@@ -226,7 +226,7 @@ exports.getRandomBooks = async (req, res) => {
 
 exports.getBooksByCategory = async (req, res) => {
     try {
-        const { category } = req.body;
+        const { category } = req.params;
         const books = await BookService.getBooksByCategory(category);
         res.status(200).json({
             success: true,

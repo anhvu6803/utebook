@@ -1,26 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./styles/BookCategoryPage.scss";
 
 import RecommendationBook from "../components/RecommendationBook";
 import CustomImageList from "../components/CustomImageList";
+import PaginationButtons from "../components/PaginationButtons";
+
+const splitIntoGroups = (inputList, chunkSize) => {
+  const result = [];
+  for (let i = 0; i < inputList.length; i += chunkSize) {
+    result.push(inputList.slice(i, i + chunkSize));
+  }
+  return result;
+}
+
 const BookCategoryPage = ({ pageName }) => {
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const page = parseInt(searchParams?.get('page') || 1, 10);
+
   const [listBooks, setListBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  //Random books
   useEffect(() => {
     const getListNovelsCategory = async () => {
       try {
+        setIsLoading(true);
         const res = await axios.get(
           `http://localhost:5000/api/book/random-books/${category}`,
         );
         setListBooks(res.data.data);
       } catch (err) {
+        setIsLoading(false);
         console.log(err);
+      }
+      finally {
+        setIsLoading(false);
       }
     }
     getListNovelsCategory();
   }, [])
+
+  //All books
+  useEffect(() => {
+    const getAllBooksbyCategory = async () => {
+      try {
+        setIsLoading(true);
+        const res = await axios.get(
+          `http://localhost:5000/api/book/books/categories/${category}`,
+        );
+        console.log(res.data.data);
+        setAllBooks(res.data.data);
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
+      }
+      finally {
+        setIsLoading(false);
+      }
+    }
+    getAllBooksbyCategory();
+  }, [])
+
+  const handlePageChange = (event, value) => {
+    const currentPath = location.pathname;
+    navigate(`${currentPath}?page=${value}`);
+  };
 
   return (
     <div className="book-category-container">
@@ -29,9 +79,25 @@ const BookCategoryPage = ({ pageName }) => {
         category={category}
         listBooks={listBooks}
       />
-
-      <p className="book-swiper-title">{category}</p>
-      <CustomImageList itemData={itemData} />
+      {!isLoading &&
+        <div className="book-page">
+          <p className="book-page-title">{category}</p>
+          {allBooks.length > 0 &&
+            <>
+              <CustomImageList
+                itemData={splitIntoGroups(allBooks, 30)}
+                page={page}
+                pageName={pageName}
+              />
+              <PaginationButtons
+                count={Math.ceil(allBooks.length / 30)}
+                page={page}
+                handlePageChange={handlePageChange}
+              />
+            </>
+          }
+        </div>
+      }
     </div>
   );
 };

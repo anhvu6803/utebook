@@ -3,7 +3,6 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Roboto', sans-serif;
 }
 
 .section {
@@ -49,7 +48,7 @@
     .icon-circle {
         width: 50px;
         height: 50px;
-        background-color: #8CC63F;
+        background-color: #7FADDD;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -98,7 +97,7 @@
     .update-button {
         display: block;
         margin-left: auto;
-        background-color: #8CC63F;
+        background-color: #7FADDD;
         color: white;
         border: none;
         border-radius: 5px;
@@ -109,7 +108,7 @@
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #7bb52f;
+            background-color: #7FADDD;
         }
     }
 }
