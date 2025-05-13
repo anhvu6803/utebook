@@ -52,7 +52,7 @@ import DetailNovelPage from "./pages/DetailNovelPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReaderBookPage from "./pages/ReaderBookPage";
 import AuthorChannelPage from "./pages/AuthorChannelPage";
-
+import ManageNotificationPage from "./pages/Admin/ManageNotification";
 
 const App = () => {
   return (
@@ -132,6 +132,7 @@ const App = () => {
             <Route path="membership" element={<ManageMembershipPage />} />
             <Route path="events" element={<ManageEventPage />} />
             <Route path="writing" element={<ManageWritingPage />} />
+            <Route path="notifications" element={<ManageNotificationPage/>} />
           </Route>
         </Routes>
       </AuthProvider>

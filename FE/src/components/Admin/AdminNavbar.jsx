@@ -46,6 +46,11 @@ const menuItems = [
      path: "/utebook-admin/events",
   },
   {
+    name: "Quản lý Thông báo",
+    icon: <FeedbackIcon />,
+    path: "/utebook-admin/notifications",
+  },
+  {
     name: "Quản lý sáng tác",
     icon: <EditNoteIcon />,
     path: "/utebook-admin/writing",  

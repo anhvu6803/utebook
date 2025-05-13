@@ -6,17 +6,26 @@ const PointPackage = require('../models/pointPackage.model');
 const MembershipPackage = require('../models/membershipPackage.model');
 const User = require('../models/user.model');
 const Transaction = require('../models/transaction.model');
+
 class PaymentController {
     async createPayment(req, res) {
         try {
-            const { packageId, typePackage, amount } = req.body;
+            const { packageId, typePackage, amount, paymentMethod } = req.body;
             const userId = req.userId;
+
+            if (!packageId || !typePackage || !amount || !paymentMethod) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Missing required fields'
+                });
+            }
 
             const result = await paymentService.createPaymentUrl({
                 userId,
                 packageId,
                 typePackage,
-                amount
+                amount,
+                paymentMethod
             });
 
             res.json({
@@ -65,7 +74,7 @@ class PaymentController {
                     await this.createMembershipHistory(transaction.userId, membershipPackage, transaction._id);
                 }
                 
-                res.redirect(`${process.env.FRONTEND_URL}/payment/success?transactionId=${transaction._id}`);
+                res.redirect(`${process.env.FRONTEND_URL}/utebook`);
             } else {
                 res.redirect(`${process.env.FRONTEND_URL}/payment/failed?transactionId=${transaction._id}`);
             }
@@ -77,11 +86,23 @@ class PaymentController {
         }
     }
 
+    momoIPN = async (req, res) => {
+        try {
+            const result = await paymentService.momoIPN(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(500).json({
+                RspCode: 99,
+                Message: error.message
+            });
+        }
+    }
+
     async getTransaction(req, res) {
         try {
             const { transactionId } = req.params;
             const transaction = await Transaction.findById(transactionId);
-
+            
             if (!transaction) {
                 return res.status(404).json({
                     success: false,
@@ -100,22 +121,19 @@ class PaymentController {
             });
         }
     }
-    
-    // Helper method to update user points
+
+    // Helper methods...
     updateUserPoints = async (userId, pointPackage) => {
         try {
-            // Check if user already has a point record
             let userPoint = await pointService.getPointByUserId(userId);
             
             if (!userPoint) {
-                // Create new point record if it doesn't exist
                 await pointService.createPoint({
                     id_user: userId,
                     quantity_HoaPhuong: pointPackage.quantity_HoaPhuong,
                     quantity_La: pointPackage.quantity_La
                 });
             } else {
-                // Update existing point record
                 await pointService.updatePoint(userId, {
                     quantity_HoaPhuong: userPoint.quantity_HoaPhuong + pointPackage.quantity_HoaPhuong,
                     quantity_La: userPoint.quantity_La + pointPackage.quantity_La
@@ -127,7 +145,6 @@ class PaymentController {
         }
     }
     
-    // Helper method to create point history record
     createPointHistory = async (userId, pointPackage, transactionId) => {
         try {
             await historyPointService.createHistoryPoint({
@@ -144,27 +161,21 @@ class PaymentController {
         }
     }
     
-    // Helper method to update user membership status
     updateUserMembership = async (userId, membershipPackage) => {
         try {
-            // Calculate membership expiration date
             const expirationDate = new Date();
             expirationDate.setDate(expirationDate.getDate() + membershipPackage.expire);
             
-            // Update user's membership status
             await User.findByIdAndUpdate(userId, {
                 isMember: true,
                 membershipExpirationDate: expirationDate
             });
-            
-            console.log(`User ${userId} membership updated. Expires on ${expirationDate}`);
         } catch (error) {
             console.error('Error updating user membership:', error);
             throw error;
         }
     }
 
-    // Helper method to create membership history record
     createMembershipHistory = async (userId, membershipPackage, transactionId) => {
         try {
             await historyPackageService.createHistoryPackage({

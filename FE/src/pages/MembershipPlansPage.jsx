@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./styles/MembershipPlansPage.scss";
 import background from "../assets/background.jpg";
 import axios from "../utils/axios";
+import PaymentMethodModal from "../components/PaymentMethodModal";
 
 const MembershipPlansPage = () => {
   const [plans, setPlans] = useState([]);
   const [error, setError] = useState(null);
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -22,20 +26,30 @@ const MembershipPlansPage = () => {
     fetchPlans();
   }, []);
 
-  const handleBuyPlan = async (plan) => {
+  const handleBuyPlan = (plan) => {
+    setSelectedPlan(plan);
+    setOpenPaymentModal(true);
+  };
+
+  const handlePaymentMethodSelect = async (paymentMethod) => {
     try {
+      setLoading(true);
       const response = await axios.post('/payment/create', {
-        packageId: plan._id,
+        packageId: selectedPlan._id,
         typePackage: 'membership',
-        amount: plan.price
+        amount: selectedPlan.price,
+        paymentMethod
       });
 
       if (response.data.success) {
-        // Chuyển hướng đến trang thanh toán VNPay
         window.location.href = response.data.data.paymentUrl;
       }
     } catch (err) {
       console.error('Payment error:', err);
+      alert('Có lỗi xảy ra khi tạo thanh toán. Vui lòng thử lại sau.');
+    } finally {
+      setLoading(false);
+      setOpenPaymentModal(false);
     }
   };
 
@@ -67,6 +81,13 @@ const MembershipPlansPage = () => {
           ))}
         </div>
       </div>
+
+      <PaymentMethodModal
+        open={openPaymentModal}
+        onClose={() => setOpenPaymentModal(false)}
+        onConfirm={handlePaymentMethodSelect}
+        loading={loading}
+      />
     </>
   );
 };

@@ -24,6 +24,12 @@ const TransactionSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    paymentMethod: {
+        type: String,
+        enum: ['vnpay', 'momo'],
+        required: true
+    },
+    // VNPay fields
     vnp_TransactionNo: {
         type: String
     },
@@ -40,6 +46,25 @@ const TransactionSchema = new mongoose.Schema({
         type: String
     },
     vnp_ResponseCode: {
+        type: String
+    },
+    // MoMo fields
+    momo_RequestId: {
+        type: String
+    },
+    momo_OrderId: {
+        type: String
+    },
+    momo_TransId: {
+        type: String
+    },
+    momo_ResultCode: {
+        type: String
+    },
+    momo_Message: {
+        type: String
+    },
+    momo_PayType: {
         type: String
     }
 }, { timestamps: true });

@@ -10,8 +10,9 @@ const {
     getRandomBooks,
     getBooksByCategory,
     getRandomBooksByCategory,
+    syncChaptersToBook,
+    syncAllChaptersToBooks
 } = require('../controllers/book.controller');
-const { getAllBooks, addBook, getBookById, updateBook, deleteBook, syncChaptersToBook, syncAllChaptersToBooks } = require('../controllers/book.controller');
 const multer = require('multer');
 
 // Configure multer for file uploads

@@ -1,0 +1,128 @@
+.manage-notification {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #ffffff;
+
+  .notification-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #f0f0f0;
+
+      h2 {
+        margin-bottom: 8px;
+        color: #1a1a1a;
+        
+        .anticon {
+          margin-right: 8px;
+          color: #1890ff;
+        }
+      }
+    }
+
+    .notification-form {
+      padding: 0 24px;
+
+      .ant-form-item {
+        margin-bottom: 24px;
+
+        .ant-form-item-label {
+          label {
+            font-weight: 500;
+            color: #262626;
+
+            .anticon {
+              margin-right: 8px;
+              color: #1890ff;
+            }
+          }
+        }
+
+        .ant-input,
+        .ant-select-selector,
+        .ant-input-textarea {
+          border-radius: 8px;
+          border-color: #d9d9d9;
+          transition: all 0.3s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+          }
+        }
+
+        .ant-select-selector {
+          padding: 4px 11px;
+        }
+
+        .ant-tag {
+          margin: 0;
+          padding: 2px 8px;
+          border-radius: 4px;
+        }
+
+        .recipients-select,
+        .selected-users {
+          width: 100%;
+        }
+
+        .message-textarea {
+          resize: vertical;
+          min-height: 120px;
+        }
+
+        .submit-button {
+          height: 48px;
+          font-size: 16px;
+          width: 100%;
+          max-width: 200px;
+          margin: 0 auto;
+          display: block;
+          border-radius: 8px;
+          background: linear-gradient(45deg, #1890ff, #40a9ff);
+          border: none;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+          }
+
+          .anticon {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media screen and (max-width: 768px) {
+  .manage-notification {
+    padding: 16px;
+
+    .notification-container {
+      .notification-form {
+        padding: 0 16px;
+
+        .submit-button {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
