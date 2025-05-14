@@ -13,20 +13,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: [process.env.WEB_URI],
-  credentials: true,
+    origin: ['http://localhost:5173', 'http://localhost:8000', process.env.WEB_URI].filter(Boolean),
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
 app.use('/api', routes);
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(5000);
-  })
-  .catch((error) => {
-    console.log(error);
-  })
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(5000);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
 module.exports = app;
 

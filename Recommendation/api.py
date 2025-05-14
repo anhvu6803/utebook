@@ -9,6 +9,7 @@ import logging
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import traceback
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(
@@ -18,6 +19,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Book Recommendation API")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Initialize recommender
 recommender = None
@@ -81,7 +91,7 @@ def initialize_recommender():
                         'bookname': doc.get('bookname', ''),
                         'author': doc.get('author', ''),
                         'description': doc.get('description', ''),
-                        'coverImage': doc.get('coverImage', ''),
+                        'image': doc.get('image', ''),
                         'rating': float(doc.get('rating', 0))
                     })
                 except Exception as e:
@@ -101,7 +111,7 @@ def initialize_recommender():
         books_df = pd.DataFrame(books_data)
         books_df = books_df.rename(columns={
             '_id': 'item_id',
-            'coverImage': 'cover_image'
+            'image': 'image'
         })
         
         # Fetch chapters data if available
@@ -172,7 +182,7 @@ async def get_recommendations(user_id: str, n_recommendations: int = 5):
                         bookname=book.get('bookname', ''),
                         author=book.get('author', ''),
                         description=book.get('description', ''),
-                        cover_image=book.get('coverImage'),
+                        image=book.get('image'),
                         rating=book.get('rating')
                     ))
             except Exception as e:
