@@ -11,6 +11,11 @@ const AuthorProfile = () => {
 
     return (
         <div className="author-profile">
+            <nav className="navigation">
+                <div className="nav-link">
+                    <a href="/utebook">Trang chủ</a> &gt; {"Trang cá nhân"}
+                </div>
+            </nav>
             <div className="banner">
 
             </div>
@@ -63,14 +68,14 @@ const AuthorProfile = () => {
                     </div>
                 </div>
 
-                <Divider/>
+                <Divider />
 
                 <div className="intro-container">
                     <div className='content-intro'>
                         <span className="title">Giới thiệu</span>
                         <p className="bio">Cô điều dưỡng có đam mê viết tiểu thuyết</p>
-                        
-                        <Divider/>
+
+                        <Divider />
 
                         <div className="contact-info">
                             <div className="contact-item">

@@ -10,6 +10,9 @@ const {
     getRandomBooks,
     getBooksByCategory,
     getRandomBooksByCategory,
+    getBooksByType,
+    getTypeBooksByCategory,
+    getBooksByCategoryNewest,
     syncAllChaptersToBooks,
     syncChaptersToBook
 } = require('../controllers/book.controller');
@@ -95,8 +98,14 @@ router.delete('/books/:id', deleteBook);
 
 router.get('/books/categories/:category', getBooksByCategory);
 
+router.get('/books/type/:type', getBooksByType);
+
+router.get('/type-books/categories-type', getTypeBooksByCategory);
+
 router.get('/random-books', getRandomBooks);
 
 router.get('/random-books/:category', getRandomBooksByCategory);
+
+router.get('/books-newest/categories/:category', getBooksByCategoryNewest);
 
 module.exports = router;

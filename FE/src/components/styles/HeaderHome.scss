@@ -1,12 +1,15 @@
 .header-home {
-  background-color: #7FADDD;
+  background-color: rgb(127, 173, 221, .5);
+  backdrop-filter: blur(8px);
   color: #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   width: 100%;
-  opacity: 0.85;
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  opacity: 1;
 
   span {
     text-transform: none !important;

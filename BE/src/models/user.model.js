@@ -15,7 +15,11 @@ const UserSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     numberPhone: { type: String, required: true },
     isPhoneVerified: { type: Boolean, default: false },
-    listFavoriteBook: { type: [String], default: [] },
+    listFavoriteBook: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
+        default: []
+    }],
 }, { timestamps: true });
 
 // Tạo index cho googleId chỉ khi nó không null

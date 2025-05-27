@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/RecommendationBook.scss"; // Import the SCSS file for styling
@@ -9,6 +9,7 @@ import CustomTitleCategory from "./CustomTitleCategory";
 import { BookOpen, Play } from "lucide-react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CustomAlert from '../components/CustomAlert';
 
 const setCategoriesForPage = (pageName) => {
     if (pageName === 'novel') {
@@ -29,13 +30,13 @@ function RecommendationBook({ pageName, category, listBooks }) {
     const navigate = useNavigate();
     const categories = setCategoriesForPage(pageName);
 
+
     const listBooksTemp = listBooks?.map(book => book) || bookContents;
     const listImagesTemp = listBooks?.map(book => book.image) || imageBooks;
 
     const [isShow, setIsShow] = useState('');
     const [selectedCategory, setSelectedCategory] = useState("Chọn thể loại");
     const [indexBook, setIndexBook] = useState(0);
-    const [isViewLiked, setIsViewLiked] = useState(bookContents.map(book => book.isLiked));
     const [books, setBooks] = useState([]);
     const [imageBooks, setBookImages] = useState([]);
 
@@ -59,14 +60,6 @@ function RecommendationBook({ pageName, category, listBooks }) {
         }
     };
 
-    const handleLikeBook = (index) => {
-        setIsViewLiked((prevLikes) => {
-            const newLikes = [...prevLikes];
-            newLikes[index] = !newLikes[index];
-            return newLikes;
-        });
-        bookContents[index].isLiked = isViewLiked[index];
-    };
     const handleShowBookId = (index) => {
         if (books.length <= 0) return listBooksTemp[index]?._id;
         return books[index]?._id;
@@ -83,6 +76,10 @@ function RecommendationBook({ pageName, category, listBooks }) {
     const handleShowImages = () => {
         if (imageBooks.length <= 0) return listImagesTemp;
         return imageBooks;
+    };
+
+    const handleCloseAlert = () => {
+        setAlert({ ...alert, open: false });
     };
     return (
         <div className="book-recommend-container"
@@ -124,16 +121,7 @@ function RecommendationBook({ pageName, category, listBooks }) {
                             <Play />
                         </button>
                     } */}
-                    <button
-                        className="btn-favorite"
-                        onClick={() => handleLikeBook(indexBook)}
-                    >
-                        {isViewLiked[indexBook] ? (
-                            <FavoriteIcon />
-                        ) : (
-                            <FavoriteBorderIcon />
-                        )}
-                    </button>
+
                 </div>
 
             </div>
@@ -144,6 +132,7 @@ function RecommendationBook({ pageName, category, listBooks }) {
                     setIndexBook={setIndexBook}
                 />
             </div>
+            <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
         </div>
     );
 }

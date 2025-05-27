@@ -4,39 +4,39 @@ const crypto = require('crypto');
 const emailUtil = require('../utils/email.util');
 const jwt = require('jsonwebtoken');
 
- const generateVerificationCode = () => {
+const generateVerificationCode = () => {
     return crypto.randomInt(100000, 999999).toString();
 };
 
- 
+
 const verificationCodes = new Map();
 
 const userService = {
-     async sendVerificationCode(email) {
-         const existingUser = await User.findOne({ email });
+    async sendVerificationCode(email) {
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             throw new Error('Email already registered');
         }
 
-         const verificationCode = generateVerificationCode();
+        const verificationCode = generateVerificationCode();
         verificationCodes.set(email, {
             code: verificationCode,
-            expires: Date.now() + 15 * 60 * 1000 
+            expires: Date.now() + 15 * 60 * 1000
         });
         await emailUtil.sendVerificationCode(email, verificationCode);
 
         return { message: 'Verification code sent successfully' };
     },
 
-     async register(userData, code) {
+    async register(userData, code) {
         const { email, password, ...rest } = userData;
-        
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             throw new Error('Email already registered');
         }
 
-         const storedCode = verificationCodes.get(email);
+        const storedCode = verificationCodes.get(email);
         if (!storedCode) {
             throw new Error('No verification code found for this email');
         }
@@ -50,14 +50,14 @@ const userService = {
             throw new Error('Invalid verification code');
         }
 
-         if (storedCode.used) {
+        if (storedCode.used) {
             verificationCodes.delete(email);
             throw new Error('Verification code has already been used');
         }
 
-         storedCode.used = true;
+        storedCode.used = true;
         verificationCodes.set(email, storedCode);
-    
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
@@ -67,14 +67,14 @@ const userService = {
             isVerified: true
         });
 
-         verificationCodes.delete(email);
+        verificationCodes.delete(email);
 
         return await newUser.save();
     },
 
     async verifyEmail(email, code) {
         const storedCode = verificationCodes.get(email);
-        
+
         if (!storedCode) {
             throw new Error('No verification code found for this email');
         }
@@ -88,7 +88,7 @@ const userService = {
             throw new Error('Invalid verification code');
         }
 
-         const user = await User.findOne({ email });
+        const user = await User.findOne({ email });
         if (!user) {
             throw new Error('User not found');
         }
@@ -100,7 +100,7 @@ const userService = {
         return { message: 'Email verified successfully' };
     },
 
- 
+
     async requestPasswordReset(email) {
         const user = await User.findOne({ email });
         if (!user) {
@@ -127,7 +127,7 @@ const userService = {
         return { message: 'Password reset link sent to email' };
     },
 
-     async resetPassword(token, newPassword) {
+    async resetPassword(token, newPassword) {
         try {
             // Verify the JWT token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -198,7 +198,34 @@ const userService = {
         } catch (error) {
             throw new Error(`Failed to update user: ${error.message}`);
         }
-    }
+    },
+
+    async getListFavorite(userId) {
+        try {
+            const user = await User.findById(userId).populate('listFavoriteBook');
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+            const result = {
+                Free: [],
+                Member: [],
+                HoaPhuong: []
+            };
+
+            user.listFavoriteBook.forEach(book => {
+                if (book && result[book.type]) {
+                    result[book.type].push({
+                        book: book
+                    });
+                }
+            });
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
 };
 
 module.exports = userService;

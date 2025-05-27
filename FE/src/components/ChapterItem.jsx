@@ -6,7 +6,9 @@ const ChapterItem = ({
     bookName,
     chapterTitle,
     chapterNumber,
-    wordCount,
+    isContinue,
+    readingId,
+    chapterId,
     hoaPhuongAmount = 0
 }) => {
     return (
@@ -39,6 +41,9 @@ const ChapterItem = ({
                     hoaPhuongAmount={hoaPhuongAmount}
                     chapterName={chapterTitle}
                     bookName={bookName}
+                    isContinue={isContinue}
+                    readingId={readingId}
+                    chapterId={chapterId}
                 />
             </div>
 

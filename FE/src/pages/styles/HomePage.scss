@@ -17,12 +17,67 @@
         text-align: left;
         position: relative;
 
-        .book-swiper-title {
-            font-size: 24px;
+        .book-swiper-title-container {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+            width: fit-content;
+            gap: 20px;
+
+            .book-swiper-title {
+                font-size: 24px;
+                font-weight: 500;
+                cursor: pointer;
+                color: black;
+            }
+
+            .more-title {
+                opacity: 0;
+                font-size: 18px;
+                font-weight: 400;
+                color: #005bbb;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                padding-top: 5px;
+
+                svg {
+                    margin-top: 3px;
+                    color: #005bbb;
+                }
+            }
+
+            &:hover .more-title {
+                opacity: 1;
+            }
+        }
+    }
+
+    .slide {
+        cursor: pointer;
+
+        .item-title {
+            font-size: 16px;
             font-weight: 500;
-            margin-bottom: 20px;
-            margin-left: 20px;
+            margin: 5px 0 0 0;
+            padding: 0 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
+        &:hover {
+            color: #005bbb;
+            scale: 1.05;
+        }
     }
+
 }

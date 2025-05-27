@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import "./styles/BookLayout.scss";
 
-const EbookLayout = () => {
+const NewestLayout = () => {
   return (
     <div className="layout-book">
       <main className="content-book">
@@ -11,4 +11,4 @@ const EbookLayout = () => {
   );
 }
 
-export default EbookLayout;
+export default NewestLayout;

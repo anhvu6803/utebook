@@ -87,11 +87,6 @@ const UserMenu = () => {
                         <ListAltIcon /> Tủ sách cá nhân
                     </li>
                     <li
-                        onClick={() => handleLoadLink("/utebook/account/achievements")}
-                    >
-                        <Medal /> Thành tích
-                    </li>
-                    <li
                         onClick={() => handleLoadLink("/utebook/account/transaction-histories")}
                     >
                         <ReceiptLongIcon /> Lịch sử giao dịch

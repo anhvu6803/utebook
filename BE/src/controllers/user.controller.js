@@ -4,7 +4,7 @@ const Point = require('../models/point.model');
 const bcrypt = require('bcryptjs');
 
 const userController = {
-     async sendVerificationCode(req, res) {
+    async sendVerificationCode(req, res) {
         try {
             const { email } = req.body;
             const result = await userService.sendVerificationCode(email);
@@ -14,7 +14,7 @@ const userController = {
         }
     },
 
-     async register(req, res) {
+    async register(req, res) {
         try {
             const { userData, code } = req.body;
             const user = await userService.register(userData, code);
@@ -40,7 +40,7 @@ const userController = {
         }
     },
 
-     async verifyEmail(req, res) {
+    async verifyEmail(req, res) {
         try {
             const { email, code } = req.body;
             const result = await userService.verifyEmail(email, code);
@@ -50,7 +50,7 @@ const userController = {
         }
     },
 
-    
+
     async requestPasswordReset(req, res) {
         try {
             const { email } = req.body;
@@ -61,14 +61,14 @@ const userController = {
         }
     },
 
- 
+
     async resetPassword(req, res) {
         try {
             const { token, newPassword } = req.body;
-            
+
             if (!token || !newPassword) {
-                return res.status(400).json({ 
-                    error: 'Token and new password are required' 
+                return res.status(400).json({
+                    error: 'Token and new password are required'
                 });
             }
 
@@ -83,7 +83,7 @@ const userController = {
     async getAllUsers(req, res) {
         try {
             const users = await User.find().select('-password');
-            
+
             // Lấy thông tin điểm cho mỗi user
             const usersWithPoints = await Promise.all(users.map(async (user) => {
                 const point = await Point.findOne({ id_user: user._id });
@@ -175,7 +175,7 @@ const userController = {
             if (updateData.points) {
                 await Point.findOneAndUpdate(
                     { id_user: user._id },
-                    { 
+                    {
                         quantity_HoaPhuong: updateData.points.hoaPhuong,
                         quantity_La: updateData.points.la
                     },
@@ -231,6 +231,35 @@ const userController = {
                 success: false,
                 message: error.message
             });
+        }
+    },
+
+    async getListFavorite(req, res) {
+        try {
+            const { id } = req.params;
+
+            const listFavoriteBook = await userService.getListFavorite(id);
+
+            res.status(200).json({
+                success: true,
+                message: 'Lấy dan sách yêu thích của người dùng thành công',
+                free: listFavoriteBook.Free,
+                member: listFavoriteBook.Member,
+                hoaPhuong: listFavoriteBook.HoaPhuong
+            });
+        } catch (error) {
+            console.error('Error in getListFavorite controller:', error);
+            if (error.message === 'User not found') {
+                res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy người dùng'
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    message: error.message || 'Có lỗi xảy ra khi lấy danh sách yêu thích'
+                });
+            }
         }
     }
 };

@@ -7,7 +7,7 @@ export default function PaginationButtons({ count, page, handlePageChange }) {
             <Pagination
                 count={count}
                 page={page}
-                onChange={handlePageChange}
+                onChange={(event, value) => handlePageChange(event, value)}
                 showFirstButton
                 showLastButton
             />
