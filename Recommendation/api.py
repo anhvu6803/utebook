@@ -37,17 +37,20 @@ class RecommendationResponse(BaseModel):
     book_id: str
     bookname: str
     author: str
-    categories: list
+    categories: List[str]
     type: str
     pushlisher: Optional[str] = None
     image: str
     description: Optional[str] = None
-    chapterIds: Optional[list] = None
-    ageLimit: Optional[int] = None
-    isFavorite: Optional[bool] = None
-    listReading: Optional[list] = None
-    listReview: Optional[list] = None
-    avegradeRate: Optional[float] = None
+    chapterIds: Optional[List[str]] = None
+    ageLimit: int
+    listUserFavorited: Optional[List[str]] = None
+    listReading: Optional[List[str]] = None
+    listReviews: Optional[List[str]] = None
+    rating: float = 0
+    avegradeRate: float = 0
+    createdAt: Optional[str] = None
+    updatedAt: Optional[str] = None
 
 def initialize_recommender():
     """Initialize the recommender system with data from MongoDB"""
@@ -199,11 +202,14 @@ async def get_recommendations(user_id: str, n_recommendations: int = 60):
                         image=book.get('image', ''),
                         description=book.get('description', ''),
                         chapterIds=[str(cid) for cid in book.get('chapterIds', [])],
-                        ageLimit=book.get('ageLimit'),
-                        listUserFavorited=book.get('listUserFavorited', []),
-                        listReading=book.get('listReading', []),
-                        listReview=book.get('listReview', []),
-                        avegradeRate=book.get('avegradeRate', 0)
+                        ageLimit=book.get('ageLimit', 0),
+                        listUserFavorited=[str(uid) for uid in book.get('listUserFavorited', [])],
+                        listReading=[str(rid) for rid in book.get('listReading', [])],
+                        listReviews=[str(rid) for rid in book.get('listReviews', [])],
+                        rating=book.get('rating', 0),
+                        avegradeRate=book.get('avegradeRate', 0),
+                        createdAt=str(book.get('createdAt', '')),
+                        updatedAt=str(book.get('updatedAt', ''))
                     ))
             except Exception as e:
                 logger.error(f"Error processing book {item_id}: {str(e)}")
