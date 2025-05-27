@@ -63,7 +63,7 @@ const UserMenu = () => {
             onMouseLeave={() => setIsOpen(false)}
         >
             <div className="user-avatar" onClick={() => handleLoadLink("/utebook/account/profile")}> 
-                <img src={testAvatar} alt="testAvatar" className="avatar" />
+                <img src={user?.avatar || testAvatar} alt="testAvatar" className="avatar" />
             </div>
 
             <div className={`user-dropdown ${isOpen ? "active" : ""}`}>

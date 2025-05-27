@@ -166,6 +166,7 @@ const DetailBookPage = () => {
   const chapterpage = parseInt(searchParams?.get('chapterpage') || 1, 10);
   const [isLoading, setIsLoading] = useState(false);
   const [isReviewLoading, setIsReviewLoading] = useState(false);
+  const [hoaPhuongAmount, setHoaPhuongAmount] = useState(0);
 
   //book detail
   const [bookName, setBookName] = useState('');
@@ -283,6 +284,8 @@ const DetailBookPage = () => {
       const response = await axios.get(`http://localhost:5000/api/user/${user._id}`);
       if (response.data.success) {
         setListFavoriteBook(response.data.data.listFavoriteBook);
+        const pointRes = await axios.get(`http://localhost:5000/api/points/${user._id}`);
+        setHoaPhuongAmount(pointRes.data.data.quantity_HoaPhuong || 0);
       }
     }
     catch (err) {
@@ -569,11 +572,13 @@ const DetailBookPage = () => {
                       <ChapterItem
                         chapterTitle={parseChapterName(chapter.chapterName).title}
                         chapterNumber={parseChapterName(chapter.chapterName).chapterNumber}
-                        hoaPhuongAmount={chapter.price}
+                        chapterPrice={chapter.price}
+                        hoaPhuongAmount={hoaPhuongAmount}
                         bookName={bookName}
                         isContinue={chapterReading === chapter._id}
                         readingId={readingId}
                         chapterId={chapter._id}
+                        setAlert={setAlert}
                       />
                     </div>
                   ))

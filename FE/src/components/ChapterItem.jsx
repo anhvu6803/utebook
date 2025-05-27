@@ -9,8 +9,11 @@ const ChapterItem = ({
     isContinue,
     readingId,
     chapterId,
-    hoaPhuongAmount = 0
+    chapterPrice,
+    hoaPhuongAmount = 0,
+    setAlert
 }) => {
+    console.log(chapterPrice);
     return (
         <>
             <h3 className="chapter-title">
@@ -24,12 +27,18 @@ const ChapterItem = ({
                     gap: '20px'
                 }}
             >
-                {hoaPhuongAmount > 0 ?
+                {chapterPrice > 0 ?
                     (
-                        <span className="amount-hoaphuong">
-                            <p>{(hoaPhuongAmount).toLocaleString('vi-VN')}</p>
-                            <Flower />
-                        </span>
+                        <>
+                            {isContinue ?
+                                <p className="owner-text">Đã sở hữu</p>
+                                :
+                                <span className="amount-hoaphuong">
+                                    <p>{(chapterPrice).toLocaleString('vi-VN')}</p>
+                                    <Flower />
+                                </span>
+                            }
+                        </>
                     )
                     :
                     (
@@ -38,12 +47,14 @@ const ChapterItem = ({
                 }
 
                 <PurchaseChapter
+                    chapterPrice={chapterPrice}
                     hoaPhuongAmount={hoaPhuongAmount}
                     chapterName={chapterTitle}
                     bookName={bookName}
                     isContinue={isContinue}
                     readingId={readingId}
                     chapterId={chapterId}
+                    setAlert={setAlert}
                 />
             </div>
 
