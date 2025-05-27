@@ -14,5 +14,6 @@ router.get('/',userController.getAllUsers);
 router.get('/:id',userController.getUserById);
 router.patch('/:id',userController.updateUser);
 router.delete('/:id',userController.deleteUser);
+router.get('/list-favorite/:id',userController.getListFavorite);
 
 module.exports = router;

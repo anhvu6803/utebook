@@ -12,9 +12,27 @@ const PurchaseChapter = ({
     hoaPhuongAmount = 0,
     chapterName,
     bookName,
+    readingId,
+    chapterId
 }) => {
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
+
+    const handleUpdateReading = async () => {
+        if (!isContinue) {
+            try {
+                const response = await axios.put(`http://localhost:5000/api/history-readings/${readingId}`,
+                    {
+                        chapterId: chapterId
+                    }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        navigate(`/utebook-reader/${chapterId}`);
+    };
 
     return (
         <>
@@ -22,7 +40,7 @@ const PurchaseChapter = ({
                 onClick={() => {
                     hoaPhuongAmount > 0 ?
                         setShowForm(true) :
-                        navigate('#')
+                        navigate(`/utebook-reader/${chapterId}`)
                 }}
             >
                 {isContinue ? 'ĐỌC TIẾP' : 'ĐỌC NGAY'}
@@ -60,7 +78,7 @@ const PurchaseChapter = ({
                             <button className="cancel-btn" onClick={() => setShowForm(false)}>
                                 Hủy bỏ
                             </button>
-                            <button className="purchase-btn">
+                            <button className="purchase-btn" onClick={handleUpdateReading}>
                                 Đồng ý
                             </button>
                         </div>

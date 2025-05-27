@@ -15,8 +15,15 @@ const reverseIndex = [
   false, false, false, true, true, true
 ]
 
-export default function CustomImageList({ itemData, page, pageName }) {
+export default function CustomImageList({
+  itemData,
+  page,
+  pageName,
+  handleLikeBook,
+  cols
+}) {
   const itemPage = itemData[page - 1]?.map((item) => item) || [];
+
   const [isHovered, setIsHovered] = useState(itemPage.map(() => false));
 
 
@@ -41,7 +48,7 @@ export default function CustomImageList({ itemData, page, pageName }) {
           (
             <>
               <ImageList
-                cols={6}
+                cols={cols || 6}
                 gap={30}
                 sx={{
                   width: '100%',
@@ -81,6 +88,7 @@ export default function CustomImageList({ itemData, page, pageName }) {
                               book={item}
                               status={reverseIndex[index] ? 'reversed' : 'normal'}
                               pageName={pageName}
+                              handleLikeBook={handleLikeBook}
                             />
                           </div>
                         )

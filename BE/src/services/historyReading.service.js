@@ -4,6 +4,12 @@ const Chapter = require('../models/chapter.model');
 const User = require('../models/user.model');
 exports.getReadingById = async (userId, bookId) => {
     try {
+        const userExists = await User.findById(userId);
+        if (!userExists) throw new Error('User does not exist');
+
+        const bookExists = await Book.findById(bookId);
+        if (!bookExists) throw new Error('Book does not exist');
+
         const reading = await HistoryReading.findOne({ userId, bookId }).populate('bookId');
 
         if (!reading) {
@@ -64,6 +70,33 @@ exports.updateReading = async (readingId, updateData) => {
         );
 
         return updatedReading;
+    } catch (error) {
+        throw error;
+    }
+};
+
+exports.getReadingbyUserId = async (userId) => {
+    try {
+        const readings = await HistoryReading.find({ userId }).populate('bookId');
+        
+        const result = {
+            Free: [],
+            Member: [],
+            HoaPhuong: []
+        };
+
+        readings.forEach(history => {
+            const book = history.bookId;
+            if (book && result[book.type]) {
+                result[book.type].push({
+                    historyId: history._id,
+                    chapterId: history.chapterId,
+                    book: book
+                });
+            }
+        });
+
+        return result;
     } catch (error) {
         throw error;
     }

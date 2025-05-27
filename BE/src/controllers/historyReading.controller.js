@@ -83,3 +83,32 @@ exports.updateReading = async (req, res) => {
         }
     }
 };
+
+exports.getReadingbyUserId = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const updatedBook = await HistoryReadingService.getReadingbyUserId(id);
+
+        res.status(200).json({
+            success: true,
+            message: 'Lấy lịch sử đọc sách người dùng',
+            free: updatedBook.Free,
+            member: updatedBook.Member,
+            hoaPhuong: updatedBook.HoaPhuong
+        });
+    } catch (error) {
+        console.error('Error in updateReading controller:', error);
+        if (error.message === 'Reading not found') {
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy lịch sử đọc sách'
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: error.message || 'Có lỗi xảy ra khi lấy lịch sử đọc sách'
+            });
+        }
+    }
+}

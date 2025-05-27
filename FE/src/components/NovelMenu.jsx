@@ -15,12 +15,12 @@ const menuItems = [
 const groupIntoFour = (items) => {
   const groups = [[], [], [], []];
   items.forEach((item, index) => {
-    groups[index % 4].push(item); // phân tán đều qua 4 nhóm
+    groups[index % 3].push(item); // phân tán đều qua 4 nhóm
   });
   return groups;
 };
 
-export default function NovelMenu() {
+export default function NovelMenu({ active }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +35,7 @@ export default function NovelMenu() {
       onMouseEnter={() => setIsOpen(true)} // Mở khi di chuột vào
       onMouseLeave={() => setIsOpen(false)} // Đóng khi rời chuột khỏi menu
     >
-      <a href="/utebook/novel" className="category-link">
+      <a href="/utebook/novel" className={`category-link ${active ? "active" : ""}`}>
         Sách hoa phượng
       </a>
 
@@ -56,10 +56,19 @@ export default function NovelMenu() {
         </div>
         <div className="menu-footer">
           <div class="menu-header">Khám phá ngay</div>
-          <button className="menu-btn"><Star size={16} /> Sách mới nhất</button>
-          <button className="menu-btn"><Book size={16} /> Sách đọc nhiều</button>
-          <button className="menu-btn"><Wallet size={16} /> Sách miễn phí</button>
-          <button className="menu-btn"><Sparkles size={16} /> Sách đề cử</button>
+
+          <button
+            className="menu-btn"
+            onClick={() => handleLoadLink("/utebook/newest")}
+          >
+            <Star size={16} /> Sách mới nhất
+          </button>
+
+          <button
+            className="menu-btn"
+            onClick={() => handleLoadLink("/utebook/free")}>
+            <Wallet size={16} /> Sách miễn phí
+          </button>
         </div>
       </div>
     </div>

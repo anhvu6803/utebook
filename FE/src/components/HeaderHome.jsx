@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/HeaderHome.scss";
 
-import EbookMenu from "./EbookMenu";
-import AudioMenu from "./AudioMenu";
 import NovelMenu from "./NovelMenu";
-import PodcastMenu from "./PodcastMenu";
 import NotificationMenu from "./NotificationMenu";
 import UserMenu from "./UserMenu";
 import logo from "../assets/logoUTE.png";
@@ -18,6 +15,8 @@ import { bool } from "prop-types";
 
 const HeaderHome = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const [isShowSearch, SetShowSearch] = useState(false);
   const handleSearchClick = () => {
@@ -37,11 +36,8 @@ const HeaderHome = () => {
         </div>
 
         <nav className="nav-links">
-          <EbookMenu />
-          <AudioMenu />
-          <NovelMenu />
-          <PodcastMenu />
-          <a href="/utebook/creative">Sáng tác</a>
+          <a href="/utebook/sach-hoi-vien" className={`${currentPath.includes("sach-hoi-vien") ? "active" : ""}`}>Sách hội viên</a>
+          <NovelMenu active={currentPath.includes("novel")} />
         </nav>
 
       </div>

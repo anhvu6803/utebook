@@ -1,0 +1,18 @@
+.book-title {
+    font-size: 16px;
+    font-weight: bold;
+    word-break: break-word;
+    text-overflow: ellipsis;
+    white-space: normal;
+    /* Cho phép xuống dòng */
+    word-wrap: break-word;
+    display: flex;
+    justify-self: flex-start;
+    text-align: left;
+    padding: 15px 0;
+    cursor: pointer;
+
+    &:hover {
+        color: #005bbb;
+    }
+}

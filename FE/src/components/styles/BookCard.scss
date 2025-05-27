@@ -31,14 +31,12 @@ $star-color: #ffba08; // yellow-500
         align-items: center;
         flex-direction: row;
         width: 700px;
-        height: 320px;
         padding: 1rem;
         border-radius: 18px;
         backdrop-filter: blur(8px);
         background-color: rgba(0, 0, 0, 0.7);
         animation: fadeIn 0.3s ease;
         gap: 5px;
-        backdrop-filter: blur(8px);
 
         .card-image {
             display: flex;
@@ -49,6 +47,7 @@ $star-color: #ffba08; // yellow-500
             display: flex;
             flex-direction: column;
             justify-content: center;
+            text-align: left;
             position: absolute;
             right: 0;
             top: 0;

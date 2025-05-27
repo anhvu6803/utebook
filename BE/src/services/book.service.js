@@ -14,10 +14,22 @@ exports.getAllBooks = async () => {
 exports.getBookById = async (bookId) => {
     try {
         const book = await Book.findById(bookId);
-        
+
         if (!book) {
             throw new Error('Book not found');
         }
+
+        // Chỉ populate nếu listReviews có ít nhất 1 phần tử
+        if (book.listReviews && book.listReviews.length > 0) {
+            await book.populate({
+                path: 'listReviews',
+                populate: {
+                    path: 'userId',         // Đây là field trong Review
+                    select: 'fullname avatar'   // Chọn những field bạn cần (tuỳ schema)
+                }
+            });
+        }
+
         return book;
     } catch (error) {
         throw error;
@@ -102,8 +114,9 @@ exports.deleteBook = async (bookId) => {
 
 exports.getRandomBooks = async () => {
     try {
-        const randomBooks = await Book.aggregate([{ $sample: { size: 10 } }]);
-        return randomBooks;
+        const randomBooks = await Book.find();
+        const shuffled = randomBooks.sort(() => 0.5 - Math.random()); // trộn ngẫu nhiên
+        return shuffled.slice(0, 10); // lấy 10 cuốn đầu tiên
     } catch (error) {
         throw error;
     }
@@ -112,6 +125,7 @@ exports.getBooksByCategory = async (category) => {
     try {
         const regex = new RegExp(category, 'i'); // 'i' để không phân biệt chữ hoa - thường
         const books = await Book.find({ categories: { $regex: regex } });
+
         return books;
     } catch (error) {
         throw error;
@@ -121,14 +135,46 @@ exports.getRandomBooksByCategory = async (category) => {
     try {
         const regex = new RegExp(category, 'i'); // không phân biệt hoa thường
 
-        const books = await Book.aggregate([
-            { $match: { categories: { $regex: regex } } },
-            { $sample: { size: 10 } } // lấy ngẫu nhiên 10 cuốn
-        ]);
+        const books = await Book.find({ categories: { $regex: regex } });
+
+        const shuffled = books.sort(() => 0.5 - Math.random()); // trộn ngẫu nhiên
+        return shuffled.slice(0, 10);
+    } catch (error) {
+        throw error;
+    }
+};
+
+exports.getBooksByType = async (type) => {
+    try {
+        const regex = new RegExp(type, 'i'); // 'i' để không phân biệt chữ hoa - thường
+        const books = await Book.find({ type: { $regex: regex } });
+        return books;
+    } catch (error) {
+        throw error;
+    }
+};
+exports.getTypeBooksByCategory = async (category, type) => {
+    try {
+        const regex = new RegExp(category, 'i'); // 'i' để không phân biệt chữ hoa - thường
+        const regexType = new RegExp(type, 'i');
+        const books = await Book.find({
+            categories: { $regex: regex },
+            type: { $regex: regexType }
+        });
+        return books;
+    } catch (error) {
+        throw error;
+    }
+};
+exports.getBooksByCategoryNewest = async (category) => {
+    try {
+        const regex = new RegExp(category, 'i'); // 'i' để không phân biệt chữ hoa - thường
+        const books = await Book.find({ categories: { $regex: regex } })
+            .sort({ updatedAt: -1 })
+            .limit(90);
 
         return books;
     } catch (error) {
         throw error;
     }
 };
-

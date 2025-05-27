@@ -9,11 +9,13 @@ import UserLayout from './layout/UserLayout/UserLayout'
 import AdminLayout from "./layout/AdminLayout/AdminLayout";
 import PackageLayout from "./layout/PackageLayout";
 import AuthorSettingLayout from "./layout/AuthorSettingLayout";
-import EbookLayout from "./layout/EbookLayout";
+import MemberLayout from "./layout/MemberLayout";
 import AudioLayout from "./layout/AudioLayout";
 import NovelLayout from "./layout/NovelLayout";
 import PodcastLayout from "./layout/PodcastLayout";
 import CreativeLayout from "./layout/CreativeLayout";
+import NewestLayout from "./layout/NewestLayout";
+import FreeLayout from "./layout/FreeLayout";
 
 import WelcomPage from './pages/WelcomePage'
 import LoginPage from "./pages/LoginPage";
@@ -54,6 +56,9 @@ import ReaderBookPage from "./pages/ReaderBookPage";
 import AuthorSettingPage from "./pages/AuthorSettingPage";
 import AuthorProfile from "./pages/AuthorProfilePage";
 import ManageNotificationPage from "./pages/Admin/ManageNotification";
+import MemberBookPage from "./pages/MemberBookPage";
+import NewestBookPage from "./pages/NewestBookPage";
+import FreeBookPage from "./pages/FreeBookPage";
 
 const App = () => {
   return (
@@ -74,27 +79,25 @@ const App = () => {
           {/* Protected routes */}
           <Route path="/utebook" element={<ProtectedRoute><HomeLayout /></ProtectedRoute>}>
             <Route index element={<HomePage />} />
-            <Route path="ebook" element={<EbookLayout />}>
-              <Route index element={<EbookPage />} />
-              <Route path=":category" element={<BookCategoryPage pageName={'ebook'} />} />
-              <Route path="detailBook" element={<DetailBookPage />} />
+            <Route path="sach-hoi-vien" element={<MemberLayout />} >
+              <Route index element={<MemberBookPage />} />
+              <Route path=":category" element={<MemberBookPage />} />
+              <Route path="view/:idNovel" element={<DetailNovelPage />} />
             </Route>
-            <Route path="audio" element={<AudioLayout />}>
-              <Route index element={<AudioBookPage />} />
-              <Route path=":category" element={<BookCategoryPage pageName={'audio'} />} />
+            <Route path="newest" element={<NewestLayout />} >
+              <Route index element={<NewestBookPage />} />
+              <Route path=":category" element={<NewestBookPage />} />
+              <Route path="view/:idNovel" element={<DetailNovelPage />} />
+            </Route>
+            <Route path="free" element={<FreeLayout />} >
+              <Route index element={<FreeBookPage />} />
+              <Route path=":category" element={<FreeBookPage />} />
+              <Route path="view/:idNovel" element={<DetailNovelPage />} />
             </Route>
             <Route path="novel" element={<NovelLayout />}>
               <Route index element={<NovelPage />} />
               <Route path=":category" element={<BookCategoryPage pageName={'novel'} />} />
               <Route path="view/:idNovel" element={<DetailNovelPage />} />
-            </Route>
-            <Route path="podcast" element={<PodcastLayout />}>
-              <Route index element={<PodcastPage />} />
-              <Route path=":category" element={<BookCategoryPage pageName={'podcast'} />} />
-            </Route>
-            <Route path="creative" element={<CreativeLayout pageName={'creative'} />}>
-              <Route index element={<CreativeBook />} />
-              <Route path=":category" element={<BookCategoryPage />} />
             </Route>
             <Route path="account" element={<AccountSettingLayout />}>
               <Route path="profile" element={<AccountSettingPage />} />
@@ -133,7 +136,7 @@ const App = () => {
             <Route path="membership" element={<ManageMembershipPage />} />
             <Route path="events" element={<ManageEventPage />} />
             <Route path="writing" element={<ManageWritingPage />} />
-            <Route path="notifications" element={<ManageNotificationPage/>} />
+            <Route path="notifications" element={<ManageNotificationPage />} />
           </Route>
         </Routes>
       </AuthProvider>

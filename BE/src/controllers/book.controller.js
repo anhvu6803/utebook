@@ -293,20 +293,20 @@ exports.syncChaptersToBook = async (req, res) => {
                 { bookId: new mongoose.Types.ObjectId(bookId) }
             ]
         });
-        
+
         console.log('Found chapters count:', chapters.length);
         console.log('Chapters:', chapters.map(c => ({
             _id: c._id,
             bookId: c.bookId,
             chapterName: c.chapterName
         })));
-        
+
         if (!chapters || chapters.length === 0) {
             console.log('Warning: No chapters found for book:', book.bookname);
             // Thay vì trả về lỗi, chúng ta sẽ cập nhật book với mảng chapterIds rỗng
             book.chapterIds = [];
             await book.save();
-            
+
             return res.status(200).json({
                 success: true,
                 message: 'No chapters found, book updated with empty chapterIds',
@@ -340,7 +340,7 @@ exports.syncChaptersToBook = async (req, res) => {
     } catch (error) {
         console.error('Error in syncChaptersToBook:', error);
         console.error('Error stack:', error.stack);
-        
+
         return res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -426,3 +426,55 @@ exports.syncAllChaptersToBooks = async (req, res) => {
         });
     }
 };
+
+exports.getBooksByType = async (req, res) => {
+    try {
+        const { type } = req.params;
+        const books = await BookService.getBooksByType(type);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách theo thể loại thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getBooksByType controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
+    }
+};
+exports.getTypeBooksByCategory = async (req, res) => {
+    try {
+        const { category, type } = req.query;
+        const books = await BookService.getTypeBooksByCategory(category, type);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách ngẫu nhiên theo thể loại thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getMemberBooksByCategory controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
+    }
+};
+exports.getBooksByCategoryNewest = async (req, res) => {
+    try {
+        const { category } = req.params;
+        const books = await BookService.getBooksByCategoryNewest(category);
+        res.status(200).json({
+            success: true,
+            message: 'Lấy danh sách sách mới nhất theo thể loại thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error in getBooksByCategoryNewest controller:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Có lỗi xảy ra khi lấy danh sách sách'
+        });
+    }
+}

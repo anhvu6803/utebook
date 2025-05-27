@@ -1,16 +1,16 @@
 // SwiperComponent.jsx
 import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from 'swiper/modules';
 import './styles/BookSwiper.scss'; // Nhập file SCSS
-import background2 from "../assets/background2.jpg";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-const BookSwiper = () => {
+const BookSwiper = ({ itemData }) => {
     const swiperRef = useRef(null);
-
+    const navigate = useNavigate();
     // Hàm điều khiển slide tiếp theo
     const handleNext = () => {
         if (swiperRef.current) {
@@ -25,6 +25,7 @@ const BookSwiper = () => {
             swiperRef.current.swiper.slidePrev();
         }
     };
+
     return (
         <div className="swiper-book-container">
             <Swiper
@@ -35,38 +36,16 @@ const BookSwiper = () => {
                 loop={true}
                 navigation={false}
             >
-                <SwiperSlide>
-                    <img src={background2} alt="book 1" />
-                    <p>Mùi nằm tuổi Hai Muời</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 2" />
-                    <p>Yêu sao cho đúng, sống sao cho trọn</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 3" />
-                    <p>Muốn kiếp nhân sinh 2</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 4" />
-                    <p>AI lang nghe tôi trai long</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 5" />
-                    <p>Top 5 kỹ năng mềm</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 5" />
-                    <p>Top 5 kỹ năng mềm</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 5" />
-                    <p>Top 5 kỹ năng mềm</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={background2} alt="book 5" />
-                    <p>Top 5 kỹ năng mềm</p>
-                </SwiperSlide>
+                {itemData?.map((item, index) => (
+                    <SwiperSlide key={index}
+                        onClick={() => navigate(`/utebook/novel/view/${item._id}`)}
+                        className="slide"
+                    >
+                        <img src={item.image} alt={item.bookname} />
+                        <p className="item-title">{item.bookname}</p>
+                    </SwiperSlide>
+
+                ))}
             </Swiper>
             <div className="swiper-button-next" onClick={handleNext}></div>
             <div className="swiper-button-prev" onClick={handlePrev}></div>

@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/BookCard.scss';
-import testAvatar from '../assets/testAvatar.jpg';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 import { BookOpen } from 'lucide-react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-const BookCard = ({ book, status, pageName }) => {
+const BookCard = ({
+    book,
+    status,
+    pageName,
+    height = 320,
+    handleLikeBook
+}) => {
+    const { user } = useAuth();
     const navigate = useNavigate();
-    // Default book data if none is provided
-    const defaultBook = {
-        title: 'Hội chứng không kết hôn',
-        author: 'Phương Mẫn Vị',
-        rating: 4.470,
-        image: testAvatar,
-        description: 'Tô Khanh, 32 tuổi, một người phụ nữ mạnh mẽ, xinh đẹp, có quan điểm sống phóng khoáng, kinh tế độc lập, đàn ông theo đuổi không đếm xuể, nhưng ở trong mắt các bà, các mẹ, cô chỉ là một cô gái quá lứa lỡ thì, đã bỏ phí quãng thời gian tươi đẹp...',
-        isNew: true
-    };
 
-    const bookData = book || defaultBook;
+    const bookData = book;
+    const [listUserFavoriteBook, setListUserFavoriteBook] = useState(bookData.listUserFavorited);
 
-    console.log(book)
     return (
         <div
             className={`card-wrapper ${status}`}
         >
             <div
                 className="card-container"
+                style={{
+                    height: height,
+                }}
             >
                 <div className={`card-image ${status}`}>
                     <img
@@ -63,7 +65,7 @@ const BookCard = ({ book, status, pageName }) => {
                             }}
                         >
                             <div className={`book-rating ${status}`}>
-                                <span className={`rating-value ${status}`}>5.0</span>
+                                <span className={`rating-value ${status}`}>{bookData.avegradeRate}</span>
                                 <span className="rating-star">★</span>
                             </div>
                             <div className="card-actions ">
@@ -76,9 +78,14 @@ const BookCard = ({ book, status, pageName }) => {
                                 </button>
                                 <button
                                     className="btn-favorite"
-                                    onClick={() => handleLikeBook(indexBook)}
+                                    onClick={() => handleLikeBook(
+                                        listUserFavoriteBook.includes(user._id),
+                                        listUserFavoriteBook,
+                                        setListUserFavoriteBook,
+                                        bookData
+                                    )}
                                 >
-                                    {true ? (
+                                    {listUserFavoriteBook.includes(user._id) ? (
                                         <FavoriteIcon />
                                     ) : (
                                         <FavoriteBorderIcon />

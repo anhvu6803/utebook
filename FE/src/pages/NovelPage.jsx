@@ -31,7 +31,7 @@ const NovelPage = () => {
       />
       <div className="book-swiper">
         <p className="book-swiper-title">UTEBOOK đề xuất</p>
-        <BookSwiper />
+
       </div>
     </div>
   );

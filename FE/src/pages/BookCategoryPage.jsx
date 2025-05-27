@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./styles/BookCategoryPage.scss";
+import { useAuth } from "../contexts/AuthContext";
 
 import RecommendationBook from "../components/RecommendationBook";
 import CustomImageList from "../components/CustomImageList";
 import PaginationButtons from "../components/PaginationButtons";
-
+import Loading from '../components/Loading';
+import CustomAlert from '../components/CustomAlert';
 const splitIntoGroups = (inputList, chunkSize) => {
   const result = [];
   for (let i = 0; i < inputList.length; i += chunkSize) {
@@ -14,9 +16,9 @@ const splitIntoGroups = (inputList, chunkSize) => {
   }
   return result;
 }
-
 const BookCategoryPage = ({ pageName }) => {
   const { category } = useParams();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,51 +28,143 @@ const BookCategoryPage = ({ pageName }) => {
   const [listBooks, setListBooks] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  //Random books
-  useEffect(() => {
-    const getListNovelsCategory = async () => {
-      try {
-        setIsLoading(true);
-        const res = await axios.get(
-          `http://localhost:5000/api/book/random-books/${category}`,
-        );
-        setListBooks(res.data.data);
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-      finally {
-        setIsLoading(false);
+  const [listFavoriteBook, setListFavoriteBook] = useState([]);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+  const getUser = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/user/${user._id}`);
+      if (response.data.success) {
+        setListFavoriteBook(response.data.data.listFavoriteBook);
       }
     }
-    getListNovelsCategory();
-  }, [])
+    catch (err) {
+      console.log(err);
+    }
+  };
+  const getListNovelsCategory = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(
+        `http://localhost:5000/api/book/random-books/${category}`,
+      );
+      console.log(res.data.data);
+      setListBooks(res.data.data);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
 
-  //All books
-  useEffect(() => {
-    const getAllBooksbyCategory = async () => {
-      try {
-        setIsLoading(true);
-        const res = await axios.get(
-          `http://localhost:5000/api/book/books/categories/${category}`,
-        );
-        console.log(res.data.data);
-        setAllBooks(res.data.data);
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-      finally {
-        setIsLoading(false);
-      }
+  const getAllBooksbyCategory = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(
+        `http://localhost:5000/api/book/books/categories/${category}`,
+      );
+      console.log(res.data.data);
+      setAllBooks(res.data.data);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
     }
-    getAllBooksbyCategory();
-  }, [])
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        getUser();
+        getListNovelsCategory();
+        getAllBooksbyCategory();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setTimeout(() => setIsLoading(false), 500);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handlePageChange = (event, value) => {
     const currentPath = location.pathname;
     navigate(`${currentPath}?page=${value}`);
   };
+
+  const handleCloseAlert = () => {
+    setAlert({ ...alert, open: false });
+  };
+
+  const handleLikeBook = async (value, listUserFavoriteBook, setListUserFavoriteBook, bookData) => {
+    const temp = !value;
+    try {
+
+      let updatedFavoriteBook;
+      let updatedUserFavoriteBook;
+      if (temp) {
+        // Nếu đang muốn thêm sách vào danh sách yêu thích
+        updatedFavoriteBook = listFavoriteBook.includes(bookData._id)
+          ? listFavoriteBook
+          : [...listFavoriteBook, bookData._id];
+
+        updatedUserFavoriteBook = listUserFavoriteBook.includes(user._id)
+          ? listUserFavoriteBook
+          : [...listUserFavoriteBook, user._id];
+
+      } else {
+        updatedFavoriteBook = listFavoriteBook.filter((id) => id !== bookData._id);
+        updatedUserFavoriteBook = listUserFavoriteBook.filter((id) => id !== user._id);
+      }
+
+      const responseUser = await axios.patch(`http://localhost:5000/api/user/${user._id}`, {
+        listFavoriteBook: updatedFavoriteBook
+      })
+
+      if (responseUser.data.success) {
+        setListFavoriteBook(updatedFavoriteBook);
+        const responseBook = await axios.put(`http://localhost:5000/api/book/books/${bookData._id}`, {
+          listUserFavorited: updatedUserFavoriteBook
+        });
+        if (responseBook.data.success) {
+          setListUserFavoriteBook(updatedUserFavoriteBook);
+          const updatedPage = allBooks.map((item) =>
+            item._id === responseBook.data.data._id ? responseBook.data.data : item
+          );
+          setAllBooks(updatedPage);
+          if (temp) {
+            setAlert({
+              open: true,
+              message: 'Thêm sách vào danh sách yêu thích thành công',
+              severity: 'success'
+            });
+          }
+          else {
+            setAlert({
+              open: true,
+              message: 'Xóa khỏi danh sách yêu thích thành công',
+              severity: 'success'
+            });
+          }
+        }
+      }
+    } catch (err) {
+      setAlert({
+        open: true,
+        message: 'Có lỗi khi thêm sách vào phần yêu thích',
+        severity: 'error'
+      });
+      console.error(err);
+    }
+  }
+  if (isLoading) return <Loading />
 
   return (
     <div className="book-category-container">
@@ -88,6 +182,7 @@ const BookCategoryPage = ({ pageName }) => {
                 itemData={splitIntoGroups(allBooks, 30)}
                 page={page}
                 pageName={pageName}
+                handleLikeBook={handleLikeBook}
               />
               <PaginationButtons
                 count={Math.ceil(allBooks.length / 30)}
@@ -98,72 +193,9 @@ const BookCategoryPage = ({ pageName }) => {
           }
         </div>
       }
+      <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
     </div>
   );
 };
 
 export default BookCategoryPage;
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: '[Tóm tắt sách] Bản đồ của trái tim tim tim tim',
-    author: '@bkristastucchio',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    author: '@rollelflex_graphy726',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-    author: '@nolanissac',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-    author: '@hjrc33',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-    author: '@arwinneil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-    author: '@tjdragotta',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-    author: '@katie_wasserman',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-    author: '@silverdalex',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-    author: '@shelleypauls',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-    author: '@peterlaster',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-    author: '@southside_customs',
-  },
-
-];

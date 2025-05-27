@@ -9,6 +9,18 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 
+import hcmute_pic1 from '../assets/hcmute_pic1.png';
+import hcmute_pic2 from '../assets/hcmute_pic2.png';
+import hcmute_pic3 from '../assets/hcmute_pic3.png';
+import hcmute_pic4 from '../assets/hcmute_pic4.png';
+
+const imageList = [
+  hcmute_pic1,
+  hcmute_pic2,
+  hcmute_pic3,
+  hcmute_pic4,
+]
+
 const SliderImageHome = () => {
   const swiperRef = useRef(null);
 
@@ -45,17 +57,12 @@ const SliderImageHome = () => {
             <button className="swiper-button-next" onClick={handleNext} />
             <button className="swiper-button-prev" onClick={handlePrev} />
           </div>
-          <SwiperSlide>
-            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src='https://307a0e78.vws.vegacdn.vn/view/v2/image/img.banner_web_v2/0/0/0/4009.jpg?v=1&w=1920&h=600' className='img-home' />
-          </SwiperSlide>
+          {imageList.map((image, index) => (
+            <SwiperSlide key={index}>
+              <img src={image} className='img-home' />
+            </SwiperSlide>
+          ))}
         </Swiper>
-
       </div>
     </div>
   );

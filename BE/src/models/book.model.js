@@ -10,11 +10,19 @@ const BookSchema = new mongoose.Schema({
     description: { type: String },
     chapterIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' }],
     ageLimit: { type: Number, required: true },
-    isFavorite: { type: Boolean, default: false },
+    listUserFavorited: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
     listReading: { type: [String], default: [] },
-    listReview: { type: [String], default: [] },
+    listReviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+        default: []
+    }],
+    rating: { type: Number, default: 0 },
     avegradeRate: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Book', BookSchema);
- 
