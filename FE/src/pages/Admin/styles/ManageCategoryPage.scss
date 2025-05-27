@@ -131,6 +131,12 @@ $box-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.05);
             color: white;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: background 0.3s;
+            cursor: pointer;
+          }
+          th:hover {
+            background: $primary-gradient-hover;
+            color: #fff;
           }
         }
 

@@ -8,7 +8,7 @@ const historyPointSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['Nạp', 'Đọc', 'Thu nhập'],
+        enum: ['Nạp', 'Đọc'],
         required: true
     },
     number_point_HoaPhuong: {
@@ -19,11 +19,11 @@ const historyPointSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    bookId: {
+    chapterId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Book',
+        ref: 'Chapter',
         required: function() {
-            return this.type === 'Đọc' || this.type === 'Thu nhập';
+            return this.type === 'Đọc';
         }
     },
     time: {

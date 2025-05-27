@@ -9,23 +9,16 @@ import CategoryIcon from "@mui/icons-material/Category";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
 import FeedbackIcon from '@mui/icons-material/Feedback';
-import CreateIcon from '@mui/icons-material/Create';
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 const menuItems = [
   { name: "Quản lý người dùng", path: "/utebook-admin/", icon: <PeopleIcon /> },
   {
     name: "Quản lý sách",
     icon: <MenuBookIcon />,
-    children: [
-      { name: "Sách đọc", path: "/utebook-admin/books" },
-      { name: "Sách nghe", path: "/utebook-admin/audio-books" },
-    ],
+     path: "/utebook-admin/books" ,
   },
   {
     name: "Quản lý thể loại",
@@ -41,19 +34,9 @@ const menuItems = [
     ],
   },
   {
-    name: "Quản lý khuyến mãi",
-    icon: <LocalOfferIcon />,
-     path: "/utebook-admin/events",
-  },
-  {
     name: "Quản lý Thông báo",
     icon: <FeedbackIcon />,
     path: "/utebook-admin/notifications",
-  },
-  {
-    name: "Quản lý sáng tác",
-    icon: <EditNoteIcon />,
-    path: "/utebook-admin/writing",  
   },
   {
     name: "Thống kê",

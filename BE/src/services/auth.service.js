@@ -62,13 +62,8 @@ class AuthService {
     }
 
     async googleLogin(email, name, picture, googleId) {
-        // Tìm user theo email hoặc googleId
-        let user = await User.findOne({ 
-            $or: [
-                { email },
-                { googleId }
-            ]
-        });
+        // Tìm user theo email vì email là unique
+        let user = await User.findOne({ email });
         
         if (!user) {
             // Tạo username từ email
@@ -89,8 +84,12 @@ class AuthService {
                 numberPhone: "Chưa cập nhật",
                 gioiTinh: "Khác",
             });
-        } else if (!user.googleId) {
-            user.avatar = picture.split('=')[0] + '?sz=100'; // Cập nhật ảnh chất lượng cao hơn
+        } else {
+            // Nếu user đã tồn tại, chỉ cập nhật googleId và avatar nếu chưa có
+            user.googleId = googleId;
+            if (!user.avatar) {
+                user.avatar = picture.split('=')[0] + '?sz=100';
+            }
             user.isVerified = true;
             await user.save();
         }
@@ -171,22 +170,40 @@ class AuthService {
             // Tạo access token mới
             const accessToken = jwt.sign(
                 { 
-                    userId,
+                    userId: user._id,
                     email: user.email,
-                    isAdmin: user.isAdmin || false
+                    isAdmin: user.isAdmin
                 },
                 process.env.JWT_SECRET,
                 { expiresIn: '2m' }
             );
 
+            // Tạo refresh token mới
+            const refreshToken = jwt.sign(
+                { 
+                    userId: user._id,
+                    email: user.email,
+                    isAdmin: user.isAdmin
+                },
+                process.env.JWT_REFRESH_SECRET,
+                { expiresIn: '1d' }
+            );
+
+            // Cập nhật refresh token trong database
+            await Auth.findByIdAndUpdate(auth._id, {
+                refreshToken,
+                expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
+            });
+
             return { 
                 accessToken,
+                refreshToken,
                 user: {
                     _id: user._id,
                     email: user.email,
                     name: user.name,
                     avatar: user.avatar,
-                    isAdmin: user.isAdmin || false
+                    isAdmin: user.isAdmin
                 }
             };
         } catch (error) {

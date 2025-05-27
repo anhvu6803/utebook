@@ -243,7 +243,7 @@ const BookDetail = ({ book, onClose, loading, categories }) => {
                   value={editedBook.type}
                   onChange={handleInputChange}
                   disabled={!isEditing}
-                  className={isEditing ? 'editable' : ''}
+                  className={`book-detail-select${isEditing ? ' editable' : ''}`}
                 >
                   <option value="Free">Miễn phí</option>
                   <option value="Member">Thành viên</option>

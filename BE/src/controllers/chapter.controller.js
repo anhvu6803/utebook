@@ -4,6 +4,14 @@ const ChapterService = require('../services/chapter.service');
 
 exports.addChapter = async (req, res) => {
     try {
+        // Check if user is authenticated and is admin
+        if (!req.user || !req.user.isAdmin) {
+            return res.status(401).json({
+                success: false,
+                message: 'Không có quyền thực hiện thao tác này'
+            });
+        }
+
         const { chapterName, price, viewlink, bookId } = req.body;
         const errors = {};
 

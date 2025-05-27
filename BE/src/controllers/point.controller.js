@@ -1,4 +1,8 @@
 const Point = require('../models/point.model');
+const Chapter = require('../models/chapter.model');
+const Book = require('../models/book.model');
+const HistoryPoint = require('../models/history_point.model');
+const pointService = require('../services/point.service');
 
 const pointController = {
     // Lấy tất cả điểm
@@ -137,6 +141,20 @@ const pointController = {
                 success: false,
                 message: error.message
             });
+        }
+    },
+
+    buyChapter: async (req, res) => {
+        try {
+            const { userId, chapterId } = req.body;
+            const result = await pointService.buyChapter(userId, chapterId);
+            res.status(200).json({
+                success: true,
+                message: 'Mua chương thành công',
+                data: result
+            });
+        } catch (error) {
+            res.status(400).json({ success: false, message: error.message });
         }
     }
 };

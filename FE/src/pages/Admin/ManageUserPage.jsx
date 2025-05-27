@@ -63,14 +63,25 @@ const ManageUserPage = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`${API_URL}/${userId}`);
-      setUsers(users.filter(u => u._id !== userId));
-      setSelectedUser(null); // Đóng modal
-      toast.success("Xóa người dùng thành công");
-      fetchUsers(); // Load lại dữ liệu
+      const response = await axios.delete(`${API_URL}/${userId}`);
+      if (response.data.success) {
+        // Cập nhật state ngay lập tức
+        setUsers(prevUsers => prevUsers.filter(u => u._id !== userId));
+        setSelectedUser(null); // Đóng modal
+        toast.success("Xóa người dùng thành công");
+      } else {
+        toast.error(response.data.message || "Không thể xóa người dùng");
+      }
     } catch (error) {
-      toast.error("Không thể xóa người dùng");
-      console.error("Error deleting user:", error);
+      if (error.response?.status === 404) {
+        // Nếu user đã bị xóa, vẫn cập nhật UI
+        setUsers(prevUsers => prevUsers.filter(u => u._id !== userId));
+        setSelectedUser(null);
+        toast.success("Xóa người dùng thành công");
+      } else {
+        toast.error("Không thể xóa người dùng");
+        console.error("Error deleting user:", error);
+      }
     }
   };
 

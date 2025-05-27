@@ -164,6 +164,12 @@
             color: white;
             font-weight: bold;
             text-align: center;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+        th:hover {
+            background: linear-gradient(45deg, #1976d2, #2196f3);
+            color: #fff;
         }
         
         td {

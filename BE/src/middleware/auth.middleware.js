@@ -119,6 +119,7 @@ const authMiddleware = async (req, res, next) => {
 const adminMiddleware = async (req, res, next) => {
     try {
         const token = req.cookies.access_token;
+        console.log('Token from cookie:', token);
         
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized' });
@@ -126,26 +127,38 @@ const adminMiddleware = async (req, res, next) => {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            console.log('Decoded token:', decoded);
             
-            if (!decoded.isAdmin) {
+            const user = await User.findById(decoded.userId);
+            console.log('User from DB:', user);
+            
+            if (!user || !user.isAdmin) {
+                console.log('Admin check failed:', { 
+                    userExists: !!user, 
+                    isAdmin: user?.isAdmin 
+                });
                 return res.status(403).json({ message: 'Forbidden - Admin access required' });
             }
 
             // Lưu thông tin user vào request
-            req.userId = decoded.userId;
-            req.user = decoded;
+            req.userId = user._id;
+            req.user = user;
+            console.log('User set in request:', req.user);
             
             next();
         } catch (error) {
+            console.log('Token verification error:', error);
             // Nếu token hết hạn, thử refresh
             if (error.name === 'TokenExpiredError') {
                 try {
                     // Decode access token để lấy userId
                     const decoded = jwt.decode(token);
+                    console.log('Decoded expired token:', decoded);
                     const userId = decoded.userId;
 
                     // Lấy refresh token từ database của user đó
                     const auth = await Auth.findOne({ userId });
+                    console.log('Auth from DB:', auth);
                     
                     if (!auth) {
                         return res.status(401).json({ message: 'No refresh token found' });
@@ -153,9 +166,17 @@ const adminMiddleware = async (req, res, next) => {
 
                     // Verify refresh token
                     const refreshDecoded = jwt.verify(auth.refreshToken, process.env.JWT_REFRESH_SECRET);
+                    console.log('Decoded refresh token:', refreshDecoded);
 
-                    // Kiểm tra lại quyền admin
-                    if (!refreshDecoded.isAdmin) {
+                    // Lấy thông tin user từ database
+                    const user = await User.findById(userId);
+                    console.log('User after refresh:', user);
+                    
+                    if (!user || !user.isAdmin) {
+                        console.log('Admin check failed after refresh:', { 
+                            userExists: !!user, 
+                            isAdmin: user?.isAdmin 
+                        });
                         return res.status(403).json({ message: 'Forbidden - Admin access required' });
                     }
 
@@ -163,12 +184,17 @@ const adminMiddleware = async (req, res, next) => {
                     const newAccessToken = jwt.sign(
                         { 
                             userId,
-                            email: refreshDecoded.email,
-                            isAdmin: refreshDecoded.isAdmin
+                            email: user.email,
+                            isAdmin: user.isAdmin
                         },
                         process.env.JWT_SECRET,
                         { expiresIn: '2m' }
                     );
+                    console.log('New access token payload:', { 
+                        userId,
+                        email: user.email,
+                        isAdmin: user.isAdmin
+                    });
 
                     // Set cookie mới
                     res.cookie('access_token', newAccessToken, {
@@ -180,11 +206,13 @@ const adminMiddleware = async (req, res, next) => {
                     });
 
                     // Lưu thông tin user vào request
-                    req.userId = userId;
-                    req.user = refreshDecoded;
+                    req.userId = user._id;
+                    req.user = user;
+                    console.log('User set in request after refresh:', req.user);
                     
                     next();
                 } catch (refreshError) {
+                    console.log('Refresh token error:', refreshError);
                     // Nếu refresh token cũng hết hạn, xóa khỏi database
                     if (refreshError.name === 'TokenExpiredError') {
                         await Auth.deleteOne({ userId: decoded.userId });
@@ -195,6 +223,7 @@ const adminMiddleware = async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid token' });
         }
     } catch (error) {
+        console.log('Middleware error:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 };

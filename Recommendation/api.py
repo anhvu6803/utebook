@@ -9,6 +9,7 @@ import logging
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import traceback
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(
@@ -19,6 +20,15 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Book Recommendation API")
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Initialize recommender
 recommender = None
 executor = ThreadPoolExecutor(max_workers=1)
@@ -27,9 +37,17 @@ class RecommendationResponse(BaseModel):
     book_id: str
     bookname: str
     author: str
-    description: str
-    cover_image: Optional[str] = None
-    rating: Optional[float] = None
+    categories: list
+    type: str
+    pushlisher: Optional[str] = None
+    image: str
+    description: Optional[str] = None
+    chapterIds: Optional[list] = None
+    ageLimit: Optional[int] = None
+    isFavorite: Optional[bool] = None
+    listReading: Optional[list] = None
+    listReview: Optional[list] = None
+    avegradeRate: Optional[float] = None
 
 def initialize_recommender():
     """Initialize the recommender system with data from MongoDB"""
@@ -71,6 +89,10 @@ def initialize_recommender():
             'bookId': 'item_id'
         })
         
+        # Handle duplicate ratings by taking the average
+        ratings_df = ratings_df.groupby(['user_id', 'item_id'])['rating'].mean().reset_index()
+        logger.info(f"After handling duplicates: {len(ratings_df)} unique user-item ratings")
+        
         # Fetch books data
         books_data = []
         try:
@@ -81,7 +103,7 @@ def initialize_recommender():
                         'bookname': doc.get('bookname', ''),
                         'author': doc.get('author', ''),
                         'description': doc.get('description', ''),
-                        'coverImage': doc.get('coverImage', ''),
+                        'image': doc.get('image', ''),
                         'rating': float(doc.get('rating', 0))
                     })
                 except Exception as e:
@@ -101,7 +123,7 @@ def initialize_recommender():
         books_df = pd.DataFrame(books_data)
         books_df = books_df.rename(columns={
             '_id': 'item_id',
-            'coverImage': 'cover_image'
+            'image': 'image'
         })
         
         # Fetch chapters data if available
@@ -171,9 +193,17 @@ async def get_recommendations(user_id: str, n_recommendations: int = 5):
                         book_id=str(book['_id']),
                         bookname=book.get('bookname', ''),
                         author=book.get('author', ''),
+                        categories=book.get('categories', []),
+                        type=book.get('type', ''),
+                        pushlisher=book.get('pushlisher', ''),
+                        image=book.get('image', ''),
                         description=book.get('description', ''),
-                        cover_image=book.get('coverImage'),
-                        rating=book.get('rating')
+                        chapterIds=[str(cid) for cid in book.get('chapterIds', [])],
+                        ageLimit=book.get('ageLimit'),
+                        isFavorite=book.get('isFavorite', False),
+                        listReading=book.get('listReading', []),
+                        listReview=book.get('listReview', []),
+                        avegradeRate=book.get('avegradeRate', 0)
                     ))
             except Exception as e:
                 logger.error(f"Error processing book {item_id}: {str(e)}")

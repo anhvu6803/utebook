@@ -103,6 +103,12 @@
         color: white;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        transition: background 0.3s;
+        cursor: pointer;
+      }
+      th:hover {
+        background: linear-gradient(45deg, #1976d2, #2196f3);
+        color: #fff;
       }
     }
 
@@ -112,7 +118,6 @@
         cursor: pointer;
 
         &:hover {
-          background: #f5f9ff;
           transform: translateY(-1px);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }

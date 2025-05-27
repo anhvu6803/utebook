@@ -16,7 +16,7 @@ const MembershipPackageSchema = new mongoose.Schema({
         min: 0
     },
     expire: {
-        type: Number, // Thời hạn gói membership (số ngày)
+        type: Number, // Thời hạn gói membership (số phút)
         required: true,
         min: 1
     }

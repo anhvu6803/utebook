@@ -170,11 +170,17 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      transition: background 0.3s;
+      cursor: pointer;
       
       &:first-child {
         text-align: left;
         padding-left: 20px;
       }
+    }
+    th:hover {
+      background: linear-gradient(45deg, #1976d2, #2196f3);
+      color: #fff;
     }
 
     td {

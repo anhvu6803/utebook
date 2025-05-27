@@ -25,10 +25,26 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [bookSearch, setBookSearch] = useState("");
+  const [showBookDropdown, setShowBookDropdown] = useState(false);
+  const filteredBooks = books.filter(book => book.bookname.toLowerCase().includes(bookSearch.toLowerCase()));
 
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showBookDropdown && !event.target.closest('.custom-book-select-wrapper')) {
+        setShowBookDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showBookDropdown]);
 
   const fetchBooks = async () => {
     try {
@@ -54,20 +70,6 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
       'x-user-id': user._id,
       'x-is-admin': user.role === 'admin'
     };
-  };
-
-  const handleBookChange = (e) => {
-    const bookId = e.target.value;
-    setSelectedBook(bookId);
-    if (bookId) {
-      const selectedBookData = books.find(book => book._id === bookId);
-      if (selectedBookData) {
-        setNewChapter(prev => ({
-          ...prev,
-          chapterName: `${selectedBookData.bookname} - Chương ${prev.chapterNumber || ''}`
-        }));
-      }
-    }
   };
 
   const handleChapterNumberChange = (e) => {
@@ -152,7 +154,9 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
       const response = await axios.post('http://localhost:5000/api/chapter/add-chapter', chapterData, {
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthHeaders()
+          'x-user-email': user.email,
+          'x-user-id': user._id,
+          'x-is-admin': user.role === 'admin' ? 'true' : 'false'
         },
         withCredentials: true
       });
@@ -181,27 +185,70 @@ const AddChapterTab = ({ onConfirm, onCancel }) => {
       <form onSubmit={handleSubmit}>
         {error && (
           <div className="error-message">
-            <span className="error-icon">⚠️</span>
+            <span className="error-icon"><DescriptionIcon /></span>
             {error}
           </div>
         )}
 
         <div className="form-group">
-          <div className="input-icon">
-            <BookIcon className="icon" />
-            <select
-              value={selectedBook}
-              onChange={handleBookChange}
-              disabled={isUploading}
-              className={`styled-select${fieldErrors.selectedBook ? ' error' : ''}`}
+          <label htmlFor="book-select" className="form-label">Chọn sách <span className="required">*</span></label>
+          <div className="custom-book-select-wrapper">
+            <div
+              className={`custom-book-select-input${fieldErrors.selectedBook ? ' error' : ''}`}
+              onClick={() => setShowBookDropdown(true)}
             >
-              <option value="">Chọn sách</option>
-              {books.map(book => (
-                <option key={book._id} value={book._id}>
-                  {book.bookname}
-                </option>
-              ))}
-            </select>
+              {selectedBook ? (
+                <div className="selected-book-info">
+                  <img src={books.find(b => b._id === selectedBook)?.image} alt="cover" className="book-thumb" />
+                  <div className="book-meta">
+                    <div className="book-title">{books.find(b => b._id === selectedBook)?.bookname}</div>
+                    <div className="book-author">{books.find(b => b._id === selectedBook)?.author}</div>
+                  </div>
+                </div>
+              ) : (
+                <span className="placeholder">Chọn sách...</span>
+              )}
+              <span className="dropdown-arrow"><TitleIcon /></span>
+            </div>
+            {showBookDropdown && (
+              <div className="custom-book-dropdown">
+                <input
+                  type="text"
+                  className="book-search-input"
+                  placeholder="Tìm kiếm tên sách..."
+                  value={bookSearch}
+                  onChange={e => setBookSearch(e.target.value)}
+                  autoFocus
+                />
+                <div className="book-list">
+                  {filteredBooks.length === 0 ? (
+                    <div className="no-books">Không tìm thấy sách</div>
+                  ) : (
+                    filteredBooks.map(book => (
+                      <div
+                        key={book._id}
+                        className="book-dropdown-item"
+                        onClick={() => {
+                          setSelectedBook(book._id);
+                          setShowBookDropdown(false);
+                          setBookSearch("");
+                          setNewChapter(prev => ({
+                            ...prev,
+                            chapterName: `${book.bookname} - Chương ${prev.chapterNumber || ''}`
+                          }));
+                        }}
+                      >
+                        <img src={book.image} alt="cover" className="book-thumb" />
+                        <div className="book-meta">
+                          <div className="book-title">{book.bookname}</div>
+                          <div className="book-author">{book.author}</div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
           </div>
           {fieldErrors.selectedBook && <div className="field-error">{fieldErrors.selectedBook}</div>}
         </div>

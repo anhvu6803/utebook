@@ -9,7 +9,21 @@ router.post('/create',authMiddleware, PaymentController.createPayment);
 router.get('/vnpay-return', PaymentController.verifyPayment);
 
 // Xác thực thanh toán từ MoMo
-router.get('/momo-return', PaymentController.verifyPayment);
+router.get('/momo-return', (req, res, next) => {
+    console.log('MoMo return callback received:', req.query);
+    PaymentController.verifyPayment(req, res, next);
+});
+
+router.get('/momo-callback', (req, res, next) => {
+    console.log('MoMo callback received:', req.query);
+    PaymentController.verifyPayment(req, res, next);
+});
+
+router.get('/', (req, res, next) => {
+    console.log('Root callback received:', req.query);
+    PaymentController.verifyPayment(req, res, next);
+});
+
 router.post('/momo-ipn', PaymentController.momoIPN);
 
 // Lấy thông tin giao dịch

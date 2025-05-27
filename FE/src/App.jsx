@@ -26,12 +26,9 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ManageUserPage from "./pages/Admin/ManageUserPage";
 import ManageBookPage from "./pages/Admin/ManageBookPage";
-import ManageAudioBookPage from "./pages/Admin/ManageAudioBookPage";
 import ManageCategoryPage from "./pages/Admin/ManageCategoryPage";
 import ManagePointPage from "./pages/Admin/ManagePointPage";
 import ManageMembershipPage from "./pages/Admin/ManageMembershipPage";
-import ManageEventPage from "./pages/Admin/ManageEventPage";
-import ManageWritingPage from "./pages/Admin/ManageWritingPage";
 import StatisticsPage from "./pages/Admin/StatisticsPage";
 import AccountSettingPage from "./pages/AccountSettingPage";
 import AccountSettingLayout from "./layout/AccountSettingLayout";
@@ -72,9 +69,10 @@ const App = () => {
             <Route path="register" element={<RegisterPage />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="change-password" element={<ChangePasswordPage />} />
-            <Route path="payment/success" element={<PaymentResultPage />} />
-            <Route path="payment/failed" element={<PaymentResultPage />} />
           </Route>
+
+          <Route path="payment/success" element={<PaymentResultPage />} />
+          <Route path="payment/failed" element={<PaymentResultPage />} />
 
           {/* Protected routes */}
           <Route path="/utebook" element={<ProtectedRoute><HomeLayout /></ProtectedRoute>}>
@@ -129,7 +127,6 @@ const App = () => {
           <Route path="/utebook-admin" element={<ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>}>
             <Route index element={<ManageUserPage />} />
             <Route path="books" element={<ManageBookPage />} />
-            <Route path="audio-books" element={<ManageAudioBookPage />} />
             <Route path="categories" element={<ManageCategoryPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="point" element={<ManagePointPage />} />
@@ -137,6 +134,7 @@ const App = () => {
             <Route path="events" element={<ManageEventPage />} />
             <Route path="writing" element={<ManageWritingPage />} />
             <Route path="notifications" element={<ManageNotificationPage />} />
+            <Route path="notifications" element={<ManageNotificationPage/>} />
           </Route>
         </Routes>
       </AuthProvider>

@@ -2,6 +2,8 @@ const HistoryPoint = require('../models/history_point.model');
 const User = require('../models/user.model');
 const Book = require('../models/book.model');
 const Transaction = require('../models/transaction.model');
+const PointPackage = require('../models/pointPackage.model');
+const Chapter = require('../models/chapter.model');
 const mongoose = require('mongoose');
 
 const historyPointService = {
@@ -70,12 +72,22 @@ const historyPointService = {
                         typePackage: transaction.typePackage,
                         amount: transaction.amount,
                         status: transaction.status,
+                        paymentMethod: transaction.paymentMethod,
+                        createdAt: transaction.createdAt,
+                        // VNPay fields
                         vnp_TransactionNo: transaction.vnp_TransactionNo,
                         vnp_BankCode: transaction.vnp_BankCode,
                         vnp_BankTranNo: transaction.vnp_BankTranNo,
                         vnp_CardType: transaction.vnp_CardType,
                         vnp_PayDate: transaction.vnp_PayDate,
-                        vnp_ResponseCode: transaction.vnp_ResponseCode
+                        vnp_ResponseCode: transaction.vnp_ResponseCode,
+                        // MoMo fields
+                        momo_RequestId: transaction.momo_RequestId,
+                        momo_OrderId: transaction.momo_OrderId,
+                        momo_TransId: transaction.momo_TransId,
+                        momo_ResultCode: transaction.momo_ResultCode,
+                        momo_Message: transaction.momo_Message,
+                        momo_PayType: transaction.momo_PayType
                     };
                 });
             }
@@ -128,42 +140,87 @@ const historyPointService = {
     // Get history points by user ID with user and book information
     async getHistoryPointsByUserIdWithUserInfo(userId) {
         try {
-            // Lấy history points của user
             const historyPoints = await HistoryPoint.find({ id_user: userId }).sort({ time: -1 });
-            
+
             // Lấy thông tin user (chỉ lấy _id và username)
             const user = await User.findById(userId, '_id username');
             if (!user) {
                 throw new Error('User not found');
             }
-            
-            // Lấy danh sách book IDs
-            const bookIds = [...new Set(historyPoints.filter(hp => hp.bookId).map(hp => hp.bookId))];
-            
-            // Lấy thông tin books (chỉ lấy _id và title)
-            const books = await Book.find({ _id: { $in: bookIds } }, '_id bookname');
+
+            // Lấy danh sách chapter IDs cho các bản ghi Đọc
+            const chapterIds = [...new Set(historyPoints.filter(hp => hp.type === 'Đọc' && hp.chapterId).map(hp => hp.chapterId))];
+            const chapters = await Chapter.find({ _id: { $in: chapterIds } });
+            const chapterMap = {};
+            chapters.forEach(chap => {
+                chapterMap[chap._id.toString()] = chap;
+            });
+
+            // Lấy danh sách book IDs từ các chapter
+            const bookIds = [...new Set(chapters.map(chap => chap.bookId))];
+            const books = await Book.find({ _id: { $in: bookIds } });
             const bookMap = {};
             books.forEach(book => {
-                bookMap[book._id.toString()] = {
-                    _id: book._id,
-                    title: book.bookname
-                };
+                bookMap[book._id.toString()] = book;
             });
-            
-            // Kết hợp thông tin
+
+            // Lấy danh sách transactionIds cho các bản ghi Nạp
+            const transactionIds = [...new Set(historyPoints.filter(hp => hp.type === 'Nạp' && hp.transactionId).map(hp => hp.transactionId))];
+            const transactions = await Transaction.find({ _id: { $in: transactionIds } });
+            const transactionMap = {};
+            transactions.forEach(tran => {
+                transactionMap[tran._id.toString()] = tran;
+            });
+
+            // Lấy danh sách packageIds từ transactions
+            const packageIds = [...new Set(transactions.map(tran => tran.packageId))];
+            const packages = await PointPackage.find({ _id: { $in: packageIds } });
+            const packageMap = {};
+            packages.forEach(pkg => {
+                packageMap[pkg._id.toString()] = pkg;
+            });
+
+            // Build kết quả
             const result = historyPoints.map(hp => {
                 const hpObj = hp.toObject();
                 hpObj.userInfo = {
                     _id: user._id,
                     username: user.username
                 };
-                hpObj.bookInfo = hp.bookId ? (bookMap[hp.bookId.toString()] || null) : null;
+                if (hp.type === 'Đọc' && hp.chapterId) {
+                    const chap = chapterMap[hp.chapterId.toString()];
+                    hpObj.chapterInfo = chap ? {
+                        _id: chap._id,
+                        chapterName: chap.chapterName,
+                        price: chap.price
+                    } : null;
+                    const book = chap && bookMap[chap.bookId.toString()];
+                    hpObj.bookInfo = book ? {
+                        _id: book._id,
+                        bookname: book.bookname,
+                        author: book.author,
+                        categories: book.categories,
+                        type: book.type,
+                        image: book.image,
+                        description: book.description
+                    } : null;
+                }
+                if (hp.type === 'Nạp' && hp.transactionId) {
+                    const tran = transactionMap[hp.transactionId.toString()];
+                    if (tran && tran.packageId) {
+                        const pkg = packageMap[tran.packageId.toString()];
+                        hpObj.packageInfo = pkg ? {
+                            _id: pkg._id,
+                            name: pkg.name,
+                            price: pkg.price
+                        } : null;
+                    }
+                }
                 return hpObj;
             });
-            
+
             return result;
         } catch (error) {
-            console.error('Error in getHistoryPointsByUserIdWithUserInfo:', error);
             throw error;
         }
     },
