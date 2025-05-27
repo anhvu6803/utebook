@@ -1,1 +1,14 @@
+# Node.js dependencies
 node_modules/
+
+# Python virtual environments
+venv/
+
+# Python bytecode cache
+__pycache__/
+
+# VSCode settings (tuỳ chọn)
+.vscode/
+
+# Excel tạm thời (tuỳ chọn)
+*.xlsx

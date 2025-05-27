@@ -15,7 +15,11 @@ const BookSchema = new mongoose.Schema({
         ref: 'User',
         default: []
     }],
-    listReading: { type: [String], default: [] },
+    listReading: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'HistoryReading',
+        default: []
+    }],
     listReviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review',

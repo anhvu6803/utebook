@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import "./styles/PurchaseChapter.scss";
 import hoaPhuong from "../assets/hoaPhuong.png";
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Modal } from "@mui/material";
+import { Spin } from "antd";
+import customAlert from "./CustomAlert";
 
 const PurchaseChapter = ({
     isContinue = false,
+    chapterPrice,
     hoaPhuongAmount = 0,
     chapterName,
     bookName,
     readingId,
-    chapterId
+    chapterId,
+    setAlert
 }) => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [showForm, setShowForm] = useState(false);
 
     const handleUpdateReading = async () => {
@@ -34,11 +40,29 @@ const PurchaseChapter = ({
         navigate(`/utebook-reader/${chapterId}`);
     };
 
+    const handlePurchaseChapter = async () => {
+        try {
+            const response = await axios.post(`http://localhost:5000/api/points//buy-chapter`,
+                {
+                    userId: user._id,
+                    chapterId: chapterId
+                }
+            );
+            console.log(response.data);
+        } catch (error) {
+            setAlert({
+                open: true,
+                message: "Mua chương thất bại",
+                severity: 'error'
+            });
+            setShowForm(false);
+        }
+    };
     return (
         <>
             <button className={isContinue ? "read-continue-button" : "read-now-button"}
                 onClick={() => {
-                    hoaPhuongAmount > 0 ?
+                    chapterPrice > 0 ?
                         setShowForm(true) :
                         navigate(`/utebook-reader/${chapterId}`)
                 }}
@@ -63,14 +87,14 @@ const PurchaseChapter = ({
                         <div className="content-line">
                             <p className="name">Giá chương:</p>
                             <span className="amount-hoaphuong">
-                                <span className="value">{(hoaPhuongAmount).toLocaleString('vi-VN')}</span>
+                                <span className="value">{(chapterPrice).toLocaleString('vi-VN')}</span>
                                 <img src={hoaPhuong} />
                             </span>
                         </div>
                         <div className="content-line">
                             <p className="name">Bạn đang có:</p>
                             <span className="amount-hoaphuong">
-                                <span className="value">{(20000).toLocaleString('vi-VN')}</span>
+                                <span className="value">{(hoaPhuongAmount).toLocaleString('vi-VN')}</span>
                                 <img src={hoaPhuong} />
                             </span>
                         </div>
@@ -78,7 +102,7 @@ const PurchaseChapter = ({
                             <button className="cancel-btn" onClick={() => setShowForm(false)}>
                                 Hủy bỏ
                             </button>
-                            <button className="purchase-btn" onClick={handleUpdateReading}>
+                            <button className="purchase-btn" onClick={handlePurchaseChapter}>
                                 Đồng ý
                             </button>
                         </div>

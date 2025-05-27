@@ -172,7 +172,7 @@ async def startup_event():
         logger.error(f"Traceback: {traceback.format_exc()}")
 
 @app.get("/recommendations/{user_id}", response_model=List[RecommendationResponse])
-async def get_recommendations(user_id: str, n_recommendations: int = 5):
+async def get_recommendations(user_id: str, n_recommendations: int = 60):
     """Get book recommendations for a user"""
     if not recommender:
         raise HTTPException(status_code=500, detail="Recommender system not initialized")
@@ -200,7 +200,7 @@ async def get_recommendations(user_id: str, n_recommendations: int = 5):
                         description=book.get('description', ''),
                         chapterIds=[str(cid) for cid in book.get('chapterIds', [])],
                         ageLimit=book.get('ageLimit'),
-                        isFavorite=book.get('isFavorite', False),
+                        listUserFavorited=book.get('listUserFavorited', []),
                         listReading=book.get('listReading', []),
                         listReview=book.get('listReview', []),
                         avegradeRate=book.get('avegradeRate', 0)
