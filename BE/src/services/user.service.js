@@ -8,7 +8,6 @@ const generateVerificationCode = () => {
     return crypto.randomInt(100000, 999999).toString();
 };
 
-
 const verificationCodes = new Map();
 
 const userService = {
@@ -99,7 +98,6 @@ const userService = {
 
         return { message: 'Email verified successfully' };
     },
-
 
     async requestPasswordReset(email) {
         const user = await User.findOne({ email });
@@ -225,7 +223,6 @@ const userService = {
         } catch (error) {
             throw error;
         }
-    },
     },
 
     async checkAndUpdateMembershipStatus() {

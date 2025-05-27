@@ -29,6 +29,7 @@
     "jspdf": "^3.0.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
+    "mongoose": "^8.15.1",
     "motion": "^12.4.7",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
