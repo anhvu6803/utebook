@@ -29,12 +29,13 @@ import ManageBookPage from "./pages/Admin/ManageBookPage";
 import ManageCategoryPage from "./pages/Admin/ManageCategoryPage";
 import ManagePointPage from "./pages/Admin/ManagePointPage";
 import ManageMembershipPage from "./pages/Admin/ManageMembershipPage";
+
 import StatisticsPage from "./pages/Admin/StatisticsPage";
 import AccountSettingPage from "./pages/AccountSettingPage";
 import AccountSettingLayout from "./layout/AccountSettingLayout";
 import AccountHistoryTransactionPage from "./pages/AccountHistoryTransactionPage";
 import AccountLibraryPage from "./pages/AccountLibraryPage";
-import AccountAchievement from "./pages/AccountAchievement";
+
 import MembershipPlansPage from "./pages/MembershipPlansPage";
 import HoaPhuongPage from "./pages/HoaPhuongPage";
 import ActivateCodePage from "./pages/ActivateCodePage";
@@ -131,9 +132,6 @@ const App = () => {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="point" element={<ManagePointPage />} />
             <Route path="membership" element={<ManageMembershipPage />} />
-            <Route path="events" element={<ManageEventPage />} />
-            <Route path="writing" element={<ManageWritingPage />} />
-            <Route path="notifications" element={<ManageNotificationPage />} />
             <Route path="notifications" element={<ManageNotificationPage/>} />
           </Route>
         </Routes>
