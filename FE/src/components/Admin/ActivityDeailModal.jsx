@@ -7,13 +7,11 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [newStatus, setNewStatus] = useState(activity?.status || 'Thành công');
   const [relatedActivities, setRelatedActivities] = useState([]);
-  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     const fetchRelatedActivities = async () => {
       if (!activity?.id_user) return;
       
-      setLoading(true);
       try {
         // Lấy các hoạt động của cùng một người dùng trong khoảng 24h trước và sau
         const activityTime = new Date(activity.time);
@@ -32,8 +30,6 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
         setRelatedActivities(filtered);
       } catch (error) {
         console.error('Error fetching related activities:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -298,25 +294,38 @@ const ActivityDetailModal = ({ activity, onClose, onStatusChange }) => {
                     </div>
 
                     <div className="transaction-details-section">
-                      <h4>Chi tiết giao dịch VNPay</h4>
+                      <h4>Chi tiết giao dịch {activity.transactionInfo.paymentMethod === 'momo' ? 'MoMo' : 'VNPay'}</h4>
                       <div className="vnpay-details">
+                        {activity.transactionInfo.vnp_TransactionNo && (
+                          <div className="detail-row">
+                            <span className="detail-label">Mã giao dịch VNPay:</span>
+                            <span className="detail-value">{activity.transactionInfo.vnp_TransactionNo}</span>
+                          </div>
+                        )}
+                        {activity.transactionInfo.momo_TransId && (
+                          <div className="detail-row">
+                            <span className="detail-label">Mã giao dịch MoMo:</span>
+                            <span className="detail-value">{activity.transactionInfo.momo_TransId}</span>
+                          </div>
+                        )}
+                        {activity.transactionInfo.vnp_BankTranNo && (
+                          <div className="detail-row">
+                            <span className="detail-label">Mã giao dịch ngân hàng:</span>
+                            <span className="detail-value">{activity.transactionInfo.vnp_BankTranNo}</span>
+                          </div>
+                        )}
                         <div className="detail-row">
-                          <span className="detail-label">Mã giao dịch VNPay:</span>
-                          <span className="detail-value">{activity.transactionInfo.vnp_TransactionNo}</span>
-                        </div>
-                <div className="detail-row">
-                          <span className="detail-label">Mã giao dịch ngân hàng:</span>
-                          <span className="detail-value">{activity.transactionInfo.vnp_BankTranNo}</span>
-                </div>
-                  <div className="detail-row">
                           <span className="detail-label">Thời gian thanh toán:</span>
                           <span className="detail-value">
-                            {new Date(
-                              activity.transactionInfo.vnp_PayDate.replace(
-                                /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
-                                '$1-$2-$3T$4:$5:$6'
-                              )
-                            ).toLocaleString('vi-VN')}
+                            {activity.transactionInfo.vnp_PayDate ? 
+                              new Date(
+                                activity.transactionInfo.vnp_PayDate.replace(
+                                  /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
+                                  '$1-$2-$3T$4:$5:$6'
+                                )
+                              ).toLocaleString('vi-VN') : 
+                              formatDate(activity.transactionInfo.createdAt) + ' ' + formatTime(activity.transactionInfo.createdAt)
+                            }
                           </span>
                         </div>
                       </div>
@@ -402,11 +411,14 @@ ActivityDetailModal.propTypes = {
       status: PropTypes.string,
       amount: PropTypes.number,
       typePackage: PropTypes.string,
+      paymentMethod: PropTypes.string,
+      createdAt: PropTypes.string,
       vnp_BankCode: PropTypes.string,
       vnp_CardType: PropTypes.string,
       vnp_TransactionNo: PropTypes.string,
       vnp_BankTranNo: PropTypes.string,
-      vnp_PayDate: PropTypes.string
+      vnp_PayDate: PropTypes.string,
+      momo_TransId: PropTypes.string
     }),
     adminApproved: PropTypes.string,
     approvalDate: PropTypes.string,

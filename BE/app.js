@@ -13,10 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:8000', process.env.WEB_URI].filter(Boolean),
+    origin: ['http://localhost:5173', 'http://localhost:8000', 'http://localhost:5000', 'http://localhost:3000'].filter(Boolean),
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Content-Type',
+        'Authorization',
+        'x-user-email',
+        'x-user-id',     
+        'x-is-admin']
 }));
 
 app.use('/api', routes);

@@ -1,4 +1,7 @@
 const Point = require('../models/point.model');
+const Chapter = require('../models/chapter.model');
+const Book = require('../models/book.model');
+const HistoryPoint = require('../models/history_point.model');
 
 const pointService = {
     // Create a new point record
@@ -59,6 +62,65 @@ const pointService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    async buyChapter(userId, chapterId) {
+        if (!userId || !chapterId) {
+            throw new Error('Thiếu userId hoặc chapterId');
+        }
+
+        // Lấy thông tin chapter
+        const chapter = await Chapter.findById(chapterId);
+        if (!chapter) throw new Error('Không tìm thấy chapter');
+
+        // Lấy thông tin book
+        const book = await Book.findById(chapter.bookId);
+        if (!book) throw new Error('Không tìm thấy book');
+
+        // Lấy điểm user
+        const point = await Point.findOne({ id_user: userId });
+        if (!point) throw new Error('Không tìm thấy điểm của user');
+
+        // Kiểm tra đủ điểm chưa
+        if (point.quantity_HoaPhuong < chapter.price) {
+            throw new Error('Không đủ điểm Hoa Phượng');
+        }
+
+        // Trừ điểm
+        point.quantity_HoaPhuong -= chapter.price;
+        await point.save();
+
+        // Thêm vào history point
+        const history = new HistoryPoint({
+            id_user: userId,
+            type: 'Đọc',
+            number_point_HoaPhuong: chapter.price,
+            number_point_La: 0,
+            chapterId: chapter._id,
+            time: new Date(),
+            status: 'Thành công'
+        });
+        await history.save();
+
+        return {
+            point,
+            history,
+            book: {
+                _id: book._id,
+                bookname: book.bookname,
+                author: book.author,
+                categories: book.categories,
+                type: book.type,
+                pushlisher: book.pushlisher,
+                image: book.image,
+                description: book.description
+            },
+            chapter: {
+                _id: chapter._id,
+                chapterName: chapter.chapterName,
+                price: chapter.price
+            }
+        };
     }
 };
 

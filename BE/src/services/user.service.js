@@ -198,6 +198,70 @@ const userService = {
         } catch (error) {
             throw new Error(`Failed to update user: ${error.message}`);
         }
+    },
+
+    async checkAndUpdateMembershipStatus() {
+        try {
+            // Tìm tất cả users có isMember=true và membershipExpirationDate đã qua
+            const currentDate = new Date();
+            const expiredMembers = await User.find({
+                isMember: true,
+                membershipExpirationDate: { $lt: currentDate }
+            });
+
+            if (expiredMembers.length === 0) {
+                return {
+                    success: true,
+                    message: 'No expired memberships found',
+                    count: 0
+                };
+            }
+
+            // Cập nhật trạng thái thành viên thành false
+            const updatePromises = expiredMembers.map(user => {
+                user.isMember = false;
+                return user.save();
+            });
+
+            await Promise.all(updatePromises);
+
+            return {
+                success: true,
+                message: 'Membership status updated successfully',
+                count: expiredMembers.length
+            };
+        } catch (error) {
+            throw new Error(`Failed to update membership status: ${error.message}`);
+        }
+    },
+
+    async checkMembershipStatus(userId) {
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            // Kiểm tra nếu user là member nhưng đã hết hạn
+            if (user.isMember && user.membershipExpirationDate) {
+                const currentDate = new Date();
+                if (user.membershipExpirationDate < currentDate) {
+                    // Cập nhật trạng thái thành viên thành false
+                    user.isMember = false;
+                    await user.save();
+                }
+            }
+
+            return {
+                success: true,
+                data: {
+                    isMember: user.isMember,
+                    membershipExpirationDate: user.membershipExpirationDate
+                }
+            };
+        } catch (error) {
+            throw new Error(`Failed to check membership status: ${error.message}`);
+        }
     }
 };
 

@@ -129,13 +129,20 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
       if (response.data.success) {
         onDelete(user._id);
         toast.success("Xóa người dùng thành công");
-        onClose(); // Đóng modal sau khi xóa thành công
+        onClose(); // Đóng modal
       } else {
         toast.error(response.data.message || "Không thể xóa người dùng");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Không thể xóa người dùng");
-      console.error("Error deleting user:", error);
+      if (error.response?.status === 404) {
+        // Nếu user đã bị xóa, vẫn cập nhật UI
+        onDelete(user._id);
+        toast.success("Xóa người dùng thành công");
+        onClose();
+      } else {
+        toast.error(error.response?.data?.message || "Không thể xóa người dùng");
+        console.error("Error deleting user:", error);
+      }
     } finally {
       setLoading(false);
     }

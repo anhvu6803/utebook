@@ -20,6 +20,7 @@ class PaymentController {
                 });
             }
 
+            console.log('Creating payment with data:', { packageId, typePackage, amount, paymentMethod, userId });
             const result = await paymentService.createPaymentUrl({
                 userId,
                 packageId,
@@ -33,6 +34,7 @@ class PaymentController {
                 data: result
             });
         } catch (error) {
+            console.error('Create payment error:', error);
             res.status(500).json({
                 success: false,
                 message: error.message
@@ -42,6 +44,7 @@ class PaymentController {
 
     verifyPayment = async (req, res) => {
         try {
+            console.log('Payment callback params:', req.query);
             const transaction = await paymentService.verifyPayment(req.query);
 
             if (transaction.status === 'success') {
@@ -73,12 +76,17 @@ class PaymentController {
                     // Lưu thông tin gói membership vào history_package
                     await this.createMembershipHistory(transaction.userId, membershipPackage, transaction._id);
                 }
-                
-                res.redirect(`${process.env.FRONTEND_URL}/utebook`);
-            } else {
-                res.redirect(`${process.env.FRONTEND_URL}/payment/failed?transactionId=${transaction._id}`);
             }
+
+            // Redirect về trang kết quả
+            const redirectUrl = transaction.status === 'success' 
+                ? `${process.env.FRONTEND_URL}/payment/success?transactionId=${transaction._id}`
+                : `${process.env.FRONTEND_URL}/payment/failed?transactionId=${transaction._id}`;
+            
+            console.log('Redirecting to:', redirectUrl);
+            return res.redirect(redirectUrl);
         } catch (error) {
+            console.error('Payment verification error:', error);
             res.status(500).json({
                 success: false,
                 message: error.message
@@ -88,9 +96,11 @@ class PaymentController {
 
     momoIPN = async (req, res) => {
         try {
+            console.log('MoMo IPN params:', req.body);
             const result = await paymentService.momoIPN(req.body);
             res.status(200).json(result);
         } catch (error) {
+            console.error('MoMo IPN error:', error);
             res.status(500).json({
                 RspCode: 99,
                 Message: error.message

@@ -37,9 +37,17 @@ class RecommendationResponse(BaseModel):
     book_id: str
     bookname: str
     author: str
-    description: str
-    cover_image: Optional[str] = None
-    rating: Optional[float] = None
+    categories: list
+    type: str
+    pushlisher: Optional[str] = None
+    image: str
+    description: Optional[str] = None
+    chapterIds: Optional[list] = None
+    ageLimit: Optional[int] = None
+    isFavorite: Optional[bool] = None
+    listReading: Optional[list] = None
+    listReview: Optional[list] = None
+    avegradeRate: Optional[float] = None
 
 def initialize_recommender():
     """Initialize the recommender system with data from MongoDB"""
@@ -80,6 +88,10 @@ def initialize_recommender():
             'userId': 'user_id',
             'bookId': 'item_id'
         })
+        
+        # Handle duplicate ratings by taking the average
+        ratings_df = ratings_df.groupby(['user_id', 'item_id'])['rating'].mean().reset_index()
+        logger.info(f"After handling duplicates: {len(ratings_df)} unique user-item ratings")
         
         # Fetch books data
         books_data = []
@@ -181,9 +193,17 @@ async def get_recommendations(user_id: str, n_recommendations: int = 5):
                         book_id=str(book['_id']),
                         bookname=book.get('bookname', ''),
                         author=book.get('author', ''),
+                        categories=book.get('categories', []),
+                        type=book.get('type', ''),
+                        pushlisher=book.get('pushlisher', ''),
+                        image=book.get('image', ''),
                         description=book.get('description', ''),
-                        image=book.get('image'),
-                        rating=book.get('rating')
+                        chapterIds=[str(cid) for cid in book.get('chapterIds', [])],
+                        ageLimit=book.get('ageLimit'),
+                        isFavorite=book.get('isFavorite', False),
+                        listReading=book.get('listReading', []),
+                        listReview=book.get('listReview', []),
+                        avegradeRate=book.get('avegradeRate', 0)
                     ))
             except Exception as e:
                 logger.error(f"Error processing book {item_id}: {str(e)}")

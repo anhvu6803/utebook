@@ -17,4 +17,7 @@ router.patch('/:userId', pointController.updatePoint);
 // Xóa điểm theo user ID
 router.delete('/:userId', pointController.deletePoint);
 
+// Mua chương sách với điểm
+router.post('/buy-chapter', pointController.buyChapter);
+
 module.exports = router; 

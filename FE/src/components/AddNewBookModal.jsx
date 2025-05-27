@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import "./styles/AddNewBookModal.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import CategoryIcon from "@mui/icons-material/Category";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import axios from "axios";
@@ -27,12 +26,10 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
     pushlisher: "",
     description: "",
     cover: null,
-    content: null,
     ageLimit: 0
   });
 
   const [previewImage, setPreviewImage] = useState(null);
-  const [pdfFileName, setPdfFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,14 +58,6 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
     if (file) {
       setNewBook({ ...newBook, cover: file });
       setPreviewImage(URL.createObjectURL(file));
-    }
-  };
-
-  const handlePdfChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setNewBook({ ...newBook, content: file });
-      setPdfFileName(file.name);
     }
   };
 
@@ -124,27 +113,6 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
     }
   };
 
-  const uploadPdfContent = async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    try {
-      const headers = {
-        'Content-Type': 'multipart/form-data',
-        ...getAuthHeaders()
-      };
-
-      const response = await axios.post('http://localhost:5000/api/drive/upload', formData, {
-        headers,
-        withCredentials: true
-      });
-      return response.data.file.viewLink;
-    } catch (error) {
-      console.error('Error uploading PDF:', error);
-      throw new Error('Lỗi khi tải PDF lên');
-    }
-  };
-
   const addBook = async (bookData) => {
     try {
       const headers = {
@@ -179,7 +147,7 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
       return;
     }
 
-    if (!newBook.bookname || !newBook.author || !newBook.cover || !newBook.content) {
+    if (!newBook.bookname || !newBook.author || !newBook.cover) {
       setError("Vui lòng nhập đầy đủ thông tin bắt buộc!");
       setIsLoading(false);
       return;
@@ -203,11 +171,7 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
       const coverImageUrl = await uploadCoverImage(newBook.cover);
       console.log('Cover image uploaded:', coverImageUrl);
       
-      // Upload PDF to Google Drive
-      const pdfUrl = await uploadPdfContent(newBook.content);
-      console.log('PDF uploaded:', pdfUrl);
-
-      // Prepare book data with URLs
+      // Prepare book data
       const bookData = {
         bookname: newBook.bookname.trim(),
         author: newBook.author.trim(),
@@ -217,7 +181,6 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
         pushlisher: newBook.pushlisher.trim(),
         description: newBook.description.trim(),
         image: coverImageUrl,
-        viewlink: pdfUrl,
         ageLimit: parseInt(newBook.ageLimit)
       };
 
@@ -318,24 +281,6 @@ const AddBookModal = ({ onConfirm, onCancel }) => {
                           <span className="sub-text">Chọn hoặc kéo thả file ảnh vào đây</span>
                         </div>
                       )}
-                    </label>
-                  </div>
-
-                  <div className="pdf-upload-container">
-                    <input
-                      type="file"
-                      id="pdf-upload"
-                      accept=".pdf"
-                      onChange={handlePdfChange}
-                      className="file-input"
-                      disabled={isUploading}
-                    />
-                    <label htmlFor="pdf-upload" className="upload-label">
-                      <div className="upload-placeholder">
-                        <PictureAsPdfIcon />
-                        <span>{pdfFileName || "Tải nội dung PDF lên"}</span>
-                        <span className="sub-text">Chọn hoặc kéo thả file PDF vào đây</span>
-                      </div>
                     </label>
                   </div>
                 </div>

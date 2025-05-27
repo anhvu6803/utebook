@@ -232,6 +232,33 @@ const userController = {
                 message: error.message
             });
         }
+    },
+
+    // Kiểm tra và cập nhật trạng thái hết hạn của tất cả thành viên
+    async checkAndUpdateAllMemberships(req, res) {
+        try {
+            const result = await userService.checkAndUpdateMembershipStatus();
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    },
+
+    // Kiểm tra trạng thái thành viên của một user
+    async checkMembershipStatus(req, res) {
+        try {
+            const { id } = req.params;
+            const result = await userService.checkMembershipStatus(id);
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
     }
 };
 

@@ -56,7 +56,7 @@ exports.addBook = async (req, res) => {
     }
 
     try {
-        const { bookname, author, categories, type, pushlisher, description, image, ageLimit, chapterIds, viewlink } = req.body;
+        const { bookname, author, categories, type, pushlisher, description, image, ageLimit, chapterIds } = req.body;
 
         // Kiểm tra các trường bắt buộc
         const requiredFields = {
@@ -67,7 +67,6 @@ exports.addBook = async (req, res) => {
             pushlisher: 'Nhà xuất bản',
             description: 'Mô tả',
             image: 'Ảnh bìa',
-            viewlink: 'Link PDF'
         };
 
         const missingFields = [];
@@ -108,21 +107,11 @@ exports.addBook = async (req, res) => {
         // Add book using service
         const newBook = await BookService.addBook(bookData);
 
-        // Create first chapter for the book
-        const chapterData = {
-            chapterName: bookData.bookname,
-            price: type === "Có phí" ? parseFloat(price) : 0,
-            viewlink: viewlink,
-            bookId: newBook._id
-        };
-
-        const newChapter = await ChapterService.addChapter(chapterData);
         res.status(201).json({
             success: true,
             message: 'Thêm sách thành công',
             data: {
-                book: newBook,
-                chapter: newChapter
+                book: newBook
             }
         });
     } catch (error) {

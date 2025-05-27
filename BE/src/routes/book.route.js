@@ -61,7 +61,6 @@ router.post('/add-book',
         body('pushlisher').notEmpty().withMessage('Publisher is required'),
         body('description').notEmpty().withMessage('Description is required'),
         body('image').notEmpty().withMessage('Image URL is required').isString(),
-        body('viewlink').notEmpty().withMessage('View link is required').isString(),
         body('ageLimit')
             .exists().withMessage('Age limit is required')
             .isInt({ min: 0 }).withMessage('Age limit must be a non-negative number'),

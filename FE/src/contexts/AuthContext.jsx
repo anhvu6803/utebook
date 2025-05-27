@@ -13,17 +13,19 @@ export const AuthProvider = ({ children }) => {
 
     // Function to update auth state and sync with sessionStorage
     const updateAuthState = (newUser, newIsAdmin, newEmail, newUserId) => {
+        console.log("Updating auth state:", { newUser, newIsAdmin, newEmail, newUserId });
         setUser(newUser);
         setIsAdmin(newIsAdmin);
         setEmail(newEmail);
-        setUserId(newUserId);
+        // Use user._id if newUserId is not provided
+        setUserId(newUserId || (newUser?._id));
         
         // Only store non-sensitive data in sessionStorage
         if (newUser) {
             sessionStorage.setItem('authState', JSON.stringify({
                 isAdmin: newIsAdmin,
                 email: newEmail,
-                userId: newUserId,
+                userId: newUserId || newUser._id,
                 // Only store non-sensitive user data
                 user: {
                     name: newUser.name,
@@ -87,19 +89,23 @@ export const AuthProvider = ({ children }) => {
 
     const refreshToken = async () => {
         try {
+            console.log("Refreshing token...");
             const response = await axios.post('/auth/refresh-token', {}, {
                 withCredentials: true
             });
             
             if (response.data?.user) {
                 const decoded = decodeToken(response.data.accessToken);
+                console.log("Decoded token:", decoded);
                 if (decoded) {
+                    // Update auth state with new user data and token info
                     updateAuthState(
                         response.data.user,
                         decoded.isAdmin === true,
                         decoded.email,
-                        decoded.userId
+                        response.data.user._id // Use user._id from response
                     );
+                    console.log("Auth state updated after refresh");
                 }
                 return true;
             }
@@ -154,7 +160,7 @@ export const AuthProvider = ({ children }) => {
                                     response.data,
                                     decoded.isAdmin === true,
                                     decoded.email,
-                                    decoded.userId
+                                    response.data._id // Use user._id from response
                                 );
                             }
                         } catch (error) {
@@ -218,7 +224,7 @@ export const AuthProvider = ({ children }) => {
                 newUser,
                 newUser?.isAdmin === true,
                 newUser?.email,
-                newUser?.userId
+                newUser?._id // Use user._id when setting user
             );
         },
         refreshToken,

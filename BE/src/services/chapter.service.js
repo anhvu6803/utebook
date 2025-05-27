@@ -1,8 +1,12 @@
 const Chapter = require('../models/chapter.model');
 const Book = require('../models/book.model');
+const mongoose = require('mongoose');
 
 class ChapterService {
     async addChapter(chapterData) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
         try {
             const { chapterName, price, viewlink, bookId } = chapterData;
 
@@ -15,16 +19,22 @@ class ChapterService {
             });
 
             // Save chapter to database
-            const savedChapter = await newChapter.save();
+            const savedChapter = await newChapter.save({ session });
 
             // Update book with new chapter
-            await Book.findByIdAndUpdate(bookId, {
-                $push: { chapterIds: savedChapter._id }
-            });
+            await Book.findByIdAndUpdate(
+                bookId,
+                { $push: { chapterIds: savedChapter._id } },
+                { session }
+            );
 
+            await session.commitTransaction();
             return savedChapter;
         } catch (error) {
+            await session.abortTransaction();
             throw error;
+        } finally {
+            session.endSession();
         }
     }
 
