@@ -21,8 +21,9 @@ def get_collections():
         books_collection = db.books
         users_collection = db.users
         chapters_collection = db.chapters
+        history_reading_collection = db.historyreadings
         
-        return reviews_collection, books_collection, users_collection, chapters_collection
+        return reviews_collection, books_collection, users_collection, chapters_collection, history_reading_collection
     except Exception as e:
         print(f"Error connecting to MongoDB: {str(e)}")
         raise 
