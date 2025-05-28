@@ -258,20 +258,35 @@ class HybridRecommender:
             return (self.user_item_matrix.loc[user_id] > 0).sum()
         return 0
 
+    def get_user_reading_history_count(self, user_id):
+        """Get the number of books in user's reading history"""
+        if user_id in self.user_item_matrix.index:
+            return (self.user_item_matrix.loc[user_id] > 0).sum()
+        return 0
+
     def get_random_recommendations(self, n_recommendations=5):
-        """Get random recommendations for new users"""
+        """Get random recommendations from all items"""
+        if not self.all_items:
+            return []
         return random.sample(self.all_items, min(n_recommendations, len(self.all_items)))
 
     def calculate_hybrid_weights(self, user_id):
-        """Calculate weights for hybrid recommendation based on user history"""
+        """Calculate weights for hybrid recommendation based on user's history"""
+        reading_count = self.get_user_reading_history_count(user_id)
         rating_count = self.get_user_rating_count(user_id)
         
-        if rating_count == 0:
-            return 0.0, 1.0  # Full weight to CBF for new users
+        # If user has no reading history, use random recommendations
+        if reading_count == 0:
+            return 0, 0
         
-        # Adjust weights based on rating count
-        cf_weight = min(rating_count / self.min_ratings_threshold, 1.0)
-        cbf_weight = 1.0 - cf_weight
+        # If user has reading history but no ratings, use only CBF
+        if rating_count == 0:
+            return 0, 1
+        
+        # Calculate weights based on the ratio of ratings to reading history
+        total = reading_count + rating_count
+        cf_weight = rating_count / total
+        cbf_weight = reading_count / total
         
         return cf_weight, cbf_weight
 
@@ -279,99 +294,110 @@ class HybridRecommender:
         """Get recommendations using collaborative filtering"""
         if user_id not in self.user_item_matrix.index:
             return []
-        
-        user_idx = self.user_item_matrix.index.get_loc(user_id)
-        user_ratings = self.user_item_matrix.iloc[user_idx]
-        
+        # Get user's ratings
+        user_ratings = self.user_item_matrix.loc[user_id]
         # Get items the user hasn't rated
         unrated_items = user_ratings[user_ratings == 0].index
-        
-        # Calculate predicted ratings
-        user_similarities = self.user_similarity_matrix[user_idx]
-        predicted_ratings = []
-        
+        if len(unrated_items) == 0:
+            return []
+        # Calculate predicted ratings for unrated items
+        predictions = []
         for item_id in unrated_items:
+            # Get similar items
             item_idx = self.user_item_matrix.columns.get_loc(item_id)
-            # Get ratings for this item from similar users
-            item_ratings = self.user_item_matrix.iloc[:, item_idx]
+            similar_items = self.item_similarity_matrix[item_idx]
+            # Get ratings for similar items
+            similar_ratings = user_ratings[user_ratings > 0]
+            if len(similar_ratings) == 0:
+                continue
             # Calculate weighted average rating
-            valid_ratings = item_ratings[item_ratings > 0]
-            if len(valid_ratings) > 0:
-                weighted_sum = np.sum(user_similarities * item_ratings)
-                similarity_sum = np.sum(np.abs(user_similarities[item_ratings > 0]))
-                if similarity_sum > 0:
-                    predicted_rating = weighted_sum / similarity_sum
-                    predicted_ratings.append((item_id, predicted_rating))
-        
+            similar_indices = [self.user_item_matrix.columns.get_loc(i) for i in similar_ratings.index]
+            weights = similar_items[similar_indices]
+            if weights.sum() == 0:
+                continue
+            predicted_rating = np.average(similar_ratings, weights=weights)
+            predictions.append((item_id, predicted_rating))
         # Sort by predicted rating and return top N
-        predicted_ratings.sort(key=lambda x: x[1], reverse=True)
-        return [item_id for item_id, _ in predicted_ratings[:n_recommendations]]
+        predictions.sort(key=lambda x: x[1], reverse=True)
+        return [item_id for item_id, _ in predictions[:n_recommendations]]
 
     def content_based_recommendations(self, user_id, n_recommendations=5):
-        """Get content-based recommendations for a user"""
-        if self.item_features is None:
-            return self.get_random_recommendations(n_recommendations)
-        
-        # Get items the user has rated highly
-        user_ratings = self.user_item_matrix.loc[user_id]
-        liked_items = user_ratings[user_ratings > 0].index.tolist()
-        
-        if not liked_items:
-            return self.get_random_recommendations(n_recommendations)
-        
-        # Get content features for liked items
-        liked_item_indices = self.items_df[self.items_df['item_id'].isin(liked_items)].index
-        if len(liked_item_indices) == 0:
-            return self.get_random_recommendations(n_recommendations)
+        """Get recommendations using content-based filtering"""
+        if user_id not in self.user_item_matrix.index:
+            return []
             
-        liked_features = self.item_features[liked_item_indices]
+        # Get user's rated items
+        user_ratings = self.user_item_matrix.loc[user_id]
+        rated_items = user_ratings[user_ratings > 0].index
         
-        # Get items the user hasn't rated
-        unrated_items = self.user_item_matrix.columns[self.user_item_matrix.loc[user_id] == 0].tolist()
-        unrated_indices = self.items_df[self.items_df['item_id'].isin(unrated_items)].index
+        if len(rated_items) == 0:
+            return []
+            
+        # Get content features for rated items
+        rated_indices = [self.items_df[self.items_df['item_id'] == item_id].index[0] for item_id in rated_items]
+        user_profile = self.item_features[rated_indices].mean(axis=0)
+        
+        # Calculate similarity with all items
+        similarities = cosine_similarity(user_profile, self.item_features).flatten()
+        
+        # Get indices of items not rated by user
+        unrated_mask = ~self.items_df['item_id'].isin(rated_items)
+        unrated_indices = self.items_df[unrated_mask].index
         
         if len(unrated_indices) == 0:
-            return self.get_random_recommendations(n_recommendations)
+            return []
+            
+        # Get similarities for unrated items
+        unrated_similarities = similarities[unrated_indices]
         
-        # Calculate similarity between liked items and unrated items
-        unrated_features = self.item_features[unrated_indices]
-        similarities = cosine_similarity(liked_features.mean(axis=0).reshape(1, -1), unrated_features)
-        
-        # Get top recommendations
-        top_indices = similarities.argsort()[0][-n_recommendations:][::-1]
-        return self.items_df.iloc[unrated_indices[top_indices]]['item_id'].tolist()
+        # Get top N recommendations
+        top_indices = unrated_indices[np.argsort(unrated_similarities)[-n_recommendations:]]
+        return self.items_df.iloc[top_indices]['item_id'].tolist()
 
     def recommend(self, user_id, n_recommendations=5):
-        """
-        Get hybrid recommendations for a user
-        Uses CF for users with many ratings, CBF for new users
-        """
+        """Get hybrid recommendations for a user"""
         # Check if user exists in the system
         if user_id not in self.user_item_matrix.index:
             return self.get_random_recommendations(n_recommendations)
+            
+        # Get user's reading history and rating counts
+        reading_count = self.get_user_reading_history_count(user_id)
+        rating_count = self.get_user_rating_count(user_id)
         
-        # Calculate hybrid weights
-        cf_weight, cbf_weight = self.calculate_hybrid_weights(user_id)
-        
-        if cf_weight == 0:
-            # New user or no ratings - use CBF
+        # If user has no reading history, return random recommendations
+        if reading_count == 0:
+            return self.get_random_recommendations(n_recommendations)
+            
+        # If user has reading history but no ratings, use only CBF
+        if rating_count == 0:
             return self.content_based_recommendations(user_id, n_recommendations)
+            
+        # Calculate weights for hybrid recommendation
+        cf_weight, cbf_weight = self.calculate_hybrid_weights(user_id)
         
         # Get recommendations from both methods
         cf_recommendations = self.collaborative_filtering_recommendations(user_id, n_recommendations)
         cbf_recommendations = self.content_based_recommendations(user_id, n_recommendations)
         
-        # Combine recommendations based on weights
+        # Combine recommendations with weights
         combined_recommendations = []
-        cf_count = int(n_recommendations * cf_weight)
-        cbf_count = n_recommendations - cf_count
+        cf_idx = 0
+        cbf_idx = 0
         
-        # Add CF recommendations
-        combined_recommendations.extend(cf_recommendations[:cf_count])
-        
-        # Add CBF recommendations
-        for rec in cbf_recommendations:
-            if rec not in combined_recommendations and len(combined_recommendations) < n_recommendations:
-                combined_recommendations.append(rec)
-        
-        return combined_recommendations 
+        while len(combined_recommendations) < n_recommendations:
+            if cf_idx < len(cf_recommendations) and cf_weight > 0:
+                item = cf_recommendations[cf_idx]
+                if item not in combined_recommendations:
+                    combined_recommendations.append(item)
+                cf_idx += 1
+                
+            if cbf_idx < len(cbf_recommendations) and cbf_weight > 0:
+                item = cbf_recommendations[cbf_idx]
+                if item not in combined_recommendations:
+                    combined_recommendations.append(item)
+                cbf_idx += 1
+                
+            if cf_idx >= len(cf_recommendations) and cbf_idx >= len(cbf_recommendations):
+                break
+                
+        return combined_recommendations[:n_recommendations] 

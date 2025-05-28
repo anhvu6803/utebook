@@ -59,7 +59,7 @@ def initialize_recommender():
         logger.info("Starting recommender initialization...")
         
         # Get MongoDB collections
-        reviews_collection, books_collection, users_collection, chapters_collection = get_collections()
+        reviews_collection, books_collection, users_collection, chapters_collection, history_reading_collection = get_collections()
         logger.info("Successfully connected to MongoDB collections")
         
         # Fetch ratings data
@@ -79,22 +79,42 @@ def initialize_recommender():
             logger.error(f"Error fetching ratings: {str(e)}")
             return
         
-        if not ratings_data:
-            logger.warning("No ratings data found in MongoDB")
+        # Fetch reading history data
+        reading_history_data = []
+        try:
+            for doc in history_reading_collection.find():
+                try:
+                    reading_history_data.append({
+                        'userId': str(doc.get('userId', '')),
+                        'bookId': str(doc.get('bookId', '')),
+                        'rating': 1.0  # Use 1.0 to indicate reading history
+                    })
+                except Exception as e:
+                    logger.error(f"Error processing reading history document: {str(e)}")
+                    continue
+        except Exception as e:
+            logger.error(f"Error fetching reading history: {str(e)}")
             return
         
-        logger.info(f"Successfully fetched {len(ratings_data)} ratings")
+        # Combine ratings and reading history
+        all_user_item_data = ratings_data + reading_history_data
+        
+        if not all_user_item_data:
+            logger.warning("No user-item data found in MongoDB")
+            return
+        
+        logger.info(f"Successfully fetched {len(ratings_data)} ratings and {len(reading_history_data)} reading history entries")
         
         # Convert to DataFrame
-        ratings_df = pd.DataFrame(ratings_data)
-        ratings_df = ratings_df.rename(columns={
+        user_item_df = pd.DataFrame(all_user_item_data)
+        user_item_df = user_item_df.rename(columns={
             'userId': 'user_id',
             'bookId': 'item_id'
         })
         
-        # Handle duplicate ratings by taking the average
-        ratings_df = ratings_df.groupby(['user_id', 'item_id'])['rating'].mean().reset_index()
-        logger.info(f"After handling duplicates: {len(ratings_df)} unique user-item ratings")
+        # Handle duplicate entries by taking the maximum rating
+        user_item_df = user_item_df.groupby(['user_id', 'item_id'])['rating'].max().reset_index()
+        logger.info(f"After handling duplicates: {len(user_item_df)} unique user-item entries")
         
         # Fetch books data
         books_data = []
@@ -153,7 +173,7 @@ def initialize_recommender():
         # Initialize recommender
         logger.info("Initializing HybridRecommender...")
         recommender = HybridRecommender()
-        recommender.fit(ratings_df, books_df, chapters_df)
+        recommender.fit(user_item_df, books_df, chapters_df)
         logger.info("Recommender system initialized successfully")
         
     except Exception as e:
