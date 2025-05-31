@@ -46,7 +46,8 @@ class HybridRecommender:
         # Sử dụng TfidfVectorizer với tokenizer tiếng Việt
         self.tfidf_vectorizer = TfidfVectorizer(
             tokenizer=self.vietnamese_tokenize,
-            stop_words=self.get_vietnamese_stopwords()
+            stop_words=self.get_vietnamese_stopwords(),
+            token_pattern=None
         )
         self.all_items = None
         self.chapter_contents = {}
@@ -114,14 +115,14 @@ class HybridRecommender:
     def get_vietnamese_stopwords(self):
         """Get Vietnamese stopwords"""
         # Danh sách stopwords tiếng Việt cơ bản
-        stopwords = {
+        stopwords = [
             'và', 'là', 'của', 'trong', 'để', 'với', 'có', 'không', 'tôi', 'bạn',
             'này', 'đó', 'đây', 'kia', 'nọ', 'mà', 'thì', 'là', 'một', 'những',
             'các', 'đã', 'đang', 'sẽ', 'được', 'cho', 'từ', 'về', 'nên', 'vì',
             'nếu', 'khi', 'nhưng', 'hoặc', 'và', 'cũng', 'rất', 'quá', 'đều',
             'chỉ', 'còn', 'đến', 'nhiều', 'ít', 'mỗi', 'mọi', 'mấy', 'vài',
             'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín', 'mười'
-        }
+        ]
         return stopwords
 
     def vietnamese_tokenize(self, text):
@@ -223,8 +224,8 @@ class HybridRecommender:
         ).fillna(0)
         
         # Calculate user and item similarity matrices
-        self.item_similarity_matrix = cosine_similarity(self.user_item_matrix.T)
-        self.user_similarity_matrix = cosine_similarity(self.user_item_matrix)
+        self.item_similarity_matrix = cosine_similarity(self.user_item_matrix.T.to_numpy())
+        self.user_similarity_matrix = cosine_similarity(self.user_item_matrix.to_numpy())
         
         # Prepare content-based features
         if 'description' in items_df.columns:
@@ -335,10 +336,10 @@ class HybridRecommender:
             
         # Get content features for rated items
         rated_indices = [self.items_df[self.items_df['item_id'] == item_id].index[0] for item_id in rated_items]
-        user_profile = self.item_features[rated_indices].mean(axis=0)
+        user_profile = np.array(self.item_features[rated_indices].mean(axis=0))
         
         # Calculate similarity with all items
-        similarities = cosine_similarity(user_profile, self.item_features).flatten()
+        similarities = cosine_similarity(user_profile.reshape(1, -1), self.item_features).flatten()
         
         # Get indices of items not rated by user
         unrated_mask = ~self.items_df['item_id'].isin(rated_items)

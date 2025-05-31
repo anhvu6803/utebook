@@ -153,53 +153,8 @@ const userController = {
             const { id } = req.params;
             const updateData = req.body;
 
-            // Nếu có cập nhật mật khẩu, hash mật khẩu mới
-            if (updateData.password) {
-                updateData.password = await bcrypt.hash(updateData.password, 10);
-            }
-
-            const user = await User.findByIdAndUpdate(
-                id,
-                updateData,
-                { new: true, runValidators: true }
-            ).select('-password');
-
-            if (!user) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'User not found'
-                });
-            }
-
-            // Cập nhật điểm nếu có
-            if (updateData.points) {
-                await Point.findOneAndUpdate(
-                    { id_user: user._id },
-                    {
-                        quantity_HoaPhuong: updateData.points.hoaPhuong,
-                        quantity_La: updateData.points.la
-                    },
-                    { new: true }
-                );
-            }
-
-            // Lấy thông tin điểm của user
-            const point = await Point.findOne({ id_user: user._id });
-            const userWithPoints = {
-                ...user.toObject(),
-                points: point ? {
-                    hoaPhuong: point.quantity_HoaPhuong,
-                    la: point.quantity_La
-                } : {
-                    hoaPhuong: 0,
-                    la: 0
-                }
-            };
-
-            res.status(200).json({
-                success: true,
-                data: userWithPoints
-            });
+            const result = await userService.updateUser(id, updateData);
+            res.status(200).json(result);
         } catch (error) {
             res.status(500).json({
                 success: false,

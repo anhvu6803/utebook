@@ -180,18 +180,68 @@ const userService = {
                 throw new Error('User not found');
             }
 
+            // Extract points data if it exists
+            const { points, password, ...userUpdateData } = updateData;
+
+            // Check for duplicate phone number if phone number is being updated
+            if (userUpdateData.numberPhone && userUpdateData.numberPhone !== user.numberPhone) {
+                const existingUser = await User.findOne({ 
+                    numberPhone: userUpdateData.numberPhone,
+                    _id: { $ne: userId } // Exclude current user
+                });
+                if (existingUser) {
+                    throw new Error('Phone number already exists');
+                }
+            }
+
+            // Hash password if provided
+            if (password) {
+                userUpdateData.password = await bcrypt.hash(password, 10);
+            }
+
             // Update user data
-            Object.keys(updateData).forEach(key => {
-                if (updateData[key] !== undefined) {
-                    user[key] = updateData[key];
+            Object.keys(userUpdateData).forEach(key => {
+                if (userUpdateData[key] !== undefined) {
+                    user[key] = userUpdateData[key];
                 }
             });
 
             await user.save();
+
+            // Update points if provided
+            if (points) {
+                const Point = require('../models/point.model');
+                await Point.findOneAndUpdate(
+                    { id_user: user._id },
+                    {
+                        quantity_HoaPhuong: points.hoaPhuong,
+                        quantity_La: points.la
+                    },
+                    { new: true, upsert: true }
+                );
+            }
+
+            // Get updated points
+            const Point = require('../models/point.model');
+            const point = await Point.findOne({ id_user: user._id });
+
+            // Remove password from response
+            const userResponse = user.toObject();
+            delete userResponse.password;
+
             return {
                 success: true,
                 message: 'User updated successfully',
-                data: user
+                data: {
+                    ...userResponse,
+                    points: point ? {
+                        hoaPhuong: point.quantity_HoaPhuong,
+                        la: point.quantity_La
+                    } : {
+                        hoaPhuong: 0,
+                        la: 0
+                    }
+                }
             };
         } catch (error) {
             throw new Error(`Failed to update user: ${error.message}`);

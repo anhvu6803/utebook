@@ -195,23 +195,38 @@ async def startup_event():
         logger.error(f"Traceback: {traceback.format_exc()}")
 
 @app.get("/recommendations/{user_id}", response_model=List[RecommendationResponse])
-async def get_recommendations(user_id: str, n_recommendations: int = 60):
+async def get_recommendations(
+    user_id: str, 
+    n_recommendations: int = 60,
+    bookname: Optional[str] = None
+):
     """Get book recommendations for a user"""
     if not recommender:
         raise HTTPException(status_code=500, detail="Recommender system not initialized")
     
     try:
+        # Get MongoDB collections
+        reviews_collection, books_collection, users_collection, chapters_collection, history_reading_collection = get_collections()
+        
+        # Check if user exists in MongoDB
+        user = users_collection.find_one({'_id': ObjectId(user_id)})
+        if not user:
+            raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
+        
         # Get recommendations
         recommended_items = recommender.recommend(user_id, n_recommendations)
         
         # Get book details for recommendations
         recommendations = []
-        reviews_collection, books_collection, users_collection, chapters_collection = get_collections()
         
         for item_id in recommended_items:
             try:
                 book = books_collection.find_one({'_id': ObjectId(item_id)})
                 if book:
+                    # Chỉ lọc theo bookname nếu bookname không phải null
+                    if bookname is not None and bookname.lower() not in book.get('bookname', '').lower():
+                        continue
+                        
                     recommendations.append(RecommendationResponse(
                         book_id=str(book['_id']),
                         bookname=book.get('bookname', ''),
