@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const routes = require('./src/routes/index');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
 dotenv.config();
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
+
 
 mongoose
     .connect(process.env.MONGO_URI)

@@ -41,11 +41,51 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordAction, setPasswordAction] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   if (!user) return null;
 
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Validate phone number format
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(formData.numberPhone)) {
+      newErrors.numberPhone = "Số điện thoại phải có 10 chữ số";
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Email không hợp lệ";
+    }
+
+    // Validate fullname
+    if (!formData.fullname.trim()) {
+      newErrors.fullname = "Họ tên không được để trống";
+    }
+
+    // Validate username
+    if (!formData.username.trim()) {
+      newErrors.username = "Username không được để trống";
+    }
+
+    // Validate membership expiration date
+    if (formData.isMember && !formData.membershipExpirationDate) {
+      newErrors.membershipExpirationDate = "Vui lòng chọn ngày hết hạn";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: null }));
+    }
+
     if (name.startsWith('points.')) {
       const pointType = name.split('.')[1];
       setFormData(prev => ({
@@ -64,11 +104,19 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
   };
 
   const handleDateChange = (date) => {
+    // Clear error when user selects a date
+    if (errors.membershipExpirationDate) {
+      setErrors(prev => ({ ...prev, membershipExpirationDate: null }));
+    }
+
     // Kiểm tra nếu ngày được chọn nhỏ hơn ngày hiện tại
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     if (date < today) {
-      toast.error("Ngày hết hạn phải lớn hơn ngày hiện tại");
+      setErrors(prev => ({ 
+        ...prev, 
+        membershipExpirationDate: "Ngày hết hạn phải lớn hơn ngày hiện tại" 
+      }));
       return;
     }
     setFormData(prev => ({
@@ -79,13 +127,22 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       // Kiểm tra ngày hết hạn nếu là hội viên
       if (formData.isMember) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         if (!formData.membershipExpirationDate || formData.membershipExpirationDate < today) {
-          toast.error("Ngày hết hạn phải lớn hơn ngày hiện tại");
+          setErrors(prev => ({ 
+            ...prev, 
+            membershipExpirationDate: "Ngày hết hạn phải lớn hơn ngày hiện tại" 
+          }));
           return;
         }
       }
@@ -104,13 +161,21 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
       if (response.data.success) {
         onUpdate(response.data.data);
         setIsEditing(false);
+        setErrors({}); // Clear all errors on success
         toast.success("Cập nhật thông tin thành công");
         onClose(); // Đóng modal sau khi cập nhật thành công
       } else {
         toast.error(response.data.message || "Không thể cập nhật thông tin");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Không thể cập nhật thông tin");
+      const errorMessage = error.response?.data?.message;
+      
+      // Handle specific error cases
+      if (errorMessage === 'Phone number already exists') {
+        setErrors(prev => ({ ...prev, numberPhone: "Số điện thoại đã tồn tại" }));
+      } else {
+        toast.error(errorMessage || "Không thể cập nhật thông tin");
+      }
       console.error("Error updating user:", error);
     } finally {
       setLoading(false);
@@ -234,7 +299,9 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
+                    className={errors.fullname ? 'error' : ''}
                   />
+                  {errors.fullname && <span className="error-message">{errors.fullname}</span>}
                 </div>
 
                 <div className="form-group">
@@ -246,7 +313,9 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
+                    className={errors.username ? 'error' : ''}
                   />
+                  {errors.username && <span className="error-message">{errors.username}</span>}
                 </div>
 
                 <div className="form-group">
@@ -258,7 +327,9 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
+                    className={errors.email ? 'error' : ''}
                   />
+                  {errors.email && <span className="error-message">{errors.email}</span>}
                 </div>
 
                 <div className="form-group">
@@ -270,7 +341,9 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
+                    className={errors.numberPhone ? 'error' : ''}
                   />
+                  {errors.numberPhone && <span className="error-message">{errors.numberPhone}</span>}
                 </div>
 
                 <div className="form-group">
@@ -325,15 +398,20 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
                   <div className="form-group">
                     <label>Ngày hết hạn:</label>
                     {isEditing ? (
-                      <DatePicker
-                        selected={formData.membershipExpirationDate}
-                        onChange={handleDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="dd/mm/yyyy"
-                        required={formData.isMember}
-                        className="date-picker"
-                        minDate={new Date()} // Thêm minDate để không cho chọn ngày trong quá khứ
-                      />
+                      <>
+                        <DatePicker
+                          selected={formData.membershipExpirationDate}
+                          onChange={handleDateChange}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="dd/mm/yyyy"
+                          required={formData.isMember}
+                          className={`date-picker ${errors.membershipExpirationDate ? 'error' : ''}`}
+                          minDate={new Date()}
+                        />
+                        {errors.membershipExpirationDate && (
+                          <span className="error-message">{errors.membershipExpirationDate}</span>
+                        )}
+                      </>
                     ) : (
                       <span className="membership-days">
                         {formatDate(user.membershipExpirationDate)}

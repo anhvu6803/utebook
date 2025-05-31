@@ -1,5 +1,6 @@
 const authService = require('../services/auth.service');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user.model');
 
 class AuthController {
     async login(req, res) {
@@ -160,28 +161,40 @@ class AuthController {
             // Lấy access token từ cookie
             const accessToken = req.cookies.access_token;
             if (!accessToken) {
-                return res.status(401).json({ message: 'No access token found' });
+                return res.status(401).json({ message: 'Vui lòng đăng nhập để tiếp tục' });
             }
 
             try {
                 const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-                const user = await authService.getMe(decoded.userId);
+                const user = await User.findById(decoded.userId).select('-password');
                 
                 if (!user) {
-                    return res.status(404).json({ message: 'User not found' });
+                    return res.status(404).json({ message: 'Không tìm thấy người dùng' });
                 }
-                const { password, ...userWithoutPassword } = user.toObject();
+
+                // Kiểm tra và cập nhật trạng thái hội viên
+                if (user.isMember && user.membershipExpirationDate) {
+                    const currentDate = new Date();
+                    if (user.membershipExpirationDate < currentDate) {
+                        // Cập nhật trạng thái hội viên nếu đã hết hạn
+                        user.isMember = false;
+                        user.membershipExpirationDate = null;
+                        await user.save();
+                    }
+                }
+
                 res.json({
-                    ...userWithoutPassword,
+                    ...user.toObject(),
                     isAdmin: user.isAdmin || false
                 });
+
             } catch (error) {
                 // Nếu token hết hạn, thử refresh token
                 if (error.name === 'TokenExpiredError') {
                     // Lấy userId từ token đã hết hạn
                     const decoded = jwt.decode(accessToken);
                     if (!decoded || !decoded.userId) {
-                        return res.status(401).json({ message: 'Invalid token' });
+                        return res.status(401).json({ message: 'Token không hợp lệ' });
                     }
 
                     // Thử refresh token
@@ -190,15 +203,26 @@ class AuthController {
                     // Set new access token in cookie
                     res.cookie('access_token', result.accessToken, {
                         httpOnly: true,
-                        secure: process.env.NODE_ENV === 'production',
-                        sameSite: 'strict',
-                        maxAge: 24* 60  * 60 * 1000// 2 phút
+                        secure: false,
+                        sameSite: 'lax',
+                        maxAge: 24 * 60 * 60 * 1000,
+                        path: '/'
                     });
 
-                    // Trả về thông tin user mới
+                    // Kiểm tra và cập nhật trạng thái hội viên sau khi refresh
+                    const user = await User.findById(result.user._id).select('-password');
+                    if (user.isMember && user.membershipExpirationDate) {
+                        const currentDate = new Date();
+                        if (user.membershipExpirationDate < currentDate) {
+                            user.isMember = false;
+                            user.membershipExpirationDate = null;
+                            await user.save();
+                        }
+                    }
+
                     res.json({
-                        ...result.user,
-                        isAdmin: result.user.isAdmin || false
+                        ...user.toObject(),
+                        isAdmin: user.isAdmin || false
                     });
                 } else {
                     throw error;
@@ -207,9 +231,9 @@ class AuthController {
         } catch (error) {
             console.error('Get me error:', error);
             if (error.name === 'JsonWebTokenError') {
-                return res.status(401).json({ message: 'Invalid token' });
+                return res.status(401).json({ message: 'Token không hợp lệ' });
             }
-            res.status(500).json({ message: 'Internal server error' });
+            res.status(500).json({ message: 'Lỗi máy chủ' });
         }
     }
 }
