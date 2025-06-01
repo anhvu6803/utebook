@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
         ref: 'Book',
         default: []
     }],
+    listChapterOwned: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chapter',
+        default: []
+    }]
 }, { timestamps: true });
 
 // Tạo index cho googleId chỉ khi nó không null

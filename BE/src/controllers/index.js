@@ -9,6 +9,8 @@ const AuthController = require('../controllers/auth.controller')
 const TwilioController = require('../controllers/twilio.controller')
 const CloudinaryController = require('../controllers/cloudinary.controller');
 const HistoryReadingController = require('../controllers/historyReading.controller');
+const CouponController = require('../controllers/coupon.controller');
+const NotificationController = require('../controllers/notification.controller');
 module.exports = {
     UserController,
     BookController,
@@ -20,5 +22,7 @@ module.exports = {
     PointPackageController,
     MembershipPackageController,
     PaymentController,
-    HistoryReadingController
+    HistoryReadingController,
+    CouponController,
+    NotificationController
 };

@@ -11,9 +11,10 @@ const ChapterItem = ({
     chapterId,
     chapterPrice,
     hoaPhuongAmount = 0,
-    setAlert
+    setAlert,
+    listChapterOwned
 }) => {
-    console.log(chapterPrice);
+    console.log(listChapterOwned);
     return (
         <>
             <h3 className="chapter-title">
@@ -30,7 +31,7 @@ const ChapterItem = ({
                 {chapterPrice > 0 ?
                     (
                         <>
-                            {isContinue ?
+                            {listChapterOwned.includes(chapterId) ?
                                 <p className="owner-text">Đã sở hữu</p>
                                 :
                                 <span className="amount-hoaphuong">
@@ -55,6 +56,7 @@ const ChapterItem = ({
                     readingId={readingId}
                     chapterId={chapterId}
                     setAlert={setAlert}
+                    listChapterOwned={listChapterOwned}
                 />
             </div>
 
