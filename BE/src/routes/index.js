@@ -17,6 +17,8 @@ const pointRouter = require('./point.route');
 const historyPointRouter = require('./historyPoint.route');
 const historyPackageRouter = require('./historyPackage.routes');
 const historyReading = require('./historyReading.route');
+const couponRouter = require('./coupon.route');
+const notificationRouter = require('./notification.route');
 
 router.use('/user', userRouter);
 router.use('/book', bookRouter);
@@ -34,4 +36,6 @@ router.use('/points', pointRouter);
 router.use('/history-points', historyPointRouter);
 router.use('/history-packages', historyPackageRouter);
 router.use('/history-readings', historyReading);
+router.use('/coupon', couponRouter);
+router.use('/notification', notificationRouter);
 module.exports = router;

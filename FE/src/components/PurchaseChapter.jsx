@@ -18,11 +18,14 @@ const PurchaseChapter = ({
     bookName,
     readingId,
     chapterId,
-    setAlert
+    setAlert,
+    listChapterOwned
 }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [showForm, setShowForm] = useState(false);
+    console.log(listChapterOwned);
+    console.log(chapterId);
 
     const handleUpdateReading = async () => {
         if (!isContinue) {
@@ -48,7 +51,9 @@ const PurchaseChapter = ({
                     chapterId: chapterId
                 }
             );
-            console.log(response.data);
+            if (response.data.success) {
+                await handleUpdateReading();
+            }
         } catch (error) {
             setAlert({
                 open: true,
@@ -62,9 +67,9 @@ const PurchaseChapter = ({
         <>
             <button className={isContinue ? "read-continue-button" : "read-now-button"}
                 onClick={() => {
-                    chapterPrice > 0 ?
+                    !listChapterOwned.includes(chapterId) ?
                         setShowForm(true) :
-                        navigate(`/utebook-reader/${chapterId}`)
+                        handleUpdateReading();
                 }}
             >
                 {isContinue ? 'ĐỌC TIẾP' : 'ĐỌC NGAY'}

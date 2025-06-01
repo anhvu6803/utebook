@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, message, Card, Space, Typography, Tag } from 'antd';
 import { SendOutlined, UserOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import './styles/ManageNotification.scss';
+import axios from 'axios';
+import CustomAlert from '../../components/CustomAlert';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -11,24 +13,36 @@ const ManageNotification = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
-  // Giả lập danh sách người dùng (thay thế bằng API call thực tế)
-  const mockUsers = [
-    { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
-    { id: 2, name: 'Trần Thị B', email: 'tranthib@example.com' },
-    { id: 3, name: 'Lê Văn C', email: 'levanc@example.com' },
-  ];
+  useEffect(() => {
+    const getAllUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/user');
+        setAllUsers(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllUsers();
+  }, []);
 
   const handleUserSearch = (value) => {
     if (value) {
-      const filteredUsers = mockUsers.filter(
-        user => 
-          user.name.toLowerCase().includes(value.toLowerCase()) ||
+      console.log(allUsers);
+      const filteredUsers = allUsers.filter(
+        user =>
+          user.fullname.toLowerCase().includes(value.toLowerCase()) ||
           user.email.toLowerCase().includes(value.toLowerCase())
       );
       setUserOptions(filteredUsers.map(user => ({
-        value: `user_${user.id}`,
-        label: `${user.name} (${user.email})`
+        value: `${user._id}`,
+        label: `${user.fullname} (${user.email})`
       })));
     } else {
       setUserOptions([]);
@@ -38,20 +52,30 @@ const ManageNotification = () => {
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      // TODO: Implement API call to send notification
-      console.log('Giá trị thông báo:', values);
-      message.success('Gửi thông báo thành công!');
+      const response = await axios.post(`http://localhost:5000/api/notification/${values.recipients}`, {
+        type: values.type,
+        title: values.title,
+        content: values.content
+      });
+      setAlert({
+        open: true,
+        message: 'Gửi thông báo thành công',
+        severity: 'success'
+      });
       form.resetFields();
     } catch (error) {
-      message.error('Gửi thông báo thất bại');
-      console.error('Lỗi khi gửi thông báo:', error);
+      setAlert({
+        open: true,
+        message: 'Gửi thông báo thất bại',
+        severity: 'error'
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const renderOption = (option) => {
-    if (option.value.startsWith('user_')) {
+    if (option.value !== 'all' && option.value !== 'membership') {
       return (
         <Space>
           <UserOutlined />
@@ -62,6 +86,41 @@ const ManageNotification = () => {
     return option.label;
   };
 
+  const handleCreateCoupon = async () => {
+    try {
+      const Random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+      const randomAmount = Random(100, 1000); // sinh trước
+
+      const response = await axios.post('http://localhost:5000/api/coupon', {
+        discount: randomAmount
+      });
+
+      console.log(response.data.data);
+      const notify = `Chúng tôi tặng bạn coupon : ${response.data.data.coupon} nhận ${response.data.data.discount} hoa phượng`;
+      form.setFieldsValue({ content: notify });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const handleSelectReciver = (value) => {
+    console.log('Giá trị được chọn:', value);
+    // Bạn có thể xử lý tiếp ở đây (gửi lên state, API, v.v.)
+  };
+  const handleTypeChange = async (value) => {
+    try {
+      if (value === 'coupon') {
+        await handleCreateCoupon();
+      }
+    } catch (errorInfo) {
+
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({ ...alert, open: false });
+  };
   return (
     <div className="manage-notification">
       <Card className="notification-container">
@@ -99,15 +158,18 @@ const ManageNotification = () => {
               label="Loại Thông Báo"
               rules={[{ required: true, message: 'Vui lòng chọn loại thông báo' }]}
             >
-              <Select placeholder="Chọn loại thông báo">
+              <Select
+                placeholder="Chọn loại thông báo"
+                onChange={handleTypeChange}
+              >
                 <Option value="info">
                   <Tag color="blue">Thông tin</Tag>
                 </Option>
+                <Option value="coupon">
+                  <Tag color="green">Coupon</Tag>
+                </Option>
                 <Option value="warning">
                   <Tag color="orange">Cảnh báo</Tag>
-                </Option>
-                <Option value="success">
-                  <Tag color="green">Thành công</Tag>
                 </Option>
                 <Option value="error">
                   <Tag color="red">Lỗi</Tag>
@@ -127,12 +189,12 @@ const ManageNotification = () => {
               help="Chọn nhóm người dùng hoặc tìm kiếm người dùng cụ thể"
             >
               <Select
-                mode="multiple"
                 placeholder="Chọn nhóm hoặc tìm kiếm người dùng"
                 className="recipients-select"
                 showSearch
                 onSearch={handleUserSearch}
                 filterOption={false}
+                onSelect={handleSelectReciver}
                 options={[
                   { value: 'all', label: 'Tất cả người dùng' },
                   { value: 'membership', label: 'Người dùng Hội viên' },
@@ -144,7 +206,7 @@ const ManageNotification = () => {
             </Form.Item>
 
             <Form.Item
-              name="message"
+              name="content"
               label="Nội Dung Thông Báo"
               rules={[{ required: true, message: 'Vui lòng nhập nội dung thông báo' }]}
             >
@@ -154,6 +216,7 @@ const ManageNotification = () => {
                 className="message-textarea"
               />
             </Form.Item>
+
 
             <Form.Item>
               <Button
@@ -170,6 +233,9 @@ const ManageNotification = () => {
           </Form>
         </Space>
       </Card>
+
+      <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
+
     </div>
   );
 };

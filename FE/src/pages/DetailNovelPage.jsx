@@ -193,6 +193,7 @@ const DetailBookPage = () => {
   const [isReading, setIsReading] = useState(false);
 
   const [listFavoriteBook, setListFavoriteBook] = useState([]);
+  const [listChapterOwned, setListChapterOwned] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [alert, setAlert] = useState({
     open: false,
@@ -284,6 +285,7 @@ const DetailBookPage = () => {
       const response = await axios.get(`http://localhost:5000/api/user/${user._id}`);
       if (response.data.success) {
         setListFavoriteBook(response.data.data.listFavoriteBook);
+        setListChapterOwned(response.data.data.listChapterOwned);
         const pointRes = await axios.get(`http://localhost:5000/api/points/${user._id}`);
         setHoaPhuongAmount(pointRes.data.data.quantity_HoaPhuong || 0);
       }
@@ -579,6 +581,7 @@ const DetailBookPage = () => {
                         readingId={readingId}
                         chapterId={chapter._id}
                         setAlert={setAlert}
+                        listChapterOwned={listChapterOwned}
                       />
                     </div>
                   ))

@@ -1,6 +1,7 @@
 const Point = require('../models/point.model');
 const Chapter = require('../models/chapter.model');
 const Book = require('../models/book.model');
+const User = require('../models/user.model');
 const HistoryPoint = require('../models/history_point.model');
 
 const pointService = {
@@ -101,6 +102,10 @@ const pointService = {
             status: 'Thành công'
         });
         await history.save();
+
+        const user = await User.findById(userId);
+        user.listChapterOwned.push(chapter._id);
+        await user.save();
 
         return {
             point,

@@ -43,6 +43,9 @@
 
         .notification-list {
             height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             overflow-y: auto;
             overflow-x: hidden; // Ẩn thanh cuộn ngang
 
@@ -67,7 +70,8 @@
 
             .notification-item {
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
+                flex-direction: row;
                 border-radius: 8px;
                 cursor: pointer;
                 transition: background 0.3s ease;
@@ -77,10 +81,12 @@
 
                 &:hover {
                     background: #222;
+                    opacity: 0.8;
                 }
 
                 .icon {
                     font-size: 12px;
+                    margin-top: 20px;
                     color: #fff;
                     flex-shrink: 0;
                     background-color: #444;
@@ -96,8 +102,10 @@
                 .content {
                     display: flex;
                     flex-direction: column;
-                    flex-grow: 1;
                     overflow: hidden;
+                    height: fit-content;
+                    margin: 0;
+                    padding: 15px;
 
                     .time {
                         font-size: 12px;
@@ -119,9 +127,9 @@
                         color: #888;
                         display: -webkit-box;
                         -webkit-line-clamp: 4;
-                        line-clamp: 4; 
+                        line-clamp: 4;
                         -webkit-box-orient: vertical;
-                        overflow: hidden; 
+                        overflow: hidden;
                         word-break: break-word;
                     }
                 }
