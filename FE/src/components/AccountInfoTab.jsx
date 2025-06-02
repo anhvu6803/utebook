@@ -3,13 +3,14 @@ import "./styles/AccountInfoTab.scss";
 import axios from 'axios';
 
 import CustomAlert from "./CustomAlert";
+import { Spin } from "antd";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const defaultAvatar = 'https://res.cloudinary.com/dbmynlh3f/image/upload/v1744354478/cciryt3jpun1dys5rz8s.png';
 const AccountInfoTab = ({ userData }) => {
     const username = userData.username;
     const userId = userData._id;
-    
+
     const [fullName, setFullName] = useState(userData.fullname);
     const [dob, setDob] = useState(userData.ngaySinh ?
         new Date(userData.ngaySinh).toISOString().split('T')[0] :
@@ -19,6 +20,7 @@ const AccountInfoTab = ({ userData }) => {
     const [profilePicture, setProfilePicture] = useState(userData?.avatar || defaultAvatar);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isUploading, setUploading] = useState(false);
     const [alert, setAlert] = useState({
         open: false,
         message: '',
@@ -63,23 +65,27 @@ const AccountInfoTab = ({ userData }) => {
             });
             return;
         }
-    
+
         if (file) {
             setSelectedFile(file);
-    
+
             const reader = new FileReader();
             reader.onloadend = () => {
                 setProfilePicture(reader.result);
             };
             reader.readAsDataURL(file);
+
+            await handleUploadImage(file);
         }
-    };    
+    };
 
-    const handleUploadImage = async () => {
+    const handleUploadImage = async (file) => {
         try {
+            setUploading(true);
             const formData = new FormData();
-            formData.append('file', selectedFile);
+            formData.append('file', file);
 
+            console.log(file);
             const responseImage = await axios.post(
                 'http://localhost:5000/api/cloudinary/upload',
                 formData,
@@ -91,6 +97,9 @@ const AccountInfoTab = ({ userData }) => {
             );
             if (responseImage.data.success) {
                 setProfilePicture(responseImage.data.data.url);
+                setTimeout(() => {
+                    setUploading(false);
+                }, 200);
             }
         } catch (error) {
             setAlert({
@@ -135,10 +144,7 @@ const AccountInfoTab = ({ userData }) => {
             setIsLoading(true);
             setAlert({ ...alert, open: false });
 
-            await handleUploadImage().
-                then(
-                    await handleUpdateInfor()
-                );
+            await handleUpdateInfor();
 
         } catch (error) {
             setAlert({
@@ -241,7 +247,7 @@ const AccountInfoTab = ({ userData }) => {
                     <button
                         className="btn update"
                         onClick={handleUpdate}
-                        disabled={isLoading || !hasChanges}
+                        disabled={isLoading || !hasChanges || isUploading}
                     >
                         {isLoading ? 'Đang cập nhật...' : 'Cập nhật'}
                     </button>
@@ -256,11 +262,13 @@ const AccountInfoTab = ({ userData }) => {
             </div>
 
             <div className="profile-picture">
-                <img
-                    src={profilePicture || testAvatar}
-                    alt="Profile"
-                    className="image"
-                />
+                <Spin size="small" spinning={isUploading} >
+                    <img
+                        src={profilePicture || testAvatar}
+                        alt="Profile"
+                        className="image"
+                    />
+                </Spin>
                 <div class="upload-btn-wrapper">
                     <button>Thay ảnh</button>
                     <input type="file" name="myfile" onChange={handleImageChange} />

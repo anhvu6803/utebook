@@ -1,13 +1,52 @@
 import React, { useState } from "react";
 import "./styles/ActivateCodePage.scss";
 import background3 from "../assets/background3.jpg";
-
+import axios from "axios";
+import CustomAlert from '../components/CustomAlert';
+import { useAuth } from "../contexts/AuthContext";
 const ActivateCodePage = () => {
+  const { user } = useAuth();
   const [code, setCode] = useState("");
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
+  const handleActivateCode = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/coupon/`, {
+        params: {
+          userId: user._id,
+          coupon: code
+        }
+      });
+
+      if (response.data.message === "Coupon applied successfully") {
+        setAlert({
+          open: true,
+          message: 'Sử dụng mã ưu đãi thành công',
+          severity: 'success'
+        });
+      }
+    }
+    catch (error) {
+      setAlert({
+        open: true,
+        message: 'Mã ưu đãi đã được sử dụng',
+        severity: 'error'
+      });
+    }
+    finally {
+      setCode('');
+    }
+  };
+  const handleCloseAlert = () => {
+    setAlert({ ...alert, open: false });
+  };
   return (
     <>
-      <img src={background3} alt="background" className="img-backgound"/>
+      <img src={background3} alt="background" className="img-backgound" />
 
       <div className="activate-code-container">
         <div className="activate-code-header ">
@@ -21,7 +60,10 @@ const ActivateCodePage = () => {
                 <label for="code">Nhập mã code</label>
                 <input type="text" id="code" value={code} onChange={(e) => setCode(e.target.value)} />
               </div>
-              <button disabled={code.length === 0}>
+              <button
+                disabled={code.length === 0}
+                onClick={handleActivateCode}
+              >
                 <p style={{ fontSize: 14, fontWeight: 500 }}>Kích hoạt ngay</p>
               </button>
             </div>
@@ -37,6 +79,8 @@ const ActivateCodePage = () => {
             </div>
           </div>
         </div>
+
+        <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
       </div>
     </>
   );

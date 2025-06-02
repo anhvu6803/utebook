@@ -1,0 +1,12 @@
+.layout-search {
+    display: flex; // Sắp xếp các phần tử con theo hàng ngang
+    padding: 0;
+    height: auto;
+    width: 100%;
+
+    .content-search {
+        width: 100%;
+        position: relative;
+        margin-top: 80px;
+    }
+}

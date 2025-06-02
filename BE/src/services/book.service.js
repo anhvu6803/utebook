@@ -178,3 +178,22 @@ exports.getBooksByCategoryNewest = async (category) => {
         throw error;
     }
 };
+
+exports.searchBooksByText = async (text, category) => {
+    try {
+        if (!text) return [];
+
+        const regexCategory = new RegExp(category, 'i');
+
+        const booksByCategory = await Book.find({ categories: { $regex: regexCategory } });
+
+        const filteredBooks = booksByCategory.filter(book => book.bookname.toLowerCase().includes(text.toLowerCase()));
+
+        const shuffled = filteredBooks.sort(() => 0.5 - Math.random()); // trộn ngẫu nhiên
+        console.log(shuffled);
+        return shuffled.slice(0, 6);
+    } catch (error) {
+        throw error;
+    }
+};
+

@@ -1,7 +1,7 @@
 const couponService = require('../services/coupon.service');
 
 exports.useCoupon = async (req, res) => {
-    const { userId, coupon } = req.body;
+    const { userId, coupon } = req.query;
 
     try {
         const result = await couponService.useCoupon(coupon, userId);

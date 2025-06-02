@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/HeaderHome.scss";
 
@@ -13,19 +13,39 @@ import Button from '@mui/material/Button';
 import { Crown } from "lucide-react";
 import { bool } from "prop-types";
 
+
+
 const HeaderHome = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get("keyword") || '';
 
   const [isShowSearch, SetShowSearch] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
   const handleSearchClick = () => {
     SetShowSearch(!isShowSearch);
+  }
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+    navigate(`/utebook/search?keyword=${e.target.value}`);
   }
 
   const handleLoadLink = (link) => {
     navigate(link);
     window.location.reload();
+  }
+
+  const showSearch = () => {
+    return isShowSearch || keyword !== '';
+  }
+
+  const showText = () => {
+    if (searchText === '') return keyword;
+    return searchText;
   }
 
   return (
@@ -44,13 +64,15 @@ const HeaderHome = () => {
 
       <div className="header-right">
 
-        {isShowSearch &&
+        {showSearch() &&
           <motion.input
             className="input"
             type="text"
             placeholder="Tìm kiếm..."
+            value={showText()}
+            onChange={handleSearch}
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: isShowSearch ? 200 : 0, opacity: isShowSearch ? 1 : 0 }}
+            animate={{ width: showSearch() ? 200 : 0, opacity: showSearch() ? 1 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           />
         }
@@ -60,7 +82,8 @@ const HeaderHome = () => {
             style={{ fontSize: 30 }}
             onClick={
               handleSearchClick
-            } />
+            }
+          />
           <Button
             className="btn-member"
             variant="outlined"

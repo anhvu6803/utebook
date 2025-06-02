@@ -467,3 +467,23 @@ exports.getBooksByCategoryNewest = async (req, res) => {
         });
     }
 }
+exports.searchBooks = async (req, res) => {
+    try {
+        const { keyword = '', category = '' } = req.query;
+
+        const books = await BookService.searchBooksByText(keyword, category);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Tìm kiếm thành công',
+            data: books
+        });
+    } catch (error) {
+        console.error('Error searching books:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Lỗi khi tìm kiếm sách',
+            error: error.message
+        });
+    }
+};

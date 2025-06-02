@@ -57,6 +57,8 @@ import ManageNotificationPage from "./pages/Admin/ManageNotification";
 import MemberBookPage from "./pages/MemberBookPage";
 import NewestBookPage from "./pages/NewestBookPage";
 import FreeBookPage from "./pages/FreeBookPage";
+import SearchPage from "./pages/SearchPage";
+import SearchLayout from "./layout/SearchLayout";
 
 const App = () => {
   return (
@@ -109,6 +111,9 @@ const App = () => {
               <Route path="my-story" element={<AccountLibraryPage />} />
             </Route>
             <Route path="author-profile" element={<AuthorProfile />} />
+            <Route path="search" element={<SearchLayout />} >
+              <Route index element={<SearchPage />} />
+            </Route>
           </Route>
 
           <Route path="/utebook-reader/:content" element={<ProtectedRoute><ReaderBookPage /></ProtectedRoute>} />
@@ -132,7 +137,7 @@ const App = () => {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="point" element={<ManagePointPage />} />
             <Route path="membership" element={<ManageMembershipPage />} />
-            <Route path="notifications" element={<ManageNotificationPage/>} />
+            <Route path="notifications" element={<ManageNotificationPage />} />
           </Route>
         </Routes>
       </AuthProvider>

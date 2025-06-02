@@ -39,12 +39,30 @@ exports.createNotificationForMembers = async (req, res) => {
 };
 
 exports.getUserNotifications = async (req, res) => {
-  try {
-    const { userId } = req.params;
+    try {
+        const { userId } = req.params;
 
-    const notifications = await notificationService.getNotificationsByUserId(userId);
-    res.status(200).json({ success: true, data: notifications });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+        const notifications = await notificationService.getNotificationsByUserId(userId);
+        res.status(200).json({ success: true, data: notifications });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+exports.sendToUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { type, title, content } = req.body;
+
+        const notification = await notificationService.sendNotificationToUser({
+            userId,
+            type,
+            title,
+            content
+        });
+
+        res.status(200).json({ success: true, data: notification });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 };
