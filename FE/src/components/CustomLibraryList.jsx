@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
 import "./styles/CustomLibraryList.scss";
 import searchResult from "./../assets/icon-search-result.png";
+import { useAuth } from '../contexts/AuthContext';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import WarningForm from './WarningForm';
+
+function isOldEnough(birthDateISO, minAge) {
+  const today = new Date();
+  const birthDate = new Date(birthDateISO);
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age >= minAge;
+}
 
 export default function CustomLibraryList({
   itemData,
@@ -11,10 +27,23 @@ export default function CustomLibraryList({
   tab,
   handleViewDetail
 }) {
+  const { user } = useAuth();
   const itemPage = itemData[page - 1]?.map((item) => item) || [];
   console.log(itemData);
+
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleReadBook = (tab, bookData) => {
+    if (!isOldEnough(user.ngaySinh, bookData.ageLimit)) {
+      setShowWarning(true);
+      return;
+    }
+    handleViewDetail(tab, bookData._id);
+  };
+
   return (
     <>
+      {showWarning && <WarningForm isShow={showWarning} />}
       {
         itemPage.length > 0 ?
           (
@@ -50,7 +79,7 @@ export default function CustomLibraryList({
                     <span
                       className="book-title"
 
-                      onClick={() => handleViewDetail(tab, item._id)}
+                      onClick={() => handleReadBook(tab, item)}
                     >
                       {item.bookname}
                     </span>

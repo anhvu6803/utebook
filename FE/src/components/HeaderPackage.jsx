@@ -63,23 +63,7 @@ const HeaderPackage = () => {
 
       <div className="header-right">
 
-        {isShowSearch &&
-          <motion.input
-            className="input"
-            type="text"
-            placeholder="Tìm kiếm..."
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: isShowSearch ? 200 : 0, opacity: isShowSearch ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          />
-        }
-
         <div className="btn-icons">
-          <SearchIcon className="icon"
-            style={{ fontSize: 30 }}
-            onClick={
-              handleSearchClick
-            } />
           <Button
             className="btn-member"
             variant="outlined"

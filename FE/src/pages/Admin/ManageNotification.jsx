@@ -50,6 +50,7 @@ const ManageNotification = () => {
   };
 
   const onFinish = async (values) => {
+    console.log('Form values:', values);
     try {
       setLoading(true);
       const response = await axios.post(`http://localhost:5000/api/notification/${values.recipients}`, {

@@ -50,7 +50,7 @@ const NovelPage = () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `http://localhost:8000/recommendations/${user._id}`,
+        `http://localhost:8000/recommendations/${user._id}?n_recommendations=30`,
       );
       console.log(res.data);
       setAllBooks(res.data);
@@ -62,11 +62,27 @@ const NovelPage = () => {
       setIsLoading(false);
     }
   }
-
+  const getListBooks = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(
+        `http://localhost:5000/api/book/random-books/`,
+      );
+      setListBooks(res.data.data);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         getUser();
+        getListBooks();
         getAllBooksRecommend();
       } catch (err) {
         console.log(err);
@@ -94,16 +110,16 @@ const NovelPage = () => {
       let updatedUserFavoriteBook;
       if (temp) {
         // Nếu đang muốn thêm sách vào danh sách yêu thích
-        updatedFavoriteBook = listFavoriteBook.includes(bookData._id)
+        updatedFavoriteBook = listFavoriteBook.includes(bookData.book_id)
           ? listFavoriteBook
-          : [...listFavoriteBook, bookData._id];
+          : [...listFavoriteBook, bookData.book_id];
 
         updatedUserFavoriteBook = listUserFavoriteBook.includes(user._id)
           ? listUserFavoriteBook
           : [...listUserFavoriteBook, user._id];
 
       } else {
-        updatedFavoriteBook = listFavoriteBook.filter((id) => id !== bookData._id);
+        updatedFavoriteBook = listFavoriteBook.filter((id) => id !== bookData.book_id);
         updatedUserFavoriteBook = listUserFavoriteBook.filter((id) => id !== user._id);
       }
 
@@ -113,15 +129,17 @@ const NovelPage = () => {
 
       if (responseUser.data.success) {
         setListFavoriteBook(updatedFavoriteBook);
-        const responseBook = await axios.put(`http://localhost:5000/api/book/books/${bookData._id}`, {
+        console.log(updatedFavoriteBook);
+        const responseBook = await axios.put(`http://localhost:5000/api/book/books/${bookData.book_id}`, {
           listUserFavorited: updatedUserFavoriteBook
         });
         if (responseBook.data.success) {
           setListUserFavoriteBook(updatedUserFavoriteBook);
           const updatedPage = allBooks.map((item) =>
-            item._id === responseBook.data.data._id ? responseBook.data.data : item
+            item.book_id === responseBook.data.data._id ? responseBook.data.data : item
           );
           setAllBooks(updatedPage);
+          console.log(responseBook.data.data);
           if (temp) {
             setAlert({
               open: true,
@@ -150,7 +168,7 @@ const NovelPage = () => {
   if (isLoading) return <Loading />
 
   return (
-    <div className="book-page-container">
+    <div className="book-category-container">
       <RecommendationBook
         pageName={"novel"}
         listBooks={listBooks}

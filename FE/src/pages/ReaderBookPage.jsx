@@ -318,6 +318,7 @@ const ReaderBookPage = () => {
                     <MenuChapter
                         currentChapter={content}
                         chapters={chapters}
+                        bookName={bookName}
                     />
                     <button
                         className="control-button"

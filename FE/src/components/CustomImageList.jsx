@@ -52,7 +52,8 @@ export default function CustomImageList({
                 gap={30}
                 sx={{
                   width: '100%',
-                  height: '100%'
+                  height: '320px',
+                  overflow: 'hidden',
                 }}
               >
                 {itemPage.map((item, index) => (

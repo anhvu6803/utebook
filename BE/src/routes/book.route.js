@@ -14,7 +14,8 @@ const {
     getTypeBooksByCategory,
     getBooksByCategoryNewest,
     syncAllChaptersToBooks,
-    syncChaptersToBook
+    syncChaptersToBook,
+    searchBooks
 } = require('../controllers/book.controller');
 const multer = require('multer');
 
@@ -106,5 +107,7 @@ router.get('/random-books', getRandomBooks);
 router.get('/random-books/:category', getRandomBooksByCategory);
 
 router.get('/books-newest/categories/:category', getBooksByCategoryNewest);
+
+router.get('/search', searchBooks);
 
 module.exports = router;

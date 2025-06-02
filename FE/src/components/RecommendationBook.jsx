@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/RecommendationBook.scss"; // Import the SCSS file for styling
+import { useAuth } from '../contexts/AuthContext';
 
 import SliderImageBook from "./SliderImageBook";
 import CustomTitleCategory from "./CustomTitleCategory";
@@ -10,6 +11,21 @@ import { BookOpen, Play } from "lucide-react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CustomAlert from '../components/CustomAlert';
+import WarningForm from './WarningForm';
+
+function isOldEnough(birthDateISO, minAge) {
+    const today = new Date();
+    const birthDate = new Date(birthDateISO);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    return age >= minAge;
+}
 
 const setCategoriesForPage = (pageName) => {
     if (pageName === 'novel') {
@@ -28,6 +44,7 @@ const setCategoriesForPage = (pageName) => {
 
 function RecommendationBook({ pageName, category, listBooks }) {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const categories = setCategoriesForPage(pageName);
 
 
@@ -39,6 +56,7 @@ function RecommendationBook({ pageName, category, listBooks }) {
     const [indexBook, setIndexBook] = useState(0);
     const [books, setBooks] = useState([]);
     const [imageBooks, setBookImages] = useState([]);
+    const [showWarning, setShowWarning] = useState(false);
 
     const getListBooksByCategory = async (category) => {
         try {
@@ -77,63 +95,78 @@ function RecommendationBook({ pageName, category, listBooks }) {
         if (imageBooks.length <= 0) return listImagesTemp;
         return imageBooks;
     };
+    const handleShowAgeLimit = (index) => {
+        if (books.length <= 0) return listBooksTemp[index]?.ageLimit;
+        return books[index]?.ageLimit;
+    }
+    const handleReadBook = () => {
+        if (!isOldEnough(user.ngaySinh, handleShowAgeLimit(indexBook))) {
+            setShowWarning(true);
+            return;
+        }
+        navigate(`/utebook/${pageName}/view/${handleShowBookId(indexBook)}`);
+    };
 
     const handleCloseAlert = () => {
         setAlert({ ...alert, open: false });
     };
     return (
-        <div className="book-recommend-container"
-            onMouseEnter={() => setIsShow('show')} // Mở khi di chuột vào
-            onMouseLeave={() => setIsShow('')} // Đóng khi rời chuót khỏi menu
-        >
-            <div className="more-content">
-                <div className="category-container">
-                    <CustomTitleCategory
-                        category={category}
-                        categories={categories}
-                        selectedCategory={selectedCategory}
-                        handleCategoryChange={handleCategoryChange}
-                        pageValue={pageNames.find((name) => name.value === pageName)}
-                    />
-                </div>
+        <>
+            {showWarning && <WarningForm isShow={showWarning} setShowWarning={setShowWarning}/>}
+            <div className="book-recommend-container"           
+                onMouseEnter={() => setIsShow('show')} // Mở khi di chuột vào
+                onMouseLeave={() => setIsShow('')} // Đóng khi rời chuót khỏi menu
+            >
 
-                <div className="description-container">
-                    <span className="tab-recommend">UTEBOOK đề xuất</span>
-                    <p className="title-book">{handleShowBookName(indexBook) || 'Đang cập nhật'}</p>
-                    <div className="description">
-                        {
-                            handleShowBookDescription(indexBook)
-                            || "Hiện đang cập nhật mô tả"
-                        }
+                <div className="more-content">
+                    <div className="category-container">
+                        <CustomTitleCategory
+                            category={category}
+                            categories={categories}
+                            selectedCategory={selectedCategory}
+                            handleCategoryChange={handleCategoryChange}
+                            pageValue={pageNames.find((name) => name.value === pageName)}
+                        />
                     </div>
-                </div>
 
-                <div className="book-actions">
-                    <button
-                        className="btn-read"
-                        onClick={() => navigate(`/utebook/${pageName}/view/${handleShowBookId(indexBook)}`)}
-                    >
-                        <BookOpen />
-                        Đọc ngay
-                    </button>
-                    {/* {bookContents[indexBook].isAudio &&
+                    <div className="description-container">
+                        <span className="tab-recommend">UTEBOOK đề xuất</span>
+                        <p className="title-book">{handleShowBookName(indexBook) || 'Đang cập nhật'}</p>
+                        <div className="description">
+                            {
+                                handleShowBookDescription(indexBook)
+                                || "Hiện đang cập nhật mô tả"
+                            }
+                        </div>
+                    </div>
+
+                    <div className="book-actions">
+                        <button
+                            className="btn-read"
+                            onClick={() => handleReadBook(indexBook)}
+                        >
+                            <BookOpen />
+                            Đọc ngay
+                        </button>
+                        {/* {bookContents[indexBook].isAudio &&
                         <button className="btn-play">
                             <Play />
                         </button>
                     } */}
 
-                </div>
+                    </div>
 
+                </div>
+                <div className='main-swiper'>
+                    <SliderImageBook
+                        images={handleShowImages()}
+                        isShow={isShow}
+                        setIndexBook={setIndexBook}
+                    />
+                </div>
+                <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
             </div>
-            <div className='main-swiper'>
-                <SliderImageBook
-                    images={handleShowImages()}
-                    isShow={isShow}
-                    setIndexBook={setIndexBook}
-                />
-            </div>
-            <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
-        </div>
+        </>
     );
 }
 

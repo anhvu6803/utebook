@@ -7,6 +7,22 @@ import { useAuth } from '../contexts/AuthContext';
 import { BookOpen } from 'lucide-react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import WarningForm from './WarningForm';
+
+function isOldEnough(birthDateISO, minAge) {
+    const today = new Date();
+    const birthDate = new Date(birthDateISO);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    return age >= minAge;
+}
+
 const BookCard = ({
     book,
     status,
@@ -19,11 +35,22 @@ const BookCard = ({
 
     const bookData = book;
     const [listUserFavoriteBook, setListUserFavoriteBook] = useState(bookData.listUserFavorited);
+    const [showWarning, setShowWarning] = useState(false);
+
+    const handleReadBook = () => {
+        if (!isOldEnough(user.ngaySinh, bookData.ageLimit)) {
+            setShowWarning(true);
+            return;
+        }
+        navigate(`/utebook/${pageName}/view/${bookData?._id || bookData?.book_id}`);
+    };
 
     return (
         <div
             className={`card-wrapper ${status}`}
         >
+            {showWarning && <WarningForm isShow={showWarning} setShowWarning={setShowWarning}/>}
+            
             <div
                 className="card-container"
                 style={{
@@ -71,7 +98,7 @@ const BookCard = ({
                             <div className="card-actions ">
                                 <button
                                     className={`btn-read ${status}`}
-                                    onClick={() => navigate(`/utebook/${pageName}/view/${bookData._id}`)}
+                                    onClick={() => handleReadBook()}
                                 >
                                     <BookOpen />
                                     Đọc ngay
