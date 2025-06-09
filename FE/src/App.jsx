@@ -57,7 +57,7 @@ import ManageNotificationPage from "./pages/Admin/ManageNotification";
 import MemberBookPage from "./pages/MemberBookPage";
 import NewestBookPage from "./pages/NewestBookPage";
 import FreeBookPage from "./pages/FreeBookPage";
-
+import ManagePackage from "./pages/Admin/ManagePackage";
 const App = () => {
   return (
     <Router>
@@ -133,6 +133,7 @@ const App = () => {
             <Route path="point" element={<ManagePointPage />} />
             <Route path="membership" element={<ManageMembershipPage />} />
             <Route path="notifications" element={<ManageNotificationPage/>} />
+            <Route path="service-packages" element={<ManagePackage />} />
           </Route>
         </Routes>
       </AuthProvider>

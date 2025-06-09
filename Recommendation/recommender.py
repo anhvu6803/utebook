@@ -157,8 +157,21 @@ class HybridRecommender:
             # Download content with timeout
             response = requests.get(download_link, timeout=10)
             if response.status_code == 200:
-                # Decode với UTF-8 để hỗ trợ tiếng Việt
-                content = response.content.decode('utf-8')
+                # Try different encodings
+                encodings = ['utf-8', 'utf-16', 'ascii', 'latin1', 'cp1252']
+                content = ""
+                
+                for encoding in encodings:
+                    try:
+                        content = response.content.decode(encoding)
+                        break
+                    except UnicodeDecodeError:
+                        continue
+                
+                if not content:
+                    print(f"Could not decode content with any known encoding for file ID: {file_id}")
+                    return viewlink, ""
+                    
                 print(f"Successfully downloaded content from file ID: {file_id}")
                 return viewlink, content
             else:
