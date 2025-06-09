@@ -179,19 +179,36 @@ exports.getBooksByCategoryNewest = async (category) => {
     }
 };
 
-exports.searchBooksByText = async (text, category) => {
+exports.searchBooksByText = async (text) => {
     try {
         if (!text) return [];
 
-        const regexCategory = new RegExp(category, 'i');
+        const books = await Book.find();
 
-        const booksByCategory = await Book.find({ categories: { $regex: regexCategory } });
+        const filteredBooks = books.filter(book => book.bookname.toLowerCase().includes(text.toLowerCase()));
 
-        const filteredBooks = booksByCategory.filter(book => book.bookname.toLowerCase().includes(text.toLowerCase()));
+        if (filteredBooks.length === 1) {
+            return filteredBooks;
+        }
 
-        const shuffled = filteredBooks.sort(() => 0.5 - Math.random()); // trộn ngẫu nhiên
-        console.log(shuffled);
-        return shuffled.slice(0, 6);
+        const categories = [
+            { label: 'Đô thị', value: 'dothi' },
+            { label: 'Tiên hiệp', value: 'tienhiep' },
+            { label: 'Trinh thám', value: 'trinhtham' },
+            { label: 'Ngôn tình', value: 'ngontinh' },
+            { label: 'Linh dị', value: 'linhdi' },
+            { label: 'Truyện Ma', value: 'truyenma' },
+        ];
+
+        const result = {};
+
+        categories.forEach(cat => {
+            result[cat.value] = filteredBooks
+                .filter(book => book.categories.some(c => c?.toLowerCase().includes(cat.label.toLowerCase())))
+                .slice(0, 6); // tối đa 6 sách mỗi thể loại
+        });
+
+        return result;
     } catch (error) {
         throw error;
     }

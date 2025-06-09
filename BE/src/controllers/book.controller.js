@@ -469,9 +469,9 @@ exports.getBooksByCategoryNewest = async (req, res) => {
 }
 exports.searchBooks = async (req, res) => {
     try {
-        const { keyword = '', category = '' } = req.query;
+        const { keyword = '' } = req.query;
 
-        const books = await BookService.searchBooksByText(keyword, category);
+        const books = await BookService.searchBooksByText(keyword);
 
         return res.status(200).json({
             success: true,
