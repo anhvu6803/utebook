@@ -26,6 +26,7 @@ export default function CustomImageList({
 
   const [isHovered, setIsHovered] = useState(itemPage.map(() => false));
 
+  console.log(itemPage);
 
   const handleHoverItemEnter = (index) => {
     if (isHovered.every((v) => !v)) {
@@ -52,12 +53,12 @@ export default function CustomImageList({
                 gap={30}
                 sx={{
                   width: '100%',
-                  height: '320px',
+                  height: 'fit-content',
                   overflow: 'hidden',
                 }}
               >
                 {itemPage.map((item, index) => (
-                  <div>
+                  <div key={index} style={{ height: '380px' }}>
                     <ImageListItem
                       key={item}
                       onMouseEnter={() => handleHoverItemEnter(index)}

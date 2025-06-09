@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Spin, ConfigProvider } from 'antd';
-const CircleLoading = ({ size, colorPrimary = '#005bbb' }) => (
+const CircleLoading = ({ size, spinning = true, colorPrimary = '#005bbb' }) => (
     <ConfigProvider
         theme={{
             components: {
@@ -15,13 +15,13 @@ const CircleLoading = ({ size, colorPrimary = '#005bbb' }) => (
             align="center"
             gap="middle"
             style={{
-                position: 'absolute',
+                position: 'fixed',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)'
             }}
         >
-            <Spin size='large' />
+            <Spin size='large' spinning={spinning}/>
         </Flex>
     </ConfigProvider >
 );

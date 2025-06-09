@@ -10,6 +10,7 @@ import CustomImageList from "../components/CustomImageList";
 import PaginationButtons from "../components/PaginationButtons";
 import CustomAlert from '../components/CustomAlert';
 import { ChevronRight } from "lucide-react";
+import { Spin } from "antd";
 
 const splitIntoGroups = (inputList, chunkSize) => {
   const result = [];
@@ -233,7 +234,7 @@ const MemberBookPage = () => {
 
           <p className="subtitle">Nghe và đọc hàng ngàn nội dung thuộc Kho sách Hội viên</p>
         </div>
-        {!isLoading &&
+        <Spin size="large" spinning={isLoading && allBooks.length <= 0}>
           <div className="book-page">
             {allBooks.length > 0 &&
               <>
@@ -251,7 +252,7 @@ const MemberBookPage = () => {
               </>
             }
           </div>
-        }
+        </Spin>
       </div >
       <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
     </>

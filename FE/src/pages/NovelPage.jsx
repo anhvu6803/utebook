@@ -9,6 +9,8 @@ import CustomImageList from "../components/CustomImageList";
 import PaginationButtons from "../components/PaginationButtons";
 import Loading from '../components/Loading';
 import CustomAlert from '../components/CustomAlert';
+import CircleLoading from "../components/CircleLoading";
+import { Spin } from "antd";
 const splitIntoGroups = (inputList, chunkSize) => {
   const result = [];
   for (let i = 0; i < inputList.length; i += chunkSize) {
@@ -77,7 +79,7 @@ const NovelPage = () => {
       setIsLoading(false);
     }
   }
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -87,7 +89,7 @@ const NovelPage = () => {
       } catch (err) {
         console.log(err);
       } finally {
-        setTimeout(() => setIsLoading(false), 500);
+        setTimeout(() => setIsLoading(false), 2000);
       }
     };
     fetchData();
@@ -165,6 +167,7 @@ const NovelPage = () => {
       console.error(err);
     }
   }
+
   if (isLoading) return <Loading />
 
   return (
@@ -173,7 +176,8 @@ const NovelPage = () => {
         pageName={"novel"}
         listBooks={listBooks}
       />
-      {!isLoading &&
+      <Spin size="large" spinning={allBooks.length <= 0}>
+
         <div className="book-page">
           <p className="book-page-title">UTEBOOK đề xuất</p>
           {allBooks.length > 0 &&
@@ -192,7 +196,7 @@ const NovelPage = () => {
             </>
           }
         </div>
-      }
+      </Spin>
       <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
     </div>
   );
