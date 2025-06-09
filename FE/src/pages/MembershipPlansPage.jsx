@@ -57,7 +57,7 @@ const MembershipPlansPage = () => {
 
   return (
     <>
-      <img src={background} alt="background" className="img-backgound"/>
+      <img src={background} alt="background" className="img-backgound" />
 
       <div className="membership-container">
         <div className="membership-header">
@@ -66,12 +66,12 @@ const MembershipPlansPage = () => {
         </div>
         <div className="plans">
           {plans.map((plan) => (
-            <div key={plan._id} className={`plan ${plan.popular ? "popular" : ""}`}>
-              {plan.popular && <span className="badge">PHỔ BIẾN</span>}
+            <div key={plan._id} className={`plan ${plan.price === 99000 ? "popular" : ""}`}>
+              {plan.price === 99000 && <span className="badge">PHỔ BIẾN</span>}
               <h3>{plan.name}</h3>
               <p className="price">{plan.price.toLocaleString()}đ</p>
               <p className="day">{plan.expire} ngày đọc/nghe sách</p>
-              <button 
+              <button
                 className="buy-button"
                 onClick={() => handleBuyPlan(plan)}
               >

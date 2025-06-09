@@ -67,7 +67,6 @@ const HoaPhuongPage = () => {
           <p className="subtitle">Đọc toàn bộ nội dung thuộc kho sách UTEBOOK (không bao gồm sách Hội viên)</p>
           <p className="subtitle" style={{ marginBottom: "30px" }}>Nạp càng nhiều, khuyến mãi càng lớn</p>
         </div>
-        <p className="title-plans">Chọn gói hoa phượng muốn nạp</p>
         <div className="plans-hoaphuong">
           {plans.map((plan) => (
             <div key={plan._id} className={`plan ${plan.popular ? "popular" : ""}`}>
