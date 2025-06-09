@@ -12,6 +12,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 
 const menuItems = [
   { name: "Quản lý người dùng", path: "/utebook-admin/", icon: <PeopleIcon /> },
@@ -32,6 +33,11 @@ const menuItems = [
       { name: "Hoa phượng", path: "/utebook-admin/point" },
       { name: "Hội viên", path: "/utebook-admin/membership" },
     ],
+  },
+  {
+    name: "Quản lý Gói Dịch Vụ",
+    icon: <CardGiftcardIcon />,
+    path: "/utebook-admin/service-packages",
   },
   {
     name: "Quản lý Thông báo",

@@ -57,6 +57,7 @@ import ManageNotificationPage from "./pages/Admin/ManageNotification";
 import MemberBookPage from "./pages/MemberBookPage";
 import NewestBookPage from "./pages/NewestBookPage";
 import FreeBookPage from "./pages/FreeBookPage";
+import ManagePackage from "./pages/Admin/ManagePackage";
 import SearchPage from "./pages/SearchPage";
 import SearchLayout from "./layout/SearchLayout";
 
@@ -137,6 +138,7 @@ const App = () => {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="point" element={<ManagePointPage />} />
             <Route path="membership" element={<ManageMembershipPage />} />
+            <Route path="service-packages" element={<ManagePackage />} />
             <Route path="notifications" element={<ManageNotificationPage />} />
           </Route>
         </Routes>

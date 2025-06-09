@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { toast } from "react-toastify";
+import Toast from '../Toast';
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -42,6 +42,7 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
   const [passwordAction, setPasswordAction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [toast, setToast] = useState({ show: false, message: '', type: 'error' });
 
   if (!user) return null;
 
@@ -125,16 +126,22 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
     }));
   };
 
+  const showToast = (message, type = 'error') => {
+    setToast({ show: true, message, type });
+  };
+
+  const handleCloseToast = () => {
+    setToast({ show: false, message: '', type: 'error' });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate form before submission
     if (!validateForm()) {
       return;
     }
 
     try {
-      // Kiểm tra ngày hết hạn nếu là hội viên
       if (formData.isMember) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -148,33 +155,30 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
       }
 
       setLoading(true);
-      // Chuyển đổi ngày hết hạn sang định dạng ISO trước khi gửi lên server
       const updatedData = {
         ...formData,
         membershipExpirationDate: formData.membershipExpirationDate ? 
           formData.membershipExpirationDate.toISOString() : null
       };
 
-      // Gọi API update user
       const response = await axios.patch(`${API_URL}/${user._id}`, updatedData);
       
       if (response.data.success) {
         onUpdate(response.data.data);
         setIsEditing(false);
-        setErrors({}); // Clear all errors on success
-        toast.success("Cập nhật thông tin thành công");
-        onClose(); // Đóng modal sau khi cập nhật thành công
+        setErrors({});
+        showToast("Cập nhật thông tin thành công", "success");
+        onClose();
       } else {
-        toast.error(response.data.message || "Không thể cập nhật thông tin");
+        showToast(response.data.message || "Không thể cập nhật thông tin");
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message;
       
-      // Handle specific error cases
       if (errorMessage === 'Phone number already exists') {
         setErrors(prev => ({ ...prev, numberPhone: "Số điện thoại đã tồn tại" }));
       } else {
-        toast.error(errorMessage || "Không thể cập nhật thông tin");
+        showToast(errorMessage || "Không thể cập nhật thông tin");
       }
       console.error("Error updating user:", error);
     } finally {
@@ -193,19 +197,18 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
       const response = await axios.delete(`${API_URL}/${user._id}`);
       if (response.data.success) {
         onDelete(user._id);
-        toast.success("Xóa người dùng thành công");
-        onClose(); // Đóng modal
+        showToast("Xóa người dùng thành công", "success");
+        onClose();
       } else {
-        toast.error(response.data.message || "Không thể xóa người dùng");
+        showToast(response.data.message || "Không thể xóa người dùng");
       }
     } catch (error) {
       if (error.response?.status === 404) {
-        // Nếu user đã bị xóa, vẫn cập nhật UI
         onDelete(user._id);
-        toast.success("Xóa người dùng thành công");
+        showToast("Xóa người dùng thành công", "success");
         onClose();
       } else {
-        toast.error(error.response?.data?.message || "Không thể xóa người dùng");
+        showToast(error.response?.data?.message || "Không thể xóa người dùng");
         console.error("Error deleting user:", error);
       }
     } finally {
@@ -222,13 +225,13 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
         const response = await axios.delete(`${API_URL}/${user._id}`);
         if (response.data.success) {
           onDelete(user._id);
-          toast.success("Xóa người dùng thành công");
+          showToast("Xóa người dùng thành công", "success");
         } else {
-          toast.error(response.data.message || "Không thể xóa người dùng");
+          showToast(response.data.message || "Không thể xóa người dùng");
         }
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Không thể thực hiện thao tác");
+      showToast(error.response?.data?.message || "Không thể thực hiện thao tác");
       console.error("Error:", error);
     } finally {
       setLoading(false);
@@ -255,6 +258,13 @@ const UserDetailForm = ({ user, onClose, onUpdate, onDelete }) => {
 
   return (
     <div className="user-detail-modal">
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={handleCloseToast}
+        />
+      )}
       <div className="modal-overlay">
         <div className="modal-content">
           <div className="modal-header">

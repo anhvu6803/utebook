@@ -4,6 +4,8 @@ import { useState } from "react";
 import "../pages/styles/LoginPage.scss";
 import imgWelcome from "../assets/imgWelcome.png";
 import { useAuth } from '../contexts/AuthContext';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const LoginPage = () => {
   const navigate = useNavigate();  
@@ -11,6 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -120,19 +123,26 @@ const LoginPage = () => {
               </div>
               <div className="form-group">
                 <label>Mật khẩu <span className="required">(*)</span></label>
-                <input 
-                  type="password" 
-                  placeholder="Nhập mật khẩu của bạn"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="password-input-container">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Nhập mật khẩu của bạn"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="toggle-password"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </button>
+                </div>
               </div>
               
               <div className="form-options">
                 <div className="remember-me">
-                  <input type="checkbox" id="remember" />
-                  <label htmlFor="remember">Ghi nhớ đăng nhập</label>
                 </div>
                 <a 
                   href="#" 

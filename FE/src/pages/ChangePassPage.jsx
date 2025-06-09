@@ -4,11 +4,15 @@ import "../pages/styles/ChangePassPage.scss";
 import imgWelcome from "../assets/imgWelcome.png";
 import axios from "axios";
 import { toast } from "react-toastify";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const ChangePasswordPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: ""
@@ -61,24 +65,42 @@ const ChangePasswordPage = () => {
             <h1>Thay đổi mật khẩu mới</h1>
             <form onSubmit={handleSubmit}>
               <label>Mật khẩu mới <span className="required">(*)</span></label>
-              <input 
-                type="password" 
-                name="newPassword"
-                placeholder="Nhập mật khẩu mới" 
-                value={formData.newPassword}
-                onChange={handleChange}
-                required
-              />
+              <div className="password-input-container">
+                <input 
+                  type={showNewPassword ? "text" : "password"} 
+                  name="newPassword"
+                  placeholder="Nhập mật khẩu mới" 
+                  value={formData.newPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <button 
+                  type="button" 
+                  className="toggle-password"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                >
+                  {showNewPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </button>
+              </div>
 
               <label>Nhập lại mật khẩu mới <span className="required">(*)</span></label>
-              <input 
-                type="password" 
-                name="confirmPassword"
-                placeholder="Nhập lại mật khẩu mới" 
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
+              <div className="password-input-container">
+                <input 
+                  type={showConfirmPassword ? "text" : "password"} 
+                  name="confirmPassword"
+                  placeholder="Nhập lại mật khẩu mới" 
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <button 
+                  type="button" 
+                  className="toggle-password"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </button>
+              </div>
 
               <div className="btn-container">
                 <button 

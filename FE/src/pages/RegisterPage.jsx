@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import Loading from "../components/Loading";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -11,6 +14,9 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
   const [isAnimating, setIsAnimating] = useState(false);
   const [isFirstVerification, setIsFirstVerification] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     fullname: "",
@@ -58,6 +64,17 @@ const RegisterPage = () => {
     if (!formData.address) newErrors.address = "Vui lòng nhập địa chỉ";
     if (!formData.verificationCode) newErrors.verificationCode = "Vui lòng nhập mã xác nhận.";
     
+    // Birth date validation
+    if (selectedDate) {
+      const today = new Date();
+      const twoYearsAgo = new Date();
+      twoYearsAgo.setFullYear(today.getFullYear() - 2);
+      
+      if (selectedDate > twoYearsAgo) {
+        newErrors.ngaySinh = "Ngày sinh phải cách hiện tại ít nhất 2 năm";
+      }
+    }
+    
     // Password validation
     if (formData.password) {
       if (formData.password.length < 6) {
@@ -103,14 +120,18 @@ const RegisterPage = () => {
     
     if (!validateForm()) return;
 
+    setIsLoading(true);
     try {
+      // Format the date to ensure it's preserved exactly as selected
+      const formattedDate = selectedDate ? new Date(selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000) : null;
+
       await axios.post("http://localhost:5000/api/user/register", {
         userData: {
           username: formData.username,
           fullname: formData.fullname,
           email: formData.email,
           password: formData.password,
-          ngaySinh: selectedDate,
+          ngaySinh: formattedDate,
           gioiTinh: formData.gioiTinh,
           numberPhone: formData.numberPhone,
           address: formData.address,
@@ -120,9 +141,10 @@ const RegisterPage = () => {
       });
       // Clear verification code after successful registration
       setFormData(prev => ({ ...prev, verificationCode: "" }));
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+      
+      // Keep loading while waiting for navigation
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      navigate("/login");
     } catch (err) {
       const errorMessage = err.response?.data?.error || "Có lỗi xảy ra khi đăng ký";
       if (errorMessage.includes("expired") || errorMessage.includes("Invalid verification code")) {
@@ -131,11 +153,13 @@ const RegisterPage = () => {
       } else {
         setErrors(prev => ({ ...prev, submit: errorMessage }));
       }
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="register-page">
+      {isLoading && <Loading />}
       <div className="container">
         <div className="header-container">
           <h1>Đăng ký</h1>
@@ -170,8 +194,10 @@ const RegisterPage = () => {
             <DatePicker
               selected={selectedDate}
               onChange={(date) => {
-                setSelectedDate(date);
-                setFormData(prev => ({ ...prev, ngaySinh: date }));
+                // Ensure the date is preserved exactly as selected
+                const adjustedDate = date ? new Date(date.getTime() - date.getTimezoneOffset() * 60000) : null;
+                setSelectedDate(adjustedDate);
+                setFormData(prev => ({ ...prev, ngaySinh: adjustedDate }));
                 if (errors.ngaySinh) {
                   setErrors(prev => ({ ...prev, ngaySinh: "" }));
                 }
@@ -179,6 +205,14 @@ const RegisterPage = () => {
               dateFormat="dd/MM/yyyy"
               placeholderText="DD/MM/YYYY"
               className="date-picker"
+              maxDate={(() => {
+                const date = new Date();
+                date.setFullYear(date.getFullYear() - 2);
+                return date;
+              })()}
+              showYearDropdown
+              scrollableYearDropdown
+              yearDropdownItemNumber={100}
             />
             {errors.ngaySinh && <span className="error-text">{errors.ngaySinh}</span>}
           </div>
@@ -199,13 +233,22 @@ const RegisterPage = () => {
           
           <div className="form-group">
             <label>Mật khẩu <span className="required">(*)</span></label>
-            <input 
-              type="password" 
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Nhập mật khẩu" 
-            />
+            <div className="password-input-container">
+              <input 
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Nhập mật khẩu" 
+              />
+              <button 
+                type="button" 
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </button>
+            </div>
             {errors.password && <span className="error-text">{errors.password}</span>}
           </div>
           
@@ -223,13 +266,22 @@ const RegisterPage = () => {
           
           <div className="form-group">
             <label>Xác nhận lại mật khẩu <span className="required">(*)</span></label>
-            <input 
-              type="password" 
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Nhập lại mật khẩu" 
-            />
+            <div className="password-input-container">
+              <input 
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Nhập lại mật khẩu" 
+              />
+              <button 
+                type="button" 
+                className="toggle-password"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </button>
+            </div>
             {errors.confirmPassword && <span className="error-text">{errors.confirmPassword}</span>}
           </div>
           
