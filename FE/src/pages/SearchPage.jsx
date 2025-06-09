@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/SearchPage.scss';
@@ -10,6 +10,7 @@ import CustomAlert from '../components/CustomAlert';
 import { Search } from "lucide-react";
 import { Spin } from 'antd';
 import CircleLoading from "../components/CircleLoading";
+import { set } from "mongoose";
 const splitIntoGroups = (inputList, chunkSize) => {
     const result = [];
     for (let i = 0; i < inputList.length; i += chunkSize) {
@@ -34,6 +35,7 @@ const SearchPage = () => {
     const location = useLocation();
     let keyword = searchParams.get("keyword") || '';
 
+    const [result, setResult] = useState([]);
     const [listBookDoThi, setListBookDoThi] = useState([]);
     const [listBookNgonTinh, setListBookNgonTinh] = useState([]);
     const [listBookTrinhTham, setListBookTrinhTham] = useState([]);
@@ -49,104 +51,29 @@ const SearchPage = () => {
         severity: 'success'
     });
 
-    const getListBookDoThi = async (keyword) => {
+    const getAllBooks = async (keyword) => {
+        console.log(keyword);
         try {
             const res = await axios.get(`http://localhost:5000/api/book/search/`, {
                 params: {
                     keyword: keyword,
-                    category: categories[0].label
                 }
             });
-            setListBookDoThi(res.data.data);
-            return res.data.data;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const getListBookNgonTinh = async (keyword) => {
-        try {
-            const res = await axios.get(`http://localhost:5000/api/book/search/`,
-                {
-                    params: {
-                        keyword: keyword,
-                        category: categories[3].label
-                    }
+            console.log(res.data.data);
+            if (res.data.success) {
+                if (res.data && typeof res.data.data === 'object' && !Array.isArray(res.data.data)) {
+                    setListBookDoThi(res.data.data[categories[0].value]);      // "dothi"
+                    setListBookTienHiep(res.data.data[categories[1].value]);   // "tienhiep"
+                    setListBookTrinhTham(res.data.data[categories[2].value]);  // "trinhtham"
+                    setListBookNgonTinh(res.data.data[categories[3].value]);   // "ngontinh"
+                    setListBookLinhDi(res.data.data[categories[4].value]);     // "linhdi"
+                    setListBookTruyenMa(res.data.data[categories[5].value]);   // "truyenma"
+                } else if (Array.isArray(res.data.data)) {
+                    setResult(res.data.data);
                 }
-            );
-            setListBookNgonTinh(res.data.data);
-            return res.data.data;
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
-    const getListBookTrinhTham = async (keyword) => {
-        try {
-            const res = await axios.get(`http://localhost:5000/api/book/search/`,
-                {
-                    params: {
-                        keyword: keyword,
-                        category: categories[2].label
-                    }
-                }
-            );
-            setListBookTrinhTham(res.data.data);
-            return res.data.data;
-        } catch (err) {
-            console.log(err);
-        }
-    }
+            }
 
-    const getListBookTienHiep = async (keyword) => {
-        try {
-            const res = await axios.get(
-                `http://localhost:5000/api/book/search/`,
-                {
-                    params: {
-                        keyword: keyword,
-                        category: categories[1].label
-                    }
-                }
-            );
-            setListBookTienHiep(res.data.data);
-            return res.data.data;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const getListBookLinhDi = async (keyword) => {
-        try {
-            const res = await axios.get(
-                `http://localhost:5000/api/book/search/`,
-                {
-                    params: {
-                        keyword: keyword,
-                        category: categories[4].label
-                    }
-                }
-            );
-            setListBookLinhDi(res.data.data);
-            return res.data.data;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const getListBookTruyenMa = async (keyword) => {
-        try {
-            const res = await axios.get(
-                `http://localhost:5000/api/book/search/`,
-                {
-                    params: {
-                        keyword: keyword,
-                        category: categories[5].label
-                    }
-                }
-            );
-            setListBookTruyenMa(res.data.data);
-            return res.data.data;
         } catch (err) {
             console.log(err);
         }
@@ -184,14 +111,17 @@ const SearchPage = () => {
             try {
                 const params = new URLSearchParams(location.search);
                 keyword = params.get("keyword") || '';
-
+                setListBookDoThi([]); // Reset listBookDoThi when keyword changes
+                setListBookTienHiep([]); // Reset listBookTienHiep when keyword changes
+                setListBookTrinhTham([]); // Reset listBookTrinhTham when keyword changes
+                setListBookNgonTinh([]); // Reset listBookNgonTinh when keyword changes
+                setListBookLinhDi([]); // Reset listBookLinhDi when keyword changes
+                setListBookTruyenMa([]); // Reset listBookTruyenMa when keyword changes
+                setResult([]);
+                setAllBooks([]);
+                
                 await getAllBooksRecommend(keyword);
-                await getListBookDoThi(keyword);
-                await getListBookNgonTinh(keyword);
-                await getListBookTrinhTham(keyword);
-                await getListBookTienHiep(keyword);
-                await getListBookLinhDi(keyword);
-                await getListBookTruyenMa(keyword);
+                await getAllBooks(keyword);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -300,6 +230,17 @@ const SearchPage = () => {
                 :
                 (
                     <div className="search-page">
+                        {result.length > 0 &&
+                            <>
+                                <p className="search-page-title">Kết quả</p>
+                                <CustomImageList
+                                    itemData={splitIntoGroups(result, 30)}
+                                    page={1}
+                                    pageName={"novel"}
+                                    handleLikeBook={handleLikeBook}
+                                />
+                            </>
+                        }
                         {allBooks.length > 0 &&
                             <>
                                 <p className="search-page-title">UTEBOOK đề xuất</p>
