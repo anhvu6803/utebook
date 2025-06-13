@@ -8,7 +8,6 @@ import hoaPhuong from "../assets/hoaPhuong.png";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Modal } from "@mui/material";
 import { Spin } from "antd";
-import customAlert from "./CustomAlert";
 import { Flower } from 'lucide-react';
 
 const PurchaseChapterForm = ({
@@ -17,9 +16,11 @@ const PurchaseChapterForm = ({
     readingId,
     setAlert,
     listChapterOwned,
+    setListChapterOwned,
     chapter,
     currentChapter,
-    handleLoadChapter
+    handleLoadChapter,
+    isLoadChapter = true
 }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -50,7 +51,16 @@ const PurchaseChapterForm = ({
                 }
             );
             if (response.data.success) {
-                await handleUpdateReading();
+                if (isLoadChapter) {
+                    await handleUpdateReading();
+                }
+                setListChapterOwned([...listChapterOwned, chapter._id]);
+                setAlert({
+                    open: true,
+                    message: "Mua chương thành công",
+                    severity: 'success'
+                });
+                setShowForm(false);
             }
         } catch (error) {
             setAlert({

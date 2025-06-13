@@ -6,16 +6,22 @@ import { Modal, } from '@mui/material';
 import PurchaseChapterForm from './PurchaseChapterForm';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+import CustomAlert from "./CustomAlert";
 
 const MenuChapter = ({ currentChapter, chapters, bookName }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
 
     const [listChapterOwned, setListChapterOwned] = useState([]);
     const [hoaPhuongAmount, setHoaPhuongAmount] = useState(0);
-    const [readingId, setReadingId] = useState(''); 
+    const [readingId, setReadingId] = useState('');
 
     const handleLoadChapter = (chapterId) => {
         navigate(`/utebook-reader/${chapterId}`);
@@ -45,7 +51,7 @@ const MenuChapter = ({ currentChapter, chapters, bookName }) => {
                     },
                 }
             );
-            if (response.data.success) {     
+            if (response.data.success) {
                 setReadingId(response.data.data._id);
             }
         }
@@ -69,6 +75,10 @@ const MenuChapter = ({ currentChapter, chapters, bookName }) => {
 
         fetchData();
     }, []);
+
+    const handleCloseAlert = () => {
+        setAlert({ ...alert, open: false });
+    };
     return (
         <>
             <button
@@ -96,15 +106,19 @@ const MenuChapter = ({ currentChapter, chapters, bookName }) => {
                                 chapter={chapter}
                                 currentChapter={currentChapter}
                                 listChapterOwned={listChapterOwned}
+                                setListChapterOwned={setListChapterOwned}
                                 hoaPhuongAmount={hoaPhuongAmount}
                                 bookName={bookName}
                                 readingId={readingId}
                                 handleLoadChapter={handleLoadChapter}
+                                isLoadChapter={false}
+                                setAlert={setAlert}
                             />
                         ))}
                     </div>
                 </div>
             </Modal>
+            <CustomAlert alert={alert} handleCloseAlert={handleCloseAlert} />
         </>
     );
 };

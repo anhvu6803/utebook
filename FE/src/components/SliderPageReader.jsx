@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './styles/SliderPageReader.scss';
 import { Spin } from 'antd';
@@ -10,19 +10,95 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+function highlightText(chunk, keyword, fontSize, fontFamily, isChapterHeading) {
+  const allLines = keyword
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line !== '');
+
+  // Gộp toàn bộ chunk thành một chuỗi duy nhất, giữ lại xuống dòng
+  let fullText = chunk.join('\n');
+
+  // Thay thế các keyword bằng highlight
+  allLines.forEach(word => {
+    if (word) {
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // escape regex special chars
+      const regex = new RegExp(escapedWord, 'g');
+      fullText = fullText.replace(regex, `<mark>${word}</mark>`);
+    }
+  });
+
+  // Tách lại chuỗi thành từng dòng (sử dụng dangerouslySetInnerHTML vì có HTML)
+  const highlightedLines = fullText.split('\n');
+
+  return (
+    <>
+      {highlightedLines.map((line, index) => (
+        <p
+          key={index}
+          style={{
+            fontSize: `${fontSize}px`,
+            fontFamily: fontFamily,
+            margin: '0 0 10px',
+            lineHeight: 1.6,
+            fontWeight: isChapterHeading(chunk[index]) ? 'bold' : '400',
+            cursor: 'text',
+          }}
+          dangerouslySetInnerHTML={{ __html: line }}
+        />
+      ))}
+    </>
+  );
+}
+
+function highlightTextReading(chunk, lineIndex, fontSize, fontFamily, isChapterHeading) {
+  return (
+    <>
+      {chunk.map((line, index) => (
+        <p
+          key={index} S
+          style={{
+            backgroundColor: index === lineIndex - 1 ? '#7FADDD' : 'transparent',
+            color: index === lineIndex - 1 ? 'white' : 'black',
+
+            fontSize: `${fontSize}px`,
+            fontFamily: fontFamily,
+            fontWeight: isChapterHeading(line) ? 'bold' : '400',
+            margin: '0 0 10px',
+            lineHeight: 1.6,
+            padding: '4px',
+            borderRadius: '4px',
+          }}
+          dangerouslySetInnerHTML={{ __html: line }}
+        />
+      ))}
+
+    </>
+  );
+}
+
 const SliderTextReader = ({
   textChunks,
   setCurrentPage,
   isReading,
   readingRef,
-  setIsReading }) => {
+  setIsReading,
+  flowReadingRef,
+  lineIndex,
+  fontSize,
+  fontFamily,
+  handleReadingCurrentPage
+}) => {
   const swiperRef = useRef(null);
   const loadingRef = useRef(false);
+  const lineRefs = useRef([]);
+
   const [isLoading, setIsLoading] = useState(loadingRef.current);
   const [currentIndex, setCurrentIndex] = useState(0);
   const isChapterHeading = (line) => {
     return line.trim().startsWith('Chương');
   };
+
   const handleNext = () => {
     if (swiperRef.current) {
       swiperRef.current.swiper.slideNext();
@@ -38,43 +114,38 @@ const SliderTextReader = ({
     }
   };
 
+  const [selectedText, setSelectedText] = useState('');
 
-  const handleSpeechText = async (text, index) => {
-    if (isReading) return;
-      try {
-        loadingRef.current = true;
-        setIsLoading(loadingRef.current);
-        await handleStopSpeech(index);
+  useEffect(() => {
+    const handleMouseUp = () => {
+      const selection = window.getSelection().toString();
+      if (selection.length > 0) {
+        setSelectedText(selection);
+      }
+    };
 
-        const response = await fetch('http://localhost:3000/api/speech_line', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            text: text,
-            delay: 0.2
-          })
-        });
-        console.log(response);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
+  console.log(textChunks);
+
+  useEffect(() => {
+    const slideChange = async () => {
+      console.log(flowReadingRef.current);
+      if (lineIndex === null && flowReadingRef.current === true) {
+        handleNext();
+        await handleReadingCurrentPage(textChunks[swiperRef.current.swiper.realIndex]);
       }
-      catch (error) {
-        console.error('Error fetching speech:', error);
-      }
-      finally {
-        loadingRef.current = false;
-        setIsLoading(loadingRef.current);
-        readingRef.current = true;
-        setIsReading(readingRef.current);
-      }
-  }
-  const handleStopSpeech = async (index) => {
-    if (currentIndex !== index || readingRef.current) {
-      setCurrentIndex(index);
-      readingRef.current = false;
-      await axios.post('http://localhost:3000/api/speech/stop');
+
     }
-  }
+    slideChange();
+
+  }, [lineIndex]);
+
+
   return (
     <div className='slider-page-reader'>
       <div className="swiper-container">
@@ -82,6 +153,7 @@ const SliderTextReader = ({
           ref={swiperRef}
           navigation={false}
           pagination={{ type: 'fraction' }}
+          allowTouchMove={false}
           modules={[Navigation, Pagination]}
           className="swiper-wrapper"
         >
@@ -97,39 +169,20 @@ const SliderTextReader = ({
               disabled={swiperRef.current && swiperRef.current.swiper.isEnd}
             />
           </div>
-
           {textChunks.map((chunk, index) => (
             <SwiperSlide key={index}>
-              <div className="text-content">
-                {chunk.map((line, lineIndex) => (
-                  <>
-                    {currentIndex === lineIndex && isLoading ?
-                      <Spin spinning={isLoading}>
-                        <p
-                          onClick={() =>
-                            handleSpeechText(line, lineIndex)
-                          }
-                          key={lineIndex}
-                          className={isChapterHeading(line) ? 'chapter-heading' : ''}
-                        >
-                          {line}
-                        </p>
-                      </Spin>
-                      :
-                      (
-                        <p
-                          onClick={() =>
-                            handleSpeechText(line, lineIndex)
-                          }
-                          key={lineIndex}
-                          className={isChapterHeading(line) ? 'chapter-heading' : ''}
-                        >
-                          {line}
-                        </p>
-                      )
-                    }
-                  </>
-                ))}
+              <div className="text-content"
+                style={{
+                  overflow: textChunks.length === 1 ? 'auto' : 'hidden',
+                  justifyContent: textChunks.length === 1 ? 'flex-start' : 'center',
+                }}
+              >
+                {isReading ?
+                  highlightTextReading(chunk, lineIndex, fontSize, fontFamily, isChapterHeading)
+                  :
+                  highlightText(chunk, selectedText, fontSize, fontFamily, isChapterHeading)
+                }
+
               </div>
             </SwiperSlide>
           ))}

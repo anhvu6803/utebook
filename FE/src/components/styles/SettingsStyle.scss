@@ -1,0 +1,248 @@
+.settings-form {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    height: 680px;
+    margin: 0 auto;
+    position: absolute;
+    right: 10px;
+    top: 80px;
+    border: .5px solid #3d3d3d;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+
+    .setting-section {
+        margin-bottom: 20px;
+
+        h3 {
+            font-size: 19px;
+            font-weight: 600;
+            margin: 0;
+            color: #ffffff;
+        }
+    }
+
+    // Theme Options
+    .theme-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 8px;
+        margin-top: 15px;
+
+        .theme-option {
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+
+            &.selected {
+                border-color: #005bbb;
+            }
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            .check-icon {
+                width: 20px;
+                height: 20px;
+                background: #005bbb;
+                padding: 3px;
+                border-radius: 50%;
+                color: white;
+            }
+        }
+    }
+
+    // Layout Options
+    .layout-options {
+        display: flex;
+        gap: 12px;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 15px;
+
+        .layout-option {
+            width: 80px;
+            height: 48px;
+            background-color: #2d2d2d;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+
+            &.selected {
+                background-color: #ffffff;
+
+                .layout-preview .line {
+                    background-color: #333;
+                }
+            }
+
+            &:hover {
+                transform: scale(1.02);
+            }
+
+            .layout-preview {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                align-items: center;
+
+                .line {
+                    height: 2px;
+                    background-color: #666;
+                    border-radius: 1px;
+
+                    &.short {
+                        width: 20px;
+                    }
+                }
+            }
+
+            .wide-layout .line {
+                width: 32px;
+            }
+
+            .narrow-layout .line {
+                width: 20px;
+            }
+        }
+    }
+
+    // Toggle Switch
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+
+            &:checked+.slider {
+                background-color: #7FADDD;
+
+                &:before {
+                    transform: translateX(26px);
+                }
+            }
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2d2d2d;
+            border-radius: 34px;
+            transition: 0.4s;
+
+            &:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                border-radius: 50%;
+                transition: 0.4s;
+            }
+        }
+    }
+
+    // Font Size Controls
+
+
+    // Font Section
+    .font-section {
+        .font-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .font-size-controls {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 12px;
+                margin-top: 15px;
+                margin-bottom: 10px;
+
+                .font-size-btn {
+                    width: 125px;
+                    height: 40px;
+                    background-color: #2d2d2d;
+                    color: #ffffff;
+                    border: 1px solid #3d3d3d;
+                    border-radius: 18px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+
+                    &:not(:disabled):hover {
+                        background-color: #3d3d3d;
+                        transform: scale(1.05);
+                    }
+
+                    &:active {
+                        transform: scale(0.95);
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: default;
+                    }
+                }
+            }
+
+            .font-option {
+                background-color: transparent;
+                color: #ffffff;
+                border: none;
+                border-radius: 8px;
+                padding: 12px 16px;
+                cursor: pointer;
+                text-align: left;
+                font-size: 18px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: all 0.2s ease;
+                width: 264px;
+
+                &:hover {
+                    background-color: #3d3d3d;
+                }
+
+                &.selected {
+                    background-color: #3d3d3d;
+                }
+
+                .check-icon {
+                    width: 24px;
+                    height: 24px;
+                    color: #7FADDD;
+                }
+            }
+        }
+    }
+}

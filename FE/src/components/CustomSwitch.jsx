@@ -66,12 +66,13 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function CustomSwitch() {
+export default function CustomSwitch({ showSpan = true }) {
     return (
 
         <FormControlLabel
             control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
             label={
+                showSpan &&
                 <span style={{ fontSize: '15px' }} >
                     Đặt làm địa chỉ mặc định
                 </ span>
