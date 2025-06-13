@@ -13,6 +13,7 @@
         padding: 20px;
         background-color: #333;
         color: white;
+        height: 80px;
 
         .nav-button {
             background: none;
@@ -32,7 +33,7 @@
             text-align: center;
 
             .book-title {
-                font-size: 15px;
+                font-size: 18px;
                 font-weight: 500;
             }
 
@@ -47,7 +48,9 @@
 
         .right-controls {
             display: flex;
-            gap: 10px;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
 
             .control-button {
                 background: none;
@@ -57,6 +60,8 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: 30px;
+                height: 30px;
             }
         }
     }
@@ -65,7 +70,6 @@
         flex-grow: 1;
         display: flex;
         position: relative;
-        background-color: white;
         overflow: hidden;
 
         .page-nav {
