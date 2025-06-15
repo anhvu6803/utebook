@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import "./styles/PurchaseChapter.scss";
-import hoaPhuong from "../assets/hoaPhuong.png";
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Modal } from "@mui/material";
-import { Spin } from "antd";
 import { Flower } from 'lucide-react';
 
 const PurchaseChapterForm = ({
@@ -20,7 +18,8 @@ const PurchaseChapterForm = ({
     chapter,
     currentChapter,
     handleLoadChapter,
-    isLoadChapter = true
+    isLoadChapter = true,
+    bookType
 }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -77,7 +76,7 @@ const PurchaseChapterForm = ({
                 key={chapter._id}
                 className={`chapter-list__item ${chapter._id === currentChapter ? 'chapter-list__item--active' : ''}`}
                 onClick={() => {
-                    !listChapterOwned.includes(chapter._id) ?
+                    !listChapterOwned.includes(chapter._id) && bookType === 'HoaPhuong' ?
                         setShowForm(true) :
                         handleUpdateReading();
                 }}
@@ -93,11 +92,20 @@ const PurchaseChapterForm = ({
                     )
                     :
                     (
-                        <>
-                            <div className={`chapter-list__item-status ${chapter.price === 0 ? 'free' : 'paid'}`}>
-                                <p>{chapter.price}</p> <Flower />
 
-                            </div>
+                        <>
+                            {bookType === 'HoaPhuong' ?
+                                (
+                                    <div className={`chapter-list__item-status ${chapter.price === 0 ? 'free' : 'paid'}`}>
+                                        <p>{chapter.price}</p> <Flower />
+                                    </div>
+                                )
+                                :
+                                <div className={`chapter-list__item-status free`}>
+                                    <p>Miễn phí</p>
+                                </div>
+                            }
+
                         </>
                     )
                 }
@@ -121,14 +129,14 @@ const PurchaseChapterForm = ({
                             <p className="name">Giá chương:</p>
                             <span className="amount-hoaphuong">
                                 <span className="value">{(chapter.price).toLocaleString('vi-VN')}</span>
-                                <img src={hoaPhuong} />
+                                <Flower />
                             </span>
                         </div>
                         <div className="content-line">
                             <p className="name">Bạn đang có:</p>
                             <span className="amount-hoaphuong">
                                 <span className="value">{(hoaPhuongAmount).toLocaleString('vi-VN')}</span>
-                                <img src={hoaPhuong} />
+                                <Flower />
                             </span>
                         </div>
                         <div className="purchase-form-actions">

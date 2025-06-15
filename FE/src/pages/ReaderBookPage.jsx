@@ -71,6 +71,7 @@ const ReaderBookPage = () => {
     const [socket, setSocket] = useState(null);
 
     const [bookName, setBookName] = useState('');
+    const [bookType, setBookType] = useState('');
     const [currentChapterName, setCurrentChapterName] = useState('');
     const [chapters, setChapters] = useState([]);
 
@@ -241,6 +242,7 @@ const ReaderBookPage = () => {
                     if (responseBook.data.success) {
                         const bookData = responseBook.data.data;
                         setBookName(bookData.bookname);
+                        setBookType(bookData.type);
                         if (bookData.chapterIds !== null) {
                             try {
                                 const chapterPromises = bookData.chapterIds.map(async (chapter) => {
@@ -473,6 +475,7 @@ const ReaderBookPage = () => {
                         currentChapter={content}
                         chapters={chapters}
                         bookName={bookName}
+                        bookType={bookType}
                     />
                     <SettingsStyle
                         isPageVertical={isPageVertical}

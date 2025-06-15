@@ -78,6 +78,7 @@ def get_audio_duration(file_path, speed=1.0):
     try:
         audio = AudioSegment.from_mp3(file_path)
         duration = audio.duration_seconds
+        print(f"Thời lượng audio: {duration}")
         return duration / speed  # thời lượng thực tế khi phát
     except Exception as e:
         print(f"Lỗi khi đọc thời lượng audio: {e}")

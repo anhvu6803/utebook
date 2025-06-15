@@ -6,7 +6,12 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { BookOpen } from "lucide-react";
 import sorryGif from "../assets/im-sorry-bow.gif";
 
-const SorryForm = ({ isReading, handleReadingBook, listBookRead }) => {
+const SorryForm = ({ 
+    isReading, 
+    handleReadingBook, 
+    listBookRead,
+    isDisabled
+ }) => {
     const [showForm, setShowForm] = useState(false);
     const handleClick = () => {
         if (isReading) {
@@ -22,6 +27,7 @@ const SorryForm = ({ isReading, handleReadingBook, listBookRead }) => {
                 onClick={() =>
                     handleClick()
                 }
+                disabled={isDisabled}
             >
                 <BookOpen size={20} />
                 Đọc từ đầu

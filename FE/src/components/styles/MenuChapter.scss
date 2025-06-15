@@ -115,6 +115,41 @@
     }
 }
 
+
+.content-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding-top: 10px;
+    font-size: 15px;
+
+    .name {
+        width: fit-content;
+        color: white;
+        margin: 0;
+        text-align: left;
+        padding-bottom: 1px;
+    }
+
+    .amount-hoaphuong {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        .value {
+            margin: 0px;
+            padding-bottom: 1px;
+            color: #ff375f;
+            font-size: 19px;
+            font-weight: bold;
+        }
+    }
+}
+
 // Add scroll styling
 ::-webkit-scrollbar {
     width: 4px;

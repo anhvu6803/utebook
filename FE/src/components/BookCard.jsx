@@ -36,9 +36,11 @@ const BookCard = ({
     const bookData = book;
     const [listUserFavoriteBook, setListUserFavoriteBook] = useState(bookData.listUserFavorited);
     const [showWarning, setShowWarning] = useState(false);
+    const [typeWaring, setTypeWaring] = useState('age');
 
     const handleReadBook = () => {
         if (!isOldEnough(user.ngaySinh, bookData.ageLimit)) {
+            setTypeWaring('age');
             setShowWarning(true);
             return;
         }

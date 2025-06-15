@@ -12,7 +12,10 @@ const ChapterItem = ({
     chapterPrice,
     hoaPhuongAmount = 0,
     setAlert,
-    listChapterOwned
+    listChapterOwned,
+    bookType,
+    handleReadingBook,
+    listBookRead
 }) => {
     console.log(listChapterOwned);
     return (
@@ -28,7 +31,7 @@ const ChapterItem = ({
                     gap: '20px'
                 }}
             >
-                {chapterPrice > 0 ?
+                {chapterPrice > 0 && bookType === 'HoaPhuong' ?
                     (
                         <>
                             {listChapterOwned.includes(chapterId) ?
@@ -57,6 +60,9 @@ const ChapterItem = ({
                     chapterId={chapterId}
                     setAlert={setAlert}
                     listChapterOwned={listChapterOwned}
+                    bookType={bookType}
+                    handleReadingBook={handleReadingBook}
+                    listBookRead={listBookRead}
                 />
             </div>
 

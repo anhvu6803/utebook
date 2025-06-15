@@ -5,10 +5,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from 'swiper/modules';
 import { useAuth } from "../contexts/AuthContext";
 import './styles/BookSwiper.scss'; // Nhập file SCSS
+import { Star, BookOpen, Crown, MoveDown, MoveUp, Flower, Award } from 'lucide-react';
+
 import WarningForm from './WarningForm';
+
+import { Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/autoplay';
 
 function isOldEnough(birthDateISO, minAge) {
     const today = new Date();
@@ -22,6 +27,12 @@ function isOldEnough(birthDateISO, minAge) {
     }
 
     return age >= minAge;
+}
+
+const showTypeBook = (type) => {
+    if (type === 'Free') return { name: 'Miễn phí', icon: <Award /> };
+    else if (type === 'Member') return { name: 'Hội viên', icon: <Crown /> }; // 'Hội viên'
+    else if (type === 'HoaPhuong') return { name: 'Hoa phượng', icon: <Flower /> } // 'Hoa phượng'
 }
 
 const BookSwiper = ({ itemData }) => {
@@ -57,11 +68,15 @@ const BookSwiper = ({ itemData }) => {
         <div className="swiper-book-container">
             {showWarning && <WarningForm isShow={showWarning} />}
             <Swiper
-                modules={[Navigation]}
+                modules={[Navigation, Autoplay]}
+                loop={true}
                 spaceBetween={50}
                 slidesPerView={5}
                 ref={swiperRef}
-                loop={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                }}
                 navigation={false}
             >
                 {itemData?.map((item, index) => (
@@ -69,7 +84,12 @@ const BookSwiper = ({ itemData }) => {
                         onClick={() => handleReadBook(item)}
                         className="slide"
                     >
-                        <img src={item.image} alt={item.bookname} />
+                        <div className="book-cover">
+                            <img src={item.image} alt="Book cover" />
+                            <div className={`book-badge ${item.type.toLowerCase()}`}>
+                                {showTypeBook(item.type).name.toUpperCase()} {showTypeBook(item.type)?.icon}
+                            </div>
+                        </div>
                         <p className="item-title">{item.bookname}</p>
                     </SwiperSlide>
 

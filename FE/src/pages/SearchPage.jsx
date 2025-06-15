@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import debounce from 'lodash.debounce';
 import './styles/SearchPage.scss';
 import { useAuth } from "../contexts/AuthContext";
 
@@ -106,30 +107,35 @@ const SearchPage = () => {
         }
     };
 
+    const debouncedSearch = useMemo(() =>
+        debounce((value) => {
+            getAllBooksRecommend(value);
+            getAllBooks(value);
+            setIsLoading(false);
+        }, 500) // 500ms sau khi ngừng gõ mới gọi API
+        , []);
+
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const params = new URLSearchParams(location.search);
-                keyword = params.get("keyword") || '';
-                setListBookDoThi([]); // Reset listBookDoThi when keyword changes
-                setListBookTienHiep([]); // Reset listBookTienHiep when keyword changes
-                setListBookTrinhTham([]); // Reset listBookTrinhTham when keyword changes
-                setListBookNgonTinh([]); // Reset listBookNgonTinh when keyword changes
-                setListBookLinhDi([]); // Reset listBookLinhDi when keyword changes
-                setListBookTruyenMa([]); // Reset listBookTruyenMa when keyword changes
-                setResult([]);
-                setAllBooks([]);
-                
-                await getAllBooksRecommend(keyword);
-                await getAllBooks(keyword);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setTimeout(() => setIsLoading(false), 5000);
-            }
+            const params = new URLSearchParams(location.search);
+            keyword = params.get("keyword") || '';
+            setListBookDoThi([]); // Reset listBookDoThi when keyword changes
+            setListBookTienHiep([]); // Reset listBookTienHiep when keyword changes
+            setListBookTrinhTham([]); // Reset listBookTrinhTham when keyword changes
+            setListBookNgonTinh([]); // Reset listBookNgonTinh when keyword changes
+            setListBookLinhDi([]); // Reset listBookLinhDi when keyword changes
+            setListBookTruyenMa([]); // Reset listBookTruyenMa when keyword changes
+            setResult([]);
+            setAllBooks([]);
+
+            debouncedSearch(keyword);
         }
 
         fetchData();
+
+        return () => {
+            debouncedSearch.cancel();
+        };
 
     }, [location.search]);
 
