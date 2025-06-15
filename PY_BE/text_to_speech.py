@@ -106,8 +106,10 @@ def doc_theo_dong(text, delay=0.2, socketio=None):
         socketio.on('audio_played_done', on_audio_done)
 
     for i, line in enumerate(lines):
+        is_paused.wait()
+
         if is_stopped:
-            break
+            return
         if line.strip() == "":
             continue
 
@@ -132,7 +134,14 @@ def doc_theo_dong(text, delay=0.2, socketio=None):
 
             duration = get_audio_duration(audio_path, reading_speed)
             line_done_event.clear()
-            line_done_event.wait(timeout=duration)
+            
+            waited_time = 0
+            while not line_done_event.is_set() and waited_time < duration:
+                if is_stopped:
+                    break
+                is_paused.wait()  # Nếu đang bị pause thì sẽ dừng ở đây
+                time.sleep(0.1)
+                waited_time += 0.1
 
         # Xoá file tạm
         for temp in ["temp.mp3", "temp_speed.mp3"]:
