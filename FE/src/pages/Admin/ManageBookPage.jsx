@@ -8,17 +8,19 @@ import AddBookModal from "../../components/AddNewBookModal";
 import axios from "axios";
 
 const ManageBookPage = () => {
-  const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [bookToDelete, setBookToDelete] = useState(null);
+  const [searchCategory, setSearchCategory] = useState("");
   const [showAddBookModal, setShowAddBookModal] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize] = useState(10);
+  const [bookToDelete, setBookToDelete] = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const booksPerPage = 10;
 
   useEffect(() => {
     fetchBooks();
@@ -70,24 +72,31 @@ const ManageBookPage = () => {
     }
   };
 
+  const filteredBooks = books.filter((book) => {
+    const matchesSearch = searchTerm
+      ? book.bookname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+    const matchesCategory = searchCategory
+      ? book.categories.some(cat => cat.toLowerCase().includes(searchCategory.toLowerCase()))
+      : true;
+    return matchesSearch && matchesCategory;
+  });
+
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+    setTotalPages(Math.ceil(filteredBooks.length / pageSize));
+  }, [searchTerm, searchCategory, filteredBooks.length, pageSize]);
 
-  const filteredBooks = books.filter((book) =>
-    book.bookname.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const indexOfLastBook = currentPage * pageSize;
+  const indexOfFirstBook = indexOfLastBook - pageSize;
   const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
 
   const handleDelete = (book) => {
     setBookToDelete(book);
   };
 
-  const confirmDelete = async (password) => {
+  const confirmDelete = async () => {
     try {
       if (bookToDelete) {
         await axios.delete(`http://localhost:5000/api/book/books/${bookToDelete._id}`, {
@@ -121,20 +130,41 @@ const ManageBookPage = () => {
   return (
     <div className="book-management">
       <div className="title">Quản lý sách</div>
-      <div className="header-actions">
-        <button className="add-book-btn" onClick={() => setShowAddBookModal(true)}>
-          + Thêm Sách Mới
-        </button>
-        <div className="search-bar">
-          <SearchIcon className="search-icon" />
-          <input
-            type="text"
-            placeholder="Tìm kiếm sách..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </div>  
+        <div className="header-actions">
+        <button
+            className="add-book-btn"
+            onClick={() => setShowAddBookModal(true)}
+          >
+            + Thêm Sách Mới
+          </button>
+          <div className="search-fields-group">
+            <div className="search-bar">
+              <SearchIcon className="search-icon" />
+              <input
+                type="text"
+                placeholder="Nhập tên sách hoặc tác giả..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="search-bar-category">
+              <select
+                value={searchCategory}
+                onChange={(e) => setSearchCategory(e.target.value)}
+                className="category-select"
+              >
+                <option value="">Tất cả thể loại</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          
+      </div>
       <table>
         <thead>
           <tr>
@@ -142,7 +172,6 @@ const ManageBookPage = () => {
             <th>Tiêu đề</th>
             <th>Tác giả</th>
             <th>Thể loại</th>
-            <th>Mô tả</th>
             <th>Hành động</th>
           </tr>
         </thead>
@@ -158,7 +187,6 @@ const ManageBookPage = () => {
                 <td>{book.bookname}</td>
                 <td>{book.author}</td>
                 <td>{book.categories.join(", ")}</td>
-                <td>{book.description}</td>
                 <td>
                   <button 
                     className="delete-btn"
