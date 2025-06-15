@@ -24,6 +24,7 @@ const ManageNotification = () => {
     const getAllUsers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/user');
+        console.log(response.data.data);
         setAllUsers(response.data.data);
       } catch (error) {
         console.log(error);
@@ -42,7 +43,7 @@ const ManageNotification = () => {
       );
       setUserOptions(filteredUsers.map(user => ({
         value: `${user._id}`,
-        label: `${user.fullname} (${user.email})`
+        label: `${user.fullname} (${user.email}) (${user.points.la})`
       })));
     } else {
       setUserOptions([]);

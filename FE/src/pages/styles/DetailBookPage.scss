@@ -248,6 +248,11 @@ $button-text: white;
       &:hover {
         opacity: 0.8;
       }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
     }
 
     .continue-read-btn {
@@ -269,6 +274,11 @@ $button-text: white;
 
       &:hover {
         opacity: 0.8;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
       }
     }
 

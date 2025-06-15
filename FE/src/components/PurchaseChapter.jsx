@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import "./styles/PurchaseChapter.scss";
-import hoaPhuong from "../assets/hoaPhuong.png";
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Modal } from "@mui/material";
-import { Spin } from "antd";
-import customAlert from "./CustomAlert";
+import { Flower } from 'lucide-react';
+
 
 const PurchaseChapter = ({
     isContinue = false,
@@ -19,7 +18,10 @@ const PurchaseChapter = ({
     readingId,
     chapterId,
     setAlert,
-    listChapterOwned
+    listChapterOwned,
+    bookType,
+    handleReadingBook,
+    listBookRead
 }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -27,8 +29,8 @@ const PurchaseChapter = ({
     console.log(listChapterOwned);
     console.log(chapterId);
 
-    const handleUpdateReading = async () => {
-        if (!isContinue) {
+    const handleReading = async () => {
+        if (!isContinue && readingId !== '') {
             try {
                 const response = await axios.put(`http://localhost:5000/api/history-readings/${readingId}`,
                     {
@@ -39,6 +41,9 @@ const PurchaseChapter = ({
             } catch (error) {
                 console.error(error);
             }
+        }
+        else {
+            handleReadingBook(listBookRead);
         }
         navigate(`/utebook-reader/${chapterId}`);
     };
@@ -52,7 +57,10 @@ const PurchaseChapter = ({
                 }
             );
             if (response.data.success) {
-                await handleUpdateReading();
+                if (!listChapterOwned.includes(chapterId)) {
+                    handleReadingBook(listBookRead);
+                }
+                await handleReading();
             }
         } catch (error) {
             setAlert({
@@ -67,10 +75,11 @@ const PurchaseChapter = ({
         <>
             <button className={isContinue ? "read-continue-button" : "read-now-button"}
                 onClick={() => {
-                    !listChapterOwned.includes(chapterId) ?
+                    !listChapterOwned.includes(chapterId) && bookType === 'HoaPhuong' ?
                         setShowForm(true) :
-                        handleUpdateReading();
+                        handleReading();
                 }}
+                disabled={!user.isMember && bookType === 'Member'}
             >
                 {isContinue ? 'ĐỌC TIẾP' : 'ĐỌC NGAY'}
             </button>
@@ -93,14 +102,14 @@ const PurchaseChapter = ({
                             <p className="name">Giá chương:</p>
                             <span className="amount-hoaphuong">
                                 <span className="value">{(chapterPrice).toLocaleString('vi-VN')}</span>
-                                <img src={hoaPhuong} />
+                                <Flower />
                             </span>
                         </div>
                         <div className="content-line">
                             <p className="name">Bạn đang có:</p>
                             <span className="amount-hoaphuong">
                                 <span className="value">{(hoaPhuongAmount).toLocaleString('vi-VN')}</span>
-                                <img src={hoaPhuong} />
+                                <Flower />
                             </span>
                         </div>
                         <div className="purchase-form-actions">

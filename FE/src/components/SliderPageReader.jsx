@@ -59,7 +59,7 @@ function highlightTextReading(chunk, lineIndex, fontSize, fontFamily, isChapterH
           key={index} S
           style={{
             backgroundColor: index === lineIndex - 1 ? '#7FADDD' : 'transparent',
-            color: index === lineIndex - 1 ? 'white' : 'black',
+            color: index === lineIndex - 1 && 'white',
 
             fontSize: `${fontSize}px`,
             fontFamily: fontFamily,

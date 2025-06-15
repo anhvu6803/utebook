@@ -17,7 +17,6 @@ const SettingsStyle = ({
     setBackgroundColor
 }) => {
     const [selectedTheme, setSelectedTheme] = useState('white');
-    const [selectedLayout, setSelectedLayout] = useState('wide');
     const [selectedFont, setSelectedFont] = useState('Netflix Sans');
     const [showForm, setShowForm] = useState(false);
     console.log(fontSize >= 26);
@@ -37,7 +36,9 @@ const SettingsStyle = ({
         'Verdana',
         'Tahoma',
         'Times New Roman',
-        'Roboto'
+        'Roboto',
+        'Open Sans',
+        'Quicksand',
     ];
 
     const handleChecked = (checked) => {
@@ -69,7 +70,7 @@ const SettingsStyle = ({
                                     key={theme.id}
                                     className={`theme-option ${selectedTheme === theme.id ? 'selected' : ''}`}
                                     style={{ backgroundColor: theme.color }}
-                                    onClick={() => {setSelectedTheme(theme.id); setBackgroundColor(theme.color)}}
+                                    onClick={() => { setSelectedTheme(theme.id); setBackgroundColor(theme.color) }}
                                 >
                                     {selectedTheme === theme.id && (
                                         <svg className="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -79,31 +80,6 @@ const SettingsStyle = ({
                                 </button>
                             ))}
                         </div>
-                    </div>
-
-                    <div className="setting-section">
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            width: 264
-                        }}
-                        >
-                            <h3>Cuộn dọc trang</h3>
-                            <label className="toggle-switch">
-                                <input
-                                    type="checkbox"
-                                    checked={isPageVertical}
-                                    onChange={(e) => {
-                                        handleChecked(e.target.checked);
-                                    }}
-
-                                />
-                                <span className="slider"></span>
-                            </label>
-                        </div>
-
                     </div>
 
                     <div className="setting-section">

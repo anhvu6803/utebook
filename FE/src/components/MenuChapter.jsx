@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import CustomAlert from "./CustomAlert";
 
-const MenuChapter = ({ currentChapter, chapters, bookName }) => {
+const MenuChapter = ({ currentChapter, chapters, bookName, bookType }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [showForm, setShowForm] = useState(false);
@@ -92,7 +92,17 @@ const MenuChapter = ({ currentChapter, chapters, bookName }) => {
                 <div className="chapter-list ">
                     {/* Header */}
                     <div className="chapter-list__header">
-                        <h2 className="chapter-list__title">Danh sách</h2>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <h2 className="chapter-list__title">Danh sách</h2>
+                            <div className='content-line'>
+                                <p className='name'>Bạn hiện có: </p>
+                                <div className='amount-hoaphuong'>
+                                    <p>{hoaPhuongAmount.toLocaleString('vi')}</p> <Flower />
+                                </div>
+                            </div>
+
+
+                        </div>
                         <button className="chapter-list__close-btn">
                             <X size={24} onClick={() => setShowForm(false)} />
                         </button>
@@ -113,6 +123,7 @@ const MenuChapter = ({ currentChapter, chapters, bookName }) => {
                                 handleLoadChapter={handleLoadChapter}
                                 isLoadChapter={false}
                                 setAlert={setAlert}
+                                bookType={bookType}
                             />
                         ))}
                     </div>

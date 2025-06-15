@@ -513,10 +513,12 @@ const DetailBookPage = () => {
                 isReading={chapters.length > 0}
                 handleReadingBook={handleReadingBook}
                 listBookRead={listBookRead}
+                isDisabled={!user.isMember && intialType === 'Member'}
               />
               {isReading && (
                 <button className="continue-read-btn"
                   onClick={() => navigate(`/utebook-reader/${chapterReading}`)}
+                  disabled={!user.isMember && intialType === 'Member'}
                 >
                   <BookOpen size={20} />
                   Đọc tiếp
@@ -582,6 +584,9 @@ const DetailBookPage = () => {
                         chapterId={chapter._id}
                         setAlert={setAlert}
                         listChapterOwned={listChapterOwned}
+                        bookType={intialType}
+                        handleReadingBook={handleReadingBook}
+                        listBookRead={listBookRead}
                       />
                     </div>
                   ))
