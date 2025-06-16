@@ -11,6 +11,7 @@ import SliderPageReader from '../components/SliderPageReader';
 import CircleLoading from '../components/CircleLoading';
 import MenuChapter from '../components/MenuChapter';
 import SettingsStyle from '../components/SettingsStyle';
+import VoiceRecognizer from '../components/VoiceRecognizer';
 // Import text content
 //import chapterText from '../assets/chapterText.txt';
 const parseChapterName = (chapterName) => {
@@ -87,6 +88,11 @@ const ReaderBookPage = () => {
     const [lineIndex, setLineIndex] = useState(null);
 
     useEffect(() => {
+        handleStopSpeech();
+    }, []);
+
+    useEffect(() => {
+        playbackRateRef.current = 1;
         const socket = io('http://localhost:3000');
         // Nhận dữ liệu âm thanh từ backend
         socket.on("audio_data", (data) => {
@@ -337,15 +343,9 @@ const ReaderBookPage = () => {
             setIsLoadingButton(loadingButtonRef.current);
             console.log(text);
 
-            const response = await fetch('http://localhost:3000/api/speech_line', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: text,
-                    delay: 0.2
-                })
+            const response = await axios.post('http://localhost:3000/api/speech_line', {
+                text: text,
+                delay: 0.2
             });
             console.log(response);
         }
@@ -365,6 +365,7 @@ const ReaderBookPage = () => {
         pauseRef.current = false;
         setIsPause(pauseRef.current);
         flowReadingRef.current = false;
+        playbackRateRef.current = 1;
 
         // 2. Stop audio ngay lập tức
         if (audioRef.current) {
@@ -388,6 +389,9 @@ const ReaderBookPage = () => {
         audioRef.current.play();
     }
     const handleChangeSpeed = async (value) => {
+        setSpeedReadingValue(value);
+        console.log(value);
+        playbackRateRef.current = value;
         try {
             await axios.post('http://localhost:3000/api/speech/set_speed', {
                 speed: value
@@ -406,6 +410,14 @@ const ReaderBookPage = () => {
         <div className="ebook-reader"
             style={{ color: backgroundColor === '#000' ? 'white' : '#333' }}
         >
+            <VoiceRecognizer
+                handlPauseSpeech={handlPauseSpeech}
+                handleResumeSpeech={handleResumeSpeech}
+                handleStopSpeech={handleStopSpeech}
+                handleReadingCurrentPage={handleReadingCurrentPage}
+                textChunks={textChunks[currentPage - 1]}
+            />
+
             <div className="top-bar">
                 <button
                     className="nav-button"
@@ -424,8 +436,6 @@ const ReaderBookPage = () => {
                                     size='large'
                                     value={speedReadingValue}
                                     onChange={(value) => {
-                                        setSpeedReadingValue(value);
-                                        playbackRateRef.current = value;
                                         handleChangeSpeed(value);
                                     }}
                                     options={speedReading}

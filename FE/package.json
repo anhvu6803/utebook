@@ -48,6 +48,7 @@
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.15",
     "swiper": "^11.2.6",
+    "voice-activity-detection": "^0.0.5",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
