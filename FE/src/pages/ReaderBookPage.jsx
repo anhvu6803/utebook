@@ -416,6 +416,7 @@ const ReaderBookPage = () => {
                 handleStopSpeech={handleStopSpeech}
                 handleReadingCurrentPage={handleReadingCurrentPage}
                 textChunks={textChunks[currentPage - 1]}
+                handleChangeSpeed={handleChangeSpeed}
             />
 
             <div className="top-bar">
