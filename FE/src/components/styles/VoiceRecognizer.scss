@@ -1,0 +1,72 @@
+.support-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 75%;
+    right: 10px;
+    z-index: 1000;
+
+    width: 64px;
+    height: 64px;
+    background-color: #7FADDD; // màu xanh ngọc
+    color: white;
+    border-radius: 16px;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.2;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #005bbb;
+        transform: translateY(-2px);
+    }
+
+    .icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    .text {
+        font-size: 13px;
+    }
+
+    .dots {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-top: 4px;
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
