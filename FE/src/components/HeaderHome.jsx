@@ -12,8 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Crown } from "lucide-react";
 import { bool } from "prop-types";
-
-
+import VoiceRecognizerForm from "./VoiceRecognizerForm";
 
 const HeaderHome = () => {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ const HeaderHome = () => {
   const keyword = searchParams.get("keyword") || '';
 
   const [isShowSearch, SetShowSearch] = useState(false);
+  const [isShowVoice, SetShowVoice] = useState(false);
   const [searchText, setSearchText] = useState("");
 
   const handleSearchClick = () => {
@@ -48,6 +48,11 @@ const HeaderHome = () => {
     return searchText;
   }
 
+  const handleVoiceSearch = (keyword) => {
+    setSearchText(keyword);
+    navigate(`/utebook/search?keyword=${keyword}`);
+  }
+
   return (
     <header className="header-home">
       <div className="header-left">
@@ -65,16 +70,23 @@ const HeaderHome = () => {
       <div className="header-right">
 
         {showSearch() &&
-          <motion.input
-            className="input"
-            type="text"
-            placeholder="Tìm kiếm..."
-            value={showText()}
-            onChange={handleSearch}
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: showSearch() ? 200 : 0, opacity: showSearch() ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          />
+          <div style={{ position: "relative" }}>
+            <motion.input
+              className="input pr-10"
+              type="text"
+              placeholder="Tìm kiếm..."
+              value={showText()}
+              onChange={handleSearch}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: showSearch() ? 200 : 0, opacity: showSearch() ? 1 : 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            />
+            <VoiceRecognizerForm
+              handleVoiceSearch={handleVoiceSearch}
+              showForm={isShowVoice}
+              setShowForm={SetShowVoice}
+            />
+          </div>
         }
 
         <div className="btn-icons">

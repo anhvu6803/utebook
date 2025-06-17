@@ -4,6 +4,7 @@ import axios from 'axios';
 import debounce from 'lodash.debounce';
 import './styles/SearchPage.scss';
 import { useAuth } from "../contexts/AuthContext";
+import imgNotFound from '../assets/icon-404.gif';
 
 import CustomImageList from "../components/CustomImageList";
 import Loading from '../components/Loading';
@@ -324,6 +325,30 @@ const SearchPage = () => {
                                 />
                             </>
                         }
+                        {result.length === 0 &&
+                            allBooks.length === 0 &&
+                            listBookDoThi.length === 0 &&
+                            listBookNgonTinh.length === 0 &&
+                            listBookTruyenMa.length === 0 &&
+                            listBookTrinhTham.length === 0 &&
+                            listBookLinhDi.length === 0 &&
+                            listBookTienHiep.length === 0 && (
+                                <div style={{
+                                    width: "100%",
+                                    height: 450,
+                                    display: "flex",
+                                    justifyContent: "center"
+                                }}>
+                                    <img
+                                        src={imgNotFound}
+                                        alt="imgNotFound"
+                                        style={{
+                                            width: 650,
+                                            height: 450,
+                                        }}
+                                    />
+                                </div>
+                            )}
                     </div>
                 )
             }

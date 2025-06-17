@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import axios from "axios";
 import './styles/VoiceRecognizer.scss';
 import { HelpCircle, AudioLines, MicVocal, HeadphoneOff, Check } from 'lucide-react';
+import LoadingClockAnimation from "./LoadingClockAnimation";
 
 const socket = io("http://localhost:8080");
 
@@ -20,6 +21,7 @@ const VoiceRecognizer = ({
     const [text, setText] = useState("");
     const [isLooping, setIsLooping] = useState(false);
     const [showDots, setShowDots] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         textReadingRef.current = textChunks;
@@ -27,10 +29,11 @@ const VoiceRecognizer = ({
 
     useEffect(() => {
         socket.on("connect", () => {
-            console.log("✅ Đã kết nối socket");
+            console.log("Đã kết nối socket");
         });
 
         socket.on("start_recording", (data) => {
+            setIsLoading(false);
             setText(data.message || "🎤 Đang ghi âm...");
         });
 
@@ -40,6 +43,7 @@ const VoiceRecognizer = ({
 
         socket.on("end_recording", () => {
             setText("🕐 Đang xử lý...");
+            setIsLoading(true);
         });
 
         socket.on("result_text", (data) => {
@@ -47,12 +51,7 @@ const VoiceRecognizer = ({
 
             if (data.status === "success") {
                 setText(`✅ ${data.text}`);
-
-                const text = data.text.toLowerCase();
-                if (text.includes("tạm dừng")) handlPauseSpeech();
-                if (text.includes("tiếp tục")) handleResumeSpeech();
-                if (text.includes("bắt đầu")) handleReadingCurrentPage(textReadingRef.current);
-                if (text.includes("kết thúc")) handleStopSpeech();
+                handleExcuteRequest(data.text);
             } else {
                 setText(`❌ ${data.message}`);
             }
@@ -106,8 +105,17 @@ const VoiceRecognizer = ({
         if (text.includes("🎤")) return <MicVocal className='icon' />;
         if (text.includes("✅")) return <Check className='icon' />;
         if (text.includes("❌")) return <HeadphoneOff className='icon' />;
+        if (isLoading) return <LoadingClockAnimation isLoading={isLoading} />;
         return <AudioLines className='icon' />;
     };
+
+    const handleExcuteRequest = (textValue) => {
+        const text = textValue.toLowerCase();
+        if (text.includes("tạm dừng")) handlPauseSpeech();
+        if (text.includes("tiếp tục")) handleResumeSpeech();
+        if (text.includes("bắt đầu")) handleReadingCurrentPage(textReadingRef.current);
+        if (text.includes("kết thúc")) handleStopSpeech();
+    }
 
     return (
         <button className='support-button' onClick={toggleLoop}>
