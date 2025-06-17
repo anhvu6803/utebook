@@ -1,21 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./styles/SorryForm.scss";
 
 import { Modal } from "@mui/material";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { BookOpen } from "lucide-react";
 import sorryGif from "../assets/im-sorry-bow.gif";
+import PurchaseForm from "./PurchaseForm";
 
-const SorryForm = ({ 
-    isReading, 
-    handleReadingBook, 
-    listBookRead,
-    isDisabled
- }) => {
+const SorryForm = ({
+    isReading,
+    isDisabled,
+    bookName,
+    chapterTitle,
+    isContinue,
+    readingId,
+    chapterId,
+    chapterPrice,
+    hoaPhuongAmount = 0,
+    setAlert,
+    listChapterOwned,
+    bookType,
+    handleReadingBook,
+    listBookRead
+}) => {
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
+    const [purchaseChapter, setPurchaseChapter] = useState(false);
     const handleClick = () => {
         if (isReading) {
-            handleReadingBook(listBookRead);
+            if (listChapterOwned.includes(chapterId) || !isDisabled) {
+                setPurchaseChapter(false);
+                navigate(`/utebook-reader/${chapterId}`);
+            }
+            else {
+                setPurchaseChapter(true);
+            }
         }
         else {
             setShowForm(true);
@@ -32,6 +52,26 @@ const SorryForm = ({
                 <BookOpen size={20} />
                 Đọc từ đầu
             </button>
+
+            {purchaseChapter &&
+                <PurchaseForm
+                    showForm={purchaseChapter}
+                    setShowForm={setPurchaseChapter}
+                    chapterPrice={chapterPrice}
+                    hoaPhuongAmount={hoaPhuongAmount}
+                    chapterName={chapterTitle}
+                    bookName={bookName}
+                    isContinue={isContinue}
+                    readingId={readingId}
+                    chapterId={chapterId}
+                    setAlert={setAlert}
+                    listChapterOwned={listChapterOwned}
+                    bookType={bookType}
+                    handleReadingBook={handleReadingBook}
+                    listBookRead={listBookRead}
+                />
+            }
+
             <Modal open={showForm}
                 onClose={() => setShowForm(false)}
             >

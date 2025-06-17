@@ -409,12 +409,14 @@ const DetailBookPage = () => {
         console.error(err);
       }
     }
-
-    navigate(`/utebook-reader/${chapters[0]._id}`)
   }
   // show alert
   const handleCloseAlert = () => {
     setAlert({ ...alert, open: false });
+  };
+
+  const handleCheckOwnChapter = (chapters, listChapterOwned) => {
+    return chapters.some(id => listChapterOwned.includes(id));
   };
 
   if (isLoading) return <Loading />
@@ -509,21 +511,39 @@ const DetailBookPage = () => {
             </div>
 
             <div className="action-buttons">
-              <SorryForm
-                isReading={chapters.length > 0}
-                handleReadingBook={handleReadingBook}
-                listBookRead={listBookRead}
-                isDisabled={!user.isMember && intialType === 'Member'}
-              />
-              {isReading && (
-                <button className="continue-read-btn"
-                  onClick={() => navigate(`/utebook-reader/${chapterReading}`)}
-                  disabled={!user.isMember && intialType === 'Member'}
-                >
-                  <BookOpen size={20} />
-                  Đọc tiếp
-                </button>
-              )}
+              <>
+                {chapters?.length > 0 &&
+                  (
+                    <>
+                      <SorryForm
+                        isReading={chapters.length > 0}
+                        listBookRead={listBookRead}
+                        isDisabled={!user.isMember && intialType === 'Member'}
+                        listChapterOwned={listChapterOwned}
+                        chapterTitle={parseChapterName(sortChapters(chapters)[0]?.chapterName).title}
+                        chapterPrice={sortChapters(chapters)[0].price}
+                        hoaPhuongAmount={hoaPhuongAmount}
+                        bookName={bookName}
+                        isContinue={chapterReading === sortChapters(chapters)[0]?._id}
+                        readingId={readingId}
+                        chapterId={sortChapters(chapters)[0]?._id}
+                        setAlert={setAlert}
+                        bookType={intialType}
+                        handleReadingBook={handleReadingBook}
+                      />
+                      {isReading && (
+                        <button className="continue-read-btn"
+                          onClick={() => navigate(`/utebook-reader/${chapterReading}`)}
+                          disabled={!user.isMember && intialType === 'Member'}
+                        >
+                          <BookOpen size={20} />
+                          Đọc tiếp
+                        </button>
+                      )}
+                    </>
+                  )
+                }
+              </>
               <button
                 className="like-btn"
                 onClick={() => handleLikeBook(isFavorite)}

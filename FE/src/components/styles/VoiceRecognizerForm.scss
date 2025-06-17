@@ -1,0 +1,131 @@
+.voice-form-container {
+    display: inline-block;
+
+    .voice-form {
+        background: #ffffff;
+        padding: 10px;
+        border-radius: 10px;
+        color: black;
+        width: 450px;
+        height: fit-content;
+        margin: auto;
+        position: fixed;
+        z-index: 1000;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        border: 1px solid #005bbb;
+
+        &.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            visibility: visible;
+        }
+
+        p {
+            text-align: left;
+            font-size: 20px;
+            color: #4f4f4f;
+            width: fit-content;
+            justify-self: center;
+            display: block;
+            margin: 0;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: black;
+            font-size: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+
+        .voice-search-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            height: 250px;
+        }
+
+        .voice-search-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            width: 120px;
+            height: 120px;
+            background-color: #7FADDD; // màu xanh ngọc
+            color: white;
+            border-radius: 16px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.2;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #005bbb;
+                transform: translateY(-2px);
+            }
+
+            .icon {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+
+            .text {
+                font-size: 13px;
+            }
+
+            .dots {
+                display: flex;
+                justify-content: center;
+                gap: 4px;
+                margin-top: 4px;
+
+                .dot {
+                    width: 6px;
+                    height: 6px;
+                    background-color: white;
+                    border-radius: 50%;
+                    animation: bounce 1s infinite;
+                }
+
+                .dot:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+
+                .dot:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+    }
+}
