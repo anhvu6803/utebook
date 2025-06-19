@@ -154,7 +154,7 @@ class HybridRecommender:
             download_link = f"https://drive.google.com/uc?export=download&id={file_id}"
             
             # Download content with timeout
-            response = requests.get(download_link, timeout=10)
+            response = requests.get(download_link, timeout=50)
             if response.status_code == 200:
                 # Try different encodings
                 encodings = ['utf-8', 'utf-16', 'ascii', 'latin1', 'cp1252']
@@ -347,7 +347,11 @@ class HybridRecommender:
             return []
             
         # Get content features for rated items
-        rated_indices = [self.items_df[self.items_df['item_id'] == item_id].index[0] for item_id in rated_items]
+        rated_indices = [
+            self.items_df[self.items_df['item_id'] == item_id].index[0]
+            for item_id in rated_items
+            if not self.items_df[self.items_df['item_id'] == item_id].empty
+        ]
         user_profile = np.array(self.item_features[rated_indices].mean(axis=0))
         
         # Calculate similarity with all items
