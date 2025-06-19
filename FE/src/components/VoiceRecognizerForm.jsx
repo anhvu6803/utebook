@@ -88,11 +88,12 @@ const VoiceRecognizerForm = ({
         if (isLoading) return <LoadingClockAnimation isLoading={isLoading} />;
         return <AudioLines className='icon' />;
     };
-
     const handleExcuteRequest = (textValue) => {
-        const text = textValue.toLowerCase();
+        let text = textValue.toLowerCase();
+        console.log(text);
         handleVoiceSearch(text);
-    }
+    };
+
 
     const handleSearch = () => {
         setShowForm(true);
