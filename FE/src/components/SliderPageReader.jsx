@@ -87,7 +87,8 @@ const SliderTextReader = ({
   lineIndex,
   fontSize,
   fontFamily,
-  handleReadingCurrentPage
+  handleReadingCurrentPage,
+  handleStopSpeech
 }) => {
   const swiperRef = useRef(null);
   const loadingRef = useRef(false);
@@ -160,12 +161,18 @@ const SliderTextReader = ({
           <div className='swiper-button'>
             <button
               className="swiper-button-prev"
-              onClick={handlePrev}
+              onClick={() => {
+                handleStopSpeech();
+                handlePrev();
+              }}
               disabled={swiperRef.current && swiperRef.current.swiper.isBeginning}
             />
             <button
               className="swiper-button-next"
-              onClick={handleNext}
+              onClick={() => {
+                handleStopSpeech();
+                handleNext();
+              }}
               disabled={swiperRef.current && swiperRef.current.swiper.isEnd}
             />
           </div>
