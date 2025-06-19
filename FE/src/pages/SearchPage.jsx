@@ -265,7 +265,7 @@ const SearchPage = () => {
                                 <CustomImageList
                                     itemData={splitIntoGroups(listBookDoThi, 30)}
                                     page={1}
-                                    pageName={"audio"}
+                                    pageName={"novel"}
                                     handleLikeBook={handleLikeBook}
                                 />
                             </>
@@ -276,7 +276,7 @@ const SearchPage = () => {
                                 <CustomImageList
                                     itemData={splitIntoGroups(listBookNgonTinh, 30)}
                                     page={1}
-                                    pageName={"ebook"}
+                                    pageName={"novel"}
                                     handleLikeBook={handleLikeBook}
                                 />
                             </>

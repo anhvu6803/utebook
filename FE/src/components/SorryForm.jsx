@@ -29,7 +29,10 @@ const SorryForm = ({
     const [purchaseChapter, setPurchaseChapter] = useState(false);
     const handleClick = () => {
         if (isReading) {
-            if (listChapterOwned.includes(chapterId) || !isDisabled) {
+            console.log(listChapterOwned.includes(chapterId));
+            if (listChapterOwned.includes(chapterId) && bookType === 'HoaPhuong'
+                || bookType === 'Free' || bookType === 'Member'
+            ) {
                 setPurchaseChapter(false);
                 navigate(`/utebook-reader/${chapterId}`);
             }
