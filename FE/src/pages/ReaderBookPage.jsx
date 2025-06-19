@@ -96,6 +96,7 @@ const ReaderBookPage = () => {
         const socket = io('http://localhost:3000');
         // Nhận dữ liệu âm thanh từ backend
         socket.on("audio_data", (data) => {
+
             const { audio, text, line_index } = data;
             setCurrentText(text);
             setLineIndex(line_index);
@@ -123,10 +124,12 @@ const ReaderBookPage = () => {
             setLineIndex(null);
         });
 
-        audioRef.current.onended = () => {
-            console.log("Đã phát xong âm thanh");
-            socket.emit("audio_played_done"); // Gửi về backend để báo dòng này xong
-        };
+        if (audioRef.current) {
+            audioRef.current.onended = () => {
+                console.log("Đã phát xong âm thanh");
+                socket.emit("audio_played_done"); // Gửi về backend để báo dòng này xong
+            };
+        }
 
         return () => {
             socket.off("audio_data");
@@ -526,6 +529,7 @@ const ReaderBookPage = () => {
                         fontFamily={fontFamily}
                         lineIndex={lineIndex}
                         handleReadingCurrentPage={handleReadingCurrentPage}
+                        handleStopSpeech={handleStopSpeech}
                     />
                 }
 
@@ -545,7 +549,8 @@ const ReaderBookPage = () => {
                 </div>
             </div>
 
-            <audio ref={audioRef} controls style={{ display: 'none' }} />
+            {readingRef.current && <audio ref={audioRef} controls style={{ display: 'none' }} />}
+
         </div>
     );
 };

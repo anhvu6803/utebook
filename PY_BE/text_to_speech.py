@@ -152,12 +152,31 @@ def doc_theo_dong(text, delay=0.2, socketio=None):
 
                     line_done_event.clear()
                     start_time = time.monotonic()
+                    paused_time = 0
+                    last_pause_start = None
 
-                    while not line_done_event.is_set() and (time.monotonic() - start_time) < duration:
+                    while not line_done_event.is_set():
                         if is_stopped:
                             break
-                        is_paused.wait()
+
+                        if not is_paused.is_set():
+                            # Nếu đang bị pause
+                            if last_pause_start is None:
+                                last_pause_start = time.monotonic()
+                            time.sleep(0.1)
+                            continue
+                        else:
+                            # Nếu tiếp tục đọc lại sau khi pause
+                            if last_pause_start is not None:
+                                paused_time += time.monotonic() - last_pause_start
+                                last_pause_start = None
+
+                        elapsed = time.monotonic() - start_time - paused_time
+                        if elapsed >= duration:
+                            break
+
                         time.sleep(0.1)
+
 
                 safe_remove(filename)
             # KẾT THÚC VÙNG ĐỘC QUYỀN
