@@ -34,6 +34,7 @@ const SorryForm = ({
                 || bookType === 'Free' || bookType === 'Member'
             ) {
                 setPurchaseChapter(false);
+                handleReadingBook(listBookRead);
                 navigate(`/utebook-reader/${chapterId}`);
             }
             else {
